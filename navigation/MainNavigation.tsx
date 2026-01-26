@@ -1,9 +1,8 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { HomeScreen } from '../screens/home-screen';
-import { InfoScreen } from '../screens/info-screen';
-import { Color } from '../values/color';
-import { useTranslation } from '../hooks/use-translation';
+import { HomeScreen, InfoScreen } from '../screens';
+import { Color } from '../values';
+import { useTranslation } from '../hooks';
 
 export const MainNavigation = () => {
   const Tab = createBottomTabNavigator();

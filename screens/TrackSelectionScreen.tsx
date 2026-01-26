@@ -2,12 +2,12 @@ import { StyleSheet, Text, FlatList, Pressable } from 'react-native';
 import { View } from 'react-native';
 import { textStyles } from '../values/text-styles';
 import { Color } from '../values/color';
-import { Button } from '../components/button';
+import { Button } from '../components';
 import { useEffect, useState } from 'react';
 import { TrackListEntry } from '../types/init';
 import { useDispatch } from 'react-redux';
 import { AppAction } from '../redux/app';
-import { useTranslation } from '../hooks/use-translation';
+import { useTranslation } from '../hooks';
 import { CommonActions } from '@react-navigation/native';
 
 // Statische Track-Liste (aktuell nur Malente-Lütjenburg)

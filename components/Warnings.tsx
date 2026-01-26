@@ -1,5 +1,5 @@
 import { I18n } from 'i18n-js';
-import { Snackbar, SnackbarState } from './snackbar';
+import { Snackbar, SnackbarState } from './Snackbar';
 import {
   LEVEL_CROSSING_WARNING_DISTANCE,
   VEHICLE_HEADING_TOWARDS_USER_WARNING_DISTANCE,

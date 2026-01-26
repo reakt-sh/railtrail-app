@@ -5,23 +5,32 @@ import * as Location from 'expo-location';
 import { useEffect, useRef, useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { ChangeVehicleIdBottomSheet } from '../components/change-vehicle-id-bottom-sheet';
-import { FAB } from '../components/fab';
-import { Header } from '../components/header';
-import { LocationButton } from '../components/location-button';
-import { MapMarkers } from '../components/map-markers';
-import { StartTripBottomSheet } from '../components/start-trip-bottom-sheet';
-import { Warnings } from '../components/warnings';
-import { disconnectFromServer, initializeApp, setupPositionUpdates } from '../effect-actions/api-actions';
+import {
+  ChangeVehicleIdBottomSheet,
+  FAB,
+  Header,
+  LocationButton,
+  MapMarkers,
+  StartTripBottomSheet,
+  Warnings,
+} from '../components';
+import {
+  disconnectFromServer,
+  initializeApp,
+  setupPositionUpdates,
+} from '../effect-actions/api-actions';
 import {
   setBackgroundLocationListener,
   setForegroundLocationListener,
   stopBackgroundLocationListener,
   stopForegroundLocationListener,
 } from '../effect-actions/location';
-import { getBackgroundPermissionStatus, requestBackgroundPermission } from '../effect-actions/permissions';
+import {
+  getBackgroundPermissionStatus,
+  requestBackgroundPermission,
+} from '../effect-actions/permissions';
 import { updateDistances } from '../effect-actions/trip-actions';
-import { useTranslation } from '../hooks/use-translation';
+import { useTranslation } from '../hooks';
 import { AppAction } from '../redux/app';
 import { ReduxAppState } from '../redux/init';
 import { TripAction } from '../redux/trip';
@@ -37,12 +46,16 @@ export const HomeScreen = () => {
   const [useSmallMarker, setUseSmallMarker] = useState<boolean>(false);
 
   const [isStartTripBottomSheetVisible, setIsStartTripBottomSheetVisible] = useState(false);
-  const [isChangeVehicleIdBottomSheetVisible, setIsChangeVehicleIdBottomSheetVisible] = useState(false);
+  const [isChangeVehicleIdBottomSheetVisible, setIsChangeVehicleIdBottomSheetVisible] =
+    useState(false);
 
-  const [isPercentagePositionIncreasing, setIsPercentagePositionIncreasing] = useState<boolean | undefined>(undefined);
+  const [isPercentagePositionIncreasing, setIsPercentagePositionIncreasing] = useState<
+    boolean | undefined
+  >(undefined);
 
   // Local state for location subscription (not serializable, shouldn't be in Redux)
-  const [locationSubscription, setLocationSubscription] = useState<Location.LocationSubscription | null>(null);
+  const [locationSubscription, setLocationSubscription] =
+    useState<Location.LocationSubscription | null>(null);
 
   useKeepAwake();
   const localizedStrings = useTranslation();

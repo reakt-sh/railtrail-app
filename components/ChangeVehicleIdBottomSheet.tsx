@@ -1,13 +1,13 @@
-import { StyleSheet, View, Text, Keyboard, TouchableOpacity, ScrollView } from 'react-native';
-import { textStyles } from '../values/text-styles';
-import { Color } from '../values/color';
-import { memo, useEffect, useMemo, useRef } from 'react';
 import BottomSheet from '@gorhom/bottom-sheet';
+import { memo, useEffect, useMemo, useRef } from 'react';
+import { Keyboard, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { TripAction } from '../redux/trip';
-import { useTranslation } from '../hooks/use-translation';
+import { useTranslation } from '../hooks';
 import { ReduxAppState } from '../redux/init';
+import { TripAction } from '../redux/trip';
 import { Vehicle } from '../types/vehicle';
+import { Color } from '../values/color';
+import { textStyles } from '../values/text-styles';
 
 interface ExternalProps {
   readonly isVisible: boolean;
@@ -16,15 +16,13 @@ interface ExternalProps {
 
 type Props = ExternalProps;
 
-export const StartTripBottomSheet = memo(({ isVisible, setIsVisible }: Props) => {
+export const ChangeVehicleIdBottomSheet = memo(({ isVisible, setIsVisible }: Props) => {
   const dispatch = useDispatch();
   const localizedStrings = useTranslation();
   const vehicles = useSelector((state: ReduxAppState) => state.trip.vehicles);
+  const currentVehicleId = useSelector((state: ReduxAppState) => state.trip.currentVehicle.id);
 
-  // ref
   const bottomSheetRef = useRef<BottomSheet>(null);
-
-  // variables - using static snap points for Reanimated 3 compatibility
   const snapPoints = useMemo(() => ['40%', '60%'], []);
 
   useEffect(() => {
@@ -39,8 +37,10 @@ export const StartTripBottomSheet = memo(({ isVisible, setIsVisible }: Props) =>
     setIsVisible(false);
     Keyboard.dismiss();
     dispatch(TripAction.setCurrentVehicle(vehicle.id, vehicle.label ?? `Draisine ${vehicle.id}`));
-    dispatch(TripAction.start());
   };
+
+  // Filter out current vehicle from selection
+  const availableVehicles = vehicles.filter((v) => v.id !== currentVehicleId);
 
   return (
     <BottomSheet
@@ -55,13 +55,9 @@ export const StartTripBottomSheet = memo(({ isVisible, setIsVisible }: Props) =>
         <Text style={[textStyles.headerTextBig, textStyles.textSpacing10]}>
           {localizedStrings.t('bottomSheetVehicleId')}
         </Text>
-        <Text style={styles.subtitle}>
-          {vehicles.length > 0
-            ? localizedStrings.t('bottomSheetSelectVehicle')
-            : localizedStrings.t('bottomSheetNoVehicles')}
-        </Text>
+        <Text style={styles.subtitle}>{localizedStrings.t('bottomSheetChangeVehicleId')}</Text>
         <ScrollView style={styles.vehicleList}>
-          {vehicles.map((vehicle) => (
+          {availableVehicles.map((vehicle) => (
             <TouchableOpacity
               key={vehicle.id}
               style={styles.vehicleItem}
@@ -87,6 +83,7 @@ const styles = StyleSheet.create({
   subtitle: {
     color: Color.darkGray,
     marginBottom: 10,
+    textAlign: 'center',
   },
   vehicleList: {
     alignSelf: 'stretch',

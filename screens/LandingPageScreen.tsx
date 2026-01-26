@@ -2,13 +2,12 @@ import { CommonActions } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { Button } from '../components/button';
-import { Checkbox } from '../components/checkbox';
+import { Button, Checkbox } from '../components';
 import {
   getForegroundPermissionStatus,
   requestForegroundPermission,
 } from '../effect-actions/permissions';
-import { useTranslation } from '../hooks/use-translation';
+import { useTranslation } from '../hooks';
 import { AppAction } from '../redux/app';
 import { Color } from '../values/color';
 import { textStyles } from '../values/text-styles';

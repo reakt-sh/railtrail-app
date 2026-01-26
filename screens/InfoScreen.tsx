@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import { textStyles } from '../values/text-styles';
 import { Color } from '../values/color';
-import { useTranslation } from '../hooks/use-translation';
+import { useTranslation } from '../hooks';
 
 export const InfoScreen = () => {
   const windowWidth = Dimensions.get('window').width - 20;

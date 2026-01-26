@@ -1,6 +1,6 @@
-import { View, StyleSheet, StyleProp, ViewStyle, Pressable } from 'react-native';
-import React from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import React from 'react';
+import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import { Color } from '../values/color';
 
 interface ExternalProps {

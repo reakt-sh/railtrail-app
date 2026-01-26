@@ -1,7 +1,7 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import React, { memo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { useTranslation } from '../hooks/use-translation';
+import { useTranslation } from '../hooks';
 import { Color } from '../values/color';
 
 interface ExternalProps {

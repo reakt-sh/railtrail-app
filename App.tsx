@@ -1,5 +1,5 @@
-import { RootNavigation } from './navigation/root-navigation';
-import { SafeAreaView } from './components/safe-area-view';
+import { RootNavigation } from './navigation';
+import { SafeAreaView } from './components';
 import { StatusBar } from 'expo-status-bar';
 import { initStore } from './redux/init';
 import { Provider } from 'react-redux';

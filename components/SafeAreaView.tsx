@@ -1,7 +1,7 @@
+import Constants from 'expo-constants';
 import React, { PropsWithChildren } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Color } from '../values/color';
-import Constants from 'expo-constants';
 
 export const SafeAreaView = ({ children }: PropsWithChildren) => {
   return (
