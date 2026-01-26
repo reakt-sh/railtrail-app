@@ -1,164 +1,176 @@
 import { Dispatch } from 'redux';
-import { TripAction } from '../redux/trip';
+import { TripAction, Warnings } from '../redux/trip';
 import { POIType, PointOfInterest } from '../types/init';
 import { Vehicle } from '../types/vehicle';
 import { percentToDistance } from '../util/util-functions';
 
+/**
+ * Calculates and dispatches distance updates for the trip.
+ * Uses batch update for better performance (single dispatch instead of multiple).
+ */
 export const updateDistances = (
   dispatch: Dispatch,
   trackLength: number | null,
-  percentagePositionOnTrack: number | null,
-  lastPercentagePositionOnTrack: number | null,
+  percentagePosition: number | null,
+  lastPercentagePosition: number | null,
   pointsOfInterest: PointOfInterest[],
   vehicles: Vehicle[],
   isPercentagePositionIncreasing?: boolean,
   vehicleId?: number | null
 ) => {
-  if (lastPercentagePositionOnTrack && percentagePositionOnTrack && trackLength) {
-    const percentageDif = Math.abs(percentagePositionOnTrack - lastPercentagePositionOnTrack);
-
-    dispatch(TripAction.addToDistanceTravelled(percentToDistance(trackLength, percentageDif)));
+  // Calculate distance to add
+  let addDistance: number | undefined;
+  if (lastPercentagePosition && percentagePosition && trackLength) {
+    const percentageDif = Math.abs(percentagePosition - lastPercentagePosition);
+    addDistance = percentToDistance(trackLength, percentageDif);
   }
 
-  dispatch(TripAction.setLastPercentagePositionOnTrack(percentagePositionOnTrack));
+  // Calculate warning distances
+  const warnings = calculateWarnings(
+    percentagePosition,
+    trackLength,
+    pointsOfInterest,
+    vehicles,
+    isPercentagePositionIncreasing,
+    vehicleId
+  );
 
+  // Single batch dispatch for all updates
+  dispatch(
+    TripAction.batchUpdate({
+      addDistance,
+      lastPercentage: percentagePosition,
+      warnings,
+    })
+  );
+};
+
+/**
+ * Calculates all warning distances in one pass.
+ */
+const calculateWarnings = (
+  percentagePosition: number | null,
+  trackLength: number | null,
+  pointsOfInterest: PointOfInterest[],
+  vehicles: Vehicle[],
+  isPercentagePositionIncreasing?: boolean,
+  vehicleId?: number | null
+): Warnings => {
+  // Next level crossing
   const nextLevelCrossing = getNextPOI(
-    percentagePositionOnTrack,
+    percentagePosition,
     pointsOfInterest,
     POIType.LevelCrossing,
     isPercentagePositionIncreasing
   );
+  const nextLevelCrossingDist =
+    nextLevelCrossing && percentagePosition != null && trackLength
+      ? percentToDistance(
+          trackLength,
+          Math.abs(nextLevelCrossing.percentagePosition - percentagePosition)
+        )
+      : null;
 
-  if (nextLevelCrossing && percentagePositionOnTrack && trackLength) {
-    const percentageDif = Math.abs(
-      nextLevelCrossing.percentagePosition - percentagePositionOnTrack
-    );
-
-    dispatch(
-      TripAction.setNextLevelCrossingDistance(percentToDistance(trackLength, percentageDif))
-    );
-  } else {
-    dispatch(TripAction.setNextLevelCrossingDistance(null));
-  }
-
+  // Next vehicle (any direction)
   const nextVehicle = getNextVehicle(
-    percentagePositionOnTrack,
+    percentagePosition,
     vehicles,
-    undefined, // Beide Richtungen suchen
+    undefined, // Both directions
     undefined,
-    vehicleId // Eigene Draisine ausschließen
+    vehicleId
   );
+  const nextVehicleDist =
+    nextVehicle && percentagePosition != null && trackLength
+      ? percentToDistance(
+          trackLength,
+          Math.abs(nextVehicle.percentagePosition - percentagePosition)
+        )
+      : null;
 
-  if (nextVehicle && percentagePositionOnTrack && trackLength) {
-    const percentageDif = Math.abs(nextVehicle.percentagePosition - percentagePositionOnTrack);
-
-    dispatch(TripAction.setNextVehicleDistance(percentToDistance(trackLength, percentageDif)));
-  } else {
-    dispatch(TripAction.setNextVehicleDistance(null));
-  }
-
-  const nextVehicleHeadingTowardsUser = getNextVehicle(
-    percentagePositionOnTrack,
+  // Next vehicle heading towards user
+  const nextVehicleHeadingTowards = getNextVehicle(
+    percentagePosition,
     vehicles,
     isPercentagePositionIncreasing,
     true,
-    vehicleId // Eigene Draisine ausschließen
+    vehicleId
   );
+  const nextVehicleHeadingTowardsDist =
+    nextVehicleHeadingTowards && percentagePosition != null && trackLength
+      ? percentToDistance(
+          trackLength,
+          Math.abs(nextVehicleHeadingTowards.percentagePosition - percentagePosition)
+        )
+      : null;
 
-  if (nextVehicleHeadingTowardsUser && percentagePositionOnTrack && trackLength) {
-    const percentageDif = Math.abs(
-      nextVehicleHeadingTowardsUser.percentagePosition - percentagePositionOnTrack
-    );
-
-    dispatch(
-      TripAction.setNextVehicleHeadingTowardsUserDistance(
-        percentToDistance(trackLength, percentageDif)
-      )
-    );
-  } else {
-    dispatch(TripAction.setNextVehicleHeadingTowardsUserDistance(null));
-  }
+  return {
+    nextLevelCrossing: nextLevelCrossingDist,
+    nextVehicle: nextVehicleDist,
+    nextVehicleHeadingTowards: nextVehicleHeadingTowardsDist,
+  };
 };
 
+/**
+ * Finds the next POI of a given type in the current travel direction.
+ */
 const getNextPOI = (
-  percentagePositionOnTrack: number | null,
+  percentagePosition: number | null,
   pointsOfInterest: PointOfInterest[],
   type: POIType,
   isPercentagePositionIncreasing?: boolean
-) => {
-  if (percentagePositionOnTrack == null) return null;
+): PointOfInterest | null => {
+  if (percentagePosition == null) return null;
 
   const filteredPOIs = pointsOfInterest
-    .filter((poi) => poi.typeId == type)
+    .filter((poi) => poi.typeId === type)
     .filter((poi) =>
       isPercentagePositionIncreasing
-        ? poi.percentagePosition >= percentagePositionOnTrack
-        : poi.percentagePosition <= percentagePositionOnTrack
+        ? poi.percentagePosition >= percentagePosition
+        : poi.percentagePosition <= percentagePosition
     );
 
-  return filteredPOIs.reduce((oldValue: PointOfInterest | null, currentValue) => {
-    if (!oldValue) return currentValue;
-    if (
-      (isPercentagePositionIncreasing &&
-        currentValue.percentagePosition <= oldValue.percentagePosition) ||
-      (!isPercentagePositionIncreasing &&
-        currentValue.percentagePosition >= oldValue.percentagePosition)
-    )
-      return currentValue;
-    else return oldValue;
+  return filteredPOIs.reduce((closest: PointOfInterest | null, current) => {
+    if (!closest) return current;
+    const closestDist = Math.abs(closest.percentagePosition - percentagePosition);
+    const currentDist = Math.abs(current.percentagePosition - percentagePosition);
+    return currentDist < closestDist ? current : closest;
   }, null);
 };
 
+/**
+ * Finds the next vehicle, optionally filtering by direction and heading.
+ */
 const getNextVehicle = (
-  percentagePositionOnTrack: number | null,
+  percentagePosition: number | null,
   vehicles: Vehicle[],
   isPercentagePositionIncreasing?: boolean,
   isHeadingTowardsUser?: boolean,
   excludeVehicleId?: number | null
-) => {
-  if (percentagePositionOnTrack == null) return null;
+): Vehicle | null => {
+  if (percentagePosition == null) return null;
 
-  // Eigene Draisine ausschließen
-  let filteredVehicles = vehicles.filter(
-    (vehicle) => excludeVehicleId == null || vehicle.id !== excludeVehicleId
+  // Exclude own vehicle
+  let filtered = vehicles.filter(
+    (v) => excludeVehicleId == null || v.id !== excludeVehicleId
   );
 
-  // Für "next vehicle": Finde das nächste in BEIDE Richtungen wenn keine Richtung bekannt
-  if (isPercentagePositionIncreasing === undefined) {
-    if (isHeadingTowardsUser != null) {
-      filteredVehicles = filteredVehicles.filter(
-        (vehicle) => vehicle.headingTowardsUser === isHeadingTowardsUser
-      );
-    }
-
-    // Finde das Fahrzeug mit der kleinsten Distanz
-    return filteredVehicles.reduce((closest: Vehicle | null, current) => {
-      if (!closest) return current;
-      const closestDist = Math.abs(closest.percentagePosition - percentagePositionOnTrack);
-      const currentDist = Math.abs(current.percentagePosition - percentagePositionOnTrack);
-      return currentDist < closestDist ? current : closest;
-    }, null);
+  // Filter by heading towards user if specified
+  if (isHeadingTowardsUser != null) {
+    filtered = filtered.filter((v) => v.headingTowardsUser === isHeadingTowardsUser);
   }
 
-  // Richtungs-basierte Suche
-  filteredVehicles = isPercentagePositionIncreasing
-    ? filteredVehicles.filter((vehicle) => vehicle.percentagePosition >= percentagePositionOnTrack)
-    : filteredVehicles.filter((vehicle) => vehicle.percentagePosition <= percentagePositionOnTrack);
+  // Filter by direction if known
+  if (isPercentagePositionIncreasing !== undefined) {
+    filtered = isPercentagePositionIncreasing
+      ? filtered.filter((v) => v.percentagePosition >= percentagePosition)
+      : filtered.filter((v) => v.percentagePosition <= percentagePosition);
+  }
 
-  if (isHeadingTowardsUser != null)
-    filteredVehicles = filteredVehicles.filter(
-      (vehicle) => vehicle.headingTowardsUser === isHeadingTowardsUser
-    );
-
-  return filteredVehicles.reduce((oldValue: Vehicle | null, currentValue) => {
-    if (!oldValue) return currentValue;
-    if (
-      (isPercentagePositionIncreasing &&
-        currentValue.percentagePosition <= oldValue.percentagePosition) ||
-      (!isPercentagePositionIncreasing &&
-        currentValue.percentagePosition >= oldValue.percentagePosition)
-    )
-      return currentValue;
-    else return oldValue;
+  // Find closest vehicle
+  return filtered.reduce((closest: Vehicle | null, current) => {
+    if (!closest) return current;
+    const closestDist = Math.abs(closest.percentagePosition - percentagePosition);
+    const currentDist = Math.abs(current.percentagePosition - percentagePosition);
+    return currentDist < closestDist ? current : closest;
   }, null);
 };

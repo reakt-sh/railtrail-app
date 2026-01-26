@@ -40,8 +40,7 @@ export const StartTripBottomSheet = memo(({ isVisible, setIsVisible }: Props) =>
   const onVehicleSelected = (vehicle: Vehicle) => {
     setIsVisible(false);
     Keyboard.dismiss();
-    dispatch(TripAction.setVehicleName(vehicle.label ?? `Draisine ${vehicle.id}`));
-    dispatch(TripAction.setVehicleId(vehicle.id));
+    dispatch(TripAction.setCurrentVehicle(vehicle.id, vehicle.label ?? `Draisine ${vehicle.id}`));
     dispatch(AppAction.setIsTripStarted(true));
   };
 

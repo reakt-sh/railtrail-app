@@ -2,94 +2,72 @@ import { Position } from '../types/position';
 import { Vehicle } from '../types/vehicle';
 import { RailTrailReduxAction } from './action';
 
-export interface TripState {
-  readonly vehicleId: number | null;
-  readonly vehicleName: string | null;
+// Grouped sub-interfaces for cleaner state structure
+export interface CurrentVehicle {
+  readonly id: number | null;
+  readonly name: string | null;
+}
+
+export interface Motion {
   readonly distanceTravelled: number;
   readonly speed: number;
   readonly heading: number;
-  readonly nextVehicleDistance: number | null;
-  readonly nextVehicleHeadingTowardsUserDistance: number | null;
-  readonly nextLevelCrossingDistance: number | null;
-  readonly vehicles: Vehicle[];
-  readonly percentagePositionOnTrack: number | null;
-  readonly lastPercentagePositionOnTrack: number | null;
-  readonly calculatedPosition: Position | null;
-  readonly passingPositon: Position | null;
 }
 
+export interface TripPosition {
+  readonly percentage: number | null;
+  readonly lastPercentage: number | null;
+  readonly calculated: Position | null;
+  readonly passing: Position | null;
+}
+
+export interface Warnings {
+  readonly nextVehicle: number | null;
+  readonly nextVehicleHeadingTowards: number | null;
+  readonly nextLevelCrossing: number | null;
+}
+
+export interface TripState {
+  readonly currentVehicle: CurrentVehicle;
+  readonly motion: Motion;
+  readonly position: TripPosition;
+  readonly warnings: Warnings;
+  readonly vehicles: Vehicle[];
+}
+
+// Action interfaces
 interface TripActionReset {
   readonly type: 'trip/reset';
 }
 
-interface TripActionSetVehicleId {
-  readonly type: 'trip/set-vehicle-id';
-  readonly payload: number | null;
+interface TripActionSetCurrentVehicle {
+  readonly type: 'trip/set-current-vehicle';
+  readonly payload: { id: number | null; name: string | null };
 }
 
-interface TripActionSetVehicleName {
-  readonly type: 'trip/set-vehicle-name';
-  readonly payload: string | null;
+interface TripActionSetMotion {
+  readonly type: 'trip/set-motion';
+  readonly payload: Partial<Motion>;
 }
 
-interface TripActionSetDistanceTravelled {
-  readonly type: 'trip/set-distance-travelled';
+interface TripActionAddDistance {
+  readonly type: 'trip/add-distance';
   readonly payload: number;
 }
 
-interface TripActionAddToDistanceTravelled {
-  readonly type: 'trip/add-to-distance-travelled';
-  readonly payload: number;
+interface TripActionSetPosition {
+  readonly type: 'trip/set-position';
+  readonly payload: Partial<TripPosition>;
 }
 
-interface TripActionSetSpeed {
-  readonly type: 'trip/set-speed';
-  readonly payload: number;
-}
-
-interface TripActionSetHeading {
-  readonly type: 'trip/set-heading';
-  readonly payload: number;
-}
-
-interface TripActionSetNextVehicleDistance {
-  readonly type: 'trip/set-next-vehicle-distance';
-  readonly payload: number | null;
-}
-
-interface TripActionSetNextVehicleHeadingTowardsUserDistance {
-  readonly type: 'trip/set-next-vehicle-heading-towars-user-distance';
-  readonly payload: number | null;
-}
-
-interface TripActionSetNextLevelCrossingDistance {
-  readonly type: 'trip/set-next-level-crossing-distance';
-  readonly payload: number | null;
+interface TripActionSetWarnings {
+  readonly type: 'trip/set-warnings';
+  readonly payload: Warnings;
 }
 
 interface TripActionSetVehicles {
   readonly type: 'trip/set-vehicles';
   readonly payload: Vehicle[];
-}
-
-interface TripActionSetPercentagePositionOnTrack {
-  readonly type: 'trip/set-percentage-position-on-track';
-  readonly payload: number | null;
-}
-
-interface TripActionSetLastPercentagePositionOnTrack {
-  readonly type: 'trip/set-last-percentage-position-on-track';
-  readonly payload: number | null;
-}
-
-interface TripActionSetCalculatedPosition {
-  readonly type: 'trip/set-calculated-position';
-  readonly payload: Position | null;
-}
-
-interface TripActionSetPassingPosition {
-  readonly type: 'trip/set-passing-position';
-  readonly payload: Position | null;
 }
 
 interface TripActionUpdateVehicleFromWebSocket {
@@ -100,96 +78,61 @@ interface TripActionUpdateVehicleFromWebSocket {
   };
 }
 
+interface TripActionBatchUpdate {
+  readonly type: 'trip/batch-update';
+  readonly payload: {
+    addDistance?: number;
+    lastPercentage?: number | null;
+    warnings?: Warnings;
+  };
+}
+
 export type TripAction =
   | TripActionReset
-  | TripActionSetVehicleId
-  | TripActionSetVehicleName
-  | TripActionSetDistanceTravelled
-  | TripActionAddToDistanceTravelled
-  | TripActionSetSpeed
-  | TripActionSetHeading
-  | TripActionSetNextVehicleDistance
-  | TripActionSetNextVehicleHeadingTowardsUserDistance
-  | TripActionSetNextLevelCrossingDistance
+  | TripActionSetCurrentVehicle
+  | TripActionSetMotion
+  | TripActionAddDistance
+  | TripActionSetPosition
+  | TripActionSetWarnings
   | TripActionSetVehicles
-  | TripActionSetPercentagePositionOnTrack
-  | TripActionSetLastPercentagePositionOnTrack
-  | TripActionSetCalculatedPosition
-  | TripActionSetPassingPosition
-  | TripActionUpdateVehicleFromWebSocket;
+  | TripActionUpdateVehicleFromWebSocket
+  | TripActionBatchUpdate;
 
 export const TripAction = {
   reset: (): TripActionReset => ({
     type: 'trip/reset',
   }),
-  setVehicleId: (vehicleId: number | null): TripActionSetVehicleId => ({
-    type: 'trip/set-vehicle-id',
-    payload: vehicleId,
+
+  setCurrentVehicle: (id: number | null, name: string | null): TripActionSetCurrentVehicle => ({
+    type: 'trip/set-current-vehicle',
+    payload: { id, name },
   }),
-  setVehicleName: (vehicleName: string | null): TripActionSetVehicleName => ({
-    type: 'trip/set-vehicle-name',
-    payload: vehicleName,
+
+  setMotion: (motion: Partial<Motion>): TripActionSetMotion => ({
+    type: 'trip/set-motion',
+    payload: motion,
   }),
-  setDistanceTravelled: (distanceTravelled: number): TripActionSetDistanceTravelled => ({
-    type: 'trip/set-distance-travelled',
-    payload: distanceTravelled,
+
+  addDistance: (distance: number): TripActionAddDistance => ({
+    type: 'trip/add-distance',
+    payload: distance,
   }),
-  addToDistanceTravelled: (distanceTravelled: number): TripActionAddToDistanceTravelled => ({
-    type: 'trip/add-to-distance-travelled',
-    payload: distanceTravelled,
+
+  setPosition: (position: Partial<TripPosition>): TripActionSetPosition => ({
+    type: 'trip/set-position',
+    payload: position,
   }),
-  setSpeed: (speed: number): TripActionSetSpeed => ({
-    type: 'trip/set-speed',
-    payload: speed,
+
+  setWarnings: (warnings: Warnings): TripActionSetWarnings => ({
+    type: 'trip/set-warnings',
+    payload: warnings,
   }),
-  setHeading: (heading: number): TripActionSetHeading => ({
-    type: 'trip/set-heading',
-    payload: heading,
-  }),
-  setNextVehicleDistance: (
-    nextVehicleDistance: number | null
-  ): TripActionSetNextVehicleDistance => ({
-    type: 'trip/set-next-vehicle-distance',
-    payload: nextVehicleDistance,
-  }),
-  setNextVehicleHeadingTowardsUserDistance: (
-    nextVehicleHeadingTowardsUserDistance: number | null
-  ): TripActionSetNextVehicleHeadingTowardsUserDistance => ({
-    type: 'trip/set-next-vehicle-heading-towars-user-distance',
-    payload: nextVehicleHeadingTowardsUserDistance,
-  }),
-  setNextLevelCrossingDistance: (
-    nextLevelCrossingDistance: number | null
-  ): TripActionSetNextLevelCrossingDistance => ({
-    type: 'trip/set-next-level-crossing-distance',
-    payload: nextLevelCrossingDistance,
-  }),
+
   setVehicles: (vehicles: Vehicle[]): TripActionSetVehicles => ({
     type: 'trip/set-vehicles',
     payload: vehicles,
   }),
-  setPercentagePositionOnTrack: (
-    percentagePositionOnTrack: number | null
-  ): TripActionSetPercentagePositionOnTrack => ({
-    type: 'trip/set-percentage-position-on-track',
-    payload: percentagePositionOnTrack,
-  }),
-  setLastPercentagePositionOnTrack: (
-    lastPercentagePositionOnTrack: number | null
-  ): TripActionSetLastPercentagePositionOnTrack => ({
-    type: 'trip/set-last-percentage-position-on-track',
-    payload: lastPercentagePositionOnTrack,
-  }),
-  setCalculatedPosition: (
-    calculatedPosition: Position | null
-  ): TripActionSetCalculatedPosition => ({
-    type: 'trip/set-calculated-position',
-    payload: calculatedPosition,
-  }),
-  setPassingPosition: (passingPosition: Position | null): TripActionSetPassingPosition => ({
-    type: 'trip/set-passing-position',
-    payload: passingPosition,
-  }),
+
   updateVehicleFromWebSocket: (payload: {
     vehicle: Vehicle;
     speed?: number;
@@ -197,62 +140,85 @@ export const TripAction = {
     type: 'trip/update-vehicle-from-websocket',
     payload,
   }),
+
+  // Batch update for performance - single dispatch updates multiple values
+  batchUpdate: (payload: {
+    addDistance?: number;
+    lastPercentage?: number | null;
+    warnings?: Warnings;
+  }): TripActionBatchUpdate => ({
+    type: 'trip/batch-update',
+    payload,
+  }),
 };
 
 export const initialTripState: TripState = {
-  vehicleId: null,
-  vehicleName: null,
-  distanceTravelled: 0,
-  speed: 0,
-  heading: 0,
-  nextVehicleDistance: null,
-  nextVehicleHeadingTowardsUserDistance: null,
-  nextLevelCrossingDistance: null,
+  currentVehicle: {
+    id: null,
+    name: null,
+  },
+  motion: {
+    distanceTravelled: 0,
+    speed: 0,
+    heading: 0,
+  },
+  position: {
+    percentage: null,
+    lastPercentage: null,
+    calculated: null,
+    passing: null,
+  },
+  warnings: {
+    nextVehicle: null,
+    nextVehicleHeadingTowards: null,
+    nextLevelCrossing: null,
+  },
   vehicles: [],
-  percentagePositionOnTrack: null,
-  lastPercentagePositionOnTrack: null,
-  calculatedPosition: null,
-  passingPositon: null,
 };
 
 const reducer = (state = initialTripState, action: RailTrailReduxAction): TripState => {
   switch (action.type) {
     case 'trip/reset':
       return { ...initialTripState };
-    case 'trip/set-vehicle-id':
-      return { ...state, vehicleId: action.payload };
-    case 'trip/set-vehicle-name':
-      return { ...state, vehicleName: action.payload };
-    case 'trip/set-distance-travelled':
-      return { ...state, distanceTravelled: action.payload };
-    case 'trip/add-to-distance-travelled':
+
+    case 'trip/set-current-vehicle':
       return {
         ...state,
-        distanceTravelled: state.distanceTravelled + action.payload,
+        currentVehicle: action.payload,
       };
-    case 'trip/set-speed':
-      return { ...state, speed: action.payload };
-    case 'trip/set-heading':
-      return { ...state, heading: action.payload };
-    case 'trip/set-next-vehicle-distance':
-      return { ...state, nextVehicleDistance: action.payload };
-    case 'trip/set-next-vehicle-heading-towars-user-distance':
-      return { ...state, nextVehicleHeadingTowardsUserDistance: action.payload };
-    case 'trip/set-next-level-crossing-distance':
-      return { ...state, nextLevelCrossingDistance: action.payload };
+
+    case 'trip/set-motion':
+      return {
+        ...state,
+        motion: { ...state.motion, ...action.payload },
+      };
+
+    case 'trip/add-distance':
+      return {
+        ...state,
+        motion: {
+          ...state.motion,
+          distanceTravelled: state.motion.distanceTravelled + action.payload,
+        },
+      };
+
+    case 'trip/set-position':
+      return {
+        ...state,
+        position: { ...state.position, ...action.payload },
+      };
+
+    case 'trip/set-warnings':
+      return {
+        ...state,
+        warnings: action.payload,
+      };
+
     case 'trip/set-vehicles':
       return { ...state, vehicles: action.payload };
-    case 'trip/set-percentage-position-on-track':
-      return { ...state, percentagePositionOnTrack: action.payload };
-    case 'trip/set-last-percentage-position-on-track':
-      return { ...state, lastPercentagePositionOnTrack: action.payload };
-    case 'trip/set-calculated-position':
-      return { ...state, calculatedPosition: action.payload };
-    case 'trip/set-passing-position':
-      return { ...state, passingPositon: action.payload };
+
     case 'trip/update-vehicle-from-websocket': {
       const { vehicle } = action.payload;
-      // Aktualisiere oder füge Vehicle hinzu
       const existingIndex = state.vehicles.findIndex((v) => v.id === vehicle.id);
       let updatedVehicles: Vehicle[];
       if (existingIndex >= 0) {
@@ -263,6 +229,29 @@ const reducer = (state = initialTripState, action: RailTrailReduxAction): TripSt
       }
       return { ...state, vehicles: updatedVehicles };
     }
+
+    case 'trip/batch-update': {
+      const { addDistance, lastPercentage, warnings } = action.payload;
+      return {
+        ...state,
+        motion:
+          addDistance !== undefined
+            ? {
+                ...state.motion,
+                distanceTravelled: state.motion.distanceTravelled + addDistance,
+              }
+            : state.motion,
+        position:
+          lastPercentage !== undefined
+            ? {
+                ...state.position,
+                lastPercentage,
+              }
+            : state.position,
+        warnings: warnings ?? state.warnings,
+      };
+    }
+
     default:
       return state;
   }

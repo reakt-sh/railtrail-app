@@ -48,8 +48,7 @@ export const ChangeVehicleIdBottomSheet = memo(({ isVisible, setIsVisible, track
       } else {
         setIsVisible(false);
         Keyboard.dismiss();
-        dispatch(TripAction.setVehicleName(text));
-        dispatch(TripAction.setVehicleId(response));
+        dispatch(TripAction.setCurrentVehicle(response, text));
         onChangeText('');
       }
     });

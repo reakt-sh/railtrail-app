@@ -39,9 +39,7 @@ export const HomeScreen = () => {
   const mapRef = useRef<MapLibreGL.MapViewRef>(null);
   const cameraRef = useRef<MapLibreGL.CameraRef>(null);
   const [cameraHeading, setCameraHeading] = useState<number>(0);
-  // Used to determine if the map should update
   const isFollowingUser = useRef<boolean>(true);
-  // Used to set and update location icon
   const [isFollowingUserState, setIsFollowingUserState] = useState<boolean>(true);
   const [useSmallMarker, setUseSmallMarker] = useState<boolean>(false);
 
@@ -57,72 +55,46 @@ export const HomeScreen = () => {
   const localizedStrings = useTranslation();
   const dispatch = useDispatch();
 
-  const hasForegroundLocationPermission = useSelector(
-    (state: ReduxAppState) => state.app.hasForegroundLocationPermission
-  );
-  const hasBackgroundLocationPermission = useSelector(
-    (state: ReduxAppState) => state.app.hasBackgroundLocationPermission
-  );
-  const isTripStarted = useSelector((state: ReduxAppState) => state.app.isTripStarted);
-  const trackId = useSelector((state: ReduxAppState) => state.app.trackId);
-  const trackPath = useSelector((state: ReduxAppState) => state.app.trackPath);
-  const location = useSelector((state: ReduxAppState) => state.app.location);
-  const pointsOfInterest = useSelector((state: ReduxAppState) => state.app.pointsOfInterest);
-  const foregroundLocationSubscription = useSelector(
-    (state: ReduxAppState) => state.app.foregroundLocationSubscription
+  // App state selectors
+  const {
+    isTripStarted,
+    trackId,
+    trackPath,
+    trackLength,
+    location,
+    pointsOfInterest,
+    foregroundLocationSubscription,
+    hasBackgroundLocationPermission,
+    hasForegroundLocationPermission,
+  } = useSelector((state: ReduxAppState) => state.app);
+
+  // Trip state selectors
+  const { currentVehicle, warnings, motion, position, vehicles } = useSelector(
+    (state: ReduxAppState) => state.trip
   );
 
-  const vehicleId = useSelector((state: ReduxAppState) => state.trip.vehicleId);
-  const vehicleName = useSelector((state: ReduxAppState) => state.trip.vehicleName);
-  const trackLength = useSelector((state: ReduxAppState) => state.app.trackLength);
-  const distanceTravelled = useSelector((state: ReduxAppState) => state.trip.distanceTravelled);
-  const speed = useSelector((state: ReduxAppState) => state.trip.speed);
-  const heading = useSelector((state: ReduxAppState) => state.trip.heading);
-  const calculatedPosition = useSelector((state: ReduxAppState) => state.trip.calculatedPosition);
-  const nextVehicleDistance = useSelector((state: ReduxAppState) => state.trip.nextVehicleDistance);
-  const nextVehicleHeadingTowardsUserDistance = useSelector(
-    (state: ReduxAppState) => state.trip.nextVehicleHeadingTowardsUserDistance
-  );
-  const nextLevelCrossingDistance = useSelector(
-    (state: ReduxAppState) => state.trip.nextLevelCrossingDistance
-  );
-  const vehicles = useSelector((state: ReduxAppState) => state.trip.vehicles);
-  const percentagePositionOnTrack = useSelector(
-    (state: ReduxAppState) => state.trip.percentagePositionOnTrack
-  );
-  const lastPercentagePositionOnTrack = useSelector(
-    (state: ReduxAppState) => state.trip.lastPercentagePositionOnTrack
-  );
-  const passingPosition = useSelector((state: ReduxAppState) => state.trip.passingPositon);
-
-  // Sync percentagePositionOnTrack from own vehicle in vehicles array
+  // Sync percentagePosition from own vehicle in vehicles array
   useEffect(() => {
-    if (vehicleId != null && vehicles.length > 0) {
-      const myVehicle = vehicles.find((v) => v.id === vehicleId);
+    if (currentVehicle.id != null && vehicles.length > 0) {
+      const myVehicle = vehicles.find((v) => v.id === currentVehicle.id);
       if (myVehicle) {
-        dispatch(TripAction.setPercentagePositionOnTrack(myVehicle.percentagePosition));
+        dispatch(TripAction.setPosition({ percentage: myVehicle.percentagePosition }));
       }
     }
-  }, [vehicles, vehicleId]);
+  }, [vehicles, currentVehicle.id]);
 
   // Initialize app and WebSocket connection
   useEffect(() => {
-    // Initialisiere App mit statischen Track-Daten und WebSocket
     initializeApp(dispatch);
-
-    // Abonniere Position-Updates vom Server
     const unsubscribePositions = setupPositionUpdates(dispatch);
 
-    // Location-Tracking einrichten wenn Berechtigung vorhanden
     if (hasForegroundLocationPermission) {
       setForegroundLocationListener(handleInternalLocationUpdate, dispatch);
-
       getBackgroundPermissionStatus().then((result) => {
         dispatch(AppAction.setHasBackgroundLocationPermission(result));
       });
     }
 
-    // Cleanup bei Unmount
     return () => {
       unsubscribePositions();
       disconnectFromServer();
@@ -131,19 +103,16 @@ export const HomeScreen = () => {
 
   // Call camera animation when location is updated
   useEffect(() => {
-    if (isTripStarted && calculatedPosition) {
-      animateCamera(calculatedPosition.lat, calculatedPosition.lng, heading);
+    if (isTripStarted && position.calculated) {
+      animateCamera(position.calculated.lat, position.calculated.lng, motion.heading);
     } else if (location) {
       animateCamera(location.coords.latitude, location.coords.longitude, location.coords.heading);
     }
-  }, [location, calculatedPosition]);
-
-  // WebSocket liefert jetzt automatisch Updates - kein Polling mehr nötig
+  }, [location, position.calculated]);
 
   // Handles stuff that should be executed on trip start or trip end
   useEffect(() => {
     if (!isTripStarted) {
-      // Background location tracking is only needed druring a trip
       if (hasBackgroundLocationPermission) {
         stopBackgroundLocationListener();
         setForegroundLocationListener(handleInternalLocationUpdate, dispatch);
@@ -152,9 +121,7 @@ export const HomeScreen = () => {
     }
 
     if (hasForegroundLocationPermission) {
-      // Switch from foreground to background location tracking if possible (because trip is started).
       if (!hasBackgroundLocationPermission) {
-        // Inform about background location tracking
         Alert.alert(
           localizedStrings.t('homeDialogBackgroundPermissionTripTitle'),
           localizedStrings.t('homeDialogBackgroundPermissionMessage'),
@@ -165,7 +132,6 @@ export const HomeScreen = () => {
                 requestBackgroundPermission().then((result) => {
                   if (result) {
                     dispatch(AppAction.setHasBackgroundLocationPermission(true));
-
                     stopForegroundLocationListener(foregroundLocationSubscription);
                     setBackgroundLocationListener(handleInternalLocationUpdate);
                   }
@@ -178,55 +144,48 @@ export const HomeScreen = () => {
         stopForegroundLocationListener(foregroundLocationSubscription);
         setBackgroundLocationListener(handleInternalLocationUpdate);
       }
-      return;
     }
-
-    // WebSocket liefert automatisch Updates - kein Polling mehr nötig
   }, [isTripStarted]);
 
   // Calculates distances and in which direction on the track the user is moving
   useEffect(() => {
-    if (percentagePositionOnTrack != null) {
-      if (
-        lastPercentagePositionOnTrack != undefined &&
-        lastPercentagePositionOnTrack !== percentagePositionOnTrack
-      )
-        setIsPercentagePositionIncreasing(
-          percentagePositionOnTrack > lastPercentagePositionOnTrack
-        );
+    if (position.percentage != null) {
+      if (position.lastPercentage != null && position.lastPercentage !== position.percentage) {
+        setIsPercentagePositionIncreasing(position.percentage > position.lastPercentage);
+      }
 
       if (isTripStarted) {
         updateDistances(
           dispatch,
           trackLength,
-          percentagePositionOnTrack,
-          lastPercentagePositionOnTrack,
+          position.percentage,
+          position.lastPercentage,
           pointsOfInterest,
           vehicles,
           isPercentagePositionIncreasing,
-          vehicleId
+          currentVehicle.id
         );
       }
     }
-  }, [percentagePositionOnTrack]);
+  }, [position.percentage]);
 
-  const handleInternalLocationUpdate = async (location: Location.LocationObject) => {
-    dispatch(AppAction.setLocation(location));
+  const handleInternalLocationUpdate = async (loc: Location.LocationObject) => {
+    dispatch(AppAction.setLocation(loc));
   };
 
   const onLocationButtonClicked = () => {
     isFollowingUser.current = !isFollowingUser.current;
     setIsFollowingUserState(isFollowingUser.current);
 
-    if (isFollowingUser.current && location)
+    if (isFollowingUser.current && location) {
       animateCamera(location.coords.latitude, location.coords.longitude, location.coords.heading);
-    else if (isFollowingUser.current && calculatedPosition)
-      animateCamera(calculatedPosition.lat, calculatedPosition.lng, heading);
+    } else if (isFollowingUser.current && position.calculated) {
+      animateCamera(position.calculated.lat, position.calculated.lng, motion.heading);
+    }
   };
 
-  // Zentriert die Kamera auf die eigene Draisine (aus WebSocket-Daten)
   const onCenterOnMyVehicleClicked = () => {
-    const myVehicle = vehicles.find((v) => v.id === vehicleId);
+    const myVehicle = vehicles.find((v) => v.id === currentVehicle.id);
     if (myVehicle) {
       cameraRef.current?.setCamera({
         centerCoordinate: [myVehicle.pos.lng, myVehicle.pos.lat],
@@ -235,17 +194,6 @@ export const HomeScreen = () => {
         zoomLevel: 25,
       });
     }
-  };
-
-  const onMapDrag = () => {
-    if (isFollowingUser.current) {
-      isFollowingUser.current = false;
-      setIsFollowingUserState(false);
-    }
-  };
-
-  const updateCameraHeading = async () => {
-    // MapLibre doesn't have getCamera, we track heading via onRegionDidChange
   };
 
   const onTripStopClicked = () => {
@@ -269,9 +217,9 @@ export const HomeScreen = () => {
   };
 
   const animateCamera = (lat: number, lng: number, heading: number | null) => {
-    if (cameraRef && cameraRef.current && isFollowingUser.current) {
+    if (cameraRef?.current && isFollowingUser.current) {
       cameraRef.current.setCamera({
-        centerCoordinate: [lng, lat], // MapLibre uses [lng, lat] format
+        centerCoordinate: [lng, lat],
         heading: heading ?? 0,
         animationDuration: 250,
       });
@@ -280,16 +228,16 @@ export const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      {isTripStarted ? (
+      {isTripStarted && (
         <Header
-          distance={distanceTravelled}
-          speed={speed}
-          nextVehicle={nextVehicleDistance}
-          nextCrossing={nextLevelCrossingDistance}
-          vehicleName={vehicleName!!}
+          distance={motion.distanceTravelled}
+          speed={motion.speed}
+          nextVehicle={warnings.nextVehicle}
+          nextCrossing={warnings.nextLevelCrossing}
+          vehicleName={currentVehicle.name ?? ''}
           setIsChangeVehicleIdBottomSheetVisible={setIsChangeVehicleIdBottomSheetVisible}
         />
-      ) : null}
+      )}
       <MapLibreGL.MapView
         ref={mapRef}
         style={styles.map}
@@ -297,10 +245,8 @@ export const HomeScreen = () => {
         logoEnabled={false}
         attributionEnabled={false}
         onRegionDidChange={(feature: any) => {
-          // Check zoom level to determine marker size
           const zoom = feature?.properties?.zoomLevel ?? 14;
           setUseSmallMarker(zoom < 12);
-          // Update heading if available
           if (feature?.properties?.heading !== undefined) {
             setCameraHeading(feature.properties.heading);
           }
@@ -316,10 +262,10 @@ export const HomeScreen = () => {
         />
         <MapMarkers
           location={location}
-          calculatedPosition={calculatedPosition}
+          calculatedPosition={position.calculated}
           pointsOfInterest={pointsOfInterest}
           vehicles={vehicles}
-          passingPosition={passingPosition}
+          passingPosition={position.passing}
           track={trackPath}
           useSmallMarker={useSmallMarker}
           mapHeading={cameraHeading}
@@ -329,20 +275,20 @@ export const HomeScreen = () => {
         {isTripStarted && (
           <Warnings
             localizedStrings={localizedStrings}
-            nextLevelCrossingDistance={nextLevelCrossingDistance}
-            nextVehicleDistance={nextVehicleDistance}
-            nextVehicleHeadingTowardsUserDistance={nextVehicleHeadingTowardsUserDistance}
-            speed={speed}
+            nextLevelCrossingDistance={warnings.nextLevelCrossing}
+            nextVehicleDistance={warnings.nextVehicle}
+            nextVehicleHeadingTowardsUserDistance={warnings.nextVehicleHeadingTowards}
+            speed={motion.speed}
           />
         )}
-        <LocationButton onPress={() => onLocationButtonClicked()} isActive={isFollowingUserState} />
+        <LocationButton onPress={onLocationButtonClicked} isActive={isFollowingUserState} />
         {isTripStarted && (
-          <FAB onPress={() => onCenterOnMyVehicleClicked()}>
+          <FAB onPress={onCenterOnMyVehicleClicked}>
             <MaterialCommunityIcons name="navigation-variant" size={26} color={Color.primary} />
           </FAB>
         )}
         {isTripStarted ? (
-          <FAB onPress={() => onTripStopClicked()}>
+          <FAB onPress={onTripStopClicked}>
             <MaterialCommunityIcons name="stop-circle" size={30} color={Color.warning} />
           </FAB>
         ) : (
