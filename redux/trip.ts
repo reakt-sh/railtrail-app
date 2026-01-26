@@ -96,7 +96,6 @@ interface TripActionUpdateVehicleFromWebSocket {
   readonly type: 'trip/update-vehicle-from-websocket';
   readonly payload: {
     vehicle: Vehicle;
-    label?: string;
     speed?: number;
   };
 }
@@ -193,7 +192,6 @@ export const TripAction = {
   }),
   updateVehicleFromWebSocket: (payload: {
     vehicle: Vehicle;
-    label?: string;
     speed?: number;
   }): TripActionUpdateVehicleFromWebSocket => ({
     type: 'trip/update-vehicle-from-websocket',

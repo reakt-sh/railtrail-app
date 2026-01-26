@@ -35,13 +35,13 @@ export const setupPositionUpdates = (dispatch: Dispatch): (() => void) => {
       percentagePosition: mapPosition.position * 100, // 0-1 zu 0-100
       heading: mapPosition.heading,
       headingTowardsUser: undefined, // Wird ggf. später berechnet
+      label: mapPosition.label,
     };
 
     // Vehicles-Array aktualisieren
     dispatch(
       TripAction.updateVehicleFromWebSocket({
         vehicle,
-        label: mapPosition.label,
         speed: mapPosition.speed,
       })
     );

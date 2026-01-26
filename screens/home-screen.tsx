@@ -1,40 +1,39 @@
-import { Alert, StyleSheet, View } from 'react-native';
-import { useKeepAwake } from 'expo-keep-awake';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import MapLibreGL from '@maplibre/maplibre-react-native';
+import { useKeepAwake } from 'expo-keep-awake';
 import * as Location from 'expo-location';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { Alert, StyleSheet, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { ChangeVehicleIdBottomSheet } from '../components/change-vehicle-id-bottom-sheet';
+import { FAB } from '../components/fab';
 import { Header } from '../components/header';
+import { LocationButton } from '../components/location-button';
+import { MapMarkers } from '../components/map-markers';
+import { StartTripBottomSheet } from '../components/start-trip-bottom-sheet';
+import { Warnings } from '../components/warnings';
 import {
+  disconnectFromServer,
   initializeApp,
   setupPositionUpdates,
-  disconnectFromServer,
 } from '../effect-actions/api-actions';
-import { Snackbar, SnackbarState } from '../components/snackbar';
 import {
   setBackgroundLocationListener,
   setForegroundLocationListener,
   stopBackgroundLocationListener,
   stopForegroundLocationListener,
 } from '../effect-actions/location';
-import { initialRegion, mapStyleUrl } from '../util/consts';
-import { LocationButton } from '../components/location-button';
-import { MapMarkers } from '../components/map-markers';
-import { StartTripBottomSheet } from '../components/start-trip-bottom-sheet';
-import { useDispatch, useSelector } from 'react-redux';
-import { ReduxAppState } from '../redux/init';
-import { AppAction } from '../redux/app';
-import { ChangeVehicleIdBottomSheet } from '../components/change-vehicle-id-bottom-sheet';
-import { useTranslation } from '../hooks/use-translation';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { FAB } from '../components/fab';
-import { Color } from '../values/color';
-import { updateDistances } from '../effect-actions/trip-actions';
 import {
   getBackgroundPermissionStatus,
   requestBackgroundPermission,
 } from '../effect-actions/permissions';
+import { updateDistances } from '../effect-actions/trip-actions';
+import { useTranslation } from '../hooks/use-translation';
+import { AppAction } from '../redux/app';
+import { ReduxAppState } from '../redux/init';
 import { TripAction } from '../redux/trip';
-import { Warnings } from '../components/warnings';
+import { initialRegion, mapStyleUrl } from '../util/consts';
+import { Color } from '../values/color';
 
 export const HomeScreen = () => {
   const mapRef = useRef<MapLibreGL.MapViewRef>(null);
@@ -303,21 +302,12 @@ export const HomeScreen = () => {
         />
       </MapLibreGL.MapView>
       <View style={styles.bottomLayout} pointerEvents={'box-none'}>
-        {isTripStarted ? (
+        {isTripStarted && (
           <Warnings
             localizedStrings={localizedStrings}
             nextLevelCrossingDistance={nextLevelCrossingDistance}
             nextVehicleDistance={nextVehicleDistance}
             nextVehicleHeadingTowardsUserDistance={nextVehicleHeadingTowardsUserDistance}
-          />
-        ) : (
-          <Snackbar
-            title={localizedStrings.t('homeSnackbarStartTitle')}
-            message={localizedStrings.t('homeSnackbarStartMessage')}
-            state={SnackbarState.INFO}
-            onPress={() => {
-              setIsStartTripBottomSheetVisible(true);
-            }}
           />
         )}
         <LocationButton onPress={() => onLocationButtonClicked()} isActive={isFollowingUserState} />
@@ -325,7 +315,11 @@ export const HomeScreen = () => {
           <FAB onPress={() => onTripStopClicked()}>
             <MaterialCommunityIcons name="stop-circle" size={30} color={Color.warning} />
           </FAB>
-        ) : null}
+        ) : (
+          <FAB onPress={() => setIsStartTripBottomSheetVisible(true)}>
+            <MaterialCommunityIcons name="play-circle" size={30} color={Color.primary} />
+          </FAB>
+        )}
       </View>
       <StartTripBottomSheet
         isVisible={isStartTripBottomSheetVisible}

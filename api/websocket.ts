@@ -1,5 +1,5 @@
-import { positioningWsUrl } from '../util/consts';
 import { MapPosition } from '../types/map-position';
+import { positioningWsUrl } from '../util/consts';
 
 type PositionCallback = (position: MapPosition) => void;
 
@@ -30,7 +30,9 @@ class PositionWebSocket {
       this.ws.onmessage = (event) => {
         try {
           const position: MapPosition = JSON.parse(event.data);
-          console.log('[WebSocket] Received position:', position.vehicle, position.label);
+          console.log(
+            `[WebSocket] Received position: of vehicle ${position.vehicle}: [${position.latitude}, ${position.longitude}]. Track: ${position.track}, Speed: ${position.speed}`
+          );
           this.callbacks.forEach((cb) => cb(position));
         } catch (error) {
           console.error('[WebSocket] Failed to parse message:', error);
