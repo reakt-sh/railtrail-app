@@ -1,14 +1,14 @@
-import { StyleSheet, View, Text, Alert, Keyboard } from 'react-native';
+import { StyleSheet, View, Text, Keyboard, TouchableOpacity, ScrollView } from 'react-native';
 import { textStyles } from '../values/text-styles';
 import { Color } from '../values/color';
-import { memo, useEffect, useMemo, useRef, useState } from 'react';
-import BottomSheet, { BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import { Button } from './button';
-import { retrieveVehicleId } from '../effect-actions/api-actions';
-import { useDispatch } from 'react-redux';
+import { memo, useEffect, useMemo, useRef } from 'react';
+import BottomSheet from '@gorhom/bottom-sheet';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppAction } from '../redux/app';
 import { TripAction } from '../redux/trip';
 import { useTranslation } from '../hooks/use-translation';
+import { ReduxAppState } from '../redux/init';
+import { Vehicle } from '../types/vehicle';
 
 interface ExternalProps {
   readonly isVisible: boolean;
@@ -18,16 +18,16 @@ interface ExternalProps {
 
 type Props = ExternalProps;
 
-export const StartTripBottomSheet = memo(({ isVisible, setIsVisible, trackId }: Props) => {
+export const StartTripBottomSheet = memo(({ isVisible, setIsVisible }: Props) => {
   const dispatch = useDispatch();
   const localizedStrings = useTranslation();
-  const [text, onChangeText] = useState('');
+  const vehicles = useSelector((state: ReduxAppState) => state.trip.vehicles);
 
   // ref
   const bottomSheetRef = useRef<BottomSheet>(null);
 
   // variables - using static snap points for Reanimated 3 compatibility
-  const snapPoints = useMemo(() => ['30%', '50%'], []);
+  const snapPoints = useMemo(() => ['40%', '60%'], []);
 
   useEffect(() => {
     if (isVisible) {
@@ -37,23 +37,12 @@ export const StartTripBottomSheet = memo(({ isVisible, setIsVisible, trackId }: 
     }
   }, [isVisible]);
 
-  const onButtonPress = async () => {
-    retrieveVehicleId(text, trackId!).then((response) => {
-      if (response == null) {
-        Alert.alert(
-          localizedStrings.t('bottomSheetAlertVehicleIdNotFoundTitle'),
-          localizedStrings.t('bottomSheetAlertVehicleIdNotFoundMessage'),
-          [{ text: localizedStrings.t('alertOk'), onPress: () => {} }]
-        );
-      } else {
-        setIsVisible(false);
-        Keyboard.dismiss();
-        dispatch(TripAction.setVehicleName(text));
-        dispatch(TripAction.setVehicleId(response));
-        dispatch(AppAction.setIsTripStarted(true));
-        onChangeText('');
-      }
-    });
+  const onVehicleSelected = (vehicle: Vehicle) => {
+    setIsVisible(false);
+    Keyboard.dismiss();
+    dispatch(TripAction.setVehicleName(vehicle.label ?? `Draisine ${vehicle.id}`));
+    dispatch(TripAction.setVehicleId(vehicle.id));
+    dispatch(AppAction.setIsTripStarted(true));
   };
 
   return (
@@ -69,19 +58,24 @@ export const StartTripBottomSheet = memo(({ isVisible, setIsVisible, trackId }: 
         <Text style={[textStyles.headerTextBig, textStyles.textSpacing10]}>
           {localizedStrings.t('bottomSheetVehicleId')}
         </Text>
-        <Text>{localizedStrings.t('bottomSheetStartTripMessage')}</Text>
-        <BottomSheetTextInput
-          placeholder={localizedStrings.t('bottomSheetVehicleId')}
-          value={text}
-          autoCapitalize="none"
-          onChangeText={onChangeText}
-          style={styles.textInput}
-        />
-        <Button
-          text={localizedStrings.t('buttonContinue')}
-          onPress={() => onButtonPress()}
-          style={styles.buttonMargin}
-        />
+        <Text style={styles.subtitle}>
+          {vehicles.length > 0
+            ? localizedStrings.t('bottomSheetSelectVehicle')
+            : localizedStrings.t('bottomSheetNoVehicles')}
+        </Text>
+        <ScrollView style={styles.vehicleList}>
+          {vehicles.map((vehicle) => (
+            <TouchableOpacity
+              key={vehicle.id}
+              style={styles.vehicleItem}
+              onPress={() => onVehicleSelected(vehicle)}
+            >
+              <Text style={styles.vehicleLabel}>
+                {vehicle.label ?? `Draisine ${vehicle.id}`}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
       </View>
     </BottomSheet>
   );
@@ -93,13 +87,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 10,
   },
-  textInput: {
+  subtitle: {
+    color: Color.darkGray,
+    marginBottom: 10,
+  },
+  vehicleList: {
     alignSelf: 'stretch',
-    marginVertical: 10,
-    padding: 10,
+    flex: 1,
+  },
+  vehicleItem: {
+    padding: 15,
+    marginVertical: 4,
     borderRadius: 10,
     backgroundColor: Color.gray,
-    textAlign: 'center',
+    alignItems: 'center',
   },
-  buttonMargin: { marginBottom: 10 },
+  vehicleLabel: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: Color.textDark,
+  },
 });

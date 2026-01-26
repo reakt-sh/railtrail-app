@@ -213,6 +213,21 @@ export const HomeScreen = () => {
       animateCamera(calculatedPosition.lat, calculatedPosition.lng, heading);
   };
 
+  // Zentriert die Kamera auf die eigene Draisine (aus WebSocket-Daten)
+  const onCenterOnMyVehicleClicked = () => {
+    console.log(vehicles);
+    const myVehicle = vehicles.find((v) => v.id === vehicleId);
+    console.log('myVehicle', myVehicle, vehicleId);
+    if (myVehicle) {
+      cameraRef.current?.setCamera({
+        centerCoordinate: [myVehicle.pos.lng, myVehicle.pos.lat],
+        heading: myVehicle.heading ?? 0,
+        animationDuration: 500,
+        zoomLevel: 15,
+      });
+    }
+  };
+
   const onMapDrag = () => {
     if (isFollowingUser.current) {
       isFollowingUser.current = false;
@@ -311,6 +326,11 @@ export const HomeScreen = () => {
           />
         )}
         <LocationButton onPress={() => onLocationButtonClicked()} isActive={isFollowingUserState} />
+        {isTripStarted && (
+          <FAB onPress={() => onCenterOnMyVehicleClicked()}>
+            <MaterialCommunityIcons name="train-car" size={26} color={Color.primary} />
+          </FAB>
+        )}
         {isTripStarted ? (
           <FAB onPress={() => onTripStopClicked()}>
             <MaterialCommunityIcons name="stop-circle" size={30} color={Color.warning} />

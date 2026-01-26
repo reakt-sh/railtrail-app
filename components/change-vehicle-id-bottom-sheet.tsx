@@ -1,13 +1,13 @@
-import { StyleSheet, View, Text, Alert, Keyboard } from 'react-native';
-import { textStyles } from '../values/text-styles';
-import { Color } from '../values/color';
-import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import BottomSheet, { BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import { Button } from './button';
-import { retrieveVehicleId } from '../effect-actions/api-actions';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { Alert, Keyboard, StyleSheet, Text, View } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { TripAction } from '../redux/trip';
+import { retrieveVehicleId } from '../effect-actions/api-actions';
 import { useTranslation } from '../hooks/use-translation';
+import { TripAction } from '../redux/trip';
+import { Color } from '../values/color';
+import { textStyles } from '../values/text-styles';
+import { Button } from './button';
 
 interface ExternalProps {
   readonly isVisible: boolean;
@@ -78,7 +78,7 @@ export const ChangeVehicleIdBottomSheet = memo(({ isVisible, setIsVisible, track
         />
         <Button
           text={localizedStrings.t('buttonContinue')}
-          onPress={() => onButtonPress()}
+          onPress={onButtonPress}
           style={styles.buttonMargin}
         />
       </View>
@@ -100,5 +100,5 @@ const styles = StyleSheet.create({
     backgroundColor: Color.gray,
     textAlign: 'center',
   },
-  buttonMargin: { marginBottom: 10 },
+  buttonMargin: { marginBottom: 8 },
 });
