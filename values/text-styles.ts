@@ -1,17 +1,17 @@
 import { StyleSheet } from 'react-native';
-import { Color } from './color';
+import { Color, Font } from './color';
 
 export const textStyles = StyleSheet.create({
   headerTextHuge: {
-    fontWeight: '600',
+    fontFamily: Font.semiBold,
     fontSize: 24,
   },
   headerTextBig: {
-    fontWeight: '600',
+    fontFamily: Font.semiBold,
     fontSize: 18,
   },
   headerTextNormal: {
-    fontWeight: '600',
+    fontFamily: Font.semiBold,
     fontSize: 14,
   },
   itemText: {

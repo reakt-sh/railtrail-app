@@ -1,6 +1,6 @@
 export const Color = {
   primary: '#3153d0',
-  textDark: '#161616',
+  textDark: '#112522',
   textLight: '#ffffff',
   backgroundLight: '#fafafa',
   gray: '#eeeeee',
@@ -9,4 +9,9 @@ export const Color = {
   black: '#000',
   warning: '#c30707',
   track: '#2191e7',
+};
+
+export const Font = {
+  regular: 'SourceSans3_400Regular',
+  semiBold: 'SourceSans3_600SemiBold',
 };
