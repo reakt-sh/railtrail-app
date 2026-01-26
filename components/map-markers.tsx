@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import * as Location from 'expo-location';
 import { PointOfInterest } from '../types/init';
 import { Vehicle } from '../types/vehicle';
@@ -111,6 +111,24 @@ export const MapMarkers = memo(
               <View style={{ position: 'absolute' }}>
                 {useSmallMarker ? <TrainForeground width={15} height={18} /> : <TrainForeground />}
               </View>
+              {/* Label unter dem Icon */}
+              {vehicle.label && (
+                <Text
+                  style={{
+                    position: 'absolute',
+                    top: useSmallMarker ? 20 : 28,
+                    fontSize: useSmallMarker ? 8 : 10,
+                    fontWeight: 'bold',
+                    color: '#333',
+                    backgroundColor: 'rgba(255,255,255,0.8)',
+                    paddingHorizontal: 2,
+                    borderRadius: 2,
+                    overflow: 'hidden',
+                  }}
+                >
+                  {vehicle.label}
+                </Text>
+              )}
             </View>
           </MapLibreGL.PointAnnotation>
         ))}

@@ -6,6 +6,7 @@ export interface Vehicle {
   percentagePosition: number;
   headingTowardsUser?: boolean;
   heading?: number;
+  label?: string;
 }
 
 export interface VehicleNameRequest {

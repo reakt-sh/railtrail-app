@@ -1,8 +1,8 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native';
-import React, { memo } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Color } from '../values/color';
+import React, { memo } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from '../hooks/use-translation';
+import { Color } from '../values/color';
 
 interface ExternalProps {
   readonly distance: number;
@@ -64,7 +64,8 @@ export const Header = memo(
           <View style={styles.rowSingleLine}>
             <Text style={styles.lableSingleLine}>{localizedStrings.t('headerVehicleId')}</Text>
             <Text style={styles.valueSingleLine}>{vehicleName ?? ''}</Text>
-            <MaterialIcons style={styles.icon} name="cached" size={24} color="black" />
+
+            <MaterialIcons style={styles.icon} name="swap-horiz" size={24} color="black" />
           </View>
         </Pressable>
       </View>

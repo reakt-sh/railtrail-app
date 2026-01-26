@@ -33,9 +33,11 @@ const translations = {
     infoDraisineTurning: 'Rotating and turning the draisine',
     bottomSheetVehicleId: 'Vehicle number',
     bottomSheetChangeVehicleId:
-      'If you change your vehicle during the trip, you can enter the new vehicle number here.',
+      'If you change your vehicle during the trip, you can select the new vehicle number here.',
     bottomSheetStartTripMessage:
       'Enter the vehicle number to continue. The number can usually be found on the seat.',
+    bottomSheetSelectVehicle: 'Select your draisine:',
+    bottomSheetNoVehicles: 'No draisines available. Please wait for vehicles to appear on the map.',
     bottomSheetAlertVehicleIdNotFoundTitle: 'Vehicle not found',
     bottomSheetAlertVehicleIdNotFoundMessage:
       'The vehicle could not be found. Make sure the vehicle number is correct and the correct route is selected.',
@@ -47,7 +49,7 @@ const translations = {
   },
 
   de: {
-    alertOk: 'OK',
+    alertOk: 'Ok',
     alertYes: 'Ja',
     alertNo: 'Nein',
     buttonContinue: 'Weiter',
@@ -80,9 +82,12 @@ const translations = {
     infoDraisineTurning: 'Drehen und Wenden der Draisine',
     bottomSheetVehicleId: 'Fahrzeugnummer',
     bottomSheetChangeVehicleId:
-      'Wenn Sie während des Ausfluges Ihr Fahrzeug wechseln, können Sie hier die neue Fahrzeugnummer eingeben.',
+      'Wenn Sie während des Ausfluges Ihr Fahrzeug wechseln, können Sie hier die neue Fahrzeugnummer wählen.',
     bottomSheetStartTripMessage:
       'Geben Sie die Fahrzeugnummer ein um fortzufahren. Die Nummer kann in der Regel auf der Sitzbank gefunden werden.',
+    bottomSheetSelectVehicle: 'Wählen Sie Ihre Draisine:',
+    bottomSheetNoVehicles:
+      'Keine Draisinen verfügbar. Bitte warten Sie, bis Fahrzeuge auf der Karte erscheinen.',
     bottomSheetAlertVehicleIdNotFoundTitle: 'Fahrzeug nicht gefunden',
     bottomSheetAlertVehicleIdNotFoundMessage:
       'Das Fahrzeug konnte nicht gefunden werden. Stellen Sie sicher dass die Fahrzeugnummer korrekt ist und die richtige Strecke ausgewählt ist.',

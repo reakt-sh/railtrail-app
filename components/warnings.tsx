@@ -11,15 +11,19 @@ interface ExternalProps {
   readonly nextLevelCrossingDistance: number | null;
   readonly nextVehicleDistance: number | null;
   readonly nextVehicleHeadingTowardsUserDistance: number | null;
+  readonly speed: number;
 }
 
 type Props = ExternalProps;
+
+const MIN_SPEED_FOR_VEHICLE_WARNING = 10; // km/h
 
 export const Warnings = ({
   localizedStrings,
   nextLevelCrossingDistance,
   nextVehicleDistance,
   nextVehicleHeadingTowardsUserDistance,
+  speed,
 }: Props) => {
   const VehicleHeadingTowardsUserWarning = (
     <Snackbar
@@ -51,8 +55,11 @@ export const Warnings = ({
     />
   );
 
+  const isMoving = speed >= MIN_SPEED_FOR_VEHICLE_WARNING;
+
   if (nextLevelCrossingDistance != null && nextVehicleHeadingTowardsUserDistance != null) {
     if (
+      isMoving &&
       nextVehicleHeadingTowardsUserDistance <= VEHICLE_HEADING_TOWARDS_USER_WARNING_DISTANCE &&
       nextVehicleHeadingTowardsUserDistance <= nextLevelCrossingDistance
     ) {
@@ -61,6 +68,7 @@ export const Warnings = ({
       return LevelCrossingWarning;
     } else return null;
   } else if (
+    isMoving &&
     nextVehicleHeadingTowardsUserDistance != null &&
     nextVehicleHeadingTowardsUserDistance <= VEHICLE_HEADING_TOWARDS_USER_WARNING_DISTANCE
   ) {
@@ -70,7 +78,7 @@ export const Warnings = ({
     nextLevelCrossingDistance <= LEVEL_CROSSING_WARNING_DISTANCE
   ) {
     return LevelCrossingWarning;
-  } else if (nextVehicleDistance != null && nextVehicleDistance <= VEHICLE_WARNING_DISTANCE) {
+  } else if (isMoving && nextVehicleDistance != null && nextVehicleDistance <= VEHICLE_WARNING_DISTANCE) {
     return VehicleWarning;
   } else return null;
 };
