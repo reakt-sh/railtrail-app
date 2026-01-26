@@ -52,7 +52,7 @@ export const StartTripBottomSheet = memo(({ isVisible, setIsVisible }: Props) =>
       onClose={() => setIsVisible(false)}
     >
       <View style={styles.contentContainer}>
-        <Text style={[textStyles.headerTextBig, textStyles.textSpacing10]}>
+        <Text style={[textStyles.headerTextBig, textStyles.textSpacing8]}>
           {localizedStrings.t('bottomSheetVehicleId')}
         </Text>
         <Text style={styles.subtitle}>
@@ -82,20 +82,20 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     alignItems: 'center',
-    marginHorizontal: 10,
+    marginHorizontal: 8,
   },
   subtitle: {
     color: Color.darkGray,
-    marginBottom: 10,
+    marginBottom: 8,
   },
   vehicleList: {
     alignSelf: 'stretch',
     flex: 1,
   },
   vehicleItem: {
-    padding: 15,
-    marginVertical: 4,
-    borderRadius: 10,
+    padding: 16,
+    marginVertical: 8,
+    borderRadius: 8,
     backgroundColor: Color.gray,
     alignItems: 'center',
   },

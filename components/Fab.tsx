@@ -26,9 +26,9 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
   },
   container: {
-    margin: 10,
-    padding: 12,
-    borderRadius: 15,
+    margin: 8,
+    padding: 16,
+    borderRadius: 16,
     backgroundColor: 'white',
   },
 });

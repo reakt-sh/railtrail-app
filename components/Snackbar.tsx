@@ -26,7 +26,7 @@ export const Snackbar = ({ title, message, state, onPress = () => {} }: Props) =
       <Text
         style={[
           textStyles.headerTextNormal,
-          textStyles.textSpacing3,
+          textStyles.textSpacing4,
           state == SnackbarState.WARNING ? textStyles.textLigth : textStyles.textAccent,
         ]}
       >
@@ -41,10 +41,10 @@ export const Snackbar = ({ title, message, state, onPress = () => {} }: Props) =
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 10,
-    marginBottom: 10,
-    padding: 15,
-    borderRadius: 15,
+    marginHorizontal: 8,
+    marginBottom: 8,
+    padding: 16,
+    borderRadius: 16,
   },
   backgroundWarning: {
     backgroundColor: Color.warning,

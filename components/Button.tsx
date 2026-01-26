@@ -33,17 +33,17 @@ export const Button = ({ text, onPress, isSecondary, disabled, style }: Props) =
 
 const styles = StyleSheet.create({
   primary: {
-    borderRadius: 50,
-    padding: 15,
+    borderRadius: 48,
+    padding: 16,
     backgroundColor: Color.primary,
   },
   secondary: {
-    borderRadius: 50,
-    padding: 15,
+    borderRadius: 48,
+    padding: 16,
   },
   disabled: {
-    borderRadius: 50,
-    padding: 15,
+    borderRadius: 48,
+    padding: 16,
     backgroundColor: Color.darkGray,
   },
   textPrimary: {

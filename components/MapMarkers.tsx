@@ -118,13 +118,13 @@ export const MapMarkers = memo(
                 <Text
                   style={{
                     position: 'absolute',
-                    top: useSmallMarker ? 20 : 28,
-                    fontSize: useSmallMarker ? 8 : 10,
+                    top: useSmallMarker ? 24 : 32,
+                    fontSize: useSmallMarker ? 8 : 12,
                     fontWeight: 'bold',
                     color: '#333',
                     backgroundColor: 'rgba(255,255,255,0.8)',
-                    paddingHorizontal: 2,
-                    borderRadius: 2,
+                    paddingHorizontal: 4,
+                    borderRadius: 4,
                     overflow: 'hidden',
                   }}
                 >

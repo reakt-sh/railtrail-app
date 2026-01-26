@@ -29,16 +29,16 @@ export const textStyles = StyleSheet.create({
   textAlignmentCenter: {
     textAlign: 'center',
   },
-  textSpacing20: {
-    marginBottom: 20,
+  textSpacing24: {
+    marginBottom: 24,
   },
-  textSpacing10: {
-    marginBottom: 10,
+  textSpacing16: {
+    marginBottom: 16,
   },
-  textSpacing5: {
-    marginBottom: 5,
+  textSpacing8: {
+    marginBottom: 8,
   },
-  textSpacing3: {
-    marginBottom: 3,
+  textSpacing4: {
+    marginBottom: 4,
   },
 });

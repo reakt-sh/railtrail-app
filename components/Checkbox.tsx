@@ -32,11 +32,11 @@ export const Checkbox = ({ isChecked, setIsChecked, children, style }: Props) =>
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 15,
+    borderRadius: 16,
     flexDirection: 'row',
     alignItems: 'center',
   },
   childrenContainer: {
-    marginStart: 10,
+    marginStart: 8,
   },
 });

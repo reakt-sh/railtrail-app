@@ -91,26 +91,26 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   lable: {
-    margin: 10,
+    margin: 8,
   },
   value: {
-    marginStart: 10,
-    marginBottom: 10,
-    fontSize: 25,
+    marginStart: 8,
+    marginBottom: 8,
+    fontSize: 24,
   },
   rowSingleLine: {
     width: '100%',
     flexDirection: 'row',
   },
   lableSingleLine: {
-    margin: 10,
+    margin: 8,
     fontSize: 16,
     alignSelf: 'center',
   },
   valueSingleLine: {
-    marginVertical: 10,
-    marginEnd: 10,
-    fontSize: 20,
+    marginVertical: 8,
+    marginEnd: 8,
+    fontSize: 24,
   },
   icon: {
     alignSelf: 'center',

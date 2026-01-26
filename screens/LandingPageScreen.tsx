@@ -40,12 +40,12 @@ export const LandingPageScreen = ({ navigation }: any) => {
           style={[
             textStyles.headerTextHuge,
             textStyles.textAlignmentCenter,
-            textStyles.textSpacing20,
+            textStyles.textSpacing24,
           ]}
         >
           {localizedStrings.t('landingPageWelcome')}
         </Text>
-        <Text style={[textStyles.textSpacing20, textStyles.textAlignmentCenter]}>
+        <Text style={[textStyles.textSpacing24, textStyles.textAlignmentCenter]}>
           {localizedStrings.t('landingPageDescription')}
         </Text>
         <Text style={textStyles.textAlignmentCenter}>
@@ -97,11 +97,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Color.backgroundLight,
-    padding: 20,
+    padding: 24,
   },
   textContainer: {
     flex: 1,
     justifyContent: 'center',
   },
-  buttonMargin: { marginBottom: 10 },
+  buttonMargin: { marginBottom: 8 },
 });

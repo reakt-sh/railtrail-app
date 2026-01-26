@@ -13,7 +13,7 @@ export const InfoScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScrollView style={styles.container} nestedScrollEnabled={false}>
-      <Text style={[textStyles.headerTextBig, textStyles.textSpacing5, styles.textMargin]}>
+      <Text style={[textStyles.headerTextBig, textStyles.textSpacing8, styles.textMargin]}>
         {localizedStrings.t('infoDraisineEquipment')}
       </Text>
       <View style={styles.youtubePlayerStyle}>
@@ -26,7 +26,7 @@ export const InfoScreen = () => {
         />
       </View>
 
-      <Text style={[textStyles.headerTextBig, textStyles.textSpacing5]}>
+      <Text style={[textStyles.headerTextBig, textStyles.textSpacing8]}>
         {localizedStrings.t('infoDraisineRules')}
       </Text>
       <View style={styles.youtubePlayerStyle}>
@@ -35,10 +35,10 @@ export const InfoScreen = () => {
           videoId={'Y_b3CLVxdr4'}
           mute
           webViewProps={{ overScrollMode: 'never' }}
-          webViewStyle={{ borderRadius: 20 }}
+          webViewStyle={{ borderRadius: 24 }}
         />
       </View>
-      <Text style={[textStyles.headerTextBig, textStyles.textSpacing5]}>
+      <Text style={[textStyles.headerTextBig, textStyles.textSpacing8]}>
         {localizedStrings.t('infoDraisineTurning')}
       </Text>
       <View style={styles.youtubePlayerStyle}>
@@ -47,7 +47,7 @@ export const InfoScreen = () => {
           videoId={'hUnVDZjz-_o'}
           mute
           webViewProps={{ overScrollMode: 'never' }}
-          webViewStyle={{ borderRadius: 20 }}
+          webViewStyle={{ borderRadius: 24 }}
         />
       </View>
       </ScrollView>
@@ -62,15 +62,14 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: Color.backgroundLight,
     width: '100%',
-    paddingHorizontal: 10,
+    paddingHorizontal: 8,
   },
   youtubePlayerStyle: {
     overflow: 'hidden',
     flex: 1,
-    borderRadius: 20,
-    marginBottom: 15,
+    borderRadius: 24,
+    marginBottom: 16,
   },
-  textMargin: { marginTop: 5 },
+  textMargin: { marginTop: 8 },
 });

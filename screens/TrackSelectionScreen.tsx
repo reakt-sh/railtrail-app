@@ -44,12 +44,12 @@ export const TrackSelectionScreen = ({ navigation }: any) => {
           style={[
             textStyles.headerTextHuge,
             textStyles.textAlignmentCenter,
-            textStyles.textSpacing10,
+            textStyles.textSpacing8,
           ]}
         >
           {localizedStrings.t('trackSelectionTitle')}
         </Text>
-        <Text style={[textStyles.textSpacing10, textStyles.textAlignmentCenter]}>
+        <Text style={[textStyles.textSpacing8, textStyles.textAlignmentCenter]}>
           {localizedStrings.t('trackSelectionDescription')}
         </Text>
       </View>
@@ -83,30 +83,30 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Color.backgroundLight,
-    paddingVertical: 20,
+    paddingVertical: 24,
   },
   textContainer: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
   },
   listContainer: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
   },
   button: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
   },
   item: {
-    marginVertical: 5,
-    padding: 10,
+    marginVertical: 8,
+    padding: 8,
     borderColor: Color.darkGray,
     borderWidth: 2,
-    borderRadius: 10,
+    borderRadius: 8,
   },
   itemSelected: {
-    marginVertical: 5,
-    padding: 10,
+    marginVertical: 8,
+    padding: 8,
     borderColor: Color.primary,
     borderWidth: 2,
-    borderRadius: 10,
+    borderRadius: 8,
     backgroundColor: Color.gray,
   },
 });
