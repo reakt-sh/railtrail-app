@@ -1,6 +1,7 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import React, { memo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from '../hooks';
 import { Color } from '../values/color';
 
@@ -25,13 +26,14 @@ export const Header = memo(
     setIsChangeVehicleIdBottomSheetVisible,
   }: Props) => {
     const localizedStrings = useTranslation();
+    const insets = useSafeAreaInsets();
 
     speed = speed < 1 ? 0 : Math.round(speed);
     let distanceString =
       distance < 1000 ? Math.round(distance) + ' m' : Math.round(distance / 100) / 10 + ' km';
 
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { paddingTop: insets.top }]}>
         <View style={styles.row}>
           <View style={styles.box}>
             <Text style={styles.lable}>{localizedStrings.t('headerDistance')}</Text>

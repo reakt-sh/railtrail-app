@@ -1,5 +1,5 @@
-import { StyleSheet, Text, FlatList, Pressable } from 'react-native';
-import { View } from 'react-native';
+import { StyleSheet, Text, FlatList, Pressable, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { textStyles } from '../values/text-styles';
 import { Color } from '../values/color';
 import { Button } from '../components';
@@ -38,7 +38,7 @@ export const TrackSelectionScreen = ({ navigation }: any) => {
   );
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.textContainer}>
         <Text
           style={[
@@ -75,7 +75,7 @@ export const TrackSelectionScreen = ({ navigation }: any) => {
         }}
         disabled={selectedTrack == null}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

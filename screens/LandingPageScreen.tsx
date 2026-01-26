@@ -1,6 +1,7 @@
 import { CommonActions } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 import { Button, Checkbox } from '../components';
 import {
@@ -33,8 +34,8 @@ export const LandingPageScreen = ({ navigation }: any) => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.textContainer}>
+    <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.textContainer}>
         <Text
           style={[
             textStyles.headerTextHuge,
@@ -50,7 +51,7 @@ export const LandingPageScreen = ({ navigation }: any) => {
         <Text style={textStyles.textAlignmentCenter}>
           {localizedStrings.t('landingPagePermissionExplanation')}
         </Text>
-      </View>
+      </SafeAreaView>
       <Checkbox
         isChecked={isCheckboxChecked}
         setIsChecked={setIsCheckboxChecked}
@@ -88,7 +89,7 @@ export const LandingPageScreen = ({ navigation }: any) => {
         disabled={!isCheckboxChecked}
         style={styles.buttonMargin}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

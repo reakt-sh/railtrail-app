@@ -1,5 +1,5 @@
-import { StyleSheet, Dimensions, ScrollView, Text } from 'react-native';
-import { View } from 'react-native';
+import { StyleSheet, Dimensions, ScrollView, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import { textStyles } from '../values/text-styles';
 import { Color } from '../values/color';
@@ -11,7 +11,8 @@ export const InfoScreen = () => {
   const localizedStrings = useTranslation();
 
   return (
-    <ScrollView style={styles.container} nestedScrollEnabled={false}>
+    <SafeAreaView style={styles.safeArea} edges={['top']}>
+      <ScrollView style={styles.container} nestedScrollEnabled={false}>
       <Text style={[textStyles.headerTextBig, textStyles.textSpacing5, styles.textMargin]}>
         {localizedStrings.t('infoDraisineEquipment')}
       </Text>
@@ -49,11 +50,16 @@ export const InfoScreen = () => {
           webViewStyle={{ borderRadius: 20 }}
         />
       </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: Color.backgroundLight,
+  },
   container: {
     flex: 1,
     backgroundColor: Color.backgroundLight,
