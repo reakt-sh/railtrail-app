@@ -95,6 +95,16 @@ export const HomeScreen = () => {
   );
   const passingPosition = useSelector((state: ReduxAppState) => state.trip.passingPositon);
 
+  // Sync percentagePositionOnTrack from own vehicle in vehicles array
+  useEffect(() => {
+    if (vehicleId != null && vehicles.length > 0) {
+      const myVehicle = vehicles.find((v) => v.id === vehicleId);
+      if (myVehicle) {
+        dispatch(TripAction.setPercentagePositionOnTrack(myVehicle.percentagePosition));
+      }
+    }
+  }, [vehicles, vehicleId]);
+
   // Initialize app and WebSocket connection
   useEffect(() => {
     // Initialisiere App mit statischen Track-Daten und WebSocket
@@ -193,7 +203,8 @@ export const HomeScreen = () => {
           lastPercentagePositionOnTrack,
           pointsOfInterest,
           vehicles,
-          isPercentagePositionIncreasing
+          isPercentagePositionIncreasing,
+          vehicleId
         );
       }
     }
@@ -321,12 +332,13 @@ export const HomeScreen = () => {
             nextLevelCrossingDistance={nextLevelCrossingDistance}
             nextVehicleDistance={nextVehicleDistance}
             nextVehicleHeadingTowardsUserDistance={nextVehicleHeadingTowardsUserDistance}
+            speed={speed}
           />
         )}
         <LocationButton onPress={() => onLocationButtonClicked()} isActive={isFollowingUserState} />
         {isTripStarted && (
           <FAB onPress={() => onCenterOnMyVehicleClicked()}>
-            <MaterialCommunityIcons name="train-car" size={26} color={Color.primary} />
+            <MaterialCommunityIcons name="navigation-variant" size={26} color={Color.primary} />
           </FAB>
         )}
         {isTripStarted ? (

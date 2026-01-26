@@ -1,8 +1,8 @@
 import { Dispatch } from 'redux';
-import { POIType, PointOfInterest } from '../types/init';
 import { TripAction } from '../redux/trip';
-import { percentToDistance } from '../util/util-functions';
+import { POIType, PointOfInterest } from '../types/init';
 import { Vehicle } from '../types/vehicle';
+import { percentToDistance } from '../util/util-functions';
 
 export const updateDistances = (
   dispatch: Dispatch,
@@ -11,7 +11,8 @@ export const updateDistances = (
   lastPercentagePositionOnTrack: number | null,
   pointsOfInterest: PointOfInterest[],
   vehicles: Vehicle[],
-  isPercentagePositionIncreasing?: boolean
+  isPercentagePositionIncreasing?: boolean,
+  vehicleId?: number | null
 ) => {
   if (lastPercentagePositionOnTrack && percentagePositionOnTrack && trackLength) {
     const percentageDif = Math.abs(percentagePositionOnTrack - lastPercentagePositionOnTrack);
@@ -43,7 +44,9 @@ export const updateDistances = (
   const nextVehicle = getNextVehicle(
     percentagePositionOnTrack,
     vehicles,
-    isPercentagePositionIncreasing
+    undefined, // Beide Richtungen suchen
+    undefined,
+    vehicleId // Eigene Draisine ausschließen
   );
 
   if (nextVehicle && percentagePositionOnTrack && trackLength) {
@@ -58,7 +61,8 @@ export const updateDistances = (
     percentagePositionOnTrack,
     vehicles,
     isPercentagePositionIncreasing,
-    true
+    true,
+    vehicleId // Eigene Draisine ausschließen
   );
 
   if (nextVehicleHeadingTowardsUser && percentagePositionOnTrack && trackLength) {
@@ -109,13 +113,37 @@ const getNextVehicle = (
   percentagePositionOnTrack: number | null,
   vehicles: Vehicle[],
   isPercentagePositionIncreasing?: boolean,
-  isHeadingTowardsUser?: boolean
+  isHeadingTowardsUser?: boolean,
+  excludeVehicleId?: number | null
 ) => {
   if (percentagePositionOnTrack == null) return null;
 
-  let filteredVehicles = isPercentagePositionIncreasing
-    ? vehicles.filter((vehicle) => vehicle.percentagePosition >= percentagePositionOnTrack)
-    : vehicles.filter((vehicle) => vehicle.percentagePosition <= percentagePositionOnTrack);
+  // Eigene Draisine ausschließen
+  let filteredVehicles = vehicles.filter(
+    (vehicle) => excludeVehicleId == null || vehicle.id !== excludeVehicleId
+  );
+
+  // Für "next vehicle": Finde das nächste in BEIDE Richtungen wenn keine Richtung bekannt
+  if (isPercentagePositionIncreasing === undefined) {
+    if (isHeadingTowardsUser != null) {
+      filteredVehicles = filteredVehicles.filter(
+        (vehicle) => vehicle.headingTowardsUser === isHeadingTowardsUser
+      );
+    }
+
+    // Finde das Fahrzeug mit der kleinsten Distanz
+    return filteredVehicles.reduce((closest: Vehicle | null, current) => {
+      if (!closest) return current;
+      const closestDist = Math.abs(closest.percentagePosition - percentagePositionOnTrack);
+      const currentDist = Math.abs(current.percentagePosition - percentagePositionOnTrack);
+      return currentDist < closestDist ? current : closest;
+    }, null);
+  }
+
+  // Richtungs-basierte Suche
+  filteredVehicles = isPercentagePositionIncreasing
+    ? filteredVehicles.filter((vehicle) => vehicle.percentagePosition >= percentagePositionOnTrack)
+    : filteredVehicles.filter((vehicle) => vehicle.percentagePosition <= percentagePositionOnTrack);
 
   if (isHeadingTowardsUser != null)
     filteredVehicles = filteredVehicles.filter(
