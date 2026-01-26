@@ -215,15 +215,13 @@ export const HomeScreen = () => {
 
   // Zentriert die Kamera auf die eigene Draisine (aus WebSocket-Daten)
   const onCenterOnMyVehicleClicked = () => {
-    console.log(vehicles);
     const myVehicle = vehicles.find((v) => v.id === vehicleId);
-    console.log('myVehicle', myVehicle, vehicleId);
     if (myVehicle) {
       cameraRef.current?.setCamera({
         centerCoordinate: [myVehicle.pos.lng, myVehicle.pos.lat],
         heading: myVehicle.heading ?? 0,
         animationDuration: 500,
-        zoomLevel: 15,
+        zoomLevel: 25,
       });
     }
   };
