@@ -6,7 +6,6 @@ export { Header } from './Header';
 export { LocationButton } from './LocationButton';
 export { MapMarkers } from './MapMarkers';
 export { PointOfInterestMarker } from './PointOfInterestMarker';
-export { SafeAreaView } from './SafeAreaView';
 export { Snackbar, SnackbarState } from './Snackbar';
 export { StartTripBottomSheet } from './StartTripBottomSheet';
 export { Track } from './Track';
