@@ -4,18 +4,22 @@ import { AppAction } from '../redux/app';
 import { TripAction } from '../redux/trip';
 import { MapPosition } from '../types/map-position';
 import { Vehicle } from '../types/vehicle';
-import { track } from '../util/consts';
+import { malenteLuetjenburgTrack } from '../util/track-loader';
 
 // Initialisiert die App mit statischen Track-Daten und WebSocket-Verbindung
 export const initializeApp = (dispatch: Dispatch) => {
   console.log('[Init] Initializing app...');
 
-  // Track-Daten laden (statisch aus consts.ts)
+  // Track-Daten laden
+  const track = malenteLuetjenburgTrack;
+  console.log(`[Init] Loaded track: ${track.name} (${track.length}m, ${track.pointsOfInterest.length} POIs)`);
+
   dispatch(
     AppAction.setTrack({
-      id: 1, // Malente-Lütjenburg
-      path: track,
-      length: 15000, // in Metern
+      id: track.id,
+      path: track.path,
+      length: track.length,
+      pointsOfInterest: track.pointsOfInterest,
     })
   );
 
