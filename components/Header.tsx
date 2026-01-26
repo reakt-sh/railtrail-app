@@ -67,7 +67,7 @@ export const Header = memo(
             <Text style={styles.lableSingleLine}>{localizedStrings.t('headerVehicleId')}</Text>
             <Text style={styles.valueSingleLine}>{vehicleName ?? ''}</Text>
 
-            <MaterialIcons style={styles.icon} name="swap-horiz" size={24} color="black" />
+            <MaterialIcons style={styles.icon} name="swap-horiz" size={24} color={Color.textDark} />
           </View>
         </Pressable>
       </View>
