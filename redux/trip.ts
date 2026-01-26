@@ -28,6 +28,7 @@ export interface Warnings {
 }
 
 export interface TripState {
+  readonly isActive: boolean;
   readonly currentVehicle: CurrentVehicle;
   readonly motion: Motion;
   readonly position: TripPosition;
@@ -38,6 +39,14 @@ export interface TripState {
 // Action interfaces
 interface TripActionReset {
   readonly type: 'trip/reset';
+}
+
+interface TripActionStart {
+  readonly type: 'trip/start';
+}
+
+interface TripActionStop {
+  readonly type: 'trip/stop';
 }
 
 interface TripActionSetCurrentVehicle {
@@ -89,6 +98,8 @@ interface TripActionBatchUpdate {
 
 export type TripAction =
   | TripActionReset
+  | TripActionStart
+  | TripActionStop
   | TripActionSetCurrentVehicle
   | TripActionSetMotion
   | TripActionAddDistance
@@ -101,6 +112,14 @@ export type TripAction =
 export const TripAction = {
   reset: (): TripActionReset => ({
     type: 'trip/reset',
+  }),
+
+  start: (): TripActionStart => ({
+    type: 'trip/start',
+  }),
+
+  stop: (): TripActionStop => ({
+    type: 'trip/stop',
   }),
 
   setCurrentVehicle: (id: number | null, name: string | null): TripActionSetCurrentVehicle => ({
@@ -153,6 +172,7 @@ export const TripAction = {
 };
 
 export const initialTripState: TripState = {
+  isActive: false,
   currentVehicle: {
     id: null,
     name: null,
@@ -179,6 +199,12 @@ export const initialTripState: TripState = {
 const reducer = (state = initialTripState, action: RailTrailReduxAction): TripState => {
   switch (action.type) {
     case 'trip/reset':
+      return { ...initialTripState };
+
+    case 'trip/start':
+      return { ...state, isActive: true };
+
+    case 'trip/stop':
       return { ...initialTripState };
 
     case 'trip/set-current-vehicle':

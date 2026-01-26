@@ -4,7 +4,6 @@ import { Color } from '../values/color';
 import { memo, useEffect, useMemo, useRef } from 'react';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppAction } from '../redux/app';
 import { TripAction } from '../redux/trip';
 import { useTranslation } from '../hooks/use-translation';
 import { ReduxAppState } from '../redux/init';
@@ -13,7 +12,6 @@ import { Vehicle } from '../types/vehicle';
 interface ExternalProps {
   readonly isVisible: boolean;
   readonly setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  readonly trackId: number | null;
 }
 
 type Props = ExternalProps;
@@ -41,7 +39,7 @@ export const StartTripBottomSheet = memo(({ isVisible, setIsVisible }: Props) =>
     setIsVisible(false);
     Keyboard.dismiss();
     dispatch(TripAction.setCurrentVehicle(vehicle.id, vehicle.label ?? `Draisine ${vehicle.id}`));
-    dispatch(AppAction.setIsTripStarted(true));
+    dispatch(TripAction.start());
   };
 
   return (

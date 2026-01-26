@@ -12,7 +12,6 @@ import { textStyles } from '../values/text-styles';
 interface ExternalProps {
   readonly isVisible: boolean;
   readonly setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  readonly trackId: number | null;
 }
 
 type Props = ExternalProps;

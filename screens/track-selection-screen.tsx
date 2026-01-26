@@ -8,8 +8,10 @@ import { TrackListEntry } from '../types/init';
 import { useDispatch } from 'react-redux';
 import { AppAction } from '../redux/app';
 import { useTranslation } from '../hooks/use-translation';
-import { retrieveTracks } from '../effect-actions/api-actions';
 import { CommonActions } from '@react-navigation/native';
+
+// Statische Track-Liste (aktuell nur Malente-Lütjenburg)
+const AVAILABLE_TRACKS: TrackListEntry[] = [{ id: 1, name: 'Malente-Lütjenburg' }];
 
 export const TrackSelectionScreen = ({ navigation }: any) => {
   const [trackList, setTrackList] = useState<TrackListEntry[]>([]);
@@ -19,7 +21,7 @@ export const TrackSelectionScreen = ({ navigation }: any) => {
   const localizedStrings = useTranslation();
 
   useEffect(() => {
-    retrieveTracks(setTrackList);
+    setTrackList(AVAILABLE_TRACKS);
   }, []);
 
   type ItemProps = { track: TrackListEntry; selected: boolean };
@@ -61,7 +63,7 @@ export const TrackSelectionScreen = ({ navigation }: any) => {
         text={localizedStrings.t('buttonContinue')}
         onPress={() => {
           if (selectedTrack != null) {
-            dispatch(AppAction.setTrackId(selectedTrack.id));
+            dispatch(AppAction.setTrack({ id: selectedTrack.id }));
 
             navigation.dispatch(
               CommonActions.reset({

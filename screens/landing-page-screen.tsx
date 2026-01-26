@@ -21,7 +21,7 @@ export const LandingPageScreen = ({ navigation }: any) => {
   useEffect(() => {
     getForegroundPermissionStatus().then((isPermissionGrated) => {
       if (isPermissionGrated) {
-        dispatch(AppAction.setHasForegroundLocationPermission(true));
+        dispatch(AppAction.setPermissions({ foreground: true }));
 
         navigation.dispatch(
           CommonActions.reset({
@@ -73,7 +73,7 @@ export const LandingPageScreen = ({ navigation }: any) => {
         onPress={() => {
           requestForegroundPermission().then((result) => {
             if (result) {
-              dispatch(AppAction.setHasForegroundLocationPermission(true));
+              dispatch(AppAction.setPermissions({ foreground: true }));
 
               navigation.dispatch(
                 CommonActions.reset({

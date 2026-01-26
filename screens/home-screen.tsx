@@ -12,21 +12,14 @@ import { LocationButton } from '../components/location-button';
 import { MapMarkers } from '../components/map-markers';
 import { StartTripBottomSheet } from '../components/start-trip-bottom-sheet';
 import { Warnings } from '../components/warnings';
-import {
-  disconnectFromServer,
-  initializeApp,
-  setupPositionUpdates,
-} from '../effect-actions/api-actions';
+import { disconnectFromServer, initializeApp, setupPositionUpdates } from '../effect-actions/api-actions';
 import {
   setBackgroundLocationListener,
   setForegroundLocationListener,
   stopBackgroundLocationListener,
   stopForegroundLocationListener,
 } from '../effect-actions/location';
-import {
-  getBackgroundPermissionStatus,
-  requestBackgroundPermission,
-} from '../effect-actions/permissions';
+import { getBackgroundPermissionStatus, requestBackgroundPermission } from '../effect-actions/permissions';
 import { updateDistances } from '../effect-actions/trip-actions';
 import { useTranslation } from '../hooks/use-translation';
 import { AppAction } from '../redux/app';
@@ -44,32 +37,22 @@ export const HomeScreen = () => {
   const [useSmallMarker, setUseSmallMarker] = useState<boolean>(false);
 
   const [isStartTripBottomSheetVisible, setIsStartTripBottomSheetVisible] = useState(false);
-  const [isChangeVehicleIdBottomSheetVisible, setIsChangeVehicleIdBottomSheetVisible] =
-    useState(false);
+  const [isChangeVehicleIdBottomSheetVisible, setIsChangeVehicleIdBottomSheetVisible] = useState(false);
 
-  const [isPercentagePositionIncreasing, setIsPercentagePositionIncreasing] = useState<
-    boolean | undefined
-  >(undefined);
+  const [isPercentagePositionIncreasing, setIsPercentagePositionIncreasing] = useState<boolean | undefined>(undefined);
+
+  // Local state for location subscription (not serializable, shouldn't be in Redux)
+  const [locationSubscription, setLocationSubscription] = useState<Location.LocationSubscription | null>(null);
 
   useKeepAwake();
   const localizedStrings = useTranslation();
   const dispatch = useDispatch();
 
-  // App state selectors
-  const {
-    isTripStarted,
-    trackId,
-    trackPath,
-    trackLength,
-    location,
-    pointsOfInterest,
-    foregroundLocationSubscription,
-    hasBackgroundLocationPermission,
-    hasForegroundLocationPermission,
-  } = useSelector((state: ReduxAppState) => state.app);
+  // App state selectors (grouped)
+  const { track, location, permissions } = useSelector((state: ReduxAppState) => state.app);
 
-  // Trip state selectors
-  const { currentVehicle, warnings, motion, position, vehicles } = useSelector(
+  // Trip state selectors (grouped)
+  const { isActive, currentVehicle, warnings, motion, position, vehicles } = useSelector(
     (state: ReduxAppState) => state.trip
   );
 
@@ -88,10 +71,10 @@ export const HomeScreen = () => {
     initializeApp(dispatch);
     const unsubscribePositions = setupPositionUpdates(dispatch);
 
-    if (hasForegroundLocationPermission) {
-      setForegroundLocationListener(handleInternalLocationUpdate, dispatch);
+    if (permissions.foreground) {
+      setForegroundLocationListener(handleInternalLocationUpdate, setLocationSubscription);
       getBackgroundPermissionStatus().then((result) => {
-        dispatch(AppAction.setHasBackgroundLocationPermission(result));
+        dispatch(AppAction.setPermissions({ background: result }));
       });
     }
 
@@ -103,7 +86,7 @@ export const HomeScreen = () => {
 
   // Call camera animation when location is updated
   useEffect(() => {
-    if (isTripStarted && position.calculated) {
+    if (isActive && position.calculated) {
       animateCamera(position.calculated.lat, position.calculated.lng, motion.heading);
     } else if (location) {
       animateCamera(location.coords.latitude, location.coords.longitude, location.coords.heading);
@@ -112,16 +95,16 @@ export const HomeScreen = () => {
 
   // Handles stuff that should be executed on trip start or trip end
   useEffect(() => {
-    if (!isTripStarted) {
-      if (hasBackgroundLocationPermission) {
+    if (!isActive) {
+      if (permissions.background) {
         stopBackgroundLocationListener();
-        setForegroundLocationListener(handleInternalLocationUpdate, dispatch);
+        setForegroundLocationListener(handleInternalLocationUpdate, setLocationSubscription);
       }
       return;
     }
 
-    if (hasForegroundLocationPermission) {
-      if (!hasBackgroundLocationPermission) {
+    if (permissions.foreground) {
+      if (!permissions.background) {
         Alert.alert(
           localizedStrings.t('homeDialogBackgroundPermissionTripTitle'),
           localizedStrings.t('homeDialogBackgroundPermissionMessage'),
@@ -131,8 +114,8 @@ export const HomeScreen = () => {
               onPress: () => {
                 requestBackgroundPermission().then((result) => {
                   if (result) {
-                    dispatch(AppAction.setHasBackgroundLocationPermission(true));
-                    stopForegroundLocationListener(foregroundLocationSubscription);
+                    dispatch(AppAction.setPermissions({ background: true }));
+                    stopForegroundLocationListener(locationSubscription);
                     setBackgroundLocationListener(handleInternalLocationUpdate);
                   }
                 });
@@ -141,11 +124,11 @@ export const HomeScreen = () => {
           ]
         );
       } else {
-        stopForegroundLocationListener(foregroundLocationSubscription);
+        stopForegroundLocationListener(locationSubscription);
         setBackgroundLocationListener(handleInternalLocationUpdate);
       }
     }
-  }, [isTripStarted]);
+  }, [isActive]);
 
   // Calculates distances and in which direction on the track the user is moving
   useEffect(() => {
@@ -154,13 +137,13 @@ export const HomeScreen = () => {
         setIsPercentagePositionIncreasing(position.percentage > position.lastPercentage);
       }
 
-      if (isTripStarted) {
+      if (isActive) {
         updateDistances(
           dispatch,
-          trackLength,
+          track.length,
           position.percentage,
           position.lastPercentage,
-          pointsOfInterest,
+          track.pointsOfInterest,
           vehicles,
           isPercentagePositionIncreasing,
           currentVehicle.id
@@ -208,8 +191,7 @@ export const HomeScreen = () => {
         {
           text: localizedStrings.t('alertYes'),
           onPress: () => {
-            dispatch(AppAction.setIsTripStarted(false));
-            dispatch(TripAction.reset());
+            dispatch(TripAction.stop());
           },
         },
       ]
@@ -228,7 +210,7 @@ export const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      {isTripStarted && (
+      {isActive && (
         <Header
           distance={motion.distanceTravelled}
           speed={motion.speed}
@@ -263,16 +245,16 @@ export const HomeScreen = () => {
         <MapMarkers
           location={location}
           calculatedPosition={position.calculated}
-          pointsOfInterest={pointsOfInterest}
+          pointsOfInterest={track.pointsOfInterest}
           vehicles={vehicles}
           passingPosition={position.passing}
-          track={trackPath}
+          track={track.path}
           useSmallMarker={useSmallMarker}
           mapHeading={cameraHeading}
         />
       </MapLibreGL.MapView>
       <View style={styles.bottomLayout} pointerEvents={'box-none'}>
-        {isTripStarted && (
+        {isActive && (
           <Warnings
             localizedStrings={localizedStrings}
             nextLevelCrossingDistance={warnings.nextLevelCrossing}
@@ -282,12 +264,12 @@ export const HomeScreen = () => {
           />
         )}
         <LocationButton onPress={onLocationButtonClicked} isActive={isFollowingUserState} />
-        {isTripStarted && (
+        {isActive && (
           <FAB onPress={onCenterOnMyVehicleClicked}>
             <MaterialCommunityIcons name="navigation-variant" size={26} color={Color.primary} />
           </FAB>
         )}
-        {isTripStarted ? (
+        {isActive ? (
           <FAB onPress={onTripStopClicked}>
             <MaterialCommunityIcons name="stop-circle" size={30} color={Color.warning} />
           </FAB>
@@ -300,12 +282,10 @@ export const HomeScreen = () => {
       <StartTripBottomSheet
         isVisible={isStartTripBottomSheetVisible}
         setIsVisible={setIsStartTripBottomSheetVisible}
-        trackId={trackId}
       />
       <ChangeVehicleIdBottomSheet
         isVisible={isChangeVehicleIdBottomSheetVisible}
         setIsVisible={setIsChangeVehicleIdBottomSheetVisible}
-        trackId={trackId}
       />
     </View>
   );
