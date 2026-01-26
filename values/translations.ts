@@ -33,7 +33,7 @@ const translations = {
     infoDraisineTurning: 'Rotating and turning the draisine',
     bottomSheetVehicleId: 'Vehicle number',
     bottomSheetChangeVehicleId:
-      'If you change your vehicle during the trip, you can enter the new vehicle number here.',
+      'If you change your vehicle during the trip, you can select the new vehicle number here.',
     bottomSheetStartTripMessage:
       'Enter the vehicle number to continue. The number can usually be found on the seat.',
     bottomSheetSelectVehicle: 'Select your draisine:',
@@ -82,7 +82,7 @@ const translations = {
     infoDraisineTurning: 'Drehen und Wenden der Draisine',
     bottomSheetVehicleId: 'Fahrzeugnummer',
     bottomSheetChangeVehicleId:
-      'Wenn Sie während des Ausfluges Ihr Fahrzeug wechseln, können Sie hier die neue Fahrzeugnummer eingeben.',
+      'Wenn Sie während des Ausfluges Ihr Fahrzeug wechseln, können Sie hier die neue Fahrzeugnummer wählen.',
     bottomSheetStartTripMessage:
       'Geben Sie die Fahrzeugnummer ein um fortzufahren. Die Nummer kann in der Regel auf der Sitzbank gefunden werden.',
     bottomSheetSelectVehicle: 'Wählen Sie Ihre Draisine:',
