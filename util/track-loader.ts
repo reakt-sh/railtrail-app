@@ -1,6 +1,6 @@
 import { POIType, PointOfInterest } from '../types/init';
 import { Position } from '../types/position';
-import trackData from '../assets/tracks/malente-luetjenburg.json';
+import trackData from '../assets/railline/malente-luetjenburg.json';
 
 // Type definitions for the JSON structure
 interface TrackMarker {

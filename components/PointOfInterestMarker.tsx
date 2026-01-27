@@ -1,6 +1,6 @@
-import { View } from 'react-native';
 import { POIType } from '../types/init';
 import {
+  GenericMarkerIcon,
   LevelCrossingIcon,
   LesserLevelCrossingIcon,
   PicnicIcon,
@@ -19,18 +19,19 @@ type Props = ExternalProps;
 export const PointOfInterestMarker = memo(({ pointOfInterestType, useSmallMarker }: Props) => {
   switch (pointOfInterestType) {
     case POIType.LevelCrossing:
-      return <LevelCrossingIcon width={useSmallMarker ? 36 : 58} height={useSmallMarker ? 36 : 58} />;
+      return <LevelCrossingIcon width={useSmallMarker ? 18 : 32} height={useSmallMarker ? 18 : 32} />;
     case POIType.LesserLevelCrossing:
       return (
-        <LesserLevelCrossingIcon width={useSmallMarker ? 32 : 46} height={useSmallMarker ? 28 : 40} />
+        <LesserLevelCrossingIcon width={useSmallMarker ? 16 : 24} height={useSmallMarker ? 14 : 20} />
       );
     case POIType.Picnic:
-      return <PicnicIcon width={useSmallMarker ? 32 : 48} height={useSmallMarker ? 32 : 48} />;
+      return <PicnicIcon width={useSmallMarker ? 16 : 28} height={useSmallMarker ? 16 : 28} />;
     case POIType.TrackEnd:
-      return <TrackEndIcon width={useSmallMarker ? 32 : 48} height={useSmallMarker ? 32 : 48} />;
+      return <TrackEndIcon width={useSmallMarker ? 16 : 28} height={useSmallMarker ? 16 : 28} />;
     case POIType.TurningPoint:
-      return <TurningPointIcon width={useSmallMarker ? 32 : 48} height={useSmallMarker ? 32 : 48} />;
+      return <TurningPointIcon width={useSmallMarker ? 16 : 28} height={useSmallMarker ? 16 : 28} />;
+    case POIType.Generic:
     default:
-      return <View />;
+      return <GenericMarkerIcon width={useSmallMarker ? 12 : 20} height={useSmallMarker ? 12 : 20} />;
   }
 });

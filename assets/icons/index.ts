@@ -1,3 +1,4 @@
+export { default as GenericMarkerIcon } from './GenericMarker';
 export { default as LesserLevelCrossingIcon } from './LesserLevelCrossing';
 export { default as LevelCrossingIcon } from './LevelCrossing';
 export { default as PassingPositionIcon } from './PassingPosition';
