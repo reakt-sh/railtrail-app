@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import * as Location from 'expo-location';
 import { PointOfInterest } from '../types/init';
 import { Vehicle } from '../types/vehicle';
-import MapLibreGL from '@maplibre/maplibre-react-native';
+import * as MapLibreGL from '@maplibre/maplibre-react-native';
 import {
   TrainForegroundIcon,
   UserLocationIcon,

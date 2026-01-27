@@ -1,4 +1,4 @@
-import MapLibreGL from '@maplibre/maplibre-react-native';
+import * as MapLibreGL from '@maplibre/maplibre-react-native';
 import * as Location from 'expo-location';
 import React, { memo, RefObject } from 'react';
 import { StyleSheet } from 'react-native';

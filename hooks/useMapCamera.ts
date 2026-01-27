@@ -1,4 +1,4 @@
-import MapLibreGL from '@maplibre/maplibre-react-native';
+import * as MapLibreGL from '@maplibre/maplibre-react-native';
 import { RefObject, useCallback, useRef, useState } from 'react';
 
 interface UseMapCameraReturn {

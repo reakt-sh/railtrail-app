@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import MapLibreGL from '@maplibre/maplibre-react-native';
+import * as MapLibreGL from '@maplibre/maplibre-react-native';
 import { Color } from '../values/color';
 
 interface ExternalProps {
