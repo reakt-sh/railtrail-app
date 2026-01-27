@@ -16,13 +16,13 @@ class PositionWebSocket {
     }
 
     this.isConnecting = true;
-    console.log('[WebSocket] Connecting to', positioningWsUrl);
+    if (__DEV__) console.log('[WebSocket] Connecting to', positioningWsUrl);
 
     try {
       this.ws = new WebSocket(positioningWsUrl);
 
       this.ws.onopen = () => {
-        console.log('[WebSocket] Connected');
+        if (__DEV__) console.log('[WebSocket] Connected');
         this.isConnecting = false;
         this.startHeartbeat();
       };
@@ -30,9 +30,11 @@ class PositionWebSocket {
       this.ws.onmessage = (event) => {
         try {
           const position: MapPosition = JSON.parse(event.data);
-          console.log(
-            `[WebSocket] Received position: of vehicle ${position.vehicle}: [${position.latitude}, ${position.longitude}]. Track: ${position.track}, Speed: ${position.speed}`
-          );
+          if (__DEV__) {
+            console.log(
+              `[WebSocket] Received position: vehicle ${position.vehicle}: [${position.latitude}, ${position.longitude}]`
+            );
+          }
           this.callbacks.forEach((cb) => cb(position));
         } catch (error) {
           console.error('[WebSocket] Failed to parse message:', error);
@@ -40,7 +42,7 @@ class PositionWebSocket {
       };
 
       this.ws.onclose = (event) => {
-        console.log('[WebSocket] Connection closed:', event.code, event.reason);
+        if (__DEV__) console.log('[WebSocket] Connection closed:', event.code, event.reason);
         this.cleanup();
         this.scheduleReconnect();
       };
@@ -75,7 +77,7 @@ class PositionWebSocket {
     if (this.reconnectTimer) {
       return;
     }
-    console.log('[WebSocket] Reconnecting in 3 seconds...');
+    if (__DEV__) console.log('[WebSocket] Reconnecting in 3 seconds...');
     this.reconnectTimer = setTimeout(() => {
       this.reconnectTimer = null;
       this.connect();
@@ -96,7 +98,7 @@ class PositionWebSocket {
   }
 
   disconnect() {
-    console.log('[WebSocket] Disconnecting...');
+    if (__DEV__) console.log('[WebSocket] Disconnecting...');
     if (this.reconnectTimer) {
       clearTimeout(this.reconnectTimer);
       this.reconnectTimer = null;

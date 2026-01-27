@@ -8,11 +8,13 @@ import { malenteLuetjenburgTrack } from '../util/track-loader';
 
 // Initialisiert die App mit statischen Track-Daten und WebSocket-Verbindung
 export const initializeApp = (dispatch: Dispatch) => {
-  console.log('[Init] Initializing app...');
+  if (__DEV__) console.log('[Init] Initializing app...');
 
   // Track-Daten laden
   const track = malenteLuetjenburgTrack;
-  console.log(`[Init] Loaded track: ${track.name} (${track.length}m, ${track.pointsOfInterest.length} POIs)`);
+  if (__DEV__) {
+    console.log(`[Init] Loaded track: ${track.name} (${track.length}m, ${track.pointsOfInterest.length} POIs)`);
+  }
 
   dispatch(
     AppAction.setTrack({
@@ -25,7 +27,7 @@ export const initializeApp = (dispatch: Dispatch) => {
 
   // WebSocket verbinden für Echtzeit-Positionen
   positionSocket.connect();
-  console.log('[Init] App initialized');
+  if (__DEV__) console.log('[Init] App initialized');
 };
 
 // Richtet WebSocket-Updates ein und konvertiert MapPosition zu Vehicle-Format
