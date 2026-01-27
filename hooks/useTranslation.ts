@@ -6,7 +6,7 @@ export const useTranslation = (): I18n => {
   const i18n = new I18n(translations);
 
   i18n.enableFallback = true;
-  i18n.defaultLocale = 'en';
+  i18n.defaultLocale = 'de';
 
   return i18n;
 };

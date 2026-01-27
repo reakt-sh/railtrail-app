@@ -1,14 +1,14 @@
 import { CommonActions } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
-import { Button } from '../components/button';
-import { Checkbox } from '../components/checkbox';
+import { Button, Checkbox } from '../components';
 import {
   getForegroundPermissionStatus,
   requestForegroundPermission,
 } from '../effect-actions/permissions';
-import { useTranslation } from '../hooks/use-translation';
+import { useTranslation } from '../hooks';
 import { AppAction } from '../redux/app';
 import { Color } from '../values/color';
 import { textStyles } from '../values/text-styles';
@@ -21,7 +21,7 @@ export const LandingPageScreen = ({ navigation }: any) => {
   useEffect(() => {
     getForegroundPermissionStatus().then((isPermissionGrated) => {
       if (isPermissionGrated) {
-        dispatch(AppAction.setHasForegroundLocationPermission(true));
+        dispatch(AppAction.setPermissions({ foreground: true }));
 
         navigation.dispatch(
           CommonActions.reset({
@@ -34,24 +34,24 @@ export const LandingPageScreen = ({ navigation }: any) => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.textContainer}>
+    <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.textContainer}>
         <Text
           style={[
             textStyles.headerTextHuge,
             textStyles.textAlignmentCenter,
-            textStyles.textSpacing20,
+            textStyles.textSpacing24,
           ]}
         >
           {localizedStrings.t('landingPageWelcome')}
         </Text>
-        <Text style={[textStyles.textSpacing20, textStyles.textAlignmentCenter]}>
+        <Text style={[textStyles.textSpacing24, textStyles.textAlignmentCenter]}>
           {localizedStrings.t('landingPageDescription')}
         </Text>
         <Text style={textStyles.textAlignmentCenter}>
           {localizedStrings.t('landingPagePermissionExplanation')}
         </Text>
-      </View>
+      </SafeAreaView>
       <Checkbox
         isChecked={isCheckboxChecked}
         setIsChecked={setIsCheckboxChecked}
@@ -62,7 +62,12 @@ export const LandingPageScreen = ({ navigation }: any) => {
       <Button
         text={localizedStrings.t('landingPageButtonWithoutLocation')}
         onPress={() => {
-          navigation.navigate('Track Selection');
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name: 'Main' }],
+            })
+          );
         }}
         isSecondary
         disabled={!isCheckboxChecked}
@@ -73,23 +78,20 @@ export const LandingPageScreen = ({ navigation }: any) => {
         onPress={() => {
           requestForegroundPermission().then((result) => {
             if (result) {
-              dispatch(AppAction.setHasForegroundLocationPermission(true));
-
-              navigation.dispatch(
-                CommonActions.reset({
-                  index: 0,
-                  routes: [{ name: 'Main' }],
-                })
-              );
-            } else {
-              navigation.navigate('Track Selection');
+              dispatch(AppAction.setPermissions({ foreground: true }));
             }
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 0,
+                routes: [{ name: 'Main' }],
+              })
+            );
           });
         }}
         disabled={!isCheckboxChecked}
         style={styles.buttonMargin}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -97,11 +99,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Color.backgroundLight,
-    padding: 20,
+    padding: 24,
   },
   textContainer: {
     flex: 1,
     justifyContent: 'center',
   },
-  buttonMargin: { marginBottom: 10 },
+  buttonMargin: { marginBottom: 8 },
 });

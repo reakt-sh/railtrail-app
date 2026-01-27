@@ -1,9 +1,9 @@
-import { StyleSheet, Dimensions, ScrollView, Text } from 'react-native';
-import { View } from 'react-native';
+import { StyleSheet, Dimensions, ScrollView, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import { textStyles } from '../values/text-styles';
 import { Color } from '../values/color';
-import { useTranslation } from '../hooks/use-translation';
+import { useTranslation } from '../hooks';
 
 export const InfoScreen = () => {
   const windowWidth = Dimensions.get('window').width - 20;
@@ -11,8 +11,9 @@ export const InfoScreen = () => {
   const localizedStrings = useTranslation();
 
   return (
-    <ScrollView style={styles.container} nestedScrollEnabled={false}>
-      <Text style={[textStyles.headerTextBig, textStyles.textSpacing5, styles.textMargin]}>
+    <SafeAreaView style={styles.safeArea} edges={['top']}>
+      <ScrollView style={styles.container} nestedScrollEnabled={false}>
+      <Text style={[textStyles.headerTextBig, textStyles.textSpacing8, styles.textMargin]}>
         {localizedStrings.t('infoDraisineEquipment')}
       </Text>
       <View style={styles.youtubePlayerStyle}>
@@ -25,7 +26,7 @@ export const InfoScreen = () => {
         />
       </View>
 
-      <Text style={[textStyles.headerTextBig, textStyles.textSpacing5]}>
+      <Text style={[textStyles.headerTextBig, textStyles.textSpacing8]}>
         {localizedStrings.t('infoDraisineRules')}
       </Text>
       <View style={styles.youtubePlayerStyle}>
@@ -34,10 +35,10 @@ export const InfoScreen = () => {
           videoId={'Y_b3CLVxdr4'}
           mute
           webViewProps={{ overScrollMode: 'never' }}
-          webViewStyle={{ borderRadius: 20 }}
+          webViewStyle={{ borderRadius: 24 }}
         />
       </View>
-      <Text style={[textStyles.headerTextBig, textStyles.textSpacing5]}>
+      <Text style={[textStyles.headerTextBig, textStyles.textSpacing8]}>
         {localizedStrings.t('infoDraisineTurning')}
       </Text>
       <View style={styles.youtubePlayerStyle}>
@@ -46,25 +47,29 @@ export const InfoScreen = () => {
           videoId={'hUnVDZjz-_o'}
           mute
           webViewProps={{ overScrollMode: 'never' }}
-          webViewStyle={{ borderRadius: 20 }}
+          webViewStyle={{ borderRadius: 24 }}
         />
       </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
     backgroundColor: Color.backgroundLight,
+  },
+  container: {
+    flex: 1,
     width: '100%',
-    paddingHorizontal: 10,
+    paddingHorizontal: 8,
   },
   youtubePlayerStyle: {
     overflow: 'hidden',
     flex: 1,
-    borderRadius: 20,
-    marginBottom: 15,
+    borderRadius: 24,
+    marginBottom: 16,
   },
-  textMargin: { marginTop: 5 },
+  textMargin: { marginTop: 8 },
 });
