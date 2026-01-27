@@ -23,7 +23,7 @@ export const MainNavigation = () => {
           return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: Color.primary,
-        tabBarInactiveTintColor: 'gray',
+        tabBarInactiveTintColor: Color.darkGray,
       })}
     >
       <Tab.Screen name={localizedStrings.t('navigationMap')} component={HomeScreen} />
