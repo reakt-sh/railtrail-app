@@ -1,13 +1,5 @@
 import { Position } from './position';
 
-export interface InitRequestInternalPosition {
-  pos: Position;
-}
-
-export interface InitRequestTrackId {
-  pos: Position;
-}
-
 export interface InitResponse {
   trackId: number;
   trackName: string;
@@ -18,7 +10,7 @@ export interface InitResponse {
 
 export interface TrackListEntry {
   id: number;
-  name: string; // human readable name
+  name: string;
 }
 
 export enum POIType {
@@ -36,23 +28,3 @@ export interface PointOfInterest {
   pos: Position;
   percentagePosition: number;
 }
-
-// // Example
-// const response: InitResponse = {
-//   trackId: 1,
-//   trackName: "Malente-Lütjenburg",
-//   trackLength: 17000,
-//   pointsOfInterest: [
-//     {
-//       type: POIType.LevelCrossing,
-//       name: "",
-//       pos: { lat: 54.323334, lng: 10.139444 },
-//       percentagePosition: 34,
-//       isTurningPoint: false,
-//     },
-//   ],
-// }
-
-// export const request: InitRequest = {
-//   pos: { lat: 54.323334, lng: 10.139444 },
-// }
