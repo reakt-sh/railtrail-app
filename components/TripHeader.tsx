@@ -17,7 +17,7 @@ interface ExternalProps {
 
 type Props = ExternalProps;
 
-export const Header = memo(
+export const TripHeader = memo(
   ({ distance, speed, nextVehicle, nextCrossing, vehicleName, onChangeVehicle }: Props) => {
     const localizedStrings = useTranslation();
     const insets = useSafeAreaInsets();
@@ -28,7 +28,7 @@ export const Header = memo(
     return (
       <View style={[styles.container, { paddingTop: insets.top }]}>
         <View style={styles.row}>
-          <View style={styles.box}>
+          <View style={[styles.box, styles.rightBorder]}>
             <Text style={styles.label}>{localizedStrings.t('headerDistance')}</Text>
             <Text style={styles.value}>{formattedDistance}</Text>
           </View>
@@ -40,11 +40,11 @@ export const Header = memo(
           </View>
         </View>
         <View style={styles.row}>
-          <View style={styles.box}>
+          <View style={[styles.box, styles.topBorder, styles.rightBorder]}>
             <Text style={styles.label}>{localizedStrings.t('headerSpeed')}</Text>
             <Text style={styles.value}>{formattedSpeed} km/h</Text>
           </View>
-          <View style={styles.box}>
+          <View style={[styles.box, styles.topBorder]}>
             <Text style={styles.label}>{localizedStrings.t('headerNextCrossing')}</Text>
             <Text style={styles.value}>
               {nextCrossing != null ? `${Math.round(nextCrossing)} m` : '-'}
@@ -52,7 +52,7 @@ export const Header = memo(
           </View>
         </View>
         <Pressable onPress={onChangeVehicle}>
-          <View style={styles.rowSingleLine}>
+          <View style={[styles.rowSingleLine, styles.topBorder]}>
             <Text style={styles.labelSingleLine}>{localizedStrings.t('headerVehicleId')}</Text>
             <Text style={styles.valueSingleLine}>{vehicleName ?? ''}</Text>
 
@@ -74,10 +74,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
+  rightBorder: {
+    borderRightWidth: 1,
+    borderRightColor: Color.gray,
+  },
+  topBorder: {
+    borderTopWidth: 1,
+    borderTopColor: Color.gray,
+  },
   box: {
     width: '50%',
-    borderColor: Color.gray,
-    borderWidth: 1,
   },
   label: {
     margin: 8,

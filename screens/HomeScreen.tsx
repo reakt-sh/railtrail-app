@@ -4,12 +4,7 @@ import * as Location from 'expo-location';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Header,
-  TrackMapView,
-  TripControls,
-  VehicleSelectionBottomSheet,
-} from '../components';
+import { TrackMapView, TripControls, TripHeader, VehicleSelectionBottomSheet } from '../components';
 import {
   disconnectFromServer,
   initializeApp,
@@ -42,11 +37,8 @@ export const HomeScreen = () => {
     centerOnPosition,
   } = useMapCamera();
 
-  const {
-    startForegroundTracking,
-    stopTracking,
-    requestBackgroundAndSwitch,
-  } = useLocationTracking();
+  const { startForegroundTracking, stopTracking, requestBackgroundAndSwitch } =
+    useLocationTracking();
 
   // Bottom sheet visibility
   const [isStartTripBottomSheetVisible, setIsStartTripBottomSheetVisible] = useState(false);
@@ -173,28 +165,25 @@ export const HomeScreen = () => {
     );
   }, [localizedStrings, dispatch]);
 
-  const handleStartVehicleSelect = useCallback((vehicle: Vehicle) => {
-    dispatch(TripAction.setCurrentVehicle(vehicle.id, vehicle.label ?? `Draisine ${vehicle.id}`));
-    dispatch(TripAction.start());
-  }, [dispatch]);
-
-  const handleChangeVehicle = useCallback((vehicle: Vehicle) => {
-    dispatch(TripAction.setCurrentVehicle(vehicle.id, vehicle.label ?? `Draisine ${vehicle.id}`));
-  }, [dispatch]);
-
-  const handleRegionChange = useCallback(
-    (feature: any) => {
-      const zoom = feature?.properties?.zoomLevel ?? 14;
-      const heading = feature?.properties?.heading ?? 0;
-      onRegionChange(zoom, heading);
+  const handleStartVehicleSelect = useCallback(
+    (vehicle: Vehicle) => {
+      dispatch(TripAction.setCurrentVehicle(vehicle.id, vehicle.label ?? `Draisine ${vehicle.id}`));
+      dispatch(TripAction.start());
     },
-    [onRegionChange]
+    [dispatch]
+  );
+
+  const handleChangeVehicle = useCallback(
+    (vehicle: Vehicle) => {
+      dispatch(TripAction.setCurrentVehicle(vehicle.id, vehicle.label ?? `Draisine ${vehicle.id}`));
+    },
+    [dispatch]
   );
 
   return (
     <View style={styles.container}>
       {isActive && (
-        <Header
+        <TripHeader
           distance={motion.distanceTravelled}
           speed={motion.speed}
           nextVehicle={warnings.nextVehicle}
