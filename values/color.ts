@@ -1,5 +1,5 @@
 export const Color = {
-  primary: '#3153d0',
+  primary: '#32415a',
   textDark: '#112522',
   textLight: '#ffffff',
   backgroundLight: '#fafafa',
@@ -8,7 +8,7 @@ export const Color = {
   white: '#ffffff',
   black: '#000',
   warning: '#c30707',
-  track: '#2191e7',
+  track: '#a0346f',
 };
 
 export const Font = {
