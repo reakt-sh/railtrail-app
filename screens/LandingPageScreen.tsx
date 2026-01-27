@@ -62,7 +62,12 @@ export const LandingPageScreen = ({ navigation }: any) => {
       <Button
         text={localizedStrings.t('landingPageButtonWithoutLocation')}
         onPress={() => {
-          navigation.navigate('Track Selection');
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name: 'Main' }],
+            })
+          );
         }}
         isSecondary
         disabled={!isCheckboxChecked}
@@ -74,16 +79,13 @@ export const LandingPageScreen = ({ navigation }: any) => {
           requestForegroundPermission().then((result) => {
             if (result) {
               dispatch(AppAction.setPermissions({ foreground: true }));
-
-              navigation.dispatch(
-                CommonActions.reset({
-                  index: 0,
-                  routes: [{ name: 'Main' }],
-                })
-              );
-            } else {
-              navigation.navigate('Track Selection');
             }
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 0,
+                routes: [{ name: 'Main' }],
+              })
+            );
           });
         }}
         disabled={!isCheckboxChecked}
