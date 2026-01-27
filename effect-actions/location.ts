@@ -34,7 +34,7 @@ export const stopForegroundLocationListener = (
 };
 
 export const setBackgroundLocationListener = (
-  callback: (location: Location.LocationObject) => {}
+  callback: (location: Location.LocationObject) => void
 ) => {
   TaskManager.defineTask(BACKGROUND_LOCATION_TASK, async ({ data, error }: any) => {
     if (error) {

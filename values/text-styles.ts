@@ -20,7 +20,7 @@ export const textStyles = StyleSheet.create({
   textDark: {
     color: Color.textDark,
   },
-  textLigth: {
+  textLight: {
     color: Color.textLight,
   },
   textAccent: {

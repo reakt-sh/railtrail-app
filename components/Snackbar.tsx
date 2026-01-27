@@ -27,12 +27,12 @@ export const Snackbar = ({ title, message, state, onPress = () => {} }: Props) =
         style={[
           textStyles.headerTextNormal,
           textStyles.textSpacing4,
-          state == SnackbarState.WARNING ? textStyles.textLigth : textStyles.textAccent,
+          state == SnackbarState.WARNING ? textStyles.textLight : textStyles.textAccent,
         ]}
       >
         {title}
       </Text>
-      <Text style={state == SnackbarState.WARNING ? textStyles.textLigth : textStyles.textDark}>
+      <Text style={state == SnackbarState.WARNING ? textStyles.textLight : textStyles.textDark}>
         {message}
       </Text>
     </View>

@@ -3,6 +3,7 @@ import React, { memo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from '../hooks';
+import { formatDistance, formatSpeed } from '../util/formatters';
 import { Color } from '../values/color';
 
 interface ExternalProps {
@@ -11,36 +12,28 @@ interface ExternalProps {
   readonly nextVehicle: number | null;
   readonly nextCrossing: number | null;
   readonly vehicleName: string;
-  readonly setIsChangeVehicleIdBottomSheetVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  readonly onChangeVehicle: () => void;
 }
 
 type Props = ExternalProps;
 
 export const Header = memo(
-  ({
-    distance,
-    speed,
-    nextVehicle,
-    nextCrossing,
-    vehicleName,
-    setIsChangeVehicleIdBottomSheetVisible,
-  }: Props) => {
+  ({ distance, speed, nextVehicle, nextCrossing, vehicleName, onChangeVehicle }: Props) => {
     const localizedStrings = useTranslation();
     const insets = useSafeAreaInsets();
 
-    speed = speed < 1 ? 0 : Math.round(speed);
-    let distanceString =
-      distance < 1000 ? Math.round(distance) + ' m' : Math.round(distance / 100) / 10 + ' km';
+    const formattedSpeed = formatSpeed(speed);
+    const formattedDistance = formatDistance(distance);
 
     return (
       <View style={[styles.container, { paddingTop: insets.top }]}>
         <View style={styles.row}>
           <View style={styles.box}>
-            <Text style={styles.lable}>{localizedStrings.t('headerDistance')}</Text>
-            <Text style={styles.value}>{distanceString}</Text>
+            <Text style={styles.label}>{localizedStrings.t('headerDistance')}</Text>
+            <Text style={styles.value}>{formattedDistance}</Text>
           </View>
           <View style={styles.box}>
-            <Text style={styles.lable}>{localizedStrings.t('headerNextVehicle')}</Text>
+            <Text style={styles.label}>{localizedStrings.t('headerNextVehicle')}</Text>
             <Text style={styles.value}>
               {nextVehicle != null ? `${Math.round(nextVehicle)} m` : '-'}
             </Text>
@@ -48,23 +41,19 @@ export const Header = memo(
         </View>
         <View style={styles.row}>
           <View style={styles.box}>
-            <Text style={styles.lable}>{localizedStrings.t('headerSpeed')}</Text>
-            <Text style={styles.value}>{speed ?? ''} km/h</Text>
+            <Text style={styles.label}>{localizedStrings.t('headerSpeed')}</Text>
+            <Text style={styles.value}>{formattedSpeed} km/h</Text>
           </View>
           <View style={styles.box}>
-            <Text style={styles.lable}>{localizedStrings.t('headerNextCrossing')}</Text>
+            <Text style={styles.label}>{localizedStrings.t('headerNextCrossing')}</Text>
             <Text style={styles.value}>
               {nextCrossing != null ? `${Math.round(nextCrossing)} m` : '-'}
             </Text>
           </View>
         </View>
-        <Pressable
-          onPress={() => {
-            setIsChangeVehicleIdBottomSheetVisible(true);
-          }}
-        >
+        <Pressable onPress={onChangeVehicle}>
           <View style={styles.rowSingleLine}>
-            <Text style={styles.lableSingleLine}>{localizedStrings.t('headerVehicleId')}</Text>
+            <Text style={styles.labelSingleLine}>{localizedStrings.t('headerVehicleId')}</Text>
             <Text style={styles.valueSingleLine}>{vehicleName ?? ''}</Text>
 
             <MaterialIcons style={styles.icon} name="swap-horiz" size={24} color={Color.textDark} />
@@ -90,7 +79,7 @@ const styles = StyleSheet.create({
     borderColor: Color.gray,
     borderWidth: 1,
   },
-  lable: {
+  label: {
     margin: 8,
   },
   value: {
@@ -102,7 +91,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
   },
-  lableSingleLine: {
+  labelSingleLine: {
     margin: 8,
     fontSize: 16,
     alignSelf: 'center',
