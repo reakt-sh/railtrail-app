@@ -1,5 +1,4 @@
 export { Button } from './Button';
-export { ChangeVehicleIdBottomSheet } from './ChangeVehicleIdBottomSheet';
 export { Checkbox } from './Checkbox';
 export { FAB } from './Fab';
 export { Header } from './Header';
@@ -7,6 +6,8 @@ export { LocationButton } from './LocationButton';
 export { MapMarkers } from './MapMarkers';
 export { PointOfInterestMarker } from './PointOfInterestMarker';
 export { Snackbar, SnackbarState } from './Snackbar';
-export { StartTripBottomSheet } from './StartTripBottomSheet';
 export { Track } from './Track';
+export { TrackMapView } from './TrackMapView';
+export { TripControls } from './TripControls';
+export { VehicleSelectionBottomSheet } from './VehicleSelectionBottomSheet';
 export { Warnings } from './Warnings';
