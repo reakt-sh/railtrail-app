@@ -1,5 +1,5 @@
 export const Color = {
-  primary: '#006ab0',
+  primary: '#1973B5',
   textDark: '#112522',
   textLight: '#ffffff',
   backgroundLight: '#fafafa',
@@ -7,7 +7,10 @@ export const Color = {
   darkGray: '#6d6d6d',
   white: '#ffffff',
   black: '#000',
-  warning: '#c30707',
+  error: '#c30707',
+  warn: '#ff8800',
+  warning: '#ffcc00',
+  success: '#28a745',
   track: '#32415a',
 };
 
