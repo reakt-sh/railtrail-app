@@ -58,7 +58,6 @@ export const useMapCamera = (): UseMapCameraReturn => {
   );
 
   const onRegionChange = useCallback((zoom: number, heading: number) => {
-    console.log('Region changed:', { zoom, heading });
     setUseSmallMarker(zoom < 15);
     setCameraHeading(heading);
   }, []);
