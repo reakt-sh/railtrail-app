@@ -1,9 +1,10 @@
+import React from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { MalenteLogoIcon } from '../assets/icons';
+import { DraisineIcon, MalenteLogoIcon } from '../assets/icons';
 import { Color } from '../values';
 import { textStyles } from '../values/text-styles';
 
@@ -19,12 +20,13 @@ type InfoStackParamList = {
 
 interface MenuItem {
   title: string;
-  icon: keyof typeof MaterialCommunityIcons.glyphMap;
+  icon?: keyof typeof MaterialCommunityIcons.glyphMap;
+  customIcon?: React.ReactNode;
   screen: keyof InfoStackParamList;
 }
 
 const menuItems: MenuItem[] = [
-  { title: 'Erklärungen zur Draisine', icon: 'train', screen: 'DraisineInfo' },
+  { title: 'Erklärungen zur Draisine', customIcon: <DraisineIcon width={24} height={24} color={Color.primary} />, screen: 'DraisineInfo' },
   { title: 'Vergangene Fahrten', icon: 'history', screen: 'TripHistory' },
   { title: 'Gut zu wissen', icon: 'lightbulb-outline', screen: 'GoodToKnow' },
   { title: 'Nummern und Adressen', icon: 'phone', screen: 'Contacts' },
@@ -53,12 +55,16 @@ export const InfoMenuScreen = () => {
               ]}
               onPress={() => navigation.navigate(item.screen)}
             >
-              <MaterialCommunityIcons
-                name={item.icon}
-                size={24}
-                color={Color.primary}
-                style={styles.menuIcon}
-              />
+              {item.customIcon ? (
+                <View style={styles.menuIcon}>{item.customIcon}</View>
+              ) : (
+                <MaterialCommunityIcons
+                  name={item.icon!}
+                  size={24}
+                  color={Color.primary}
+                  style={styles.menuIcon}
+                />
+              )}
               <Text style={[textStyles.itemText, styles.menuText]}>{item.title}</Text>
               <MaterialCommunityIcons name="chevron-right" size={24} color={Color.darkGray} />
             </Pressable>
