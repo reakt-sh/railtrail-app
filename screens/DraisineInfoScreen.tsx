@@ -5,7 +5,7 @@ import { textStyles } from '../values/text-styles';
 import { Color } from '../values/color';
 import { useTranslation } from '../hooks';
 
-export const InfoScreen = () => {
+export const DraisineInfoScreen = () => {
   const windowWidth = Dimensions.get('window').width - 20;
   const youtubePlayerHeight = (windowWidth / 16) * 9;
   const localizedStrings = useTranslation();

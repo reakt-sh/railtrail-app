@@ -1,6 +1,7 @@
 export { default as GenericMarkerIcon } from './GenericMarker';
 export { default as LesserLevelCrossingIcon } from './LesserLevelCrossing';
 export { default as LevelCrossingIcon } from './LevelCrossing';
+export { default as MalenteLogoIcon } from './MalenteLogo';
 export { default as PassingPositionIcon } from './PassingPosition';
 export { default as PicnicIcon } from './Picnic';
 export { default as TrackEndIcon } from './TrackEnd';
