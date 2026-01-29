@@ -1,7 +1,7 @@
 import React from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Color } from '../values/color';
-import { FAB } from './fab';
+import { FAB } from './Fab';
 
 interface ExternalProps {
   readonly onPress: () => void;

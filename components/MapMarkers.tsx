@@ -3,15 +3,17 @@ import { Text, View } from 'react-native';
 import * as Location from 'expo-location';
 import { PointOfInterest } from '../types/init';
 import { Vehicle } from '../types/vehicle';
-import MapLibreGL from '@maplibre/maplibre-react-native';
-import TrainForeground from '../assets/icons/train-forground';
-import UserLocation from '../assets/icons/user-location';
-import { PointOfInterestMarker } from './point-of-interest-marker';
-import TrainBackgroundHeading from '../assets/icons/train-background-heading';
-import TrainBackgroundNeutral from '../assets/icons/train-background-neutral';
+import * as MapLibreGL from '@maplibre/maplibre-react-native';
+import {
+  TrainForegroundIcon,
+  UserLocationIcon,
+  TrainBackgroundHeadingIcon,
+  TrainBackgroundNeutralIcon,
+  PassingPositionIcon,
+} from '../assets/icons';
+import { PointOfInterestMarker } from './PointOfInterestMarker';
 import { Position } from '../types/position';
-import PassingPosition from '../assets/icons/passing-position';
-import { Track } from './track';
+import { Track } from './Track';
 
 interface ExternalProps {
   readonly location: Location.LocationObject | null;
@@ -46,7 +48,7 @@ export const MapMarkers = memo(
             coordinate={[calculatedPosition.lng, calculatedPosition.lat]}
           >
             <View>
-              <UserLocation />
+              <UserLocationIcon />
             </View>
           </MapLibreGL.PointAnnotation>
         ) : location ? (
@@ -55,7 +57,7 @@ export const MapMarkers = memo(
             coordinate={[location.coords.longitude, location.coords.latitude]}
           >
             <View>
-              <UserLocation />
+              <UserLocationIcon />
             </View>
           </MapLibreGL.PointAnnotation>
         ) : null}
@@ -97,32 +99,32 @@ export const MapMarkers = memo(
               >
                 {useSmallMarker ? (
                   vehicle.heading != null ? (
-                    <TrainBackgroundHeading width={32} height={32} />
+                    <TrainBackgroundHeadingIcon width={32} height={32} />
                   ) : (
-                    <TrainBackgroundNeutral width={32} height={32} />
+                    <TrainBackgroundNeutralIcon width={32} height={32} />
                   )
                 ) : vehicle.heading != null ? (
-                  <TrainBackgroundHeading />
+                  <TrainBackgroundHeadingIcon />
                 ) : (
-                  <TrainBackgroundNeutral />
+                  <TrainBackgroundNeutralIcon />
                 )}
               </View>
               {/* Foreground (train icon) - rendered on top */}
               <View style={{ position: 'absolute' }}>
-                {useSmallMarker ? <TrainForeground width={15} height={18} /> : <TrainForeground />}
+                {useSmallMarker ? <TrainForegroundIcon width={15} height={18} /> : <TrainForegroundIcon />}
               </View>
               {/* Label unter dem Icon */}
               {vehicle.label && (
                 <Text
                   style={{
                     position: 'absolute',
-                    top: useSmallMarker ? 20 : 28,
-                    fontSize: useSmallMarker ? 8 : 10,
+                    top: useSmallMarker ? 24 : 32,
+                    fontSize: useSmallMarker ? 8 : 12,
                     fontWeight: 'bold',
                     color: '#333',
                     backgroundColor: 'rgba(255,255,255,0.8)',
-                    paddingHorizontal: 2,
-                    borderRadius: 2,
+                    paddingHorizontal: 4,
+                    borderRadius: 4,
                     overflow: 'hidden',
                   }}
                 >
@@ -140,7 +142,7 @@ export const MapMarkers = memo(
             coordinate={[passingPosition.lng, passingPosition.lat]}
           >
             <View>
-              {useSmallMarker ? <PassingPosition width={32} height={32} /> : <PassingPosition />}
+              {useSmallMarker ? <PassingPositionIcon width={32} height={32} /> : <PassingPositionIcon />}
             </View>
           </MapLibreGL.PointAnnotation>
         ) : null}

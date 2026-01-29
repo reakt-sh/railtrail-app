@@ -1,47 +1,30 @@
+import * as Location from 'expo-location';
 import { PointOfInterest } from '../types/init';
 import { RailTrailReduxAction } from './action';
-import * as Location from 'expo-location';
+
+// Grouped sub-interfaces
+export interface Track {
+  readonly id: number | null;
+  readonly path: GeoJSON.FeatureCollection | null;
+  readonly length: number | null;
+  readonly pointsOfInterest: PointOfInterest[];
+}
+
+export interface Permissions {
+  readonly foreground: boolean;
+  readonly background: boolean;
+}
 
 export interface AppState {
-  readonly trackId: number | null;
-  readonly trackLength: number | null;
-  readonly trackPath: GeoJSON.FeatureCollection | null;
-  readonly hasForegroundLocationPermission: boolean;
-  readonly hasBackgroundLocationPermission: boolean;
-  readonly isTripStarted: boolean;
+  readonly track: Track;
   readonly location: Location.LocationObject | null;
-  readonly pointsOfInterest: PointOfInterest[];
-  readonly foregroundLocationSubscription: Location.LocationSubscription | null;
+  readonly permissions: Permissions;
 }
 
-interface AppActionSetTrackId {
-  readonly type: 'app/set-track-id';
-  readonly payload: number | null;
-}
-
-interface TripActionSetTrackLength {
-  readonly type: 'trip/set-track-length';
-  readonly payload: number | null;
-}
-
-interface AppActionSetTrackPath {
-  readonly type: 'app/set-track-path';
-  readonly payload: GeoJSON.FeatureCollection | null;
-}
-
-interface AppActionSetHasForegroundLocationPermission {
-  readonly type: 'app/set-has-foreground-location-permission';
-  readonly payload: boolean;
-}
-
-interface AppActionSetHasBackgroundLocationPermission {
-  readonly type: 'app/set-has-background-location-permission';
-  readonly payload: boolean;
-}
-
-interface AppActionSetIsTripStarted {
-  readonly type: 'app/set-is-trip-started';
-  readonly payload: boolean;
+// Action interfaces
+interface AppActionSetTrack {
+  readonly type: 'app/set-track';
+  readonly payload: Partial<Track>;
 }
 
 interface AppActionSetLocation {
@@ -49,104 +32,61 @@ interface AppActionSetLocation {
   readonly payload: Location.LocationObject | null;
 }
 
-interface AppActionSetPointsOfInterest {
-  readonly type: 'app/set-points-of-interest';
-  readonly payload: PointOfInterest[];
+interface AppActionSetPermissions {
+  readonly type: 'app/set-permissions';
+  readonly payload: Partial<Permissions>;
 }
 
-interface AppActionSetForegroundLocationSubscription {
-  readonly type: 'app/set-foreground-location-subscription';
-  readonly payload: Location.LocationSubscription | null;
-}
-
-export type AppAction =
-  | AppActionSetTrackId
-  | TripActionSetTrackLength
-  | AppActionSetTrackPath
-  | AppActionSetHasForegroundLocationPermission
-  | AppActionSetHasBackgroundLocationPermission
-  | AppActionSetIsTripStarted
-  | AppActionSetLocation
-  | AppActionSetPointsOfInterest
-  | AppActionSetForegroundLocationSubscription;
+export type AppAction = AppActionSetTrack | AppActionSetLocation | AppActionSetPermissions;
 
 export const AppAction = {
-  setTrackId: (trackId: number | null): AppActionSetTrackId => ({
-    type: 'app/set-track-id',
-    payload: trackId,
+  setTrack: (track: Partial<Track>): AppActionSetTrack => ({
+    type: 'app/set-track',
+    payload: track,
   }),
-  setTrackLength: (trackLength: number | null): TripActionSetTrackLength => ({
-    type: 'trip/set-track-length',
-    payload: trackLength,
-  }),
-  setTrackPath: (trackPath: GeoJSON.FeatureCollection | null): AppActionSetTrackPath => ({
-    type: 'app/set-track-path',
-    payload: trackPath,
-  }),
-  setHasForegroundLocationPermission: (
-    hasForegroundLocationPermission: boolean
-  ): AppActionSetHasForegroundLocationPermission => ({
-    type: 'app/set-has-foreground-location-permission',
-    payload: hasForegroundLocationPermission,
-  }),
-  setHasBackgroundLocationPermission: (
-    hasBackgroundLocationPermission: boolean
-  ): AppActionSetHasBackgroundLocationPermission => ({
-    type: 'app/set-has-background-location-permission',
-    payload: hasBackgroundLocationPermission,
-  }),
-  setIsTripStarted: (isTripStarted: boolean): AppActionSetIsTripStarted => ({
-    type: 'app/set-is-trip-started',
-    payload: isTripStarted,
-  }),
+
   setLocation: (location: Location.LocationObject | null): AppActionSetLocation => ({
     type: 'app/set-location',
     payload: location,
   }),
-  setPointsOfInterest: (pointsOfInterest: PointOfInterest[]): AppActionSetPointsOfInterest => ({
-    type: 'app/set-points-of-interest',
-    payload: pointsOfInterest,
-  }),
-  setForegroundLocationSubscription: (
-    foregroundLocationSubscription: Location.LocationSubscription | null
-  ): AppActionSetForegroundLocationSubscription => ({
-    type: 'app/set-foreground-location-subscription',
-    payload: foregroundLocationSubscription,
+
+  setPermissions: (permissions: Partial<Permissions>): AppActionSetPermissions => ({
+    type: 'app/set-permissions',
+    payload: permissions,
   }),
 };
 
 export const initialAppState: AppState = {
-  trackId: null,
-  trackLength: null,
-  trackPath: null,
-  hasForegroundLocationPermission: false,
-  hasBackgroundLocationPermission: false,
-  isTripStarted: false,
+  track: {
+    id: null,
+    path: null,
+    length: null,
+    pointsOfInterest: [],
+  },
   location: null,
-  pointsOfInterest: [],
-  foregroundLocationSubscription: null,
+  permissions: {
+    foreground: false,
+    background: false,
+  },
 };
 
 const reducer = (state = initialAppState, action: RailTrailReduxAction): AppState => {
   switch (action.type) {
-    case 'app/set-track-id':
-      return { ...state, trackId: action.payload };
-    case 'trip/set-track-length':
-      return { ...state, trackLength: action.payload };
-    case 'app/set-track-path':
-      return { ...state, trackPath: action.payload };
-    case 'app/set-has-foreground-location-permission':
-      return { ...state, hasForegroundLocationPermission: action.payload };
-    case 'app/set-has-background-location-permission':
-      return { ...state, hasBackgroundLocationPermission: action.payload };
-    case 'app/set-is-trip-started':
-      return { ...state, isTripStarted: action.payload };
+    case 'app/set-track':
+      return {
+        ...state,
+        track: { ...state.track, ...action.payload },
+      };
+
     case 'app/set-location':
       return { ...state, location: action.payload };
-    case 'app/set-points-of-interest':
-      return { ...state, pointsOfInterest: action.payload };
-    case 'app/set-foreground-location-subscription':
-      return { ...state, foregroundLocationSubscription: action.payload };
+
+    case 'app/set-permissions':
+      return {
+        ...state,
+        permissions: { ...state.permissions, ...action.payload },
+      };
+
     default:
       return state;
   }

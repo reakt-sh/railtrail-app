@@ -1,6 +1,6 @@
-import { View, StyleSheet, StyleProp, ViewStyle, Pressable } from 'react-native';
-import React from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import React from 'react';
+import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import { Color } from '../values/color';
 
 interface ExternalProps {
@@ -23,7 +23,7 @@ export const Checkbox = ({ isChecked, setIsChecked, children, style }: Props) =>
       {isChecked ? (
         <MaterialCommunityIcons name="checkbox-marked" size={24} color={Color.primary} />
       ) : (
-        <MaterialCommunityIcons name="checkbox-blank-outline" size={24} color="black" />
+        <MaterialCommunityIcons name="checkbox-blank-outline" size={24} color={Color.textDark} />
       )}
       <View style={styles.childrenContainer}>{children}</View>
     </Pressable>
@@ -32,11 +32,11 @@ export const Checkbox = ({ isChecked, setIsChecked, children, style }: Props) =>
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 15,
+    borderRadius: 16,
     flexDirection: 'row',
     alignItems: 'center',
   },
   childrenContainer: {
-    marginStart: 10,
+    marginStart: 8,
   },
 });
