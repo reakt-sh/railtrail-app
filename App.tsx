@@ -1,3 +1,4 @@
+import { configureReanimatedLogger, ReanimatedLogLevel } from 'react-native-reanimated';
 import { RootNavigation } from './navigation';
 import { StatusBar } from 'expo-status-bar';
 import { initStore } from './redux/init';
@@ -13,6 +14,12 @@ import {
 } from '@expo-google-fonts/source-sans-3';
 import { useCallback } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
+
+// Suppress Reanimated strict mode warning from bottom-sheet library
+configureReanimatedLogger({
+  level: ReanimatedLogLevel.warn,
+  strict: false,
+});
 
 // Keep splash screen visible while loading fonts
 SplashScreen.preventAutoHideAsync();
