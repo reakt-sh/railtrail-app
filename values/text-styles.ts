@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
-import { Color, Font } from './color';
+import { Color } from './color';
+import { Font } from './fonts';
 
 export const textStyles = StyleSheet.create({
   headerTextHuge: {
@@ -25,20 +26,5 @@ export const textStyles = StyleSheet.create({
   },
   textAccent: {
     color: Color.primary,
-  },
-  textAlignmentCenter: {
-    textAlign: 'center',
-  },
-  textSpacing24: {
-    marginBottom: 24,
-  },
-  textSpacing16: {
-    marginBottom: 16,
-  },
-  textSpacing8: {
-    marginBottom: 8,
-  },
-  textSpacing4: {
-    marginBottom: 4,
   },
 });

@@ -12,6 +12,7 @@ import {
   SourceSans3_400Regular,
   SourceSans3_600SemiBold,
 } from '@expo-google-fonts/source-sans-3';
+import { BarlowCondensed_300Light } from '@expo-google-fonts/barlow-condensed';
 import { useCallback } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 
@@ -44,6 +45,7 @@ export default function App() {
   const [fontsLoaded] = useFonts({
     SourceSans3_400Regular,
     SourceSans3_600SemiBold,
+    BarlowCondensed_300Light,
   });
 
   const onLayoutRootView = useCallback(async () => {

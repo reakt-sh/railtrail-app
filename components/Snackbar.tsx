@@ -1,6 +1,6 @@
-import { StyleSheet, View, Text, Pressable } from 'react-native';
-import { textStyles } from '../values/text-styles';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Color } from '../values/color';
+import { textStyles } from '../values/text-styles';
 
 interface ExternalProps {
   readonly title: string;
@@ -25,8 +25,7 @@ export const Snackbar = ({ title, message, state, onPress = () => {} }: Props) =
     >
       <Text
         style={[
-          textStyles.headerTextNormal,
-          textStyles.textSpacing4,
+          styles.headerText,
           state == SnackbarState.WARNING ? textStyles.textLight : textStyles.textAccent,
         ]}
       >
@@ -51,6 +50,10 @@ const styles = StyleSheet.create({
   },
   backgroundInfo: {
     backgroundColor: Color.backgroundLight,
+  },
+  headerText: {
+    ...textStyles.headerTextNormal,
+    marginBottom: 4,
   },
 });
 

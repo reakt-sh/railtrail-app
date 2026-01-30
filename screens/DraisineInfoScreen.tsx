@@ -1,9 +1,9 @@
-import { StyleSheet, Dimensions, ScrollView, Text, View } from 'react-native';
+import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import YoutubePlayer from 'react-native-youtube-iframe';
-import { textStyles } from '../values/text-styles';
-import { Color } from '../values/color';
 import { useTranslation } from '../hooks';
+import { Color } from '../values/color';
+import { textStyles } from '../values/text-styles';
 
 export const DraisineInfoScreen = () => {
   const windowWidth = Dimensions.get('window').width - 20;
@@ -13,43 +13,37 @@ export const DraisineInfoScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScrollView style={styles.container} nestedScrollEnabled={false}>
-      <Text style={[textStyles.headerTextBig, textStyles.textSpacing8, styles.textMargin]}>
-        {localizedStrings.t('infoDraisineEquipment')}
-      </Text>
-      <View style={styles.youtubePlayerStyle}>
-        <YoutubePlayer
-          height={youtubePlayerHeight}
-          videoId={'nt2UC_P2qt0'}
-          mute
-          webViewProps={{ overScrollMode: 'never' }}
-          webViewStyle={{ flex: 1 }}
-        />
-      </View>
+        <Text style={styles.headline}>{localizedStrings.t('infoDraisineEquipment')}</Text>
+        <View style={styles.youtubePlayerStyle}>
+          <YoutubePlayer
+            height={youtubePlayerHeight}
+            videoId={'nt2UC_P2qt0'}
+            mute
+            webViewProps={{ overScrollMode: 'never' }}
+            webViewStyle={{ flex: 1 }}
+          />
+        </View>
 
-      <Text style={[textStyles.headerTextBig, textStyles.textSpacing8]}>
-        {localizedStrings.t('infoDraisineRules')}
-      </Text>
-      <View style={styles.youtubePlayerStyle}>
-        <YoutubePlayer
-          height={youtubePlayerHeight}
-          videoId={'Y_b3CLVxdr4'}
-          mute
-          webViewProps={{ overScrollMode: 'never' }}
-          webViewStyle={{ borderRadius: 24 }}
-        />
-      </View>
-      <Text style={[textStyles.headerTextBig, textStyles.textSpacing8]}>
-        {localizedStrings.t('infoDraisineTurning')}
-      </Text>
-      <View style={styles.youtubePlayerStyle}>
-        <YoutubePlayer
-          height={youtubePlayerHeight}
-          videoId={'hUnVDZjz-_o'}
-          mute
-          webViewProps={{ overScrollMode: 'never' }}
-          webViewStyle={{ borderRadius: 24 }}
-        />
-      </View>
+        <Text style={styles.headline}>{localizedStrings.t('infoDraisineRules')}</Text>
+        <View style={styles.youtubePlayerStyle}>
+          <YoutubePlayer
+            height={youtubePlayerHeight}
+            videoId={'Y_b3CLVxdr4'}
+            mute
+            webViewProps={{ overScrollMode: 'never' }}
+            webViewStyle={{ borderRadius: 24 }}
+          />
+        </View>
+        <Text style={styles.headline}>{localizedStrings.t('infoDraisineTurning')}</Text>
+        <View style={styles.youtubePlayerStyle}>
+          <YoutubePlayer
+            height={youtubePlayerHeight}
+            videoId={'hUnVDZjz-_o'}
+            mute
+            webViewProps={{ overScrollMode: 'never' }}
+            webViewStyle={{ borderRadius: 24 }}
+          />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -71,5 +65,8 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     marginBottom: 16,
   },
-  textMargin: { marginTop: 8 },
+  headline: {
+    ...textStyles.headerTextBig,
+    marginBottom: 8,
+  },
 });

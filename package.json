@@ -16,6 +16,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo-google-fonts/barlow-condensed": "^0.4.1",
     "@expo-google-fonts/source-sans-3": "^0.4.1",
     "@gorhom/bottom-sheet": "^4",
     "@maplibre/maplibre-react-native": "^10.4.2",

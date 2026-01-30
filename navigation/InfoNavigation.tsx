@@ -1,17 +1,14 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Pressable } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { CustomHeader } from '../components/CustomHeader';
 import {
-  InfoMenuScreen,
-  DraisineInfoScreen,
-  TripHistoryScreen,
-  GoodToKnowScreen,
   ContactsScreen,
+  DraisineInfoScreen,
+  GoodToKnowScreen,
   ImprintScreen,
+  InfoMenuScreen,
   PrivacyPolicyScreen,
+  TripHistoryScreen,
 } from '../screens';
-import { Color } from '../values';
 
 export type InfoStackParamList = {
   InfoMenu: undefined;
@@ -25,36 +22,15 @@ export type InfoStackParamList = {
 
 const Stack = createNativeStackNavigator<InfoStackParamList>();
 
-const BackButton = () => {
-  const navigation = useNavigation();
-  return (
-    <Pressable onPress={() => navigation.goBack()}>
-      <MaterialCommunityIcons name="arrow-left" size={24} color={Color.primary} />
-    </Pressable>
-  );
-};
-
 export const InfoNavigation = () => {
   return (
     <Stack.Navigator
       initialRouteName="InfoMenu"
       screenOptions={{
-        headerShown: true,
-        headerStyle: {
-          backgroundColor: Color.backgroundLight,
-        },
-        headerTintColor: Color.primary,
-        headerTitleStyle: {
-          fontWeight: '600',
-        },
-        headerLeft: () => <BackButton />,
+        header: (props) => <CustomHeader {...props} />,
       }}
     >
-      <Stack.Screen
-        name="InfoMenu"
-        component={InfoMenuScreen}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name="InfoMenu" component={InfoMenuScreen} options={{ headerShown: false }} />
       <Stack.Screen
         name="DraisineInfo"
         component={DraisineInfoScreen}
@@ -75,11 +51,7 @@ export const InfoNavigation = () => {
         component={ContactsScreen}
         options={{ title: 'Nummern und Adressen' }}
       />
-      <Stack.Screen
-        name="Imprint"
-        component={ImprintScreen}
-        options={{ title: 'Impressum' }}
-      />
+      <Stack.Screen name="Imprint" component={ImprintScreen} options={{ title: 'Impressum' }} />
       <Stack.Screen
         name="PrivacyPolicy"
         component={PrivacyPolicyScreen}
