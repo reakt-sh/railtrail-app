@@ -11,7 +11,7 @@ export const DraisineInfoScreen = () => {
   const localizedStrings = useTranslation();
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top']}>
+    <SafeAreaView style={styles.safeArea} edges={[]}>
       <ScrollView style={styles.container} nestedScrollEnabled={false}>
         <Text style={styles.headline}>{localizedStrings.t('infoDraisineEquipment')}</Text>
         <View style={styles.youtubePlayerStyle}>
@@ -58,6 +58,8 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     paddingHorizontal: 8,
+    paddingTop: 16,
+    marginBottom: 16,
   },
   youtubePlayerStyle: {
     overflow: 'hidden',
@@ -67,6 +69,6 @@ const styles = StyleSheet.create({
   },
   headline: {
     ...textStyles.headerTextBig,
-    marginBottom: 8,
+    marginBottom: 16,
   },
 });

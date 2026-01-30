@@ -9,7 +9,7 @@ export const textStyles = StyleSheet.create({
   },
   headerTextBig: {
     fontFamily: Font.semiBold,
-    fontSize: 18,
+    fontSize: 20,
   },
   headerTextNormal: {
     fontFamily: Font.semiBold,

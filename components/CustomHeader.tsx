@@ -11,7 +11,7 @@ export const CustomHeader = ({ options, navigation }: NativeStackHeaderProps) =>
   return (
     <View style={[styles.header, { paddingTop: insets.top + 24 }]}>
       <Pressable onPress={() => navigation.goBack()} style={styles.backButton}>
-        <MaterialCommunityIcons name="arrow-left" size={24} color={Color.primary} />
+        <MaterialCommunityIcons name="arrow-left" size={24} color={Color.white} />
       </Pressable>
       <Text style={styles.headerTitle}>{title}</Text>
     </View>
@@ -20,7 +20,7 @@ export const CustomHeader = ({ options, navigation }: NativeStackHeaderProps) =>
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: Color.backgroundLight,
+    backgroundColor: Color.primary,
     paddingHorizontal: 16,
     paddingBottom: 24,
     flexDirection: 'row',
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontFamily: Font.condensed,
     fontSize: 32,
-    color: Color.primary,
+    color: Color.white,
     flex: 1,
     textAlign: 'center',
     marginRight: 24,
