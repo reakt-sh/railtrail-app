@@ -5,42 +5,38 @@ import { Font } from './fonts';
 export const textStyles = StyleSheet.create({
   headerTextHuge: {
     fontFamily: Font.semiBold,
+    color: Color.text,
     fontSize: 24,
   },
-  headerTextBig: {
+  headerTextMedium: {
     fontFamily: Font.semiBold,
+    color: Color.text,
     fontSize: 20,
   },
-  headerTextMedium: {
+  headerTextThin: {
     fontFamily: Font.condensed,
     textTransform: 'uppercase',
+    color: Color.text,
+
     fontSize: 20,
-  },
-  headerTextNormal: {
-    fontFamily: Font.semiBold,
-    fontSize: 16,
-    color: Color.textDark,
   },
   bodyMedium: {
     fontFamily: Font.regular,
     fontSize: 16,
-    color: Color.textDark,
+    color: Color.text,
   },
   bodySmall: {
     fontFamily: Font.regular,
     fontSize: 14,
-    color: Color.textDark,
+    color: Color.text,
+  },
+  link: {
+    fontFamily: Font.regular,
+    fontSize: 16,
+    color: Color.primary,
+    textDecorationLine: 'underline',
   },
   itemText: {
     fontSize: 16,
-  },
-  textDark: {
-    color: Color.textDark,
-  },
-  textLight: {
-    color: Color.textLight,
-  },
-  textAccent: {
-    color: Color.primary,
   },
 });

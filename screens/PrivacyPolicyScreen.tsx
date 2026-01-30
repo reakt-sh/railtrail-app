@@ -5,10 +5,10 @@ import { textStyles } from '../values/text-styles';
 
 export const PrivacyPolicyScreen = () => {
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top']}>
+    <SafeAreaView style={styles.safeArea} edges={[]}>
       <View style={styles.container}>
-        <Text style={textStyles.headerTextBig}>Datenschutzerklärung</Text>
-        <Text style={[textStyles.itemText, styles.placeholder]}>
+        <Text style={textStyles.headerTextHuge}>Datenschutzerklärung</Text>
+        <Text style={[textStyles.bodyMedium, styles.placeholder]}>
           Datenschutzerklärung wird hier angezeigt.
         </Text>
       </View>

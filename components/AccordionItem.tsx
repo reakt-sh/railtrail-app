@@ -18,13 +18,13 @@ export const AccordionItem = ({ question, answer }: AccordionItemProps) => {
   };
 
   return (
-    <View style={styles.accordionItem}>
+    <View style={[styles.accordionItem, !expanded && styles.accordionItemCollapsed]}>
       <Pressable onPress={toggleExpand} style={styles.accordionHeader}>
         <Text style={styles.questionText}>{question}</Text>
         <MaterialCommunityIcons
           name={expanded ? 'chevron-up' : 'chevron-down'}
           size={24}
-          color={Color.primary}
+          color={Color.text}
         />
       </Pressable>
       {expanded && (
@@ -38,10 +38,13 @@ export const AccordionItem = ({ question, answer }: AccordionItemProps) => {
 
 const styles = StyleSheet.create({
   accordionItem: {
-    backgroundColor: Color.white,
     borderRadius: 12,
     marginBottom: 12,
     overflow: 'hidden',
+  },
+  accordionItemCollapsed: {
+    borderBottomColor: Color.outline,
+    borderBottomWidth: 1,
   },
   accordionHeader: {
     flexDirection: 'row',
@@ -50,7 +53,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   questionText: {
-    ...textStyles.headerTextMedium,
+    ...textStyles.headerTextThin,
     flex: 1,
     marginRight: 8,
   },

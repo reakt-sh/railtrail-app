@@ -1,7 +1,7 @@
-import React from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { DraisineIcon, MalenteLogoIcon } from '../assets/icons';
@@ -26,7 +26,11 @@ interface MenuItem {
 }
 
 const menuItems: MenuItem[] = [
-  { title: 'Erklärungen zur Draisine', customIcon: <DraisineIcon width={24} height={24} color={Color.primary} />, screen: 'DraisineInfo' },
+  {
+    title: 'Erklärungen zur Draisine',
+    customIcon: <DraisineIcon width={24} height={24} color={Color.primary} />,
+    screen: 'DraisineInfo',
+  },
   { title: 'Vergangene Fahrten', icon: 'history', screen: 'TripHistory' },
   { title: 'Gut zu wissen', icon: 'lightbulb-outline', screen: 'GoodToKnow' },
   { title: 'Nummern und Adressen', icon: 'phone', screen: 'Contacts' },
@@ -65,7 +69,7 @@ export const InfoMenuScreen = () => {
                   style={styles.menuIcon}
                 />
               )}
-              <Text style={[textStyles.itemText, styles.menuText]}>{item.title}</Text>
+              <Text style={styles.menuText}>{item.title}</Text>
               <MaterialCommunityIcons name="chevron-right" size={24} color={Color.darkGray} />
             </Pressable>
           ))}
@@ -114,6 +118,7 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
   menuText: {
+    ...textStyles.bodyMedium,
     flex: 1,
   },
 });

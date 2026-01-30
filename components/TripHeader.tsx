@@ -56,7 +56,7 @@ export const TripHeader = memo(
             <Text style={styles.labelSingleLine}>{localizedStrings.t('headerVehicleId')}</Text>
             <Text style={styles.valueSingleLine}>{vehicleName ?? ''}</Text>
 
-            <MaterialIcons style={styles.icon} name="swap-horiz" size={24} color={Color.textDark} />
+            <MaterialIcons style={styles.icon} name="swap-horiz" size={24} color={Color.text} />
           </View>
         </Pressable>
       </View>

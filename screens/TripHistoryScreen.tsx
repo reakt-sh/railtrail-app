@@ -5,10 +5,10 @@ import { textStyles } from '../values/text-styles';
 
 export const TripHistoryScreen = () => {
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top']}>
+    <SafeAreaView style={styles.safeArea} edges={[]}>
       <View style={styles.container}>
-        <Text style={textStyles.headerTextBig}>Vergangene Fahrten</Text>
-        <Text style={[textStyles.itemText, styles.placeholder]}>
+        <Text style={textStyles.headerTextHuge}>Vergangene Fahrten</Text>
+        <Text style={[textStyles.bodyMedium, styles.placeholder]}>
           Hier werden zukünftig deine vergangenen Fahrten angezeigt.
         </Text>
       </View>

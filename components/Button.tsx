@@ -1,5 +1,5 @@
-import { View, StyleSheet, Pressable, Text, StyleProp, ViewStyle } from 'react-native';
 import React from 'react';
+import { Pressable, StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { Color } from '../values/color';
 
 interface ExternalProps {
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     backgroundColor: Color.darkGray,
   },
   textPrimary: {
-    color: Color.textLight,
+    color: Color.white,
     fontSize: 18,
     textAlign: 'center',
   },

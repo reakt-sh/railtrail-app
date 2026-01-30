@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
   },
   title: {
-    ...textStyles.headerTextBig,
+    ...textStyles.headerTextHuge,
     marginBottom: 8,
   },
   subtitle: {
@@ -105,6 +105,6 @@ const styles = StyleSheet.create({
   vehicleLabel: {
     fontSize: 16,
     fontWeight: '600',
-    color: Color.textDark,
+    color: Color.text,
   },
 });
