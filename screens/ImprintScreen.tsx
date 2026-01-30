@@ -26,12 +26,8 @@ export const ImprintScreen = () => {
           <Text style={styles.text}>Tourismuszentrale Holsteinische Schweiz</Text>
           <Text style={styles.text}>Bahnhofstraße 5</Text>
           <Text style={styles.text}>24306 Plön</Text>
-        </View>
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Kontakt</Text>
-
-          <Pressable onPress={handlePhonePress} style={styles.row}>
+          <Pressable onPress={handlePhonePress} style={[styles.row, { marginTop: 8 }]}>
             <MaterialCommunityIcons name="phone-outline" size={20} color={Color.primary} />
             <Text style={textStyles.link}>+49 4522 509525</Text>
           </Pressable>
@@ -80,7 +76,6 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     ...textStyles.headerTextMedium,
-    color: Color.primary,
     marginBottom: 8,
   },
   text: {
