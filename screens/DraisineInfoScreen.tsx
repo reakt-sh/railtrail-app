@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   headline: {
-    ...textStyles.headerTextBig,
+    ...textStyles.headerTextMedium,
     marginBottom: 16,
   },
 });

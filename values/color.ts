@@ -2,7 +2,7 @@ export const Color = {
   primary: '#1973B5',
   textDark: '#112522',
   textLight: '#ffffff',
-  backgroundLight: '#fafafa',
+  backgroundLight: '#ffffffb3',
   gray: '#eeeeee',
   darkGray: '#6d6d6d',
   outline: '#cccccc',

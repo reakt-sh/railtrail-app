@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     backgroundColor: Color.backgroundLight,
   },
   headerText: {
-    ...textStyles.headerTextNormal,
+    ...textStyles.bodyMedium,
     marginBottom: 4,
   },
 });
