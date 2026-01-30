@@ -1,9 +1,15 @@
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import React from 'react';
 import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Color } from '../values';
 import { textStyles } from '../values/text-styles';
 
 export const ImprintScreen = () => {
+  const handlePhonePress = () => {
+    Linking.openURL(`tel:${'+49 4522 509525'.replace(/\s/g, '')}`);
+  };
+
   const handleEmailPress = () => {
     Linking.openURL('mailto:info@holsteinischeschweiz.de');
   };
@@ -24,12 +30,20 @@ export const ImprintScreen = () => {
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Kontakt</Text>
-          <Text style={styles.text}>Telefon: +49 4522 509525</Text>
-          <Pressable onPress={handleEmailPress}>
-            <Text style={[styles.text, styles.link]}>E-Mail: info@holsteinischeschweiz.de</Text>
+
+          <Pressable onPress={handlePhonePress} style={styles.row}>
+            <MaterialCommunityIcons name="phone-outline" size={20} color={Color.primary} />
+            <Text style={textStyles.link}>+49 4522 509525</Text>
           </Pressable>
-          <Pressable onPress={handleWebsitePress}>
-            <Text style={[styles.text, styles.link]}>Web: www.holsteinischeschweiz.de</Text>
+
+          <Pressable onPress={handleEmailPress} style={styles.row}>
+            <MaterialCommunityIcons name="email-outline" size={20} color={Color.primary} />
+            <Text style={textStyles.link}>info@holsteinischeschweiz.de</Text>
+          </Pressable>
+
+          <Pressable onPress={handleWebsitePress} style={styles.row}>
+            <MaterialCommunityIcons name="web" size={20} color={Color.primary} />
+            <Text style={textStyles.link}>www.holsteinischeschweiz.de</Text>
           </Pressable>
         </View>
 
@@ -60,13 +74,9 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     padding: 16,
-    paddingBottom: 32,
   },
   section: {
-    backgroundColor: Color.white,
-    borderRadius: 12,
     padding: 16,
-    marginBottom: 12,
   },
   sectionTitle: {
     ...textStyles.headerTextMedium,
@@ -77,7 +87,10 @@ const styles = StyleSheet.create({
     ...textStyles.bodyMedium,
     marginBottom: 4,
   },
-  link: {
-    color: Color.primary,
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 4,
   },
 });
