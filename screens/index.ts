@@ -1,3 +1,9 @@
 export { HomeScreen } from './HomeScreen';
-export { InfoScreen } from './InfoScreen';
 export { LandingPageScreen } from './LandingPageScreen';
+export { InfoMenuScreen } from './InfoMenuScreen';
+export { DraisineInfoScreen } from './DraisineInfoScreen';
+export { TripHistoryScreen } from './TripHistoryScreen';
+export { GoodToKnowScreen } from './GoodToKnowScreen';
+export { ContactsScreen } from './ContactsScreen';
+export { ImprintScreen } from './ImprintScreen';
+export { PrivacyPolicyScreen } from './PrivacyPolicyScreen';

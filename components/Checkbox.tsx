@@ -23,7 +23,7 @@ export const Checkbox = ({ isChecked, setIsChecked, children, style }: Props) =>
       {isChecked ? (
         <MaterialCommunityIcons name="checkbox-marked" size={24} color={Color.primary} />
       ) : (
-        <MaterialCommunityIcons name="checkbox-blank-outline" size={24} color={Color.textDark} />
+        <MaterialCommunityIcons name="checkbox-blank-outline" size={24} color={Color.text} />
       )}
       <View style={styles.childrenContainer}>{children}</View>
     </Pressable>

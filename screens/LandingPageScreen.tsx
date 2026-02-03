@@ -36,19 +36,13 @@ export const LandingPageScreen = ({ navigation }: any) => {
   return (
     <SafeAreaView style={styles.container}>
       <SafeAreaView style={styles.textContainer}>
-        <Text
-          style={[
-            textStyles.headerTextHuge,
-            textStyles.textAlignmentCenter,
-            textStyles.textSpacing24,
-          ]}
-        >
+        <Text style={[textStyles.headerTextHuge, { textAlign: 'center', marginBottom: 24 }]}>
           {localizedStrings.t('landingPageWelcome')}
         </Text>
-        <Text style={[textStyles.textSpacing24, textStyles.textAlignmentCenter]}>
+        <Text style={{ textAlign: 'center', marginBottom: 24 }}>
           {localizedStrings.t('landingPageDescription')}
         </Text>
-        <Text style={textStyles.textAlignmentCenter}>
+        <Text style={{ textAlign: 'center' }}>
           {localizedStrings.t('landingPagePermissionExplanation')}
         </Text>
       </SafeAreaView>

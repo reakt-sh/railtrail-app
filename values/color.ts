@@ -1,10 +1,10 @@
 export const Color = {
   primary: '#1973B5',
-  textDark: '#112522',
-  textLight: '#ffffff',
-  backgroundLight: '#fafafa',
+  text: '#112522',
+  backgroundLight: '#ffffffb3',
   gray: '#eeeeee',
   darkGray: '#6d6d6d',
+  outline: '#cccccc',
   white: '#ffffff',
   black: '#000',
   error: '#c30707',
@@ -12,9 +12,4 @@ export const Color = {
   warning: '#ffcc00',
   success: '#28a745',
   track: '#32415a',
-};
-
-export const Font = {
-  regular: 'SourceSans3_400Regular',
-  semiBold: 'SourceSans3_600SemiBold',
 };

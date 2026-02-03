@@ -1,44 +1,42 @@
 import { StyleSheet } from 'react-native';
-import { Color, Font } from './color';
+import { Color } from './color';
+import { Font } from './fonts';
 
 export const textStyles = StyleSheet.create({
   headerTextHuge: {
     fontFamily: Font.semiBold,
+    color: Color.text,
     fontSize: 24,
   },
-  headerTextBig: {
+  headerTextMedium: {
     fontFamily: Font.semiBold,
-    fontSize: 18,
+    color: Color.text,
+    fontSize: 20,
   },
-  headerTextNormal: {
-    fontFamily: Font.semiBold,
+  headerTextThin: {
+    fontFamily: Font.condensed,
+    textTransform: 'uppercase',
+    color: Color.text,
+
+    fontSize: 20,
+  },
+  bodyMedium: {
+    fontFamily: Font.regular,
+    fontSize: 16,
+    color: Color.text,
+  },
+  bodySmall: {
+    fontFamily: Font.regular,
     fontSize: 14,
+    color: Color.text,
+  },
+  link: {
+    fontFamily: Font.regular,
+    fontSize: 16,
+    color: Color.primary,
+    textDecorationLine: 'underline',
   },
   itemText: {
     fontSize: 16,
-  },
-  textDark: {
-    color: Color.textDark,
-  },
-  textLight: {
-    color: Color.textLight,
-  },
-  textAccent: {
-    color: Color.primary,
-  },
-  textAlignmentCenter: {
-    textAlign: 'center',
-  },
-  textSpacing24: {
-    marginBottom: 24,
-  },
-  textSpacing16: {
-    marginBottom: 16,
-  },
-  textSpacing8: {
-    marginBottom: 8,
-  },
-  textSpacing4: {
-    marginBottom: 4,
   },
 });

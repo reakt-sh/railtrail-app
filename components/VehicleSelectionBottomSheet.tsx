@@ -18,7 +18,15 @@ interface ExternalProps {
 type Props = ExternalProps;
 
 export const VehicleSelectionBottomSheet = memo(
-  ({ isVisible, setIsVisible, title, subtitle, vehicles, onVehicleSelected, excludeVehicleId }: Props) => {
+  ({
+    isVisible,
+    setIsVisible,
+    title,
+    subtitle,
+    vehicles,
+    onVehicleSelected,
+    excludeVehicleId,
+  }: Props) => {
     const bottomSheetRef = useRef<BottomSheet>(null);
     const snapPoints = useMemo(() => ['40%', '60%'], []);
 
@@ -49,7 +57,7 @@ export const VehicleSelectionBottomSheet = memo(
         onClose={() => setIsVisible(false)}
       >
         <View style={styles.contentContainer}>
-          <Text style={[textStyles.headerTextBig, textStyles.textSpacing8]}>{title}</Text>
+          <Text style={styles.title}>{title}</Text>
           <Text style={styles.subtitle}>{subtitle}</Text>
           <ScrollView style={styles.vehicleList}>
             {availableVehicles.map((vehicle) => (
@@ -74,6 +82,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 8,
   },
+  title: {
+    ...textStyles.headerTextHuge,
+    marginBottom: 8,
+  },
   subtitle: {
     color: Color.darkGray,
     marginBottom: 8,
@@ -93,6 +105,6 @@ const styles = StyleSheet.create({
   vehicleLabel: {
     fontSize: 16,
     fontWeight: '600',
-    color: Color.textDark,
+    color: Color.text,
   },
 });
