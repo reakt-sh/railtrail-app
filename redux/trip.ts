@@ -205,7 +205,7 @@ const reducer = (state = initialTripState, action: RailTrailReduxAction): TripSt
       return { ...state, isActive: true };
 
     case 'trip/stop':
-      return { ...initialTripState };
+      return { ...initialTripState, vehicles: state.vehicles };
 
     case 'trip/set-current-vehicle':
       return {

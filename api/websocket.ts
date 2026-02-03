@@ -31,8 +31,9 @@ class PositionWebSocket {
         try {
           const position: MapPosition = JSON.parse(event.data);
           if (__DEV__) {
+            const now = new Date().toLocaleTimeString('de-DE');
             console.log(
-              `[WebSocket] Received position: vehicle ${position.vehicle}: [${position.latitude}, ${position.longitude}]`
+              `[WebSocket] Received position: vehicle ${position.vehicle}: [${position.latitude}, ${position.longitude}]. Time: ${now}`
             );
           }
           this.callbacks.forEach((cb) => cb(position));

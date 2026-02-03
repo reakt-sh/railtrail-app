@@ -6,7 +6,7 @@ const translations = {
     alertNo: 'No',
     buttonContinue: 'Continue',
 
-    navigationMap: 'Map',
+    navigationMap: 'Fahren',
     navigationInfo: 'Info',
     landingPageWelcome: 'Welcome to the Naturpark-Draisine',
     landingPageDescription:
@@ -86,7 +86,7 @@ const translations = {
     alertNo: 'Nein',
     buttonContinue: 'Weiter',
 
-    navigationMap: 'Karte',
+    navigationMap: 'Fahren',
     navigationInfo: 'Info',
 
     landingPageWelcome: 'Willkommen bei der Naturpark-Draisine',
@@ -131,7 +131,7 @@ const translations = {
 
     // Trip Header
     headerDistance: 'Zurückgelegte Distanz',
-    headerNextVehicle: 'Nächstes Fahrzeug',
+    headerNextVehicle: 'Nächstes Draisine',
     headerSpeed: 'Geschwindigkeit',
     headerNextCrossing: 'Nächster Bahnübergang',
     headerVehicleId: 'Fahrzeugnummer:',

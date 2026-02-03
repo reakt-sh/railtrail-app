@@ -225,3 +225,40 @@ export const loadTrack = () => {
 
 // Export the loaded track data
 export const malenteLuetjenburgTrack = loadTrack();
+
+// Convert percentage position to lat/lng coordinates
+export const percentageToPosition = (percentage: number): Position => {
+  const track = malenteLuetjenburgTrack;
+  const coordinates = (track.path.features[0].geometry as GeoJSON.LineString).coordinates as [number, number][];
+  const { totalLength, cumulativeDistances } = calculateTrackMetrics(coordinates);
+
+  const targetDistance = (percentage / 100) * totalLength;
+
+  // Find the segment containing this distance
+  let segmentIndex = 0;
+  for (let i = 0; i < cumulativeDistances.length - 1; i++) {
+    if (cumulativeDistances[i + 1] >= targetDistance) {
+      segmentIndex = i;
+      break;
+    }
+    segmentIndex = i;
+  }
+
+  // Interpolate within the segment
+  const segmentStart = cumulativeDistances[segmentIndex];
+  const segmentEnd = cumulativeDistances[segmentIndex + 1] ?? cumulativeDistances[segmentIndex];
+  const segmentLength = segmentEnd - segmentStart;
+
+  let t = 0;
+  if (segmentLength > 0) {
+    t = (targetDistance - segmentStart) / segmentLength;
+  }
+
+  const [lng1, lat1] = coordinates[segmentIndex];
+  const [lng2, lat2] = coordinates[segmentIndex + 1] ?? coordinates[segmentIndex];
+
+  return {
+    lat: lat1 + t * (lat2 - lat1),
+    lng: lng1 + t * (lng2 - lng1),
+  };
+};

@@ -3,8 +3,10 @@ import { useKeepAwake } from 'expo-keep-awake';
 import * as Location from 'expo-location';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { TrackMapView, TripControls, TripHeader, VehicleSelectionBottomSheet } from '../components';
+import { useDispatch, useSelector, useStore } from 'react-redux';
+import { FAB, TrackMapView, TripControls, TripHeader, VehicleSelectionBottomSheet } from '../components';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Color } from '../values';
 import {
   disconnectFromServer,
   initializeApp,
@@ -12,7 +14,8 @@ import {
 } from '../effect-actions/api-actions';
 import { getBackgroundPermissionStatus } from '../effect-actions/permissions';
 import { updateDistances } from '../effect-actions/trip-actions';
-import { useLocationTracking, useMapCamera, useTranslation } from '../hooks';
+import { saveAndStopTrip } from '../effect-actions/trip-storage';
+import { useLocationTracking, useMapCamera, useTranslation, useTripSimulation } from '../hooks';
 import { AppAction } from '../redux/app';
 import { ReduxAppState } from '../redux/init';
 import { TripAction } from '../redux/trip';
@@ -20,7 +23,9 @@ import { Vehicle } from '../types/vehicle';
 
 export const HomeScreen = () => {
   const mapRef = useRef<MapLibreGL.MapViewRef>(null);
+  const tripStartTimeRef = useRef<string | null>(null);
   const dispatch = useDispatch();
+  const store = useStore<ReduxAppState>();
   const localizedStrings = useTranslation();
 
   useKeepAwake();
@@ -29,8 +34,10 @@ export const HomeScreen = () => {
   const {
     cameraRef,
     isFollowingUser,
+    isFollowingVehicle,
     cameraHeading,
     useSmallMarker,
+    setIsFollowingVehicle,
     animateCamera,
     onLocationButtonClicked,
     onRegionChange,
@@ -39,6 +46,8 @@ export const HomeScreen = () => {
 
   const { startForegroundTracking, stopTracking, requestBackgroundAndSwitch } =
     useLocationTracking();
+
+  const { isSimulating, startSimulation } = useTripSimulation();
 
   // Bottom sheet visibility
   const [isStartTripBottomSheetVisible, setIsStartTripBottomSheetVisible] = useState(false);
@@ -82,24 +91,27 @@ export const HomeScreen = () => {
     };
   }, []);
 
-  // Sync percentagePosition from own vehicle in vehicles array
+  // Sync percentagePosition and calculated position from own vehicle in vehicles array
   useEffect(() => {
     if (currentVehicle.id != null && vehicles.length > 0) {
       const myVehicle = vehicles.find((v) => v.id === currentVehicle.id);
       if (myVehicle) {
-        dispatch(TripAction.setPosition({ percentage: myVehicle.percentagePosition }));
+        dispatch(TripAction.setPosition({
+          percentage: myVehicle.percentagePosition,
+          calculated: myVehicle.pos,
+        }));
       }
     }
   }, [vehicles, currentVehicle.id]);
 
-  // Camera animation when location is updated
+  // Camera animation: follow vehicle position OR user GPS location
   useEffect(() => {
-    if (isActive && position.calculated) {
+    if (isFollowingVehicle && position.calculated) {
       animateCamera(position.calculated.lat, position.calculated.lng, motion.heading);
-    } else if (location) {
+    } else if (isFollowingUser && location) {
       animateCamera(location.coords.latitude, location.coords.longitude, location.coords.heading);
     }
-  }, [location, position.calculated]);
+  }, [location, position.calculated, isFollowingUser, isFollowingVehicle]);
 
   // Handle trip start/stop
   useEffect(() => {
@@ -140,19 +152,19 @@ export const HomeScreen = () => {
 
   // Event handlers
   const handleLocationButtonClick = useCallback(() => {
-    onLocationButtonClicked(
-      location ? { ...location.coords } : null,
-      position.calculated,
-      motion.heading
-    );
-  }, [location, position.calculated, motion.heading, onLocationButtonClicked]);
+    onLocationButtonClicked(location ? { ...location.coords } : null);
+  }, [location, onLocationButtonClicked]);
 
   const handleCenterOnVehicle = useCallback(() => {
-    const myVehicle = vehicles.find((v) => v.id === currentVehicle.id);
+    const currentState = store.getState();
+    const vehicleId = currentState.trip.currentVehicle.id;
+    const myVehicle = currentState.trip.vehicles.find((v) => v.id === vehicleId);
+
     if (myVehicle) {
       centerOnPosition(myVehicle.pos.lat, myVehicle.pos.lng, myVehicle.heading ?? 0);
+      setIsFollowingVehicle(true);
     }
-  }, [vehicles, currentVehicle.id, centerOnPosition]);
+  }, [store, centerOnPosition, setIsFollowingVehicle]);
 
   const handleStopTrip = useCallback(() => {
     Alert.alert(
@@ -160,13 +172,21 @@ export const HomeScreen = () => {
       localizedStrings.t('homeDialogEndTripMessage'),
       [
         { text: localizedStrings.t('alertNo'), onPress: () => {} },
-        { text: localizedStrings.t('alertYes'), onPress: () => dispatch(TripAction.stop()) },
+        {
+          text: localizedStrings.t('alertYes'),
+          onPress: () => {
+            const startTime = tripStartTimeRef.current ?? new Date().toISOString();
+            saveAndStopTrip(dispatch, store.getState, startTime);
+            tripStartTimeRef.current = null;
+          },
+        },
       ]
     );
-  }, [localizedStrings, dispatch]);
+  }, [localizedStrings, dispatch, store]);
 
   const handleStartVehicleSelect = useCallback(
     (vehicle: Vehicle) => {
+      tripStartTimeRef.current = new Date().toISOString();
       dispatch(TripAction.setCurrentVehicle(vehicle.id, vehicle.label ?? `Draisine ${vehicle.id}`));
       dispatch(TripAction.start());
     },
@@ -208,6 +228,7 @@ export const HomeScreen = () => {
       <TripControls
         isActive={isActive}
         isFollowingUser={isFollowingUser}
+        isFollowingVehicle={isFollowingVehicle}
         onLocationButtonClick={handleLocationButtonClick}
         onStartTrip={() => setIsStartTripBottomSheetVisible(true)}
         onStopTrip={handleStopTrip}
@@ -237,6 +258,13 @@ export const HomeScreen = () => {
         excludeVehicleId={currentVehicle.id}
         onVehicleSelected={handleChangeVehicle}
       />
+      {__DEV__ && !isActive && !isSimulating && (
+        <View style={styles.devButtonContainer}>
+          <FAB onPress={startSimulation} accessibilityLabel="Start simulation">
+            <MaterialCommunityIcons name="play-box-outline" size={24} color={Color.success} />
+          </FAB>
+        </View>
+      )}
     </View>
   );
 };
@@ -245,5 +273,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
+  },
+  devButtonContainer: {
+    position: 'absolute',
+    top: 100,
+    left: 0,
   },
 });
