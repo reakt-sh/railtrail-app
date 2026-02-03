@@ -23,7 +23,7 @@ export const SIMULATION_POSITIONS: SimulationPoint[] = [
   { percentage: 1.8, speed: 16 },
   { percentage: 2.25, speed: 18 },
   // Cruising speed
-  { percentage: 2.75, speed: 20 },π
+  { percentage: 2.75, speed: 20 },
   { percentage: 3.3, speed: 20 },
   { percentage: 3.85, speed: 20 },
   { percentage: 4.4, speed: 20 },
