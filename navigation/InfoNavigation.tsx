@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CustomHeader } from '../components/CustomHeader';
+import { useTranslation } from '../hooks';
 import {
   ContactsScreen,
   DraisineInfoScreen,
@@ -23,6 +24,8 @@ export type InfoStackParamList = {
 const Stack = createNativeStackNavigator<InfoStackParamList>();
 
 export const InfoNavigation = () => {
+  const localizedStrings = useTranslation();
+
   return (
     <Stack.Navigator
       initialRouteName="InfoMenu"
@@ -34,28 +37,32 @@ export const InfoNavigation = () => {
       <Stack.Screen
         name="DraisineInfo"
         component={DraisineInfoScreen}
-        options={{ title: 'Erklärungen zur Draisine' }}
+        options={{ title: localizedStrings.t('infoTitleDraisineInfo') }}
       />
       <Stack.Screen
         name="TripHistory"
         component={TripHistoryScreen}
-        options={{ title: 'Vergangene Fahrten' }}
+        options={{ title: localizedStrings.t('infoTitleTripHistory') }}
       />
       <Stack.Screen
         name="GoodToKnow"
         component={GoodToKnowScreen}
-        options={{ title: 'Gut zu wissen' }}
+        options={{ title: localizedStrings.t('infoTitleGoodToKnow') }}
       />
       <Stack.Screen
         name="Contacts"
         component={ContactsScreen}
-        options={{ title: 'Nummern und Adressen' }}
+        options={{ title: localizedStrings.t('infoTitleContacts') }}
       />
-      <Stack.Screen name="Imprint" component={ImprintScreen} options={{ title: 'Impressum' }} />
+      <Stack.Screen
+        name="Imprint"
+        component={ImprintScreen}
+        options={{ title: localizedStrings.t('infoTitleImprint') }}
+      />
       <Stack.Screen
         name="PrivacyPolicy"
         component={PrivacyPolicyScreen}
-        options={{ title: 'Datenschutzerklärung' }}
+        options={{ title: localizedStrings.t('infoTitlePrivacyPolicy') }}
       />
     </Stack.Navigator>
   );
