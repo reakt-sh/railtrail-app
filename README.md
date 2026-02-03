@@ -56,6 +56,25 @@ cp .env.example .env
 npx expo start
 ```
 
+### iOS Build
+
+```bash
+# iOS Dependencies installieren
+cd ios && pod install && cd ..
+
+# iOS App bauen und starten
+npx expo run:ios
+```
+
+**Hinweis:** Das Podfile enthält spezielle Konfiguration für MapLibre. Falls der Build fehlschlägt mit `Module 'MapLibre' not found`, siehe [Troubleshooting](#troubleshooting).
+
+### Android Build
+
+```bash
+# Android App bauen und starten
+npx expo run:android
+```
+
 ### Konfiguration
 
 Die App wird über Umgebungsvariablen in `.env` konfiguriert:
@@ -97,6 +116,65 @@ Die App verbindet sich per WebSocket für Echtzeit-Positionsupdates der Fahrzeug
 ├── util/             # Utility-Funktionen & Konstanten
 ├── values/           # Design-Tokens (Farben, etc.)
 └── assets/           # Icons, Bilder, Splash
+```
+
+## Troubleshooting
+
+### iOS: `Module 'MapLibre' not found`
+
+Dieser Fehler tritt auf, wenn das MapLibre iOS SDK nicht korrekt über Swift Package Manager eingebunden wird.
+
+**Lösung:**
+
+1. Stelle sicher, dass das Podfile die MapLibre-Konfiguration enthält:
+
+```ruby
+# Am Anfang des Podfiles (nach den require-Statements)
+maplibre_path = File.join(__dir__, '../node_modules/@maplibre/maplibre-react-native/maplibre-react-native.podspec')
+eval(File.read(maplibre_path), nil, maplibre_path)
+
+# Im post_install Block
+post_install do |installer|
+  # ... andere post_install Aufrufe ...
+  $MLRN.post_install(installer)
+end
+```
+
+2. Pods neu installieren:
+
+```bash
+cd ios
+rm -rf Pods Podfile.lock build
+pod install
+cd ..
+```
+
+3. Build neu starten:
+
+```bash
+npx expo run:ios --no-build-cache
+```
+
+### iOS: `expo-media-library` Compiler Warnings
+
+Die Warnings `extra tokens at end of #ifndef directive` sind bekannte Issues im generierten Code und beeinträchtigen den Build nicht.
+
+### iOS: Build schlägt nach Dependency-Update fehl
+
+Nach dem Hinzufügen oder Aktualisieren von Dependencies:
+
+```bash
+cd ios
+rm -rf Pods Podfile.lock build
+pod install
+cd ..
+npx expo run:ios --no-build-cache
+```
+
+### Metro Bundler: Cache-Probleme
+
+```bash
+npx expo start --clear
 ```
 
 ## Mitwirken
