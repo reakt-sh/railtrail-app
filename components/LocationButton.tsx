@@ -6,12 +6,22 @@ import { FAB } from './Fab';
 interface ExternalProps {
   readonly onPress: () => void;
   readonly isActive: boolean;
+  readonly accessibilityLabelActive: string;
+  readonly accessibilityLabelInactive: string;
 }
 
 type Props = ExternalProps;
 
-export const LocationButton = ({ onPress, isActive }: Props) => (
-  <FAB onPress={onPress}>
+export const LocationButton = ({
+  onPress,
+  isActive,
+  accessibilityLabelActive,
+  accessibilityLabelInactive,
+}: Props) => (
+  <FAB
+    onPress={onPress}
+    accessibilityLabel={isActive ? accessibilityLabelActive : accessibilityLabelInactive}
+  >
     {isActive ? (
       <MaterialIcons name="my-location" size={30} color={Color.primary} />
     ) : (

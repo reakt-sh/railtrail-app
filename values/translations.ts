@@ -60,6 +60,22 @@ const translations = {
     infoTitleContacts: 'Numbers and Addresses',
     infoTitleImprint: 'Imprint',
     infoTitlePrivacyPolicy: 'Privacy Policy',
+
+    // Accessibility
+    a11yGoBack: 'Go back',
+    a11yLocationTrackingActive: 'Location tracking active',
+    a11yShowMyLocation: 'Show my location',
+    a11yCenterOnVehicle: 'Center on vehicle',
+    a11yStartTrip: 'Start trip',
+    a11yStopTrip: 'Stop trip',
+    a11yChangeVehicle: 'Change vehicle',
+    a11yChangeVehicleHint: 'Opens vehicle selection',
+    a11ySelectVehicle: 'Select %{name}',
+    a11yCallPhone: 'Call %{phone}',
+    a11ySendEmail: 'Send email to %{email}',
+    a11yExpandSection: 'Double tap to expand',
+    a11yCollapseSection: 'Double tap to collapse',
+    a11yAcceptPrivacyPolicy: 'Accept privacy policy',
   },
 
   de: {
@@ -127,6 +143,22 @@ const translations = {
     infoTitleContacts: 'Nummern und Adressen',
     infoTitleImprint: 'Impressum',
     infoTitlePrivacyPolicy: 'Datenschutzerklärung',
+
+    // Accessibility
+    a11yGoBack: 'Zurück',
+    a11yLocationTrackingActive: 'Standort wird verfolgt',
+    a11yShowMyLocation: 'Meinen Standort anzeigen',
+    a11yCenterOnVehicle: 'Auf Fahrzeug zentrieren',
+    a11yStartTrip: 'Fahrt starten',
+    a11yStopTrip: 'Fahrt beenden',
+    a11yChangeVehicle: 'Fahrzeug wechseln',
+    a11yChangeVehicleHint: 'Öffnet Fahrzeugauswahl',
+    a11ySelectVehicle: '%{name} auswählen',
+    a11yCallPhone: '%{phone} anrufen',
+    a11ySendEmail: 'E-Mail an %{email} senden',
+    a11yExpandSection: 'Doppeltippen zum Öffnen',
+    a11yCollapseSection: 'Doppeltippen zum Schließen',
+    a11yAcceptPrivacyPolicy: 'Datenschutzerklärung akzeptieren',
   },
 };
 export { translations };
