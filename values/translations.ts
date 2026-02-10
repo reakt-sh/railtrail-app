@@ -6,7 +6,7 @@ const translations = {
     alertNo: 'No',
     buttonContinue: 'Continue',
 
-    navigationMap: 'Fahren',
+    navigationMap: 'Map',
     navigationInfo: 'Info',
     landingPageWelcome: 'Welcome to the Naturpark-Draisine',
     landingPageDescription:
@@ -86,7 +86,7 @@ const translations = {
     alertNo: 'Nein',
     buttonContinue: 'Weiter',
 
-    navigationMap: 'Fahren',
+    navigationMap: 'Karte',
     navigationInfo: 'Info',
 
     landingPageWelcome: 'Willkommen bei der Naturpark-Draisine',

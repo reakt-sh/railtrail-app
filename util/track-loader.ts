@@ -161,7 +161,12 @@ const convertMarkersToPOI = (
     })
     .map((marker) => {
       const [lng, lat] = marker.position.coordinates;
-      const poiType = markerTypeToPOIType[marker.type] ?? POIType.Generic;
+      let poiType = markerTypeToPOIType[marker.type] ?? POIType.Generic;
+
+      // Override type for turning points
+      if (marker.extra?.isTurningPoint === true) {
+        poiType = POIType.TurningPoint;
+      }
 
       const percentagePosition = findPercentagePosition(
         lng,

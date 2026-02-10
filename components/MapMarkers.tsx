@@ -1,18 +1,19 @@
+import * as MapLibreGL from '@maplibre/maplibre-react-native';
+import * as Location from 'expo-location';
 import React, { memo } from 'react';
 import { Text, View } from 'react-native';
-import * as Location from 'expo-location';
-import { PointOfInterest } from '../types/init';
-import { Vehicle } from '../types/vehicle';
-import * as MapLibreGL from '@maplibre/maplibre-react-native';
 import {
-  TrainForegroundIcon,
-  UserLocationIcon,
+  PassingPositionIcon,
   TrainBackgroundHeadingIcon,
   TrainBackgroundNeutralIcon,
-  PassingPositionIcon,
+  TrainForegroundIcon,
+  UserLocationIcon,
 } from '../assets/icons';
-import { PointOfInterestMarker } from './PointOfInterestMarker';
+import { PointOfInterest } from '../types/init';
 import { Position } from '../types/position';
+import { Vehicle } from '../types/vehicle';
+import { POITooltip, getPOITitle } from './POITooltip';
+import { PointOfInterestMarker } from './PointOfInterestMarker';
 import { Track } from './Track';
 
 interface ExternalProps {
@@ -68,6 +69,7 @@ export const MapMarkers = memo(
             key={`poi-${index}`}
             id={`poi-${index}`}
             coordinate={[poi.pos.lng, poi.pos.lat]}
+            title={getPOITitle(poi.name, poi.typeId)}
           >
             <View>
               <PointOfInterestMarker
@@ -75,6 +77,9 @@ export const MapMarkers = memo(
                 useSmallMarker={useSmallMarker}
               />
             </View>
+            <MapLibreGL.Callout title={getPOITitle(poi.name, poi.typeId)}>
+              <POITooltip name={poi.name} typeId={poi.typeId} />
+            </MapLibreGL.Callout>
           </MapLibreGL.PointAnnotation>
         ))}
 
@@ -111,7 +116,11 @@ export const MapMarkers = memo(
               </View>
               {/* Foreground (train icon) - rendered on top */}
               <View style={{ position: 'absolute' }}>
-                {useSmallMarker ? <TrainForegroundIcon width={15} height={18} /> : <TrainForegroundIcon />}
+                {useSmallMarker ? (
+                  <TrainForegroundIcon width={15} height={18} />
+                ) : (
+                  <TrainForegroundIcon />
+                )}
               </View>
               {/* Label unter dem Icon */}
               {vehicle.label && (
@@ -142,7 +151,11 @@ export const MapMarkers = memo(
             coordinate={[passingPosition.lng, passingPosition.lat]}
           >
             <View>
-              {useSmallMarker ? <PassingPositionIcon width={32} height={32} /> : <PassingPositionIcon />}
+              {useSmallMarker ? (
+                <PassingPositionIcon width={32} height={32} />
+              ) : (
+                <PassingPositionIcon />
+              )}
             </View>
           </MapLibreGL.PointAnnotation>
         ) : null}
