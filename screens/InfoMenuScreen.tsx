@@ -5,6 +5,7 @@ import React from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { DraisineIcon, MalenteLogoIcon } from '../assets/icons';
+import { useTranslation } from '../hooks/useTranslation';
 import { Color } from '../values';
 import { textStyles } from '../values/text-styles';
 
@@ -19,7 +20,7 @@ type InfoStackParamList = {
 };
 
 interface MenuItem {
-  title: string;
+  titleKey: string;
   icon?: keyof typeof MaterialCommunityIcons.glyphMap;
   customIcon?: React.ReactNode;
   screen: keyof InfoStackParamList;
@@ -27,19 +28,20 @@ interface MenuItem {
 
 const menuItems: MenuItem[] = [
   {
-    title: 'Erklärungen zur Draisine',
+    titleKey: 'infoTitleDraisineInfo',
     customIcon: <DraisineIcon width={24} height={24} color={Color.primary} />,
     screen: 'DraisineInfo',
   },
-  { title: 'Vergangene Fahrten', icon: 'history', screen: 'TripHistory' },
-  { title: 'Gut zu wissen', icon: 'lightbulb-outline', screen: 'GoodToKnow' },
-  { title: 'Nummern und Adressen', icon: 'phone', screen: 'Contacts' },
-  { title: 'Impressum', icon: 'file-document-outline', screen: 'Imprint' },
-  { title: 'Datenschutzerklärung', icon: 'shield-lock-outline', screen: 'PrivacyPolicy' },
+  { titleKey: 'infoTitleTripHistory', icon: 'history', screen: 'TripHistory' },
+  { titleKey: 'infoTitleGoodToKnow', icon: 'lightbulb-outline', screen: 'GoodToKnow' },
+  { titleKey: 'infoTitleContacts', icon: 'phone', screen: 'Contacts' },
+  { titleKey: 'infoTitleImprint', icon: 'file-document-outline', screen: 'Imprint' },
+  { titleKey: 'infoTitlePrivacyPolicy', icon: 'shield-lock-outline', screen: 'PrivacyPolicy' },
 ];
 
 export const InfoMenuScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<InfoStackParamList>>();
+  const i18n = useTranslation();
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -69,7 +71,7 @@ export const InfoMenuScreen = () => {
                   style={styles.menuIcon}
                 />
               )}
-              <Text style={styles.menuText}>{item.title}</Text>
+              <Text style={styles.menuText}>{i18n.t(item.titleKey)}</Text>
               <MaterialCommunityIcons name="chevron-right" size={24} color={Color.darkGray} />
             </Pressable>
           ))}

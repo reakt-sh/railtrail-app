@@ -71,6 +71,56 @@ const translations = {
     poiHalt: 'Stop',
     poiEndOfTheLine: 'End of track',
 
+    // Contacts Screen
+    contactTouristInfoMalente: 'Tourist Info Malente',
+    contactTouristInfoMalenteSubtitle: 'Booking & handout of draisines',
+    contactTouristInfoPloen: 'Tourist Info Plön',
+    contactTouristInfoEutin: 'Tourist Info Eutin',
+    contactTourismuszentrale: 'Tourism Center Holsteinische Schweiz',
+    contactTourismuszentraleSubtitle: 'Operator of the draisine railway',
+
+    // Good to Know Screen (FAQ)
+    faqDepartureTimes: 'What are the departure times?',
+    faqDepartureTimesAnswer:
+      'May–September: Weekdays and Saturdays at 10:00 AM (3–6 hrs) and 1:30 PM (3 hrs). Sundays at 10:00 AM (3 hrs).\n\nOctober–April: Weekdays at 10:00 AM and 1:30 PM. Weekends on request.\n\nPlease arrive 30 minutes before departure for formalities and handover.',
+    faqPassengers: 'How many people can ride?',
+    faqPassengersAnswer:
+      'Up to 4 people can ride on each draisine – 2 people pedal, 2 people can relax. At least one adult per draisine is required.',
+    faqPrice: 'What does a draisine cost?',
+    faqPriceAnswer:
+      '3-hour tour: €50 per draisine\nFamily price (with children under 16): €40\nostseecard holders receive €2 discount.\n\nGroup tours with up to 60 people are possible.',
+    faqHowItWorks: 'How does a draisine work?',
+    faqHowItWorksAnswer:
+      'The draisine is powered by pedaling, similar to a bicycle. Important: Draisines have a long braking distance – drive with foresight!\n\nThere is one-way traffic, turning is done at the turning point.',
+    faqRules: 'What should I pay attention to during the ride?',
+    faqRulesAnswer:
+      '• Stop at all level crossings – road traffic has right of way\n• Do not stop near private properties\n• Animals are not recommended due to noise level\n• Wear long, sturdy clothing and solid footwear (vegetation along the track)',
+    faqVouchers: 'Are there vouchers for draisine rides?',
+    faqVouchersAnswer:
+      'Yes, vouchers are available and valid for 3 years. Ask at the Tourist Info Malente.',
+
+    // Imprint Screen
+    imprintOperator: 'Operator',
+    imprintAppDevelopment: 'App Development',
+    imprintDisclaimer: 'Disclaimer',
+    imprintDisclaimerText:
+      'The contents of this app were created with the utmost care. However, we cannot guarantee the accuracy, completeness, and timeliness of the content.',
+
+    // Privacy Policy Screen
+    privacyPolicyTitle: 'Privacy Policy',
+    privacyPolicyPlaceholder: 'Privacy policy will be displayed here.',
+
+    // Trip History Screen
+    tripHistoryTitle: 'Past Trips',
+    tripHistoryDeleteTitle: 'Delete trip',
+    tripHistoryDeleteMessage: 'Do you really want to delete this trip?',
+    tripHistoryDeleteCancel: 'Cancel',
+    tripHistoryDeleteConfirm: 'Delete',
+    tripHistoryEmpty: 'No trips recorded yet.',
+    tripHistoryEmptySubtext: 'Start a trip on the map to see it here.',
+    tripHistoryHours: 'hrs',
+    tripHistoryMinutes: 'min',
+
     // Accessibility
     a11yGoBack: 'Go back',
     a11yLocationTrackingActive: 'Location tracking active',
@@ -163,6 +213,56 @@ const translations = {
     poiTurningPoint: 'Wendepunkt',
     poiHalt: 'Haltepunkt',
     poiEndOfTheLine: 'Streckenende',
+
+    // Contacts Screen
+    contactTouristInfoMalente: 'Tourist Info Malente',
+    contactTouristInfoMalenteSubtitle: 'Buchung & Ausgabe der Draisinen',
+    contactTouristInfoPloen: 'Tourist Info Plön',
+    contactTouristInfoEutin: 'Tourist Info Eutin',
+    contactTourismuszentrale: 'Tourismuszentrale Holsteinische Schweiz',
+    contactTourismuszentraleSubtitle: 'Betreiber der Draisinenbahn',
+
+    // Good to Know Screen (FAQ)
+    faqDepartureTimes: 'Wie sind die Abfahrtszeiten?',
+    faqDepartureTimesAnswer:
+      'Mai–September: Wochentags und Samstags um 10:00 Uhr (3–6 Std) und 13:30 Uhr (3 Std). Sonntags um 10:00 Uhr (3 Std).\n\nOktober–April: Wochentags um 10:00 und 13:30 Uhr. Am Wochenende auf Anfrage.\n\nBitte erscheinen Sie 30 Minuten vor Abfahrt für Formalitäten und Übergabe.',
+    faqPassengers: 'Wie viele Personen können mitfahren?',
+    faqPassengersAnswer:
+      'Auf jeder Draisine können bis zu 4 Personen mitfahren – 2 Personen treten, 2 Personen können sich entspannen. Mindestens ein Erwachsener pro Draisine ist erforderlich.',
+    faqPrice: 'Was kostet eine Draisine?',
+    faqPriceAnswer:
+      '3-Stunden-Tour: 50€ pro Draisine\nFamilienpreis (mit Kindern unter 16): 40€\nostseecard-Inhaber erhalten 2€ Rabatt.\n\nGruppentouren mit bis zu 60 Personen sind möglich.',
+    faqHowItWorks: 'Wie funktioniert eine Draisine?',
+    faqHowItWorksAnswer:
+      'Die Draisine wird durch Treten angetrieben, ähnlich wie ein Fahrrad. Wichtig: Draisinen haben einen langen Bremsweg – fahren Sie vorausschauend!\n\nEs herrscht Einbahnverkehr, das Wenden erfolgt am Wendepunkt.',
+    faqRules: 'Was muss ich bei der Fahrt beachten?',
+    faqRulesAnswer:
+      '• An allen Bahnübergängen anhalten – Straßenverkehr hat Vorfahrt\n• Nicht in der Nähe von Privatgrundstücken anhalten\n• Tiere sind wegen des Lärmpegels nicht empfohlen\n• Tragen Sie lange, feste Kleidung und festes Schuhwerk (Vegetation entlang der Strecke)',
+    faqVouchers: 'Gibt es Gutscheine für Draisinenfahrten?',
+    faqVouchersAnswer:
+      'Ja, Gutscheine sind erhältlich und 3 Jahre gültig. Fragen Sie bei der Tourist-Info Malente nach.',
+
+    // Imprint Screen
+    imprintOperator: 'Betreiber',
+    imprintAppDevelopment: 'App-Entwicklung',
+    imprintDisclaimer: 'Haftungsausschluss',
+    imprintDisclaimerText:
+      'Die Inhalte dieser App wurden mit größtmöglicher Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen.',
+
+    // Privacy Policy Screen
+    privacyPolicyTitle: 'Datenschutzerklärung',
+    privacyPolicyPlaceholder: 'Datenschutzerklärung wird hier angezeigt.',
+
+    // Trip History Screen
+    tripHistoryTitle: 'Vergangene Fahrten',
+    tripHistoryDeleteTitle: 'Fahrt löschen',
+    tripHistoryDeleteMessage: 'Möchtest du diese Fahrt wirklich löschen?',
+    tripHistoryDeleteCancel: 'Abbrechen',
+    tripHistoryDeleteConfirm: 'Löschen',
+    tripHistoryEmpty: 'Noch keine Fahrten aufgezeichnet.',
+    tripHistoryEmptySubtext: 'Starte eine Fahrt auf der Karte, um sie hier zu sehen.',
+    tripHistoryHours: 'Std',
+    tripHistoryMinutes: 'Min',
 
     // Accessibility
     a11yGoBack: 'Zurück',

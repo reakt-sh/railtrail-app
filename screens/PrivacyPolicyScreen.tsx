@@ -1,15 +1,18 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTranslation } from '../hooks/useTranslation';
 import { Color } from '../values';
 import { textStyles } from '../values/text-styles';
 
 export const PrivacyPolicyScreen = () => {
+  const i18n = useTranslation();
+
   return (
     <SafeAreaView style={styles.safeArea} edges={[]}>
       <View style={styles.container}>
-        <Text style={textStyles.headerTextHuge}>Datenschutzerklärung</Text>
+        <Text style={textStyles.headerTextHuge}>{i18n.t('privacyPolicyTitle')}</Text>
         <Text style={[textStyles.bodyMedium, styles.placeholder]}>
-          Datenschutzerklärung wird hier angezeigt.
+          {i18n.t('privacyPolicyPlaceholder')}
         </Text>
       </View>
     </SafeAreaView>
