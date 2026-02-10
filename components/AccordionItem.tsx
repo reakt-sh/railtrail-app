@@ -1,6 +1,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { LayoutAnimation, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from '../hooks';
 import { Color } from '../values';
 import { textStyles } from '../values/text-styles';
 
@@ -11,6 +12,7 @@ export interface AccordionItemProps {
 
 export const AccordionItem = ({ question, answer }: AccordionItemProps) => {
   const [expanded, setExpanded] = useState(false);
+  const i18n = useTranslation();
 
   const toggleExpand = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -19,7 +21,14 @@ export const AccordionItem = ({ question, answer }: AccordionItemProps) => {
 
   return (
     <View style={[styles.accordionItem, !expanded && styles.accordionItemCollapsed]}>
-      <Pressable onPress={toggleExpand} style={styles.accordionHeader}>
+      <Pressable
+        onPress={toggleExpand}
+        style={styles.accordionHeader}
+        accessibilityRole="button"
+        accessibilityLabel={question}
+        accessibilityHint={expanded ? i18n.t('a11yCollapseSection') : i18n.t('a11yExpandSection')}
+        accessibilityState={{ expanded }}
+      >
         <Text style={styles.questionText}>{question}</Text>
         <MaterialCommunityIcons
           name={expanded ? 'chevron-up' : 'chevron-down'}

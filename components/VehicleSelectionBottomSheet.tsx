@@ -1,6 +1,7 @@
 import BottomSheet from '@gorhom/bottom-sheet';
 import { memo, useEffect, useMemo, useRef } from 'react';
 import { Keyboard, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useTranslation } from '../hooks';
 import { Vehicle } from '../types/vehicle';
 import { Color } from '../values/color';
 import { textStyles } from '../values/text-styles';
@@ -29,6 +30,7 @@ export const VehicleSelectionBottomSheet = memo(
   }: Props) => {
     const bottomSheetRef = useRef<BottomSheet>(null);
     const snapPoints = useMemo(() => ['40%', '60%'], []);
+    const i18n = useTranslation();
 
     useEffect(() => {
       if (isVisible) {
@@ -44,8 +46,15 @@ export const VehicleSelectionBottomSheet = memo(
       onVehicleSelected(vehicle);
     };
 
-    const availableVehicles =
-      excludeVehicleId != null ? vehicles.filter((v) => v.id !== excludeVehicleId) : vehicles;
+    const availableVehicles = useMemo(() => {
+      const filtered =
+        excludeVehicleId != null ? vehicles.filter((v) => v.id !== excludeVehicleId) : vehicles;
+      return [...filtered].sort((a, b) => {
+        const labelA = a.label ?? `${a.id}`;
+        const labelB = b.label ?? `${b.id}`;
+        return labelA.localeCompare(labelB, undefined, { numeric: true });
+      });
+    }, [vehicles, excludeVehicleId]);
 
     return (
       <BottomSheet
@@ -59,14 +68,18 @@ export const VehicleSelectionBottomSheet = memo(
         <View style={styles.contentContainer}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.subtitle}>{subtitle}</Text>
-          <ScrollView style={styles.vehicleList}>
+          <ScrollView style={styles.vehicleList} contentContainerStyle={styles.vehicleGrid}>
             {availableVehicles.map((vehicle) => (
               <TouchableOpacity
                 key={vehicle.id}
                 style={styles.vehicleItem}
                 onPress={() => handleVehiclePress(vehicle)}
+                accessibilityRole="button"
+                accessibilityLabel={i18n.t('a11ySelectVehicle', {
+                  name: vehicle.label ?? `Draisine ${vehicle.id}`,
+                })}
               >
-                <Text style={styles.vehicleLabel}>{vehicle.label ?? `Draisine ${vehicle.id}`}</Text>
+                <Text style={styles.vehicleLabel}>{vehicle.label ?? `${vehicle.id}`}</Text>
               </TouchableOpacity>
             ))}
           </ScrollView>
@@ -95,16 +108,23 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     flex: 1,
   },
+  vehicleGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    gap: 8,
+    paddingHorizontal: 8,
+  },
   vehicleItem: {
-    padding: 16,
-    marginVertical: 8,
-    borderRadius: 8,
+    width: '23%',
+    aspectRatio: 1,
+    borderRadius: 12,
     backgroundColor: Color.gray,
-    alignItems: 'center',
+    minHeight: 48,
+    justifyContent: 'center',
   },
   vehicleLabel: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: Color.text,
+    ...textStyles.bodyMedium,
+    textAlign: 'center',
   },
 });

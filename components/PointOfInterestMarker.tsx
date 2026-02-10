@@ -14,6 +14,7 @@ type Props = ExternalProps;
 interface MarkerConfig {
   icon: keyof typeof MaterialCommunityIcons.glyphMap | keyof typeof MaterialIcons.glyphMap;
   color: string;
+  iconColor?: string;
   iconSizeSmall?: number;
   iconSizeLarge?: number;
 
@@ -24,7 +25,7 @@ const markerConfigs: Record<POIType, MarkerConfig> = {
   [POIType.LevelCrossing]: {
     icon: 'alpha-x',
     color: Color.error,
-    iconSizeSmall: 20,
+    iconSizeSmall: 0,
     iconSizeLarge: 24,
   },
   [POIType.LesserLevelCrossing]: {
@@ -34,14 +35,17 @@ const markerConfigs: Record<POIType, MarkerConfig> = {
   },
   [POIType.Picnic]: { icon: 'silverware-fork-knife', color: Color.success },
   [POIType.TrackEnd]: { icon: 'sign-direction', color: Color.track },
-  [POIType.TurningPoint]: { icon: 'rotate-left', color: Color.primary },
-  [POIType.Generic]: { icon: 'information-variant', color: Color.primary },
+  [POIType.TurningPoint]: { icon: 'arrow-u-left-bottom', color: Color.primary },
+  [POIType.Generic]: { icon: 'information-variant', color: Color.white, iconColor: Color.primary },
+  [POIType.Halt]: { icon: 'bus-stop', color: Color.primary },
+  [POIType.EndOfTheLine]: { icon: 'sign-direction', color: Color.track },
 };
 
 export const PointOfInterestMarker = memo(({ pointOfInterestType, useSmallMarker }: Props) => {
   const config = markerConfigs[pointOfInterestType] ?? markerConfigs[POIType.Generic];
-  const size = useSmallMarker ? 20 : 24;
-  const iconSize = useSmallMarker ? (config.iconSizeSmall ?? 12) : (config.iconSizeLarge ?? 16);
+  const size = useSmallMarker ? 6 : 24;
+  const iconSize = useSmallMarker ? (config.iconSizeSmall ?? 0) : (config.iconSizeLarge ?? 16);
+  const iconColor = config.iconColor ?? Color.white;
 
   return (
     <View style={[styles.circle, { width: size, height: size, backgroundColor: config.color }]}>
@@ -49,13 +53,13 @@ export const PointOfInterestMarker = memo(({ pointOfInterestType, useSmallMarker
         <MaterialIcons
           name={config.icon as keyof typeof MaterialIcons.glyphMap}
           size={iconSize}
-          color={Color.white}
+          color={iconColor}
         />
       ) : (
         <MaterialCommunityIcons
           name={config.icon as keyof typeof MaterialCommunityIcons.glyphMap}
           size={iconSize}
-          color={Color.white}
+          color={iconColor}
         />
       )}
     </View>

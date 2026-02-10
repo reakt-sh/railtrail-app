@@ -11,7 +11,7 @@ import { MapMarkers } from './MapMarkers';
 interface ExternalProps {
   readonly mapRef: RefObject<MapLibreGL.MapViewRef>;
   readonly cameraRef: RefObject<MapLibreGL.CameraRef>;
-  readonly onRegionChange: (zoom: number, heading: number) => void;
+  readonly onRegionChange: (zoom: number, heading: number, isUserInteraction?: boolean) => void;
   readonly location: Location.LocationObject | null;
   readonly calculatedPosition: Position | null;
   readonly pointsOfInterest: PointOfInterest[];
@@ -48,7 +48,8 @@ export const TrackMapView = memo(
         onRegionDidChange={(feature: any) => {
           const zoom = feature?.properties?.zoomLevel ?? 14;
           const heading = feature?.properties?.heading ?? 0;
-          onRegionChange(zoom, heading);
+          const isUserInteraction = feature?.properties?.isUserInteraction ?? false;
+          onRegionChange(zoom, heading, isUserInteraction);
         }}
         onPress={() => {}}
       >

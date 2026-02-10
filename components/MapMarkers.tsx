@@ -1,33 +1,37 @@
-import React, { memo } from 'react';
-import { Text, View } from 'react-native';
 import * as Location from 'expo-location';
+import React, { memo } from 'react';
 import { PointOfInterest } from '../types/init';
-import { Vehicle } from '../types/vehicle';
-import * as MapLibreGL from '@maplibre/maplibre-react-native';
-import {
-  TrainForegroundIcon,
-  UserLocationIcon,
-  TrainBackgroundHeadingIcon,
-  TrainBackgroundNeutralIcon,
-  PassingPositionIcon,
-} from '../assets/icons';
-import { PointOfInterestMarker } from './PointOfInterestMarker';
 import { Position } from '../types/position';
+import { Vehicle } from '../types/vehicle';
+import { PassingPositionMarker } from './PassingPositionMarker';
+import { POIMarker } from './POIMarker';
 import { Track } from './Track';
+import { UserLocationMarker } from './UserLocationMarker';
+import { VehicleMarker } from './VehicleMarker';
 
-interface ExternalProps {
+interface Props {
+  /** Raw GPS location from the device */
   readonly location: Location.LocationObject | null;
+  /** Calculated position snapped to the track */
   readonly calculatedPosition: Position | null;
+  /** Points of interest along the track (crossings, picnic areas, etc.) */
   readonly pointsOfInterest: PointOfInterest[];
+  /** Other vehicles (draisines) on the track */
   readonly vehicles: Vehicle[];
+  /** Designated passing position for meeting other vehicles */
   readonly passingPosition: Position | null;
+  /** GeoJSON track geometry for rendering the rail line */
   readonly track: GeoJSON.FeatureCollection | null;
+  /** Use smaller markers when zoomed out */
   readonly useSmallMarker: boolean;
+  /** Current map heading for rotating vehicle direction indicators */
   readonly mapHeading: number;
 }
 
-type Props = ExternalProps;
-
+/**
+ * Container component for all map markers and overlays.
+ * Renders user location, vehicles, POIs, passing position, and the track line.
+ */
 export const MapMarkers = memo(
   ({
     location,
@@ -38,118 +42,44 @@ export const MapMarkers = memo(
     track,
     useSmallMarker,
     mapHeading,
-  }: Props) => {
-    return (
-      <>
-        {/* User Location Marker */}
-        {calculatedPosition ? (
-          <MapLibreGL.PointAnnotation
-            id="user-location"
-            coordinate={[calculatedPosition.lng, calculatedPosition.lat]}
-          >
-            <View>
-              <UserLocationIcon />
-            </View>
-          </MapLibreGL.PointAnnotation>
-        ) : location ? (
-          <MapLibreGL.PointAnnotation
-            id="user-location"
-            coordinate={[location.coords.longitude, location.coords.latitude]}
-          >
-            <View>
-              <UserLocationIcon />
-            </View>
-          </MapLibreGL.PointAnnotation>
-        ) : null}
+  }: Props) => (
+    <>
+      {/* User's current location */}
+      <UserLocationMarker
+        calculatedPosition={calculatedPosition}
+        location={location}
+      />
 
-        {/* POI Markers */}
-        {pointsOfInterest.map((poi, index) => (
-          <MapLibreGL.PointAnnotation
-            key={`poi-${index}`}
-            id={`poi-${index}`}
-            coordinate={[poi.pos.lng, poi.pos.lat]}
-          >
-            <View>
-              <PointOfInterestMarker
-                pointOfInterestType={poi.typeId}
-                useSmallMarker={useSmallMarker}
-              />
-            </View>
-          </MapLibreGL.PointAnnotation>
-        ))}
+      {/* Points of Interest along the track */}
+      {pointsOfInterest.map((poi, index) => (
+        <POIMarker
+          key={`poi-${index}`}
+          poi={poi}
+          index={index}
+          useSmallMarker={useSmallMarker}
+        />
+      ))}
 
-        {/* Vehicle Markers - Background + Foreground combined */}
-        {vehicles.map((vehicle) => (
-          <MapLibreGL.PointAnnotation
-            key={`vehicle-${vehicle.id}`}
-            id={`vehicle-${vehicle.id}`}
-            coordinate={[vehicle.pos.lng, vehicle.pos.lat]}
-          >
-            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-              {/* Background (direction indicator) - rendered first, behind */}
-              <View
-                style={{
-                  position: 'absolute',
-                  transform: [
-                    {
-                      rotate: `${vehicle.heading != undefined ? vehicle.heading - mapHeading : 0}deg`,
-                    },
-                  ],
-                }}
-              >
-                {useSmallMarker ? (
-                  vehicle.heading != null ? (
-                    <TrainBackgroundHeadingIcon width={32} height={32} />
-                  ) : (
-                    <TrainBackgroundNeutralIcon width={32} height={32} />
-                  )
-                ) : vehicle.heading != null ? (
-                  <TrainBackgroundHeadingIcon />
-                ) : (
-                  <TrainBackgroundNeutralIcon />
-                )}
-              </View>
-              {/* Foreground (train icon) - rendered on top */}
-              <View style={{ position: 'absolute' }}>
-                {useSmallMarker ? <TrainForegroundIcon width={15} height={18} /> : <TrainForegroundIcon />}
-              </View>
-              {/* Label unter dem Icon */}
-              {vehicle.label && (
-                <Text
-                  style={{
-                    position: 'absolute',
-                    top: useSmallMarker ? 24 : 32,
-                    fontSize: useSmallMarker ? 8 : 12,
-                    fontWeight: 'bold',
-                    color: '#333',
-                    backgroundColor: 'rgba(255,255,255,0.8)',
-                    paddingHorizontal: 4,
-                    borderRadius: 4,
-                    overflow: 'hidden',
-                  }}
-                >
-                  {vehicle.label}
-                </Text>
-              )}
-            </View>
-          </MapLibreGL.PointAnnotation>
-        ))}
+      {/* Other vehicles on the track */}
+      {vehicles.map((vehicle) => (
+        <VehicleMarker
+          key={`vehicle-${vehicle.id}`}
+          vehicle={vehicle}
+          mapHeading={mapHeading}
+          useSmallMarker={useSmallMarker}
+        />
+      ))}
 
-        {/* Passing Position Marker */}
-        {passingPosition ? (
-          <MapLibreGL.PointAnnotation
-            id="passing-position"
-            coordinate={[passingPosition.lng, passingPosition.lat]}
-          >
-            <View>
-              {useSmallMarker ? <PassingPositionIcon width={32} height={32} /> : <PassingPositionIcon />}
-            </View>
-          </MapLibreGL.PointAnnotation>
-        ) : null}
+      {/* Designated passing position */}
+      {passingPosition && (
+        <PassingPositionMarker
+          position={passingPosition}
+          useSmallMarker={useSmallMarker}
+        />
+      )}
 
-        {/* Track Line */}
-        {track ? <Track track={track} /> : null}
-      </>
-    );
-  }
+      {/* Track line overlay */}
+      {track && <Track track={track} />}
+    </>
+  )
 );

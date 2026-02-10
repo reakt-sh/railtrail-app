@@ -1,47 +1,30 @@
 import { ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AccordionItem } from '../components/AccordionItem';
+import { useTranslation } from '../hooks/useTranslation';
 import { Color } from '../values';
 
-const faqItems = [
-  {
-    question: 'Wie sind die Abfahrtszeiten?',
-    answer:
-      'Mai–September: Wochentags und Samstags um 10:00 Uhr (3–6 Std) und 13:30 Uhr (3 Std). Sonntags um 10:00 Uhr (3 Std).\n\nOktober–April: Wochentags um 10:00 und 13:30 Uhr. Am Wochenende auf Anfrage.\n\nBitte erscheinen Sie 30 Minuten vor Abfahrt für Formalitäten und Übergabe.',
-  },
-  {
-    question: 'Wie viele Personen können mitfahren?',
-    answer:
-      'Auf jeder Draisine können bis zu 4 Personen mitfahren – 2 Personen treten, 2 Personen können sich entspannen. Mindestens ein Erwachsener pro Draisine ist erforderlich.',
-  },
-  {
-    question: 'Was kostet eine Draisine?',
-    answer:
-      '3-Stunden-Tour: 50€ pro Draisine\nFamilienpreis (mit Kindern unter 16): 40€\nostseecard-Inhaber erhalten 2€ Rabatt.\n\nGruppentouren mit bis zu 60 Personen sind möglich.',
-  },
-  {
-    question: 'Wie funktioniert eine Draisine?',
-    answer:
-      'Die Draisine wird durch Treten angetrieben, ähnlich wie ein Fahrrad. Wichtig: Draisinen haben einen langen Bremsweg – fahren Sie vorausschauend!\n\nEs herrscht Einbahnverkehr, das Wenden erfolgt am Wendepunkt.',
-  },
-  {
-    question: 'Was muss ich bei der Fahrt beachten?',
-    answer:
-      '• An allen Bahnübergängen anhalten – Straßenverkehr hat Vorfahrt\n• Nicht in der Nähe von Privatgrundstücken anhalten\n• Tiere sind wegen des Lärmpegels nicht empfohlen\n• Tragen Sie lange, feste Kleidung und festes Schuhwerk (Vegetation entlang der Strecke)',
-  },
-  {
-    question: 'Gibt es Gutscheine für Draisinenfahrten?',
-    answer:
-      'Ja, Gutscheine sind erhältlich und 3 Jahre gültig. Fragen Sie bei der Tourist-Info Malente nach.',
-  },
+const faqKeys = [
+  { questionKey: 'faqDepartureTimes', answerKey: 'faqDepartureTimesAnswer' },
+  { questionKey: 'faqPassengers', answerKey: 'faqPassengersAnswer' },
+  { questionKey: 'faqPrice', answerKey: 'faqPriceAnswer' },
+  { questionKey: 'faqHowItWorks', answerKey: 'faqHowItWorksAnswer' },
+  { questionKey: 'faqRules', answerKey: 'faqRulesAnswer' },
+  { questionKey: 'faqVouchers', answerKey: 'faqVouchersAnswer' },
 ];
 
 export const GoodToKnowScreen = () => {
+  const i18n = useTranslation();
+
   return (
     <SafeAreaView style={styles.safeArea} edges={[]}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        {faqItems.map((item, index) => (
-          <AccordionItem key={index} question={item.question} answer={item.answer} />
+        {faqKeys.map((item, index) => (
+          <AccordionItem
+            key={index}
+            question={i18n.t(item.questionKey)}
+            answer={i18n.t(item.answerKey)}
+          />
         ))}
       </ScrollView>
     </SafeAreaView>

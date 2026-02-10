@@ -16,6 +16,7 @@ interface WarningsState {
 interface ExternalProps {
   readonly isActive: boolean;
   readonly isFollowingUser: boolean;
+  readonly isFollowingVehicle: boolean;
   readonly onLocationButtonClick: () => void;
   readonly onStartTrip: () => void;
   readonly onStopTrip: () => void;
@@ -31,6 +32,7 @@ export const TripControls = memo(
   ({
     isActive,
     isFollowingUser,
+    isFollowingVehicle,
     onLocationButtonClick,
     onStartTrip,
     onStopTrip,
@@ -50,18 +52,30 @@ export const TripControls = memo(
             speed={speed}
           />
         )}
-        <LocationButton onPress={onLocationButtonClick} isActive={isFollowingUser} />
+        <LocationButton
+          onPress={onLocationButtonClick}
+          isActive={isFollowingUser}
+          accessibilityLabelActive={localizedStrings.t('a11yLocationTrackingActive')}
+          accessibilityLabelInactive={localizedStrings.t('a11yShowMyLocation')}
+        />
         {isActive && (
-          <FAB onPress={onCenterOnVehicle}>
-            <MaterialCommunityIcons name="navigation-variant" size={26} color={Color.primary} />
+          <FAB
+            onPress={onCenterOnVehicle}
+            accessibilityLabel={localizedStrings.t('a11yCenterOnVehicle')}
+          >
+            <MaterialCommunityIcons
+              name="navigation-variant"
+              size={26}
+              color={isFollowingVehicle ? Color.primary : Color.black}
+            />
           </FAB>
         )}
         {isActive ? (
-          <FAB onPress={onStopTrip}>
+          <FAB onPress={onStopTrip} accessibilityLabel={localizedStrings.t('a11yStopTrip')}>
             <MaterialCommunityIcons name="stop-circle" size={30} color={Color.warning} />
           </FAB>
         ) : (
-          <FAB onPress={onStartTrip}>
+          <FAB onPress={onStartTrip} accessibilityLabel={localizedStrings.t('a11yStartTrip')}>
             <MaterialCommunityIcons name="play-circle" size={30} color={Color.primary} />
           </FAB>
         )}

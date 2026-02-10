@@ -1,0 +1,41 @@
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from '../hooks/useTranslation';
+import { POIType } from '../types/init';
+import { getPOITypeLabel } from '../util/poi';
+import { Color, textStyles } from '../values';
+
+interface POITooltipProps {
+  name?: string;
+  type: POIType;
+  originalType?: POIType;
+}
+
+export const POITooltip = ({ name, type, originalType }: POITooltipProps) => {
+  const i18n = useTranslation();
+
+  return (
+    <View style={[styles.tooltip]}>
+      {name && <Text style={styles.tooltipTitle}>{name}</Text>}
+      <Text style={styles.tooltipType}>{getPOITypeLabel(i18n, type, originalType)}</Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  tooltip: {
+    backgroundColor: Color.white,
+    padding: 8,
+    borderRadius: 6,
+    minWidth: 160,
+    textAlign: 'center',
+  },
+  tooltipTitle: {
+    ...textStyles.titleSmall,
+    alignSelf: 'center',
+  },
+  tooltipType: {
+    ...textStyles.hint,
+    alignSelf: 'center',
+  },
+});

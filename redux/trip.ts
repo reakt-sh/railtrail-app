@@ -1,4 +1,5 @@
 import { Position } from '../types/position';
+import { VehicleSegment } from '../types/saved-trip';
 import { Vehicle } from '../types/vehicle';
 import { RailTrailReduxAction } from './action';
 
@@ -6,6 +7,13 @@ import { RailTrailReduxAction } from './action';
 export interface CurrentVehicle {
   readonly id: number | null;
   readonly name: string | null;
+}
+
+export interface ActiveSegment {
+  readonly vehicleId: number;
+  readonly vehicleName: string;
+  readonly startTime: string;
+  readonly startDistance: number;
 }
 
 export interface Motion {
@@ -34,6 +42,8 @@ export interface TripState {
   readonly position: TripPosition;
   readonly warnings: Warnings;
   readonly vehicles: Vehicle[];
+  readonly activeSegment: ActiveSegment | null;
+  readonly completedSegments: VehicleSegment[];
 }
 
 // Action interfaces
@@ -96,6 +106,18 @@ interface TripActionBatchUpdate {
   };
 }
 
+interface TripActionStartSegment {
+  readonly type: 'trip/start-segment';
+  readonly payload: {
+    vehicleId: number;
+    vehicleName: string;
+  };
+}
+
+interface TripActionEndSegment {
+  readonly type: 'trip/end-segment';
+}
+
 export type TripAction =
   | TripActionReset
   | TripActionStart
@@ -107,7 +129,9 @@ export type TripAction =
   | TripActionSetWarnings
   | TripActionSetVehicles
   | TripActionUpdateVehicleFromWebSocket
-  | TripActionBatchUpdate;
+  | TripActionBatchUpdate
+  | TripActionStartSegment
+  | TripActionEndSegment;
 
 export const TripAction = {
   reset: (): TripActionReset => ({
@@ -169,6 +193,15 @@ export const TripAction = {
     type: 'trip/batch-update',
     payload,
   }),
+
+  startSegment: (vehicleId: number, vehicleName: string): TripActionStartSegment => ({
+    type: 'trip/start-segment',
+    payload: { vehicleId, vehicleName },
+  }),
+
+  endSegment: (): TripActionEndSegment => ({
+    type: 'trip/end-segment',
+  }),
 };
 
 export const initialTripState: TripState = {
@@ -194,6 +227,8 @@ export const initialTripState: TripState = {
     nextLevelCrossing: null,
   },
   vehicles: [],
+  activeSegment: null,
+  completedSegments: [],
 };
 
 const reducer = (state = initialTripState, action: RailTrailReduxAction): TripState => {
@@ -205,7 +240,7 @@ const reducer = (state = initialTripState, action: RailTrailReduxAction): TripSt
       return { ...state, isActive: true };
 
     case 'trip/stop':
-      return { ...initialTripState };
+      return { ...initialTripState, vehicles: state.vehicles };
 
     case 'trip/set-current-vehicle':
       return {
@@ -244,7 +279,7 @@ const reducer = (state = initialTripState, action: RailTrailReduxAction): TripSt
       return { ...state, vehicles: action.payload };
 
     case 'trip/update-vehicle-from-websocket': {
-      const { vehicle } = action.payload;
+      const { vehicle, speed } = action.payload;
       const existingIndex = state.vehicles.findIndex((v) => v.id === vehicle.id);
       let updatedVehicles: Vehicle[];
       if (existingIndex >= 0) {
@@ -253,7 +288,11 @@ const reducer = (state = initialTripState, action: RailTrailReduxAction): TripSt
       } else {
         updatedVehicles = [...state.vehicles, vehicle];
       }
-      return { ...state, vehicles: updatedVehicles };
+      return {
+        ...state,
+        vehicles: updatedVehicles,
+        motion: speed !== undefined ? { ...state.motion, speed } : state.motion,
+      };
     }
 
     case 'trip/batch-update': {
@@ -275,6 +314,37 @@ const reducer = (state = initialTripState, action: RailTrailReduxAction): TripSt
               }
             : state.position,
         warnings: warnings ?? state.warnings,
+      };
+    }
+
+    case 'trip/start-segment': {
+      const { vehicleId, vehicleName } = action.payload;
+      return {
+        ...state,
+        activeSegment: {
+          vehicleId,
+          vehicleName,
+          startTime: new Date().toISOString(),
+          startDistance: state.motion.distanceTravelled,
+        },
+      };
+    }
+
+    case 'trip/end-segment': {
+      if (!state.activeSegment) {
+        return state;
+      }
+      const completedSegment: VehicleSegment = {
+        vehicleId: state.activeSegment.vehicleId,
+        vehicleName: state.activeSegment.vehicleName,
+        startTime: state.activeSegment.startTime,
+        endTime: new Date().toISOString(),
+        distanceTravelled: state.motion.distanceTravelled - state.activeSegment.startDistance,
+      };
+      return {
+        ...state,
+        activeSegment: null,
+        completedSegments: [...state.completedSegments, completedSegment],
       };
     }
 

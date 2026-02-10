@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 import { TripAction, Warnings } from '../redux/trip';
 import { POIType, PointOfInterest } from '../types/init';
 import { Vehicle } from '../types/vehicle';
-import { percentToDistance } from '../util/util-functions';
+import { percentToDistance } from '../util/calculators';
 
 /**
  * Calculates and dispatches distance updates for the trip.
@@ -150,9 +150,7 @@ const getNextVehicle = (
   if (percentagePosition == null) return null;
 
   // Exclude own vehicle
-  let filtered = vehicles.filter(
-    (v) => excludeVehicleId == null || v.id !== excludeVehicleId
-  );
+  let filtered = vehicles.filter((v) => excludeVehicleId == null || v.id !== excludeVehicleId);
 
   // Filter by heading towards user if specified
   if (isHeadingTowardsUser != null) {

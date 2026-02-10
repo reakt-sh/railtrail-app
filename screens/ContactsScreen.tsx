@@ -1,38 +1,28 @@
 import { ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ContactCard } from '../components/ContactCard';
+import { useTranslation } from '../hooks/useTranslation';
 import { Color } from '../values';
 
 export const ContactsScreen = () => {
+  const i18n = useTranslation();
+
   return (
     <SafeAreaView style={styles.safeArea} edges={[]}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <ContactCard
-          title="Tourist Info Malente"
-          subtitle="Buchung & Ausgabe der Draisinen"
+          title={i18n.t('contactTouristInfoMalente')}
+          subtitle={i18n.t('contactTouristInfoMalenteSubtitle')}
           address="Bahnhofstraße 3, Malente"
           phone="+49 4523 9842730"
           email="info@tourismus-malente.de"
         />
 
         <ContactCard
-          title="Tourist Info Plön"
-          phone="+49 4522 50950"
-          email="touristinfo@ploen.de"
-        />
-
-        <ContactCard
-          title="Tourist Info Eutin"
-          phone="+49 4521 70970"
-          email="info@eutin-tourismus.de"
-        />
-
-        <ContactCard
-          title="Tourismuszentrale Holsteinische Schweiz"
-          subtitle="Betreiber der Draisinenbahn"
-          address="Bahnhofstraße 5, 24306 Plön"
-          phone="+49 4522 509525"
-          email="info@holsteinischeschweiz.de"
+          title={i18n.t('contactTouristInfoLuetjenburg')}
+          address="Markt 4, 24321 Lütjenburg"
+          phone="+49 4381 - 419941"
+          email="tourist-info@stadt-luetjenburg.de"
         />
       </ScrollView>
     </SafeAreaView>

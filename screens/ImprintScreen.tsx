@@ -2,10 +2,12 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
 import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTranslation } from '../hooks/useTranslation';
 import { Color } from '../values';
 import { textStyles } from '../values/text-styles';
 
 export const ImprintScreen = () => {
+  const i18n = useTranslation();
   const handlePhonePress = () => {
     Linking.openURL(`tel:${'+49 4522 509525'.replace(/\s/g, '')}`);
   };
@@ -22,8 +24,8 @@ export const ImprintScreen = () => {
     <SafeAreaView style={styles.safeArea} edges={[]}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Betreiber</Text>
-          <Text style={styles.text}>Tourismuszentrale Holsteinische Schweiz</Text>
+          <Text style={styles.sectionTitle}>{i18n.t('imprintOperator')}</Text>
+          <Text style={styles.text}>{i18n.t('contactTourismuszentrale')}</Text>
           <Text style={styles.text}>Bahnhofstraße 5</Text>
           <Text style={styles.text}>24306 Plön</Text>
 
@@ -44,16 +46,13 @@ export const ImprintScreen = () => {
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>App-Entwicklung</Text>
+          <Text style={styles.sectionTitle}>{i18n.t('imprintAppDevelopment')}</Text>
           <Text style={styles.text}>HLB GmbH</Text>
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Haftungsausschluss</Text>
-          <Text style={styles.text}>
-            Die Inhalte dieser App wurden mit größtmöglicher Sorgfalt erstellt. Für die Richtigkeit,
-            Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen.
-          </Text>
+          <Text style={styles.sectionTitle}>{i18n.t('imprintDisclaimer')}</Text>
+          <Text style={styles.text}>{i18n.t('imprintDisclaimerText')}</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
