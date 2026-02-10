@@ -204,8 +204,10 @@ export const HomeScreen = () => {
 
   const handleStartVehicleSelect = useCallback(
     (vehicle: Vehicle) => {
+      const vehicleName = vehicle.label ?? `Draisine ${vehicle.id}`;
       tripStartTimeRef.current = new Date().toISOString();
-      dispatch(TripAction.setCurrentVehicle(vehicle.id, vehicle.label ?? `Draisine ${vehicle.id}`));
+      dispatch(TripAction.setCurrentVehicle(vehicle.id, vehicleName));
+      dispatch(TripAction.startSegment(vehicle.id, vehicleName));
       dispatch(TripAction.start());
     },
     [dispatch]
@@ -213,7 +215,10 @@ export const HomeScreen = () => {
 
   const handleChangeVehicle = useCallback(
     (vehicle: Vehicle) => {
-      dispatch(TripAction.setCurrentVehicle(vehicle.id, vehicle.label ?? `Draisine ${vehicle.id}`));
+      const vehicleName = vehicle.label ?? `Draisine ${vehicle.id}`;
+      dispatch(TripAction.endSegment());
+      dispatch(TripAction.setCurrentVehicle(vehicle.id, vehicleName));
+      dispatch(TripAction.startSegment(vehicle.id, vehicleName));
     },
     [dispatch]
   );

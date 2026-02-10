@@ -1,6 +1,6 @@
+import trackData from '../assets/railline/malente-luetjenburg.json';
 import { POIType, PointOfInterest } from '../types/init';
 import { Position } from '../types/position';
-import trackData from '../assets/railline/malente-luetjenburg.json';
 
 // Type definitions for the JSON structure
 interface TrackMarker {
@@ -50,18 +50,13 @@ interface TrackJSON {
 const markerTypeToPOIType: Record<string, POIType> = {
   crossing: POIType.LevelCrossing,
   'minor-crossing': POIType.LesserLevelCrossing,
-  halt: POIType.Generic,
+  halt: POIType.Halt,
   generic: POIType.Generic,
   'end-of-the-line': POIType.TrackEnd,
 };
 
 // Calculate distance between two coordinates using Haversine formula
-const haversineDistance = (
-  lat1: number,
-  lng1: number,
-  lat2: number,
-  lng2: number
-): number => {
+const haversineDistance = (lat1: number, lng1: number, lat2: number, lng2: number): number => {
   const R = 6371000; // Earth's radius in meters
   const dLat = ((lat2 - lat1) * Math.PI) / 180;
   const dLng = ((lng2 - lng1) * Math.PI) / 180;
@@ -117,7 +112,10 @@ const findPercentagePosition = (
 
     let t = 0;
     if (segmentLengthSq > 0) {
-      t = Math.max(0, Math.min(1, ((markerLng - lng1) * dx + (markerLat - lat1) * dy) / segmentLengthSq));
+      t = Math.max(
+        0,
+        Math.min(1, ((markerLng - lng1) * dx + (markerLat - lat1) * dy) / segmentLengthSq)
+      );
     }
 
     const projectedLng = lng1 + t * dx;
@@ -182,7 +180,7 @@ const convertMarkersToPOI = (
         pos: { lat, lng } as Position,
         percentagePosition,
         originalType: marker.extra?.isTurningPoint
-          ? markerTypeToPOIType[marker.type] ?? POIType.Generic
+          ? (markerTypeToPOIType[marker.type] ?? POIType.Generic)
           : undefined,
       };
     })
@@ -237,7 +235,10 @@ export const malenteLuetjenburgTrack = loadTrack();
 // Convert percentage position to lat/lng coordinates
 export const percentageToPosition = (percentage: number): Position => {
   const track = malenteLuetjenburgTrack;
-  const coordinates = (track.path.features[0].geometry as GeoJSON.LineString).coordinates as [number, number][];
+  const coordinates = (track.path.features[0].geometry as GeoJSON.LineString).coordinates as [
+    number,
+    number,
+  ][];
   const { totalLength, cumulativeDistances } = calculateTrackMetrics(coordinates);
 
   const targetDistance = (percentage / 100) * totalLength;

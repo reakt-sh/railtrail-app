@@ -15,8 +15,17 @@ interface TripCardProps {
   i18n: I18n;
 }
 
+const formatVehicleNames = (trip: SavedTrip): string => {
+  if (!trip.segments?.length) {
+    return trip.vehicleName ?? '';
+  }
+  const uniqueNames = [...new Set(trip.segments.map((s) => s.vehicleName))];
+  return uniqueNames.join(', ');
+};
+
 export const TripCard = ({ trip, onDelete, i18n }: TripCardProps) => {
   const locale = i18n.locale as Locale;
+  const vehicleDisplayName = formatVehicleNames(trip);
 
   const renderDeleteAction = () => (
     <TouchableOpacity
@@ -34,7 +43,9 @@ export const TripCard = ({ trip, onDelete, i18n }: TripCardProps) => {
       <View style={styles.card}>
         <View style={styles.cardHeader}>
           <DraisineIcon width={20} height={20} color={Color.primary} />
-          <Text style={[textStyles.headerTextMedium, styles.vehicleName]}>{trip.vehicleName}</Text>
+          <Text style={[textStyles.headerTextMedium, styles.vehicleName]}>
+            {vehicleDisplayName}
+          </Text>
         </View>
         <Text style={[textStyles.bodySmall, styles.date]}>
           {formatDate(trip.startTime, locale)}

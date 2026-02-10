@@ -4,7 +4,7 @@ import { RailTrailReduxAction } from '../redux/action';
 import { ReduxAppState } from '../redux/init';
 import { TripAction } from '../redux/trip';
 import { TripHistoryAction } from '../redux/tripHistory';
-import { SavedTrip } from '../types/saved-trip';
+import { SavedTrip, VehicleSegment } from '../types/saved-trip';
 
 const STORAGE_KEY = 'railtrail_saved_trips';
 
@@ -14,20 +14,36 @@ export const saveAndStopTrip = async (
   startTime: string
 ): Promise<void> => {
   const state = getState();
-  const { currentVehicle, motion } = state.trip;
+  const { currentVehicle, motion, activeSegment, completedSegments } = state.trip;
 
   if (currentVehicle.id == null) {
     dispatch(TripAction.stop());
     return;
   }
 
+  const endTime = new Date().toISOString();
+
+  // Build segments array: completed segments + finalized active segment
+  const segments: VehicleSegment[] = [...completedSegments];
+  if (activeSegment) {
+    segments.push({
+      vehicleId: activeSegment.vehicleId,
+      vehicleName: activeSegment.vehicleName,
+      startTime: activeSegment.startTime,
+      endTime,
+      distanceTravelled: motion.distanceTravelled - activeSegment.startDistance,
+    });
+  }
+
   const savedTrip: SavedTrip = {
     id: `trip_${Date.now()}`,
     startTime,
-    endTime: new Date().toISOString(),
+    endTime,
+    totalDistance: motion.distanceTravelled,
+    segments,
+    // Legacy fields for backwards compatibility
     vehicleId: currentVehicle.id,
     vehicleName: currentVehicle.name ?? `Draisine ${currentVehicle.id}`,
-    totalDistance: motion.distanceTravelled,
   };
 
   try {
@@ -51,12 +67,31 @@ export const saveAndStopTrip = async (
   dispatch(TripAction.stop());
 };
 
+// Migrate old trips without segments array
+const migrateTrip = (trip: SavedTrip): SavedTrip => {
+  if (trip.segments) {
+    return trip;
+  }
+  // Create a single segment from legacy fields
+  return {
+    ...trip,
+    segments: trip.vehicleId != null ? [{
+      vehicleId: trip.vehicleId,
+      vehicleName: trip.vehicleName ?? `Draisine ${trip.vehicleId}`,
+      startTime: trip.startTime,
+      endTime: trip.endTime,
+      distanceTravelled: trip.totalDistance,
+    }] : [],
+  };
+};
+
 export const loadSavedTrips = async (dispatch: Dispatch<RailTrailReduxAction>): Promise<void> => {
   dispatch(TripHistoryAction.setLoading(true));
 
   try {
     const json = await AsyncStorage.getItem(STORAGE_KEY);
-    const trips: SavedTrip[] = json ? JSON.parse(json) : [];
+    const rawTrips: SavedTrip[] = json ? JSON.parse(json) : [];
+    const trips = rawTrips.map(migrateTrip);
     dispatch(TripHistoryAction.setTrips(trips));
   } catch (error) {
     console.error('Failed to load saved trips:', error);
