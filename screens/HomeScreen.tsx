@@ -4,9 +4,7 @@ import * as Location from 'expo-location';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector, useStore } from 'react-redux';
-import { FAB, TrackMapView, TripControls, TripHeader, VehicleSelectionBottomSheet } from '../components';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Color } from '../values';
+import { TrackMapView, TripControls, TripHeader, VehicleSelectionBottomSheet } from '../components';
 import {
   disconnectFromServer,
   initializeApp,
@@ -47,7 +45,7 @@ export const HomeScreen = () => {
   const { startForegroundTracking, stopTracking, requestBackgroundAndSwitch } =
     useLocationTracking();
 
-  const { isSimulating, startSimulation } = useTripSimulation();
+  const { startSimulation, stopSimulation } = useTripSimulation();
 
   // Bottom sheet visibility
   const [isStartTripBottomSheetVisible, setIsStartTripBottomSheetVisible] = useState(false);
@@ -85,9 +83,17 @@ export const HomeScreen = () => {
       });
     }
 
+    // Auto-start simulation in dev mode
+    if (__DEV__) {
+      startSimulation();
+    }
+
     return () => {
       unsubscribePositions();
       disconnectFromServer();
+      if (__DEV__) {
+        stopSimulation();
+      }
     };
   }, []);
 
@@ -258,13 +264,6 @@ export const HomeScreen = () => {
         excludeVehicleId={currentVehicle.id}
         onVehicleSelected={handleChangeVehicle}
       />
-      {__DEV__ && !isActive && !isSimulating && (
-        <View style={styles.devButtonContainer}>
-          <FAB onPress={startSimulation} accessibilityLabel="Start simulation">
-            <MaterialCommunityIcons name="play-box-outline" size={24} color={Color.success} />
-          </FAB>
-        </View>
-      )}
     </View>
   );
 };
@@ -273,10 +272,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
-  },
-  devButtonContainer: {
-    position: 'absolute',
-    top: 100,
-    left: 0,
   },
 });
