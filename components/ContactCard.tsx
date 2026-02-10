@@ -1,5 +1,6 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from '../hooks';
 import { Color } from '../values';
 import { textStyles } from '../values/text-styles';
 
@@ -12,6 +13,8 @@ export interface ContactCardProps {
 }
 
 export const ContactCard = ({ title, subtitle, phone, email, address }: ContactCardProps) => {
+  const i18n = useTranslation();
+
   const handlePhonePress = () => {
     if (phone) {
       Linking.openURL(`tel:${phone.replace(/\s/g, '')}`);
@@ -37,14 +40,24 @@ export const ContactCard = ({ title, subtitle, phone, email, address }: ContactC
       )}
 
       {phone && (
-        <Pressable onPress={handlePhonePress} style={styles.row}>
+        <Pressable
+          onPress={handlePhonePress}
+          style={styles.row}
+          accessibilityRole="link"
+          accessibilityLabel={i18n.t('a11yCallPhone', { phone })}
+        >
           <MaterialCommunityIcons name="phone-outline" size={20} color={Color.primary} />
           <Text style={[styles.ml8, textStyles.link]}>{phone}</Text>
         </Pressable>
       )}
 
       {email && (
-        <Pressable onPress={handleEmailPress} style={styles.row}>
+        <Pressable
+          onPress={handleEmailPress}
+          style={styles.row}
+          accessibilityRole="link"
+          accessibilityLabel={i18n.t('a11ySendEmail', { email })}
+        >
           <MaterialCommunityIcons name="email-outline" size={20} color={Color.primary} />
           <Text style={[styles.ml8, textStyles.link]}>{email}</Text>
         </Pressable>

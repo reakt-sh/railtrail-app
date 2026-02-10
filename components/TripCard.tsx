@@ -18,7 +18,12 @@ export const TripCard = ({ trip, onDelete, i18n }: TripCardProps) => {
   const locale = i18n.locale === 'de' ? 'de-DE' : 'en-US';
 
   const renderDeleteAction = () => (
-    <TouchableOpacity style={styles.deleteButton} onPress={() => onDelete(trip.id)}>
+    <TouchableOpacity
+      style={styles.deleteButton}
+      onPress={() => onDelete(trip.id)}
+      accessibilityRole="button"
+      accessibilityLabel={i18n.t('a11yDeleteTrip')}
+    >
       <MaterialCommunityIcons name="delete" size={24} color={Color.white} />
     </TouchableOpacity>
   );

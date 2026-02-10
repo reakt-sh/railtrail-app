@@ -60,6 +60,8 @@ export const InfoMenuScreen = () => {
                 index === menuItems.length - 1 && styles.menuItemLast,
               ]}
               onPress={() => navigation.navigate(item.screen)}
+              accessibilityRole="button"
+              accessibilityLabel={i18n.t(item.titleKey)}
             >
               {item.customIcon ? (
                 <View style={styles.menuIcon}>{item.customIcon}</View>

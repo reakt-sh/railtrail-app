@@ -136,6 +136,7 @@ const translations = {
     a11yExpandSection: 'Double tap to expand',
     a11yCollapseSection: 'Double tap to collapse',
     a11yAcceptPrivacyPolicy: 'Accept privacy policy',
+    a11yDeleteTrip: 'Delete trip',
   },
 
   de: {
@@ -279,6 +280,7 @@ const translations = {
     a11yExpandSection: 'Doppeltippen zum Öffnen',
     a11yCollapseSection: 'Doppeltippen zum Schließen',
     a11yAcceptPrivacyPolicy: 'Datenschutzerklärung akzeptieren',
+    a11yDeleteTrip: 'Fahrt löschen',
   },
 };
 export { translations };

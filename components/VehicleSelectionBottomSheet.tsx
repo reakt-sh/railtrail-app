@@ -1,6 +1,7 @@
 import BottomSheet from '@gorhom/bottom-sheet';
 import { memo, useEffect, useMemo, useRef } from 'react';
 import { Keyboard, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useTranslation } from '../hooks';
 import { Vehicle } from '../types/vehicle';
 import { Color } from '../values/color';
 import { textStyles } from '../values/text-styles';
@@ -29,6 +30,7 @@ export const VehicleSelectionBottomSheet = memo(
   }: Props) => {
     const bottomSheetRef = useRef<BottomSheet>(null);
     const snapPoints = useMemo(() => ['40%', '60%'], []);
+    const i18n = useTranslation();
 
     useEffect(() => {
       if (isVisible) {
@@ -65,6 +67,10 @@ export const VehicleSelectionBottomSheet = memo(
                 key={vehicle.id}
                 style={styles.vehicleItem}
                 onPress={() => handleVehiclePress(vehicle)}
+                accessibilityRole="button"
+                accessibilityLabel={i18n.t('a11ySelectVehicle', {
+                  name: vehicle.label ?? `Draisine ${vehicle.id}`,
+                })}
               >
                 <Text style={styles.vehicleLabel}>{vehicle.label ?? `Draisine ${vehicle.id}`}</Text>
               </TouchableOpacity>

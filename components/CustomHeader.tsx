@@ -3,16 +3,23 @@ import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTranslation } from '../hooks';
 import { Color, Font } from '../values';
 
 export const CustomHeader = ({ options, navigation }: NativeStackHeaderProps) => {
   const insets = useSafeAreaInsets();
+  const i18n = useTranslation();
   const title = options.title || '';
 
   return (
     <View style={[styles.header, { paddingTop: insets.top + 24 }]}>
       <StatusBar style="light" />
-      <Pressable onPress={() => navigation.goBack()} style={styles.backButton}>
+      <Pressable
+        onPress={() => navigation.goBack()}
+        style={styles.backButton}
+        accessibilityRole="button"
+        accessibilityLabel={i18n.t('a11yGoBack')}
+      >
         <MaterialCommunityIcons name="arrow-left" size={24} color={Color.white} />
       </Pressable>
       <Text style={styles.headerTitle}>{title}</Text>

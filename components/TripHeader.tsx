@@ -51,7 +51,12 @@ export const TripHeader = memo(
             </Text>
           </View>
         </View>
-        <Pressable onPress={onChangeVehicle}>
+        <Pressable
+          onPress={onChangeVehicle}
+          accessibilityRole="button"
+          accessibilityLabel={localizedStrings.t('a11yChangeVehicle')}
+          accessibilityHint={localizedStrings.t('a11yChangeVehicleHint')}
+        >
           <View style={[styles.rowSingleLine, styles.topBorder]}>
             <Text style={styles.labelSingleLine}>{localizedStrings.t('headerVehicleId')}</Text>
             <Text style={styles.valueSingleLine}>{vehicleName ?? ''}</Text>

@@ -25,7 +25,7 @@ const markerConfigs: Record<POIType, MarkerConfig> = {
   [POIType.LevelCrossing]: {
     icon: 'alpha-x',
     color: Color.error,
-    iconSizeSmall: 16,
+    iconSizeSmall: 0,
     iconSizeLarge: 24,
   },
   [POIType.LesserLevelCrossing]: {
@@ -43,8 +43,8 @@ const markerConfigs: Record<POIType, MarkerConfig> = {
 
 export const PointOfInterestMarker = memo(({ pointOfInterestType, useSmallMarker }: Props) => {
   const config = markerConfigs[pointOfInterestType] ?? markerConfigs[POIType.Generic];
-  const size = useSmallMarker ? 16 : 24;
-  const iconSize = useSmallMarker ? (config.iconSizeSmall ?? 8) : (config.iconSizeLarge ?? 16);
+  const size = useSmallMarker ? 6 : 24;
+  const iconSize = useSmallMarker ? (config.iconSizeSmall ?? 0) : (config.iconSizeLarge ?? 16);
   const iconColor = config.iconColor ?? Color.white;
 
   return (

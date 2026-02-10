@@ -16,6 +16,8 @@ export const Snackbar = ({ title, message, state, onPress = () => {} }: Props) =
     onPress={() => {
       onPress();
     }}
+    accessibilityRole="alert"
+    accessibilityLabel={`${title}: ${message}`}
   >
     <View
       style={[
