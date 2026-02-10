@@ -220,14 +220,14 @@ export const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      {isActive && (
+      {(isActive || isFollowingVehicle) && (
         <TripHeader
           distance={motion.distanceTravelled}
           speed={motion.speed}
           nextVehicle={warnings.nextVehicle}
           nextCrossing={warnings.nextLevelCrossing}
-          vehicleName={currentVehicle.name ?? ''}
-          onChangeVehicle={() => setIsChangeVehicleIdBottomSheetVisible(true)}
+          vehicleName={isActive ? (currentVehicle.name ?? '') : (vehicles[0]?.label ?? '')}
+          onChangeVehicle={isActive ? () => setIsChangeVehicleIdBottomSheetVisible(true) : undefined}
         />
       )}
       <TrackMapView

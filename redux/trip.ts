@@ -244,7 +244,7 @@ const reducer = (state = initialTripState, action: RailTrailReduxAction): TripSt
       return { ...state, vehicles: action.payload };
 
     case 'trip/update-vehicle-from-websocket': {
-      const { vehicle } = action.payload;
+      const { vehicle, speed } = action.payload;
       const existingIndex = state.vehicles.findIndex((v) => v.id === vehicle.id);
       let updatedVehicles: Vehicle[];
       if (existingIndex >= 0) {
@@ -253,7 +253,11 @@ const reducer = (state = initialTripState, action: RailTrailReduxAction): TripSt
       } else {
         updatedVehicles = [...state.vehicles, vehicle];
       }
-      return { ...state, vehicles: updatedVehicles };
+      return {
+        ...state,
+        vehicles: updatedVehicles,
+        motion: speed !== undefined ? { ...state.motion, speed } : state.motion,
+      };
     }
 
     case 'trip/batch-update': {

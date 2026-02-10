@@ -12,7 +12,7 @@ interface ExternalProps {
   readonly nextVehicle: number | null;
   readonly nextCrossing: number | null;
   readonly vehicleName: string;
-  readonly onChangeVehicle: () => void;
+  readonly onChangeVehicle?: () => void;
 }
 
 type Props = ExternalProps;
@@ -51,19 +51,25 @@ export const TripHeader = memo(
             </Text>
           </View>
         </View>
-        <Pressable
-          onPress={onChangeVehicle}
-          accessibilityRole="button"
-          accessibilityLabel={localizedStrings.t('a11yChangeVehicle')}
-          accessibilityHint={localizedStrings.t('a11yChangeVehicleHint')}
-        >
+        {onChangeVehicle ? (
+          <Pressable
+            onPress={onChangeVehicle}
+            accessibilityRole="button"
+            accessibilityLabel={localizedStrings.t('a11yChangeVehicle')}
+            accessibilityHint={localizedStrings.t('a11yChangeVehicleHint')}
+          >
+            <View style={[styles.rowSingleLine, styles.topBorder]}>
+              <Text style={styles.labelSingleLine}>{localizedStrings.t('headerVehicleId')}</Text>
+              <Text style={styles.valueSingleLine}>{vehicleName ?? ''}</Text>
+              <MaterialIcons style={styles.icon} name="swap-horiz" size={24} color={Color.text} />
+            </View>
+          </Pressable>
+        ) : (
           <View style={[styles.rowSingleLine, styles.topBorder]}>
             <Text style={styles.labelSingleLine}>{localizedStrings.t('headerVehicleId')}</Text>
             <Text style={styles.valueSingleLine}>{vehicleName ?? ''}</Text>
-
-            <MaterialIcons style={styles.icon} name="swap-horiz" size={24} color={Color.text} />
           </View>
-        </Pressable>
+        )}
       </View>
     );
   }
