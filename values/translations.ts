@@ -61,6 +61,16 @@ const translations = {
     infoTitleImprint: 'Imprint',
     infoTitlePrivacyPolicy: 'Privacy Policy',
 
+    // POI Labels
+    poiGeneric: 'Info',
+    poiLevelCrossing: 'Level crossing',
+    poiLesserLevelCrossing: 'Crossing',
+    poiPicnic: 'Picnic area',
+    poiTrackEnd: 'End of track',
+    poiTurningPoint: 'Turning point',
+    poiHalt: 'Stop',
+    poiEndOfTheLine: 'End of track',
+
     // Accessibility
     a11yGoBack: 'Go back',
     a11yLocationTrackingActive: 'Location tracking active',
@@ -143,6 +153,16 @@ const translations = {
     infoTitleContacts: 'Nummern und Adressen',
     infoTitleImprint: 'Impressum',
     infoTitlePrivacyPolicy: 'Datenschutzerklärung',
+
+    // POI Labels
+    poiGeneric: 'Info',
+    poiLevelCrossing: 'Bahnübergang',
+    poiLesserLevelCrossing: 'Querung',
+    poiPicnic: 'Rastplatz',
+    poiTrackEnd: 'Streckenende',
+    poiTurningPoint: 'Wendepunkt',
+    poiHalt: 'Haltepunkt',
+    poiEndOfTheLine: 'Streckenende',
 
     // Accessibility
     a11yGoBack: 'Zurück',

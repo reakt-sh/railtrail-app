@@ -9,10 +9,12 @@ import {
   TrainForegroundIcon,
   UserLocationIcon,
 } from '../assets/icons';
+import { useTranslation } from '../hooks/useTranslation';
 import { PointOfInterest } from '../types/init';
 import { Position } from '../types/position';
 import { Vehicle } from '../types/vehicle';
-import { POITooltip, getPOITitle } from './POITooltip';
+import { getPOITitle } from '../util/poi';
+import { POITooltip } from './POITooltip';
 import { PointOfInterestMarker } from './PointOfInterestMarker';
 import { Track } from './Track';
 
@@ -40,6 +42,7 @@ export const MapMarkers = memo(
     useSmallMarker,
     mapHeading,
   }: Props) => {
+    const i18n = useTranslation();
     return (
       <>
         {/* User Location Marker */}
@@ -69,7 +72,7 @@ export const MapMarkers = memo(
             key={`poi-${index}`}
             id={`poi-${index}`}
             coordinate={[poi.pos.lng, poi.pos.lat]}
-            title={getPOITitle(poi.name, poi.typeId)}
+            title={getPOITitle(i18n, poi.name, poi.typeId, poi.originalType)}
           >
             <View>
               <PointOfInterestMarker
@@ -77,8 +80,8 @@ export const MapMarkers = memo(
                 useSmallMarker={useSmallMarker}
               />
             </View>
-            <MapLibreGL.Callout title={getPOITitle(poi.name, poi.typeId)}>
-              <POITooltip name={poi.name} typeId={poi.typeId} />
+            <MapLibreGL.Callout title={getPOITitle(i18n, poi.name, poi.typeId, poi.originalType)}>
+              <POITooltip name={poi.name} type={poi.typeId} originalType={poi.originalType} />
             </MapLibreGL.Callout>
           </MapLibreGL.PointAnnotation>
         ))}

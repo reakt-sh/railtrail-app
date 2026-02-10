@@ -14,12 +14,14 @@ export interface TrackListEntry {
 }
 
 export enum POIType {
-  Generic = 0,
-  LevelCrossing = 1,
-  LesserLevelCrossing = 2,
-  Picnic = 3,
-  TrackEnd = 4,
-  TurningPoint = 5,
+  Generic = 'generic',
+  LevelCrossing = 'crossing',
+  LesserLevelCrossing = 'lesser-crossing',
+  Picnic = 'picnic',
+  TrackEnd = 'track-end',
+  TurningPoint = 'turning-point',
+  Halt = 'halt',
+  EndOfTheLine = 'end-of-the-line',
 }
 
 export interface PointOfInterest {
@@ -27,4 +29,5 @@ export interface PointOfInterest {
   name?: string;
   pos: Position;
   percentagePosition: number;
+  originalType?: POIType; // Original marker type before being converted to turning point
 }

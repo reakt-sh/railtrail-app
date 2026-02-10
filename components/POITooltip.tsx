@@ -1,33 +1,25 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from '../hooks/useTranslation';
 import { POIType } from '../types/init';
+import { getPOITypeLabel } from '../util/poi';
 import { Color, textStyles } from '../values';
-
-const poiTypeLabels: Record<POIType, string> = {
-  [POIType.Generic]: 'Info',
-  [POIType.LevelCrossing]: 'Bahnübergang',
-  [POIType.LesserLevelCrossing]: 'Querung',
-  [POIType.Picnic]: 'Rastplatz',
-  [POIType.TrackEnd]: 'Streckenende',
-  [POIType.TurningPoint]: 'Wendepunkt',
-};
 
 interface POITooltipProps {
   name?: string;
-  typeId: POIType;
+  type: POIType;
+  originalType?: POIType;
 }
 
-export const POITooltip = ({ name, typeId }: POITooltipProps) => {
+export const POITooltip = ({ name, type, originalType }: POITooltipProps) => {
+  const i18n = useTranslation();
+
   return (
     <View style={[styles.tooltip]}>
       {name && <Text style={styles.tooltipTitle}>{name}</Text>}
-      <Text style={styles.tooltipType}>{poiTypeLabels[typeId]}</Text>
+      <Text style={styles.tooltipType}>{getPOITypeLabel(i18n, type, originalType)}</Text>
     </View>
   );
-};
-
-export const getPOITitle = (name: string | undefined, typeId: POIType): string => {
-  return name || poiTypeLabels[typeId];
 };
 
 const styles = StyleSheet.create({

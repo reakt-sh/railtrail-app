@@ -181,6 +181,7 @@ const convertMarkersToPOI = (
         name: marker.name,
         pos: { lat, lng } as Position,
         percentagePosition,
+        originalType: marker.extra?.isTurningPoint ? marker.type : undefined,
       };
     })
     .sort((a, b) => a.percentagePosition - b.percentagePosition);
