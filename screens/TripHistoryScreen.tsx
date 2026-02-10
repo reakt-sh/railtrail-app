@@ -1,8 +1,8 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useEffect } from 'react';
 import { ActivityIndicator, Alert, FlatList, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
+import { DraisineIcon } from '../assets/icons';
 import { TripCard } from '../components';
 import { deleteSavedTrip, loadSavedTrips } from '../effect-actions/trip-storage';
 import { useTranslation } from '../hooks/useTranslation';
@@ -32,7 +32,7 @@ export const TripHistoryScreen = () => {
 
   const renderEmptyState = () => (
     <View style={styles.emptyState}>
-      <MaterialCommunityIcons name="train" size={64} color={Color.outline} />
+      <DraisineIcon width={64} height={64} color={Color.outline} />
       <Text style={[textStyles.bodyMedium, styles.emptyText]}>{i18n.t('tripHistoryEmpty')}</Text>
       <Text style={[textStyles.bodySmall, styles.emptySubtext]}>
         {i18n.t('tripHistoryEmptySubtext')}

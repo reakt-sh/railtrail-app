@@ -61,7 +61,7 @@ export const VehicleSelectionBottomSheet = memo(
         <View style={styles.contentContainer}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.subtitle}>{subtitle}</Text>
-          <ScrollView style={styles.vehicleList}>
+          <ScrollView style={styles.vehicleList} contentContainerStyle={styles.vehicleGrid}>
             {availableVehicles.map((vehicle) => (
               <TouchableOpacity
                 key={vehicle.id}
@@ -72,7 +72,7 @@ export const VehicleSelectionBottomSheet = memo(
                   name: vehicle.label ?? `Draisine ${vehicle.id}`,
                 })}
               >
-                <Text style={styles.vehicleLabel}>{vehicle.label ?? `Draisine ${vehicle.id}`}</Text>
+                <Text style={styles.vehicleLabel}>{vehicle.label ?? `${vehicle.id}`}</Text>
               </TouchableOpacity>
             ))}
           </ScrollView>
@@ -101,16 +101,23 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     flex: 1,
   },
+  vehicleGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    gap: 8,
+    paddingHorizontal: 8,
+  },
   vehicleItem: {
-    padding: 16,
-    marginVertical: 8,
-    borderRadius: 8,
+    width: '23%',
+    aspectRatio: 1,
+    borderRadius: 12,
     backgroundColor: Color.gray,
-    alignItems: 'center',
+    minHeight: 48,
+    justifyContent: 'center',
   },
   vehicleLabel: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: Color.text,
+    ...textStyles.bodyMedium,
+    textAlign: 'center',
   },
 });
