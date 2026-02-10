@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { I18n } from 'i18n-js';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Swipeable } from 'react-native-gesture-handler';
+import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import { DraisineIcon } from '../assets/icons';
 import { SavedTrip } from '../types/saved-trip';
 import { formatDate, formatDistance, formatDuration } from '../util/formatters';
@@ -17,14 +17,14 @@ interface TripCardProps {
 export const TripCard = ({ trip, onDelete, i18n }: TripCardProps) => {
   const locale = i18n.locale === 'de' ? 'de-DE' : 'en-US';
 
-  const renderRightActions = () => (
+  const renderDeleteAction = () => (
     <TouchableOpacity style={styles.deleteButton} onPress={() => onDelete(trip.id)}>
       <MaterialCommunityIcons name="delete" size={24} color={Color.white} />
     </TouchableOpacity>
   );
 
   return (
-    <Swipeable renderRightActions={renderRightActions}>
+    <ReanimatedSwipeable renderRightActions={renderDeleteAction}>
       <View style={styles.card}>
         <View style={styles.cardHeader}>
           <DraisineIcon width={20} height={20} color={Color.primary} />
@@ -51,7 +51,7 @@ export const TripCard = ({ trip, onDelete, i18n }: TripCardProps) => {
           </View>
         </View>
       </View>
-    </Swipeable>
+    </ReanimatedSwipeable>
   );
 };
 
