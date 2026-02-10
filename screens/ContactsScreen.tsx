@@ -19,23 +19,10 @@ export const ContactsScreen = () => {
         />
 
         <ContactCard
-          title={i18n.t('contactTouristInfoPloen')}
-          phone="+49 4522 50950"
-          email="touristinfo@ploen.de"
-        />
-
-        <ContactCard
-          title={i18n.t('contactTouristInfoEutin')}
-          phone="+49 4521 70970"
-          email="info@eutin-tourismus.de"
-        />
-
-        <ContactCard
-          title={i18n.t('contactTourismuszentrale')}
-          subtitle={i18n.t('contactTourismuszentraleSubtitle')}
-          address="Bahnhofstraße 5, 24306 Plön"
-          phone="+49 4522 509525"
-          email="info@holsteinischeschweiz.de"
+          title={i18n.t('contactTouristInfoLuetjenburg')}
+          address="Markt 4, 24321 Lütjenburg"
+          phone="+49 4381 - 419941"
+          email="tourist-info@stadt-luetjenburg.de"
         />
       </ScrollView>
     </SafeAreaView>

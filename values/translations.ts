@@ -51,7 +51,7 @@ const translations = {
     headerNextVehicle: 'Next vehicle',
     headerSpeed: 'Speed',
     headerNextCrossing: 'Next level crossing',
-    headerVehicleId: 'Vehicle Number:',
+    headerVehicleId: 'Vehicle:',
 
     // Info Menu
     infoTitleDraisineInfo: 'Draisine Explanations',
@@ -74,9 +74,7 @@ const translations = {
     // Contacts Screen
     contactTouristInfoMalente: 'Tourist Info Malente',
     contactTouristInfoMalenteSubtitle: 'Booking & handout of draisines',
-    contactTouristInfoPloen: 'Tourist Info Plön',
-    contactTouristInfoEutin: 'Tourist Info Eutin',
-    contactTourismuszentrale: 'Tourism Center Holsteinische Schweiz',
+    contactTouristInfoLuetjenburg: 'Tourist Info Lütjenburg',
     contactTourismuszentraleSubtitle: 'Operator of the draisine railway',
 
     // Good to Know Screen (FAQ)
@@ -195,7 +193,7 @@ const translations = {
     headerNextVehicle: 'Nächstes Draisine',
     headerSpeed: 'Geschwindigkeit',
     headerNextCrossing: 'Nächster Bahnübergang',
-    headerVehicleId: 'Fahrzeugnummer:',
+    headerVehicleId: 'Draisine:',
 
     // Info Menu
     infoTitleDraisineInfo: 'Erklärungen zur Draisine',
@@ -218,9 +216,7 @@ const translations = {
     // Contacts Screen
     contactTouristInfoMalente: 'Tourist Info Malente',
     contactTouristInfoMalenteSubtitle: 'Buchung & Ausgabe der Draisinen',
-    contactTouristInfoPloen: 'Tourist Info Plön',
-    contactTouristInfoEutin: 'Tourist Info Eutin',
-    contactTourismuszentrale: 'Tourismuszentrale Holsteinische Schweiz',
+    contactTouristInfoLuetjenburg: 'Tourist Info Lütjenburg',
     contactTourismuszentraleSubtitle: 'Betreiber der Draisinenbahn',
 
     // Good to Know Screen (FAQ)
