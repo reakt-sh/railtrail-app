@@ -1,3 +1,5 @@
+import { Locale } from '../hooks/useTranslation';
+
 /**
  * Formatiert eine Distanz in Metern zu einem lesbaren String.
  * Unter 1000m wird in Metern angezeigt, darüber in Kilometern.
@@ -38,7 +40,9 @@ export const formatDuration = (
 
 export const formatDate = (isoString: string, locale: string): string => {
   const date = new Date(isoString);
-  return date.toLocaleDateString(locale, {
+  const localesArgument = locale === Locale.de ? 'de-DE' : 'en-US';
+
+  return date.toLocaleDateString(localesArgument, {
     day: '2-digit',
     month: '2-digit',
     year: 'numeric',

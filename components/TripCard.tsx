@@ -3,6 +3,7 @@ import { I18n } from 'i18n-js';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import { DraisineIcon } from '../assets/icons';
+import { Locale } from '../hooks/useTranslation';
 import { SavedTrip } from '../types/saved-trip';
 import { formatDate, formatDistance, formatDuration } from '../util/formatters';
 import { Color } from '../values';
@@ -15,7 +16,7 @@ interface TripCardProps {
 }
 
 export const TripCard = ({ trip, onDelete, i18n }: TripCardProps) => {
-  const locale = i18n.locale === 'de' ? 'de-DE' : 'en-US';
+  const locale = i18n.locale as Locale;
 
   const renderDeleteAction = () => (
     <TouchableOpacity
