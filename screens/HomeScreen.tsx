@@ -112,12 +112,19 @@ export const HomeScreen = () => {
 
   // Camera animation: follow vehicle position OR user GPS location
   useEffect(() => {
-    if (isFollowingVehicle && position.calculated) {
-      animateCamera(position.calculated.lat, position.calculated.lng, motion.heading);
+    if (isFollowingVehicle) {
+      // If trip is active, follow own vehicle; otherwise follow first available vehicle
+      const vehicleToFollow = currentVehicle.id != null
+        ? vehicles.find((v) => v.id === currentVehicle.id)
+        : vehicles[0];
+
+      if (vehicleToFollow) {
+        animateCamera(vehicleToFollow.pos.lat, vehicleToFollow.pos.lng, vehicleToFollow.heading ?? 0);
+      }
     } else if (isFollowingUser && location) {
       animateCamera(location.coords.latitude, location.coords.longitude, location.coords.heading);
     }
-  }, [location, position.calculated, isFollowingUser, isFollowingVehicle]);
+  }, [location, vehicles, currentVehicle.id, isFollowingUser, isFollowingVehicle]);
 
   // Handle trip start/stop
   useEffect(() => {
@@ -164,10 +171,15 @@ export const HomeScreen = () => {
   const handleCenterOnVehicle = useCallback(() => {
     const currentState = store.getState();
     const vehicleId = currentState.trip.currentVehicle.id;
-    const myVehicle = currentState.trip.vehicles.find((v) => v.id === vehicleId);
+    const allVehicles = currentState.trip.vehicles;
 
-    if (myVehicle) {
-      centerOnPosition(myVehicle.pos.lat, myVehicle.pos.lng, myVehicle.heading ?? 0);
+    // Follow own vehicle if trip is active, otherwise follow first available vehicle
+    const vehicleToFollow = vehicleId != null
+      ? allVehicles.find((v) => v.id === vehicleId)
+      : allVehicles[0];
+
+    if (vehicleToFollow) {
+      centerOnPosition(vehicleToFollow.pos.lat, vehicleToFollow.pos.lng, vehicleToFollow.heading ?? 0);
       setIsFollowingVehicle(true);
     }
   }, [store, centerOnPosition, setIsFollowingVehicle]);
@@ -221,7 +233,7 @@ export const HomeScreen = () => {
       <TrackMapView
         mapRef={mapRef}
         cameraRef={cameraRef}
-        onRegionChange={(zoom, heading) => onRegionChange(zoom, heading)}
+        onRegionChange={(zoom, heading, isUserInteraction) => onRegionChange(zoom, heading, isUserInteraction)}
         location={location}
         calculatedPosition={position.calculated}
         pointsOfInterest={track.pointsOfInterest}

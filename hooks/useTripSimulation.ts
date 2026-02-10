@@ -49,10 +49,10 @@ export const useTripSimulation = () => {
 
     // Start the simulation interval
     intervalRef.current = setInterval(() => {
-      // Variable speed: 10-25 km/h with slight random variation
-      const baseSpeed = 17.5; // Middle of 10-25
-      const variation = (Math.random() - 0.5) * 15; // ±7.5 km/h
-      const speed = Math.max(10, Math.min(25, baseSpeed + variation));
+      // Variable speed: 7-15 km/h
+      const baseSpeed = 11;
+      const variation = (Math.random() - 0.5) * 8; // ±4 km/h
+      const speed = Math.max(7, Math.min(15, baseSpeed + variation));
 
       // Calculate distance traveled per second
       const distancePerSecond = (speed * 1000) / 3600; // m/s

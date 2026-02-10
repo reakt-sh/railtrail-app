@@ -13,7 +13,7 @@ interface UseMapCameraReturn {
   onLocationButtonClicked: (
     location: { latitude: number; longitude: number; heading: number | null } | null
   ) => void;
-  onRegionChange: (zoom: number, heading: number) => void;
+  onRegionChange: (zoom: number, heading: number, isUserInteraction?: boolean) => void;
   centerOnPosition: (lat: number, lng: number, heading: number, zoomLevel?: number) => void;
 }
 
@@ -23,6 +23,7 @@ export const useMapCamera = (): UseMapCameraReturn => {
   const [isFollowingVehicle, setIsFollowingVehicleState] = useState<boolean>(false);
   const [cameraHeading, setCameraHeading] = useState<number>(0);
   const [useSmallMarker, setUseSmallMarker] = useState<boolean>(false);
+  const isProgrammaticMove = useRef<boolean>(false);
 
   const setIsFollowingUser = useCallback((following: boolean) => {
     setIsFollowingUserState(following);
@@ -39,6 +40,7 @@ export const useMapCamera = (): UseMapCameraReturn => {
   }, []);
 
   const animateCamera = useCallback((lat: number, lng: number, heading: number | null) => {
+    isProgrammaticMove.current = true;
     cameraRef.current?.setCamera({
       centerCoordinate: [lng, lat],
       heading: heading ?? 0,
@@ -58,16 +60,23 @@ export const useMapCamera = (): UseMapCameraReturn => {
     [isFollowingUser, setIsFollowingUser, animateCamera]
   );
 
-  const onRegionChange = useCallback((zoom: number, heading: number) => {
-    setUseSmallMarker(zoom < 15);
-    setCameraHeading(heading);
-    // User scrolled/zoomed - disable all following
-    setIsFollowingUserState(false);
-    setIsFollowingVehicleState(false);
-  }, []);
+  const onRegionChange = useCallback(
+    (zoom: number, heading: number, isUserInteraction: boolean = false) => {
+      setUseSmallMarker(zoom < 15);
+      setCameraHeading(heading);
+      // Only disable following on explicit user interaction (scroll/zoom gesture)
+      if (isUserInteraction) {
+        isProgrammaticMove.current = false;
+        setIsFollowingUserState(false);
+        setIsFollowingVehicleState(false);
+      }
+    },
+    []
+  );
 
   const centerOnPosition = useCallback(
     (lat: number, lng: number, heading: number, zoomLevel: number = 20) => {
+      isProgrammaticMove.current = true;
       cameraRef.current?.setCamera({
         centerCoordinate: [lng, lat],
         heading,
