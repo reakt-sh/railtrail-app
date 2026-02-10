@@ -46,8 +46,15 @@ export const VehicleSelectionBottomSheet = memo(
       onVehicleSelected(vehicle);
     };
 
-    const availableVehicles =
-      excludeVehicleId != null ? vehicles.filter((v) => v.id !== excludeVehicleId) : vehicles;
+    const availableVehicles = useMemo(() => {
+      const filtered =
+        excludeVehicleId != null ? vehicles.filter((v) => v.id !== excludeVehicleId) : vehicles;
+      return [...filtered].sort((a, b) => {
+        const labelA = a.label ?? `${a.id}`;
+        const labelB = b.label ?? `${b.id}`;
+        return labelA.localeCompare(labelB, undefined, { numeric: true });
+      });
+    }, [vehicles, excludeVehicleId]);
 
     return (
       <BottomSheet
