@@ -30,6 +30,16 @@ export const textStyles = StyleSheet.create({
     fontSize: 14,
     color: Color.text,
   },
+  titleSmall: {
+    fontFamily: Font.semiBold,
+    fontSize: 14,
+    color: Color.text,
+  },
+  hint: {
+    fontFamily: Font.regular,
+    fontSize: 12,
+    color: Color.darkGray,
+  },
   link: {
     fontFamily: Font.regular,
     fontSize: 16,

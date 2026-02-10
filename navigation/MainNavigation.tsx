@@ -2,8 +2,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTranslation } from '../hooks';
 import { HomeScreen } from '../screens';
-import { InfoNavigation } from './InfoNavigation';
 import { Color } from '../values';
+import { InfoNavigation } from './InfoNavigation';
 
 export const MainNavigation = () => {
   const Tab = createBottomTabNavigator();
@@ -25,6 +25,7 @@ export const MainNavigation = () => {
         },
         tabBarActiveTintColor: Color.primary,
         tabBarInactiveTintColor: Color.darkGray,
+        tabBarStyle: { height: 88, paddingBottom: 40, paddingTop: 8 },
       })}
     >
       <Tab.Screen name={localizedStrings.t('navigationMap')} component={HomeScreen} />
