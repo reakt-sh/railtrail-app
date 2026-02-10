@@ -44,7 +44,8 @@ export const useMapCamera = (): UseMapCameraReturn => {
     cameraRef.current?.setCamera({
       centerCoordinate: [lng, lat],
       heading: heading ?? 0,
-      animationDuration: 250,
+      animationDuration: 500,
+      animationMode: 'easeTo',
     });
   }, []);
 
@@ -81,6 +82,7 @@ export const useMapCamera = (): UseMapCameraReturn => {
         centerCoordinate: [lng, lat],
         heading,
         animationDuration: 500,
+        animationMode: 'easeTo',
         zoomLevel,
       });
     },

@@ -16,7 +16,7 @@ const MARKER_SIZE = {
     background: 32,
     foregroundWidth: 16,
     foregroundHeight: 16,
-    labelTop: 24,
+    labelTop: 12,
     labelFontSize: 8,
   },
   large: {
