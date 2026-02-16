@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
-import { Color } from '../consts';
-import { textStyles } from '../consts/text-styles';
+import { Color } from '../constants';
+import { textStyles } from '../constants/text-styles';
 import { useTranslation } from '../hooks';
 
 export interface ContactCardProps {

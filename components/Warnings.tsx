@@ -1,11 +1,11 @@
 import { I18n } from 'i18n-js';
 import { useEffect, useRef } from 'react';
-import { Snackbar, SnackbarState } from './Snackbar';
 import {
   LEVEL_CROSSING_WARNING_DISTANCE,
   VEHICLE_HEADING_TOWARDS_USER_WARNING_DISTANCE,
   VEHICLE_WARNING_DISTANCE,
-} from '../util/consts';
+} from '../constants';
+import { Snackbar, SnackbarState } from './Snackbar';
 
 interface ExternalProps {
   readonly localizedStrings: I18n;
@@ -45,7 +45,10 @@ export const Warnings = ({
     ) {
       lastHeadingWarningDistance.current = null;
     }
-    if (nextLevelCrossingDistance == null || nextLevelCrossingDistance > LEVEL_CROSSING_WARNING_DISTANCE) {
+    if (
+      nextLevelCrossingDistance == null ||
+      nextLevelCrossingDistance > LEVEL_CROSSING_WARNING_DISTANCE
+    ) {
       lastCrossingWarningDistance.current = null;
     }
   }, [nextVehicleDistance, nextVehicleHeadingTowardsUserDistance, nextLevelCrossingDistance]);
@@ -132,7 +135,11 @@ export const Warnings = ({
       return LevelCrossingWarning;
     }
     return null;
-  } else if (isMoving && nextVehicleDistance != null && nextVehicleDistance <= VEHICLE_WARNING_DISTANCE) {
+  } else if (
+    isMoving &&
+    nextVehicleDistance != null &&
+    nextVehicleDistance <= VEHICLE_WARNING_DISTANCE
+  ) {
     if (shouldShowWarning(nextVehicleDistance, lastVehicleWarningDistance)) {
       return VehicleWarning;
     }

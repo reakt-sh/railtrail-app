@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Color } from '../consts';
+import { Color } from '../constants';
 import { useTranslation } from '../hooks';
 import { HomeScreen } from '../screens';
 import { InfoNavigation } from './InfoNavigation';

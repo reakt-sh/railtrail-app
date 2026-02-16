@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
 import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
-import { Color } from '../consts/color';
+import { Color } from '../constants/color';
 
 interface ExternalProps {
   readonly isChecked: boolean;

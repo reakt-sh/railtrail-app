@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Color, privacySections } from '../consts';
-import { textStyles } from '../consts/text-styles';
+import { Color, privacySections } from '../constants';
+import { textStyles } from '../constants/text-styles';
 import { useTranslation } from '../hooks/useTranslation';
 
 type SectionProps = {

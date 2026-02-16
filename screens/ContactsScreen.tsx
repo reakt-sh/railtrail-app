@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ContactCard } from '../components/ContactCard';
-import { Color } from '../consts';
+import { Color } from '../constants';
 import { useTranslation } from '../hooks/useTranslation';
 
 export const ContactsScreen = () => {

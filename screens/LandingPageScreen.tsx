@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CommonActions } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
@@ -5,9 +6,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 import { MalenteLogoIcon } from '../assets/icons';
 import { Button, Checkbox } from '../components';
-import { privacySections } from '../consts';
-import { Color } from '../consts/color';
-import { textStyles } from '../consts/text-styles';
+import { privacySections, StorageKeys } from '../constants';
+import { Color } from '../constants/color';
+import { textStyles } from '../constants/text-styles';
 import {
   getForegroundPermissionStatus,
   requestForegroundPermission,
@@ -22,10 +23,18 @@ export const LandingPageScreen = ({ navigation }: any) => {
   const [isPrivacyModalVisible, setIsPrivacyModalVisible] = useState(false);
 
   useEffect(() => {
-    getForegroundPermissionStatus().then((isPermissionGrated) => {
-      if (isPermissionGrated) {
-        dispatch(AppAction.setPermissions({ foreground: true }));
+    const checkInitialState = async () => {
+      const [isPermissionGranted, privacyAccepted] = await Promise.all([
+        getForegroundPermissionStatus(),
+        AsyncStorage.getItem(StorageKeys.PRIVACY_ACCEPTED),
+      ]);
 
+      if (isPermissionGranted) {
+        dispatch(AppAction.setPermissions({ foreground: true }));
+      }
+
+      // Skip landing page if both privacy accepted and permission granted
+      if (privacyAccepted === 'true' && isPermissionGranted) {
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
@@ -33,21 +42,25 @@ export const LandingPageScreen = ({ navigation }: any) => {
           })
         );
       }
-    });
+    };
+
+    checkInitialState();
   }, []);
 
-  const continueWithLocation = () => {
-    requestForegroundPermission().then((result) => {
-      if (result) {
-        dispatch(AppAction.setPermissions({ foreground: true }));
-      }
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ name: 'Main' }],
-        })
-      );
-    });
+  const continueWithLocation = async () => {
+    // Save privacy policy acceptance
+    await AsyncStorage.setItem(StorageKeys.PRIVACY_ACCEPTED, 'true');
+
+    const result = await requestForegroundPermission();
+    if (result) {
+      dispatch(AppAction.setPermissions({ foreground: true }));
+    }
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: 'Main' }],
+      })
+    );
   };
 
   return (

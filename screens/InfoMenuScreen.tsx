@@ -5,8 +5,8 @@ import React from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { DraisineIcon, MalenteLogoIcon } from '../assets/icons';
-import { Color } from '../consts';
-import { textStyles } from '../consts/text-styles';
+import { Color } from '../constants';
+import { textStyles } from '../constants/text-styles';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Locale, useTranslation } from '../hooks/useTranslation';
 

@@ -3,7 +3,7 @@ import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Color, Font } from '../consts';
+import { Color, Font } from '../constants';
 import { useTranslation } from '../hooks';
 
 export const CustomHeader = ({ options, navigation }: NativeStackHeaderProps) => {

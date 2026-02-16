@@ -1,8 +1,8 @@
 import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import YoutubePlayer from 'react-native-youtube-iframe';
-import { Color } from '../consts/color';
-import { textStyles } from '../consts/text-styles';
+import { Color } from '../constants/color';
+import { textStyles } from '../constants/text-styles';
 import { useTranslation } from '../hooks';
 
 export const DraisineInfoScreen = () => {

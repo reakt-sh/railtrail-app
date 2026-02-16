@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import React, { memo } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Color } from '../consts';
+import { Color } from '../constants';
 import { POIType } from '../types/init';
 
 interface ExternalProps {

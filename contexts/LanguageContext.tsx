@@ -1,8 +1,7 @@
-import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { StorageKeys } from '../constants';
 import { Locale } from '../hooks/useTranslation';
-
-const LANGUAGE_STORAGE_KEY = '@app_language';
 
 interface LanguageContextType {
   locale: Locale;
@@ -23,7 +22,7 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
   useEffect(() => {
     const loadLanguage = async () => {
       try {
-        const savedLocale = await AsyncStorage.getItem(LANGUAGE_STORAGE_KEY);
+        const savedLocale = await AsyncStorage.getItem(StorageKeys.LANGUAGE);
         if (savedLocale && Object.values(Locale).includes(savedLocale as Locale)) {
           setLocaleState(savedLocale as Locale);
         }
@@ -39,7 +38,7 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
 
   const setLocale = async (newLocale: Locale) => {
     try {
-      await AsyncStorage.setItem(LANGUAGE_STORAGE_KEY, newLocale);
+      await AsyncStorage.setItem(StorageKeys.LANGUAGE, newLocale);
       setLocaleState(newLocale);
     } catch (error) {
       console.error('Failed to save language preference:', error);

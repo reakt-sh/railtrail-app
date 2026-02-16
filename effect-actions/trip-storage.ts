@@ -1,12 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Dispatch } from '@reduxjs/toolkit';
+import { StorageKeys } from '../constants';
 import { RailTrailReduxAction } from '../redux/action';
 import { ReduxAppState } from '../redux/init';
 import { TripAction } from '../redux/trip';
 import { TripHistoryAction } from '../redux/tripHistory';
 import { SavedTrip, VehicleSegment } from '../types/saved-trip';
-
-const STORAGE_KEY = 'railtrail_saved_trips';
 
 export const saveAndStopTrip = async (
   dispatch: Dispatch<RailTrailReduxAction>,
@@ -48,14 +47,14 @@ export const saveAndStopTrip = async (
 
   try {
     // Load existing trips
-    const existingJson = await AsyncStorage.getItem(STORAGE_KEY);
+    const existingJson = await AsyncStorage.getItem(StorageKeys.SAVED_TRIPS);
     const existingTrips: SavedTrip[] = existingJson ? JSON.parse(existingJson) : [];
 
     // Add new trip at the beginning
     const updatedTrips = [savedTrip, ...existingTrips];
 
     // Save to storage
-    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedTrips));
+    await AsyncStorage.setItem(StorageKeys.SAVED_TRIPS, JSON.stringify(updatedTrips));
 
     // Update Redux state
     dispatch(TripHistoryAction.addTrip(savedTrip));
@@ -75,13 +74,18 @@ const migrateTrip = (trip: SavedTrip): SavedTrip => {
   // Create a single segment from legacy fields
   return {
     ...trip,
-    segments: trip.vehicleId != null ? [{
-      vehicleId: trip.vehicleId,
-      vehicleName: trip.vehicleName ?? `Draisine ${trip.vehicleId}`,
-      startTime: trip.startTime,
-      endTime: trip.endTime,
-      distanceTravelled: trip.totalDistance,
-    }] : [],
+    segments:
+      trip.vehicleId != null
+        ? [
+            {
+              vehicleId: trip.vehicleId,
+              vehicleName: trip.vehicleName ?? `Draisine ${trip.vehicleId}`,
+              startTime: trip.startTime,
+              endTime: trip.endTime,
+              distanceTravelled: trip.totalDistance,
+            },
+          ]
+        : [],
   };
 };
 
@@ -89,7 +93,7 @@ export const loadSavedTrips = async (dispatch: Dispatch<RailTrailReduxAction>): 
   dispatch(TripHistoryAction.setLoading(true));
 
   try {
-    const json = await AsyncStorage.getItem(STORAGE_KEY);
+    const json = await AsyncStorage.getItem(StorageKeys.SAVED_TRIPS);
     const rawTrips: SavedTrip[] = json ? JSON.parse(json) : [];
     const trips = rawTrips.map(migrateTrip);
     dispatch(TripHistoryAction.setTrips(trips));
@@ -107,14 +111,14 @@ export const deleteSavedTrip = async (
 ): Promise<void> => {
   try {
     // Load existing trips
-    const existingJson = await AsyncStorage.getItem(STORAGE_KEY);
+    const existingJson = await AsyncStorage.getItem(StorageKeys.SAVED_TRIPS);
     const existingTrips: SavedTrip[] = existingJson ? JSON.parse(existingJson) : [];
 
     // Filter out the deleted trip
     const updatedTrips = existingTrips.filter((trip) => trip.id !== tripId);
 
     // Save to storage
-    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedTrips));
+    await AsyncStorage.setItem(StorageKeys.SAVED_TRIPS, JSON.stringify(updatedTrips));
 
     // Update Redux state
     dispatch(TripHistoryAction.removeTrip(tripId));

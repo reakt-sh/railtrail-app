@@ -1,6 +1,6 @@
 import * as MapLibreGL from '@maplibre/maplibre-react-native';
 import { memo } from 'react';
-import { Color } from '../consts/color';
+import { Color } from '../constants/color';
 
 interface ExternalProps {
   readonly track: GeoJSON.FeatureCollection;

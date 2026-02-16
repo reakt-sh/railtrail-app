@@ -2,10 +2,10 @@ import * as MapLibreGL from '@maplibre/maplibre-react-native';
 import * as Location from 'expo-location';
 import React, { memo, RefObject } from 'react';
 import { StyleSheet } from 'react-native';
+import { initialRegion, mapStyleUrl } from '../constants';
 import { PointOfInterest } from '../types/init';
 import { Position } from '../types/position';
 import { Vehicle } from '../types/vehicle';
-import { initialRegion, mapStyleUrl } from '../util/consts';
 import { MapMarkers } from './MapMarkers';
 
 interface ExternalProps {

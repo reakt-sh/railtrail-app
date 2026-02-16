@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Color, textStyles } from '../consts';
+import { Color, textStyles } from '../constants';
 import { useTranslation } from '../hooks/useTranslation';
 import { POIType } from '../types/init';
 import { getPOITypeLabel } from '../util/poi';

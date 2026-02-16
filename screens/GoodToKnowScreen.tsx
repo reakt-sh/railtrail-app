@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AccordionItem } from '../components/AccordionItem';
-import { Color } from '../consts';
+import { Color } from '../constants';
 import { useTranslation } from '../hooks/useTranslation';
 
 const faqKeys = [

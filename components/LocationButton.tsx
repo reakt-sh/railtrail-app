@@ -1,6 +1,6 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
-import { Color } from '../consts/color';
+import { Color } from '../constants/color';
 import { FAB } from './Fab';
 
 interface ExternalProps {

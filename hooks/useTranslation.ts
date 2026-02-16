@@ -1,6 +1,6 @@
 import { I18n } from 'i18n-js';
 import { useMemo } from 'react';
-import { translations } from '../consts/translations';
+import { translations } from '../constants/translations';
 import { useLanguage } from '../contexts/LanguageContext';
 
 export enum Locale {
