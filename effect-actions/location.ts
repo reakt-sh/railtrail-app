@@ -1,11 +1,11 @@
 import * as Location from 'expo-location';
 import * as TaskManager from 'expo-task-manager';
-import { delay } from '../util/calculators';
 import {
   BACKGROUND_LOCATION_TASK,
   MIN_LOCATION_UPDATE_DISTANCE_INTERVAL,
   MIN_LOCATION_UPDATE_TIME_INTERVAL,
-} from '../util/consts';
+} from '../constants';
+import { delay } from '../util/calculators';
 
 export const getCurrentLocation = async () => {
   return await Location.getCurrentPositionAsync({});

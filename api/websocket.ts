@@ -1,5 +1,5 @@
+import { positioningWsUrl } from '../constants';
 import { MapPosition } from '../types/map-position';
-import { positioningWsUrl } from '../util/consts';
 
 type PositionCallback = (position: MapPosition) => void;
 

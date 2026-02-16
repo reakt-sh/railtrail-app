@@ -6,9 +6,9 @@ import {
   TrainBackgroundHeadingIcon,
   TrainBackgroundNeutralIcon,
 } from '../assets/icons';
+import { textStyles } from '../constants';
+import { Color } from '../constants/color';
 import { Vehicle } from '../types/vehicle';
-import { textStyles } from '../values';
-import { Color } from '../values/color';
 
 /** Size configurations for marker elements */
 const MARKER_SIZE = {

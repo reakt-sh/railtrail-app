@@ -2,12 +2,12 @@ import { useCallback, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReduxAppState } from '../redux/init';
 import { TripAction } from '../redux/trip';
-import { SIMULATION_INTERVAL_MS } from '../util/simulation-data';
-import { percentageToPosition } from '../util/track-loader';
 import { Vehicle } from '../types/vehicle';
+import { percentageToPosition } from '../util/track-loader';
 
 const SIMULATION_VEHICLE_ID = 99;
 const SIMULATION_VEHICLE_LABEL = 'Demo';
+export const SIMULATION_INTERVAL_MS = 60000;
 
 export const useTripSimulation = () => {
   const [isSimulating, setIsSimulating] = useState(false);

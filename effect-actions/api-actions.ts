@@ -30,9 +30,27 @@ export const initializeApp = (dispatch: Dispatch) => {
   if (__DEV__) console.log('[Init] App initialized');
 };
 
+// Track letzte Positionen für Geschwindigkeits-Validierung
+// (GPS kann Geschwindigkeit > 0 melden obwohl Fahrzeug stationär ist)
+const lastPositions = new Map<number, number>();
+
+// Schwellwert für Positionsänderung (in Prozent der Strecke)
+const POSITION_CHANGE_THRESHOLD = 0.001;
+
 // Richtet WebSocket-Updates ein und konvertiert MapPosition zu Vehicle-Format
 export const setupPositionUpdates = (dispatch: Dispatch): (() => void) => {
   return positionSocket.subscribe((mapPosition: MapPosition) => {
+    const currentPos = mapPosition.position * 100; // 0-1 zu 0-100
+    const lastPos = lastPositions.get(mapPosition.vehicle);
+
+    // Nur Geschwindigkeit > 0 wenn Position sich tatsächlich geändert hat
+    const positionChanged =
+      lastPos === undefined || Math.abs(currentPos - lastPos) > POSITION_CHANGE_THRESHOLD;
+    const effectiveSpeed = positionChanged ? mapPosition.speed : 0;
+
+    // Letzte Position speichern
+    lastPositions.set(mapPosition.vehicle, currentPos);
+
     // MapPosition zu Vehicle-Format konvertieren für die bestehende UI
     const vehicle: Vehicle = {
       id: mapPosition.vehicle,
@@ -40,7 +58,7 @@ export const setupPositionUpdates = (dispatch: Dispatch): (() => void) => {
         lat: mapPosition.latitude ?? 0,
         lng: mapPosition.longitude ?? 0,
       },
-      percentagePosition: mapPosition.position * 100, // 0-1 zu 0-100
+      percentagePosition: currentPos,
       heading: mapPosition.heading,
       headingTowardsUser: undefined, // Wird ggf. später berechnet
       label: mapPosition.label,
@@ -50,7 +68,7 @@ export const setupPositionUpdates = (dispatch: Dispatch): (() => void) => {
     dispatch(
       TripAction.updateVehicleFromWebSocket({
         vehicle,
-        speed: mapPosition.speed,
+        speed: effectiveSpeed,
       })
     );
   });

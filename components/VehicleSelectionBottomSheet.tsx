@@ -1,10 +1,10 @@
 import BottomSheet from '@gorhom/bottom-sheet';
 import { memo, useEffect, useMemo, useRef } from 'react';
 import { Keyboard, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Color } from '../constants/color';
+import { textStyles } from '../constants/text-styles';
 import { useTranslation } from '../hooks';
 import { Vehicle } from '../types/vehicle';
-import { Color } from '../values/color';
-import { textStyles } from '../values/text-styles';
 
 interface ExternalProps {
   readonly isVisible: boolean;
@@ -29,7 +29,7 @@ export const VehicleSelectionBottomSheet = memo(
     excludeVehicleId,
   }: Props) => {
     const bottomSheetRef = useRef<BottomSheet>(null);
-    const snapPoints = useMemo(() => ['40%', '60%'], []);
+    const snapPoints = useMemo(() => ['50%', '85%'], []);
     const i18n = useTranslation();
 
     useEffect(() => {
@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     gap: 8,
     paddingHorizontal: 8,
+    paddingBottom: 100,
   },
   vehicleItem: {
     width: '23%',

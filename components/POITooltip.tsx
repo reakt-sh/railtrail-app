@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { Color, textStyles } from '../constants';
 import { useTranslation } from '../hooks/useTranslation';
 import { POIType } from '../types/init';
 import { getPOITypeLabel } from '../util/poi';
-import { Color, textStyles } from '../values';
 
 interface POITooltipProps {
   name?: string;

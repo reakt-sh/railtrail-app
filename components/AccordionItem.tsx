@@ -1,9 +1,9 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { LayoutAnimation, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Color } from '../constants';
+import { textStyles } from '../constants/text-styles';
 import { useTranslation } from '../hooks';
-import { Color } from '../values';
-import { textStyles } from '../values/text-styles';
 
 export interface AccordionItemProps {
   question: string;

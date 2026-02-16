@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
 import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
-import { Color } from '../values/color';
+import { Color } from '../constants/color';
 
 interface ExternalProps {
   readonly isChecked: boolean;
@@ -13,7 +13,13 @@ interface ExternalProps {
 
 type Props = ExternalProps;
 
-export const Checkbox = ({ isChecked, setIsChecked, children, style, accessibilityLabel }: Props) => {
+export const Checkbox = ({
+  isChecked,
+  setIsChecked,
+  children,
+  style,
+  accessibilityLabel,
+}: Props) => {
   return (
     <Pressable
       style={[styles.container, style]}

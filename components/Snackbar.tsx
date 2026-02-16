@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { Color } from '../values/color';
-import { textStyles } from '../values/text-styles';
+import { Color } from '../constants/color';
+import { textStyles } from '../constants/text-styles';
 
 interface ExternalProps {
   readonly title: string;

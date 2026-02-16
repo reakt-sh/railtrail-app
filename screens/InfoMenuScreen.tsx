@@ -5,9 +5,10 @@ import React from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { DraisineIcon, MalenteLogoIcon } from '../assets/icons';
-import { useTranslation } from '../hooks/useTranslation';
-import { Color } from '../values';
-import { textStyles } from '../values/text-styles';
+import { Color } from '../constants';
+import { textStyles } from '../constants/text-styles';
+import { useLanguage } from '../contexts/LanguageContext';
+import { Locale, useTranslation } from '../hooks/useTranslation';
 
 type InfoStackParamList = {
   InfoMenu: undefined;
@@ -42,6 +43,11 @@ const menuItems: MenuItem[] = [
 export const InfoMenuScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<InfoStackParamList>>();
   const i18n = useTranslation();
+  const { locale, setLocale } = useLanguage();
+
+  const toggleLanguage = () => {
+    setLocale(locale === Locale.de ? Locale.en : Locale.de);
+  };
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -51,14 +57,10 @@ export const InfoMenuScreen = () => {
         </View>
 
         <View style={styles.menuContainer}>
-          {menuItems.map((item, index) => (
+          {menuItems.map((item) => (
             <Pressable
               key={item.screen}
-              style={({ pressed }) => [
-                styles.menuItem,
-                pressed && styles.menuItemPressed,
-                index === menuItems.length - 1 && styles.menuItemLast,
-              ]}
+              style={({ pressed }) => [styles.menuItem, pressed && styles.menuItemPressed]}
               onPress={() => navigation.navigate(item.screen)}
               accessibilityRole="button"
               accessibilityLabel={i18n.t(item.titleKey)}
@@ -77,6 +79,50 @@ export const InfoMenuScreen = () => {
               <MaterialCommunityIcons name="chevron-right" size={24} color={Color.darkGray} />
             </Pressable>
           ))}
+          <Pressable
+            style={({ pressed }) => [
+              styles.menuItem,
+              pressed && styles.menuItemPressed,
+              styles.menuItemLast,
+            ]}
+            onPress={toggleLanguage}
+            accessibilityRole="button"
+            accessibilityLabel={`${i18n.t('languageLabel')}: ${i18n.t('languageValue')}`}
+          >
+            <MaterialCommunityIcons
+              name="translate"
+              size={24}
+              color={Color.primary}
+              style={styles.menuIcon}
+            />
+            <Text style={styles.menuText}>{i18n.t('languageLabel')}</Text>
+            <View style={styles.languageToggle}>
+              <View
+                style={[styles.languageOption, locale === Locale.de && styles.languageOptionActive]}
+              >
+                <Text
+                  style={[
+                    styles.languageOptionText,
+                    locale === Locale.de && styles.languageOptionTextActive,
+                  ]}
+                >
+                  DE
+                </Text>
+              </View>
+              <View
+                style={[styles.languageOption, locale === Locale.en && styles.languageOptionActive]}
+              >
+                <Text
+                  style={[
+                    styles.languageOptionText,
+                    locale === Locale.en && styles.languageOptionTextActive,
+                  ]}
+                >
+                  EN
+                </Text>
+              </View>
+            </View>
+          </Pressable>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -116,6 +162,7 @@ const styles = StyleSheet.create({
     backgroundColor: Color.gray,
   },
   menuItemLast: {
+    marginTop: 16,
     borderBottomWidth: 0,
   },
   menuIcon: {
@@ -124,5 +171,26 @@ const styles = StyleSheet.create({
   menuText: {
     ...textStyles.bodyMedium,
     flex: 1,
+  },
+  languageToggle: {
+    flexDirection: 'row',
+    backgroundColor: Color.gray,
+    borderRadius: 8,
+    padding: 2,
+  },
+  languageOption: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 6,
+  },
+  languageOptionActive: {
+    backgroundColor: Color.primary,
+  },
+  languageOptionText: {
+    ...textStyles.bodyMedium,
+    color: Color.darkGray,
+  },
+  languageOptionTextActive: {
+    color: Color.white,
   },
 });

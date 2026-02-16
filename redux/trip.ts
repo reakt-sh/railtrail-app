@@ -288,10 +288,15 @@ const reducer = (state = initialTripState, action: RailTrailReduxAction): TripSt
       } else {
         updatedVehicles = [...state.vehicles, vehicle];
       }
+
+      // Only update speed from the currently selected vehicle
+      const shouldUpdateSpeed =
+        speed !== undefined && state.currentVehicle.id === vehicle.id;
+
       return {
         ...state,
         vehicles: updatedVehicles,
-        motion: speed !== undefined ? { ...state.motion, speed } : state.motion,
+        motion: shouldUpdateSpeed ? { ...state.motion, speed } : state.motion,
       };
     }
 
