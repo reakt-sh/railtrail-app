@@ -79,20 +79,7 @@ export const LandingPageScreen = ({ navigation }: any) => {
           {localizedStrings.t('landingPagePrivacyPolicySuffix')}
         </Text>
       </Checkbox>
-      <Button
-        text={localizedStrings.t('landingPageButtonWithoutLocation')}
-        onPress={() => {
-          navigation.dispatch(
-            CommonActions.reset({
-              index: 0,
-              routes: [{ name: 'Main' }],
-            })
-          );
-        }}
-        isSecondary
-        disabled={!isCheckboxChecked}
-        style={styles.buttonMargin}
-      />
+
       <Button
         text={localizedStrings.t('landingPageButtonWithLocation')}
         onPress={continueWithLocation}
@@ -147,7 +134,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 24,
   },
-  buttonMargin: { marginBottom: 8 },
+  buttonMargin: { marginBottom: 16, marginTop: 16 },
   link: {
     color: Color.primary,
     textDecorationLine: 'underline',

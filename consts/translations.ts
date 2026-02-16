@@ -13,8 +13,7 @@ const translations = {
       'With RailTrail you can enjoy improved safety and see a lot of useful information on your trips.',
     landingPagePermissionExplanation:
       'In order to be able to use the app to its full extent, we recommend activating the location permissions for the app.',
-    landingPageButtonWithoutLocation: 'Continue without location data',
-    landingPageButtonWithLocation: 'Continue with location data',
+    landingPageButtonWithLocation: "Let's go",
     landingPagePrivacyPolicyPrefix: 'I accept the ',
     landingPagePrivacyPolicyLink: 'privacy policy',
     landingPagePrivacyPolicySuffix: '.',
@@ -120,7 +119,7 @@ const translations = {
 
     privacySection3Title: '3. Location Data (GPS)',
     privacySection3Content:
-      '3.1 Local Use of Your Location Data\n\nIf you grant the app permission to access your mobile device\'s location, your GPS data is processed exclusively locally on your device. The location data is used to:\n\n• Display your own position on the route map,\n• Project your position onto the route (so-called snapping),\n• Calculate trip information such as speed and distance traveled.\n\nYour GPS data is never transmitted to a server. It does not leave your device and is not stored. When you close the app, the location data is discarded.\n\nLegal basis: Your consent pursuant to Art. 6(1)(a) GDPR, which you grant via the location permission of your operating system (iOS/Android). You can revoke the permission at any time in the device settings. The app can also be used without location permission – in this case, only the position of your draisine based on GNSS tracker data will be displayed.\n\n3.2 No Background Location Collection\n\nThe app only collects your location while it is active in the foreground. No location collection takes place in the background.',
+      "3.1 Local Use of Your Location Data\n\nIf you grant the app permission to access your mobile device's location, your GPS data is processed exclusively locally on your device. The location data is used to:\n\n• Display your own position on the route map,\n• Project your position onto the route (so-called snapping),\n• Calculate trip information such as speed and distance traveled.\n\nYour GPS data is never transmitted to a server. It does not leave your device and is not stored. When you close the app, the location data is discarded.\n\nLegal basis: Your consent pursuant to Art. 6(1)(a) GDPR, which you grant via the location permission of your operating system (iOS/Android). You can revoke the permission at any time in the device settings. The app can also be used without location permission – in this case, only the position of your draisine based on GNSS tracker data will be displayed.\n\n3.2 No Background Location Collection\n\nThe app only collects your location while it is active in the foreground. No location collection takes place in the background.",
 
     privacySection4Title: '4. Reception of Draisine Position Data',
     privacySection4Content:
@@ -136,7 +135,7 @@ const translations = {
 
     privacySection7Title: '7. Embedded YouTube Videos',
     privacySection7Content:
-      'The app contains embedded YouTube videos (e.g., instructions for using the draisines and securing level crossings). The embedding is done via YouTube\'s enhanced privacy mode.\n\nWhen playing a video, a connection is established to servers of Google Ireland Limited (Gordon House, Barrow Street, Dublin 4, Ireland). The following data is transmitted to Google:\n\n• Your IP address,\n• The video accessed,\n• Technical information about your device and browser.\n\nIf you are logged into your Google account, Google may associate the video access with your profile. Google may also transfer the data to the USA. The transfer to the USA is based on the EU-US Data Privacy Framework (adequacy decision of the EU Commission pursuant to Art. 45 GDPR).\n\nMore information can be found in Google\'s privacy policy: https://policies.google.com/privacy\n\nLegal basis: Consent pursuant to Art. 6(1)(a) GDPR. The videos are only loaded when you actively play them.',
+      "The app contains embedded YouTube videos (e.g., instructions for using the draisines and securing level crossings). The embedding is done via YouTube's enhanced privacy mode.\n\nWhen playing a video, a connection is established to servers of Google Ireland Limited (Gordon House, Barrow Street, Dublin 4, Ireland). The following data is transmitted to Google:\n\n• Your IP address,\n• The video accessed,\n• Technical information about your device and browser.\n\nIf you are logged into your Google account, Google may associate the video access with your profile. Google may also transfer the data to the USA. The transfer to the USA is based on the EU-US Data Privacy Framework (adequacy decision of the EU Commission pursuant to Art. 45 GDPR).\n\nMore information can be found in Google's privacy policy: https://policies.google.com/privacy\n\nLegal basis: Consent pursuant to Art. 6(1)(a) GDPR. The videos are only loaded when you actively play them.",
 
     privacySection8Title: '8. Feedback Form',
     privacySection8Content:
@@ -207,8 +206,7 @@ const translations = {
       'Mit RailTrail sind Sie auf der Schiene sicher unterwegs und bekommen viele nützliche Informationen angezeigt.',
     landingPagePermissionExplanation:
       'Um die App im vollen Funktionsumfang nutzen zu können, empfehlen wir Ihnen die Standortdaten für die App zu aktivieren.',
-    landingPageButtonWithoutLocation: 'Weiter ohne Standortdaten',
-    landingPageButtonWithLocation: 'Weiter mit Standortdaten',
+    landingPageButtonWithLocation: "Los geht's",
     landingPagePrivacyPolicyPrefix: 'Ich stimme der ',
     landingPagePrivacyPolicyLink: 'Datenschutzerklärung',
     landingPagePrivacyPolicySuffix: ' zu.',
