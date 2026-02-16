@@ -1,5 +1,6 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Color } from '../consts';
 import { useTranslation } from '../hooks';
 import { HomeScreen } from '../screens';
@@ -8,6 +9,7 @@ import { InfoNavigation } from './InfoNavigation';
 export const MainNavigation = () => {
   const Tab = createBottomTabNavigator();
   const localizedStrings = useTranslation();
+  const insets = useSafeAreaInsets();
 
   return (
     <Tab.Navigator
@@ -25,7 +27,11 @@ export const MainNavigation = () => {
         },
         tabBarActiveTintColor: Color.primary,
         tabBarInactiveTintColor: Color.darkGray,
-        tabBarStyle: { height: 88, paddingBottom: 40, paddingTop: 8 },
+        tabBarStyle: {
+          height: 64 + insets.bottom,
+          paddingBottom: insets.bottom,
+          paddingTop: 8,
+        },
       })}
     >
       <Tab.Screen name={localizedStrings.t('navigationMap')} component={HomeScreen} />
