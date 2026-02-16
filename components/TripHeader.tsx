@@ -2,9 +2,9 @@ import { MaterialIcons } from '@expo/vector-icons';
 import React, { memo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Color } from '../consts/color';
 import { useTranslation } from '../hooks';
 import { formatDistance, formatSpeed } from '../util/formatters';
-import { Color } from '../values/color';
 
 interface ExternalProps {
   readonly distance: number;

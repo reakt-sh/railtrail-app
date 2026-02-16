@@ -1,6 +1,7 @@
-import { translations } from '../values/translations';
-// import * as Localization from 'expo-localization';
 import { I18n } from 'i18n-js';
+import { useMemo } from 'react';
+import { translations } from '../consts/translations';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export enum Locale {
   de = 'de',
@@ -8,10 +9,15 @@ export enum Locale {
 }
 
 export const useTranslation = (): I18n => {
-  const i18n = new I18n(translations);
+  const { locale } = useLanguage();
 
-  i18n.enableFallback = true;
-  i18n.defaultLocale = Locale.de;
+  const i18n = useMemo(() => {
+    const instance = new I18n(translations);
+    instance.enableFallback = true;
+    instance.defaultLocale = Locale.de;
+    instance.locale = locale;
+    return instance;
+  }, [locale]);
 
   return i18n;
 };

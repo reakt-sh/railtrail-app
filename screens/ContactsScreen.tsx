@@ -1,8 +1,8 @@
 import { ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ContactCard } from '../components/ContactCard';
+import { Color } from '../consts';
 import { useTranslation } from '../hooks/useTranslation';
-import { Color } from '../values';
 
 export const ContactsScreen = () => {
   const i18n = useTranslation();

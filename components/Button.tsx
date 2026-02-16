@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pressable, StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
-import { Color } from '../values/color';
+import { Color } from '../consts/color';
 
 interface ExternalProps {
   readonly text: string;

@@ -2,7 +2,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { I18n } from 'i18n-js';
 import React, { memo } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Color } from '../values/color';
+import { Color } from '../consts/color';
 import { FAB } from './Fab';
 import { LocationButton } from './LocationButton';
 import { Warnings } from './Warnings';

@@ -15,7 +15,9 @@ const translations = {
       'In order to be able to use the app to its full extent, we recommend activating the location permissions for the app.',
     landingPageButtonWithoutLocation: 'Continue without location data',
     landingPageButtonWithLocation: 'Continue with location data',
-    landingPagePrivacyPolicy: 'I accept the privacy policy.',
+    landingPagePrivacyPolicyPrefix: 'I accept the ',
+    landingPagePrivacyPolicyLink: 'privacy policy',
+    landingPagePrivacyPolicySuffix: '.',
 
     homeSnackbarStartTitle: 'Start trip',
     homeSnackbarStartMessage: 'Click here to select a vehicle and start the trip',
@@ -207,7 +209,9 @@ const translations = {
       'Um die App im vollen Funktionsumfang nutzen zu können, empfehlen wir Ihnen die Standortdaten für die App zu aktivieren.',
     landingPageButtonWithoutLocation: 'Weiter ohne Standortdaten',
     landingPageButtonWithLocation: 'Weiter mit Standortdaten',
-    landingPagePrivacyPolicy: 'Ich stimme der Datenschutzerklärung zu.',
+    landingPagePrivacyPolicyPrefix: 'Ich stimme der ',
+    landingPagePrivacyPolicyLink: 'Datenschutzerklärung',
+    landingPagePrivacyPolicySuffix: ' zu.',
 
     homeSnackbarStartTitle: 'Fahrt starten',
     homeSnackbarStartMessage: 'Hier klicken um ein Fahrzeug auszuwählen und die Fahrt zu beginnen',

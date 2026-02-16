@@ -2,9 +2,9 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
 import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Color } from '../consts';
+import { textStyles } from '../consts/text-styles';
 import { useTranslation } from '../hooks/useTranslation';
-import { Color } from '../values';
-import { textStyles } from '../values/text-styles';
 
 export const ImprintScreen = () => {
   const i18n = useTranslation();

@@ -1,10 +1,10 @@
 import BottomSheet from '@gorhom/bottom-sheet';
 import { memo, useEffect, useMemo, useRef } from 'react';
 import { Keyboard, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Color } from '../consts/color';
+import { textStyles } from '../consts/text-styles';
 import { useTranslation } from '../hooks';
 import { Vehicle } from '../types/vehicle';
-import { Color } from '../values/color';
-import { textStyles } from '../values/text-styles';
 
 interface ExternalProps {
   readonly isVisible: boolean;

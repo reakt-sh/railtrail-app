@@ -4,11 +4,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 import { DraisineIcon } from '../assets/icons';
 import { TripCard } from '../components';
+import { Color } from '../consts';
+import { textStyles } from '../consts/text-styles';
 import { deleteSavedTrip, loadSavedTrips } from '../effect-actions/trip-storage';
 import { useTranslation } from '../hooks/useTranslation';
 import { ReduxAppState } from '../redux/init';
-import { Color } from '../values';
-import { textStyles } from '../values/text-styles';
 
 export const TripHistoryScreen = () => {
   const dispatch = useDispatch();

@@ -1,8 +1,8 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Color } from '../consts';
 import { useTranslation } from '../hooks';
 import { HomeScreen } from '../screens';
-import { Color } from '../values';
 import { InfoNavigation } from './InfoNavigation';
 
 export const MainNavigation = () => {

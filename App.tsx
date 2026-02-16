@@ -15,6 +15,7 @@ import {
 import { BarlowCondensed_300Light } from '@expo-google-fonts/barlow-condensed';
 import { useCallback } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
+import { LanguageProvider } from './contexts/LanguageContext';
 
 // Suppress Reanimated strict mode warning from bottom-sheet library
 configureReanimatedLogger({
@@ -61,10 +62,12 @@ export default function App() {
   return (
     <SafeAreaProvider onLayout={onLayoutRootView}>
       <Provider store={store}>
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <RootNavigation />
-          <StatusBar style="dark" />
-        </GestureHandlerRootView>
+        <LanguageProvider>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <RootNavigation />
+            <StatusBar style="dark" />
+          </GestureHandlerRootView>
+        </LanguageProvider>
       </Provider>
     </SafeAreaProvider>
   );
