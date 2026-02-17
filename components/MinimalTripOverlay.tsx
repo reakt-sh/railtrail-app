@@ -27,6 +27,8 @@ export const MinimalTripOverlay = memo(({ speed, elapsedTime, onPress }: Props) 
       accessibilityHint="Opens drawer with full trip information"
     >
       <View style={styles.content}>
+        <MaterialCommunityIcons name="menu" size={24} color={Color.white} style={styles.menuIcon} />
+        <View style={styles.divider} />
         <View style={styles.speedContainer}>
           <Text style={styles.speedValue}>{formattedSpeed}</Text>
           <Text style={styles.speedUnit}>km/h</Text>
@@ -59,6 +61,9 @@ const styles = StyleSheet.create({
   content: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  menuIcon: {
+    opacity: 0.9,
   },
   speedContainer: {
     flexDirection: 'row',

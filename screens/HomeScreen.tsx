@@ -1,5 +1,5 @@
-import { DrawerActions, useNavigation } from '@react-navigation/native';
 import * as MapLibreGL from '@maplibre/maplibre-react-native';
+import { DrawerActions, useNavigation } from '@react-navigation/native';
 import { useKeepAwake } from 'expo-keep-awake';
 import * as Location from 'expo-location';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -131,9 +131,7 @@ export const HomeScreen = () => {
     if (isFollowingVehicle) {
       // If trip is active, follow own vehicle; otherwise follow first available vehicle
       const vehicleToFollow =
-        currentVehicle.id != null
-          ? vehicles.find((v) => v.id === currentVehicle.id)
-          : vehicles[0];
+        currentVehicle.id != null ? vehicles.find((v) => v.id === currentVehicle.id) : vehicles[0];
 
       if (vehicleToFollow) {
         animateCamera(

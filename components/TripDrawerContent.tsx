@@ -1,5 +1,5 @@
-import { DrawerContentComponentProps, DrawerContentScrollView } from '@react-navigation/drawer';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { DrawerContentComponentProps, DrawerContentScrollView } from '@react-navigation/drawer';
 import React, { memo, useEffect, useState } from 'react';
 import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -8,7 +8,7 @@ import { Color } from '../constants/color';
 import { textStyles } from '../constants/text-styles';
 import { useTranslation } from '../hooks';
 import { ReduxAppState } from '../redux/init';
-import { formatDistance, formatSpeed } from '../util/formatters';
+import { formatDistance, formatElapsedTime, formatSpeed } from '../util/formatters';
 
 interface InfoRowProps {
   label: string;
@@ -26,19 +26,6 @@ const InfoRow = memo(({ label, value, icon }: InfoRowProps) => (
   </View>
 ));
 
-const formatElapsedTime = (startTime: string | null): string => {
-  if (!startTime) return '--:--';
-
-  const start = new Date(startTime);
-  const now = new Date();
-  const diffMs = now.getTime() - start.getTime();
-  const diffMins = Math.floor(diffMs / 60000);
-  const hours = Math.floor(diffMins / 60);
-  const mins = diffMins % 60;
-
-  return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
-};
-
 export const TripDrawerContent = memo((props: DrawerContentComponentProps) => {
   const localizedStrings = useTranslation();
   const insets = useSafeAreaInsets();
@@ -48,7 +35,7 @@ export const TripDrawerContent = memo((props: DrawerContentComponentProps) => {
   );
 
   // Update elapsed time every minute
-  const [elapsedTime, setElapsedTime] = useState(formatElapsedTime(tripStartTime ?? null));
+  const [elapsedTime, setElapsedTime] = useState(formatElapsedTime(tripStartTime ?? null, true));
 
   useEffect(() => {
     if (!isActive || !tripStartTime) {
@@ -56,9 +43,9 @@ export const TripDrawerContent = memo((props: DrawerContentComponentProps) => {
       return;
     }
 
-    setElapsedTime(formatElapsedTime(tripStartTime));
+    setElapsedTime(formatElapsedTime(tripStartTime, true));
     const interval = setInterval(() => {
-      setElapsedTime(formatElapsedTime(tripStartTime));
+      setElapsedTime(formatElapsedTime(tripStartTime, true));
     }, 10000); // Update every 10 seconds
 
     return () => clearInterval(interval);
@@ -81,8 +68,10 @@ export const TripDrawerContent = memo((props: DrawerContentComponentProps) => {
   return (
     <DrawerContentScrollView {...props} style={styles.container}>
       <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
-        <MaterialCommunityIcons name="train-car" size={32} color={Color.primary} />
-        <Text style={styles.vehicleName}>{currentVehicle.name ?? localizedStrings.t('drawerUnknownVehicle')}</Text>
+        <MaterialCommunityIcons name="bicycle-cargo" size={32} color={Color.primary} />
+        <Text style={styles.vehicleName}>
+          {currentVehicle.name ?? localizedStrings.t('drawerUnknownVehicle')}
+        </Text>
       </View>
 
       <View style={styles.section}>
@@ -119,13 +108,17 @@ export const TripDrawerContent = memo((props: DrawerContentComponentProps) => {
         <InfoRow
           icon="boom-gate"
           label={localizedStrings.t('drawerNextCrossing')}
-          value={warnings.nextLevelCrossing != null ? `${Math.round(warnings.nextLevelCrossing)} m` : '-'}
+          value={
+            warnings.nextLevelCrossing != null ? `${Math.round(warnings.nextLevelCrossing)} m` : '-'
+          }
         />
 
         <InfoRow
           icon="rotate-3d-variant"
           label={localizedStrings.t('drawerNextTurningPoint')}
-          value={warnings.nextTurningPoint != null ? `${Math.round(warnings.nextTurningPoint)} m` : '-'}
+          value={
+            warnings.nextTurningPoint != null ? `${Math.round(warnings.nextTurningPoint)} m` : '-'
+          }
         />
       </View>
 
