@@ -9,7 +9,7 @@ import { Vehicle } from '../types/vehicle';
 import { MapMarkers } from './MapMarkers';
 
 interface ExternalProps {
-  readonly mapRef: RefObject<MapLibreGL.MapViewRef>;
+  readonly mapRef: RefObject<MapLibreGL.MapViewRef | null>;
   readonly cameraRef: RefObject<MapLibreGL.CameraRef>;
   readonly onRegionChange: (zoom: number, heading: number, isUserInteraction?: boolean) => void;
   readonly location: Location.LocationObject | null;

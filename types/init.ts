@@ -22,6 +22,7 @@ export enum POIType {
   TurningPoint = 'turning-point',
   Halt = 'halt',
   EndOfTheLine = 'end-of-the-line',
+  TouristInfo = 'tourist-info',
 }
 
 export interface PointOfInterest {

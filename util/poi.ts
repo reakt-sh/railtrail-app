@@ -10,6 +10,7 @@ export const poiTypeTranslationKeys: Record<POIType, string> = {
   [POIType.TurningPoint]: 'poiTurningPoint',
   [POIType.Halt]: 'poiHalt',
   [POIType.EndOfTheLine]: 'poiEndOfTheLine',
+  [POIType.TouristInfo]: 'poiTouristInfo',
 };
 
 export const getPOITypeLabel = (i18n: I18n, typeId: POIType, originalType?: POIType): string => {

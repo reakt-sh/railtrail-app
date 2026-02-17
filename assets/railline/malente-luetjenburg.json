@@ -264,6 +264,10 @@
           {
             "id": "end-of-the-line",
             "name": "Streckenende"
+          },
+          {
+            "id": "tourist-info",
+            "name": "Tourist Information"
           }
         ],
         "data": [
@@ -827,6 +831,30 @@
             "position": {
               "type": "Point",
               "coordinates": [10.0992304224411, 54.31928770949525]
+            },
+            "extra": {
+              "isTurningPoint": false
+            }
+          },
+          {
+            "id": "50",
+            "name": "Malente Tourismus- und Service GmbH",
+            "type": "tourist-info",
+            "position": {
+              "type": "Point",
+              "coordinates": [10.550507247251739, 54.16807395033756]
+            },
+            "extra": {
+              "isTurningPoint": false
+            }
+          },
+          {
+            "id": "51",
+            "name": "Tourist Info Lütjenburg",
+            "type": "tourist-info",
+            "position": {
+              "type": "Point",
+              "coordinates": [10.59025325928048, 54.29294786587569]
             },
             "extra": {
               "isTurningPoint": false

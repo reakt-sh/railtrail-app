@@ -53,6 +53,7 @@ const markerTypeToPOIType: Record<string, POIType> = {
   halt: POIType.Halt,
   generic: POIType.Generic,
   'end-of-the-line': POIType.TrackEnd,
+  'tourist-info': POIType.TouristInfo,
 };
 
 // Calculate distance between two coordinates using Haversine formula

@@ -87,6 +87,7 @@ const translations = {
     poiTurningPoint: 'Turning point',
     poiHalt: 'Stop',
     poiEndOfTheLine: 'End of track',
+    poiTouristInfo: 'Tourist Info',
 
     // Contacts Screen
     contactTouristInfoMalente: 'Tourist Info Malente',
@@ -303,6 +304,7 @@ const translations = {
     poiTurningPoint: 'Wendepunkt',
     poiHalt: 'Haltepunkt',
     poiEndOfTheLine: 'Streckenende',
+    poiTouristInfo: 'Tourist Info',
 
     // Contacts Screen
     contactTouristInfoMalente: 'Tourist Info Malente',
