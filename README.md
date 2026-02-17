@@ -46,34 +46,51 @@ Dieses Projekt ist eine Weiterentwicklung des [RailTrail-Prototyps](https://gith
 git clone https://github.com/reakt-sh/railtrail-app.git
 cd railtrail-app
 
-# Dependencies installieren
+# Dependencies installieren (Patches werden automatisch angewendet)
 npm install
 
 # Umgebungsvariablen einrichten
 cp .env.example .env
-
-# Entwicklungsserver starten
-npx expo start
 ```
 
-### iOS Build
+### Development Build erstellen
+
+Diese App verwendet einen **Development Build** (nicht Expo Go), da native Module wie MapLibre verwendet werden.
 
 ```bash
-# iOS Dependencies installieren
-cd ios && pod install && cd ..
+# Native Projekte generieren (iOS + Android)
+npx expo prebuild
 
 # iOS App bauen und starten
 npx expo run:ios
-```
 
-**Hinweis:** Das Podfile enthält spezielle Konfiguration für MapLibre. Falls der Build fehlschlägt mit `Module 'MapLibre' not found`, siehe [Troubleshooting](#troubleshooting).
-
-### Android Build
-
-```bash
 # Android App bauen und starten
 npx expo run:android
 ```
+
+### Neustart nach Problemen
+
+Falls der Build fehlschlägt oder nach größeren Änderungen:
+
+```bash
+# Alles bereinigen
+rm -rf node_modules ios android package-lock.json
+
+# Neu aufsetzen
+npm install
+npx expo prebuild
+npx expo run:ios    # oder run:android
+```
+
+### Expo Go (eingeschränkt)
+
+Für schnelle UI-Änderungen ohne native Neukompilierung:
+
+```bash
+npx expo start
+```
+
+**Hinweis:** MapLibre und andere native Module funktionieren nur im Development Build, nicht in Expo Go.
 
 ### Konfiguration
 
@@ -120,55 +137,47 @@ Die App verbindet sich per WebSocket für Echtzeit-Positionsupdates der Fahrzeug
 
 ## Troubleshooting
 
+### Generell: Build schlägt fehl
+
+Bei den meisten Build-Problemen hilft ein kompletter Neustart:
+
+```bash
+rm -rf node_modules ios android package-lock.json
+npm install
+npx expo prebuild
+npx expo run:ios    # oder run:android
+```
+
 ### iOS: `Module 'MapLibre' not found`
 
-Dieser Fehler tritt auf, wenn das MapLibre iOS SDK nicht korrekt über Swift Package Manager eingebunden wird.
+Dieser Fehler tritt auf, wenn das MapLibre iOS SDK nicht korrekt eingebunden wird.
 
-**Lösung:**
-
-1. Stelle sicher, dass das Podfile die MapLibre-Konfiguration enthält:
-
-```ruby
-# Am Anfang des Podfiles (nach den require-Statements)
-maplibre_path = File.join(__dir__, '../node_modules/@maplibre/maplibre-react-native/maplibre-react-native.podspec')
-eval(File.read(maplibre_path), nil, maplibre_path)
-
-# Im post_install Block
-post_install do |installer|
-  # ... andere post_install Aufrufe ...
-  $MLRN.post_install(installer)
-end
-```
-
-2. Pods neu installieren:
+**Lösung:** Native Projekte neu generieren:
 
 ```bash
-cd ios
-rm -rf Pods Podfile.lock build
-pod install
-cd ..
+rm -rf ios
+npx expo prebuild --platform ios
+npx expo run:ios
 ```
 
-3. Build neu starten:
+### iOS: Swift Compiler Error in `expo-localization`
+
+Falls ein Fehler wie `Switch must be exhaustive` in `LocalizationModule.swift` auftritt:
+
+Der Patch in `/patches/expo-localization+16.0.1.patch` behebt dieses Problem automatisch bei `npm install`. Falls der Patch nicht angewendet wurde:
 
 ```bash
-npx expo run:ios --no-build-cache
+npx patch-package
 ```
 
-### iOS: `expo-media-library` Compiler Warnings
+### Android: `Cannot find native module`
 
-Die Warnings `extra tokens at end of #ifndef directive` sind bekannte Issues im generierten Code und beeinträchtigen den Build nicht.
-
-### iOS: Build schlägt nach Dependency-Update fehl
-
-Nach dem Hinzufügen oder Aktualisieren von Dependencies:
+Native Module fehlen nach Änderungen:
 
 ```bash
-cd ios
-rm -rf Pods Podfile.lock build
-pod install
-cd ..
-npx expo run:ios --no-build-cache
+rm -rf android
+npx expo prebuild --platform android
+npx expo run:android
 ```
 
 ### Metro Bundler: Cache-Probleme
@@ -176,6 +185,13 @@ npx expo run:ios --no-build-cache
 ```bash
 npx expo start --clear
 ```
+
+### Patches
+
+Diese App verwendet `patch-package` für Fixes in Dependencies. Patches liegen in `/patches/` und werden automatisch bei `npm install` angewendet.
+
+Aktuell gepatchte Packages:
+- `expo-localization` - Swift exhaustive switch fix für neuere Xcode-Versionen
 
 ## Mitwirken
 

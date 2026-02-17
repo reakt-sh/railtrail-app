@@ -33,10 +33,12 @@ export interface Warnings {
   readonly nextVehicle: number | null;
   readonly nextVehicleHeadingTowards: number | null;
   readonly nextLevelCrossing: number | null;
+  readonly nextTurningPoint: number | null;
 }
 
 export interface TripState {
   readonly isActive: boolean;
+  readonly tripStartTime: string | null;
   readonly currentVehicle: CurrentVehicle;
   readonly motion: Motion;
   readonly position: TripPosition;
@@ -206,6 +208,7 @@ export const TripAction = {
 
 export const initialTripState: TripState = {
   isActive: false,
+  tripStartTime: null,
   currentVehicle: {
     id: null,
     name: null,
@@ -225,6 +228,7 @@ export const initialTripState: TripState = {
     nextVehicle: null,
     nextVehicleHeadingTowards: null,
     nextLevelCrossing: null,
+    nextTurningPoint: null,
   },
   vehicles: [],
   activeSegment: null,
@@ -237,7 +241,7 @@ const reducer = (state = initialTripState, action: RailTrailReduxAction): TripSt
       return { ...initialTripState };
 
     case 'trip/start':
-      return { ...state, isActive: true };
+      return { ...state, isActive: true, tripStartTime: new Date().toISOString() };
 
     case 'trip/stop':
       return { ...initialTripState, vehicles: state.vehicles };

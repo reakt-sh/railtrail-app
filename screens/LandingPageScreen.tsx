@@ -72,10 +72,10 @@ export const LandingPageScreen = ({ navigation }: any) => {
         <Text style={[textStyles.headerTextHuge, { textAlign: 'center', marginBottom: 24 }]}>
           {localizedStrings.t('landingPageWelcome')}
         </Text>
-        <Text style={{ textAlign: 'center', marginBottom: 24 }}>
+        <Text style={[textStyles.bodyMedium, { textAlign: 'center', marginBottom: 24 }]}>
           {localizedStrings.t('landingPageDescription')}
         </Text>
-        <Text style={{ textAlign: 'center' }}>
+        <Text style={[textStyles.bodyMedium, { textAlign: 'center' }]}>
           {localizedStrings.t('landingPagePermissionExplanation')}
         </Text>
       </SafeAreaView>
@@ -84,9 +84,9 @@ export const LandingPageScreen = ({ navigation }: any) => {
         setIsChecked={setIsCheckboxChecked}
         style={styles.buttonMargin}
       >
-        <Text>
+        <Text style={textStyles.bodyMedium}>
           {localizedStrings.t('landingPagePrivacyPolicyPrefix')}
-          <Text style={styles.link} onPress={() => setIsPrivacyModalVisible(true)}>
+          <Text style={[textStyles.bodyMedium, styles.link]} onPress={() => setIsPrivacyModalVisible(true)}>
             {localizedStrings.t('landingPagePrivacyPolicyLink')}
           </Text>
           {localizedStrings.t('landingPagePrivacyPolicySuffix')}

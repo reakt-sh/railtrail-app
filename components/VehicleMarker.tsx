@@ -1,13 +1,13 @@
 import * as MapLibreGL from '@maplibre/maplibre-react-native';
 import React, { memo } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Platform, StyleSheet, Text, View } from 'react-native';
 import {
   DraisineIcon,
   TrainBackgroundHeadingIcon,
   TrainBackgroundNeutralIcon,
 } from '../assets/icons';
-import { textStyles } from '../constants';
 import { Color } from '../constants/color';
+import { Font } from '../constants/fonts';
 import { Vehicle } from '../types/vehicle';
 
 /** Size configurations for marker elements */
@@ -64,11 +64,13 @@ export const VehicleMarker = memo(({ vehicle, mapHeading, useSmallMarker }: Prop
           <DraisineIcon width={size.foregroundWidth} height={size.foregroundHeight} />
         </View>
 
-        {/* Label below the icon */}
-        {vehicle.label && (
-          <Text style={[styles.label, { top: size.labelTop, fontSize: size.labelFontSize }]}>
-            {vehicle.label}
-          </Text>
+        {/* Label below the icon - disabled on Android due to fontSize bug with New Architecture */}
+        {Platform.OS === 'ios' && vehicle.label && (
+          <View style={[styles.labelContainer, { top: size.labelTop }]}>
+            <Text style={useSmallMarker ? styles.labelSmall : styles.labelLarge}>
+              {vehicle.label}
+            </Text>
+          </View>
         )}
       </View>
     </MapLibreGL.PointAnnotation>
@@ -96,13 +98,21 @@ const styles = StyleSheet.create({
   foregroundLayer: {
     position: 'absolute',
   },
-  label: {
-    ...textStyles.hint,
+  labelContainer: {
     position: 'absolute',
-    color: Color.text,
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
     paddingHorizontal: 4,
     borderRadius: 4,
     overflow: 'hidden',
+  },
+  labelSmall: {
+    fontFamily: Font.regular,
+    fontSize: 8,
+    color: Color.text,
+  },
+  labelLarge: {
+    fontFamily: Font.regular,
+    fontSize: 12,
+    color: Color.text,
   },
 });

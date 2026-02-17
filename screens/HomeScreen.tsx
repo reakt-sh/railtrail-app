@@ -1,10 +1,17 @@
+import { DrawerActions, useNavigation } from '@react-navigation/native';
 import * as MapLibreGL from '@maplibre/maplibre-react-native';
 import { useKeepAwake } from 'expo-keep-awake';
 import * as Location from 'expo-location';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector, useStore } from 'react-redux';
-import { TrackMapView, TripControls, TripHeader, VehicleSelectionBottomSheet } from '../components';
+import {
+  MinimalTripOverlay,
+  QRScannerBottomSheet,
+  TrackMapView,
+  TripControls,
+  VehicleSelectionBottomSheet,
+} from '../components';
 import {
   disconnectFromServer,
   initializeApp,
@@ -13,7 +20,13 @@ import {
 import { getBackgroundPermissionStatus } from '../effect-actions/permissions';
 import { updateDistances } from '../effect-actions/trip-actions';
 import { saveAndStopTrip } from '../effect-actions/trip-storage';
-import { useLocationTracking, useMapCamera, useTranslation, useTripSimulation } from '../hooks';
+import {
+  useElapsedTime,
+  useLocationTracking,
+  useMapCamera,
+  useTranslation,
+  useTripSimulation,
+} from '../hooks';
 import { AppAction } from '../redux/app';
 import { ReduxAppState } from '../redux/init';
 import { TripAction } from '../redux/trip';
@@ -24,6 +37,7 @@ export const HomeScreen = () => {
   const tripStartTimeRef = useRef<string | null>(null);
   const dispatch = useDispatch();
   const store = useStore<ReduxAppState>();
+  const navigation = useNavigation();
   const localizedStrings = useTranslation();
 
   useKeepAwake();
@@ -48,7 +62,8 @@ export const HomeScreen = () => {
   const { startSimulation, stopSimulation } = useTripSimulation();
 
   // Bottom sheet visibility
-  const [isStartTripBottomSheetVisible, setIsStartTripBottomSheetVisible] = useState(false);
+  const [isQRScannerVisible, setIsQRScannerVisible] = useState(false);
+  const [isManualSelectionVisible, setIsManualSelectionVisible] = useState(false);
   const [isChangeVehicleIdBottomSheetVisible, setIsChangeVehicleIdBottomSheetVisible] =
     useState(false);
 
@@ -59,9 +74,11 @@ export const HomeScreen = () => {
 
   // Redux state
   const { track, location, permissions } = useSelector((state: ReduxAppState) => state.app);
-  const { isActive, currentVehicle, warnings, motion, position, vehicles } = useSelector(
-    (state: ReduxAppState) => state.trip
-  );
+  const { isActive, currentVehicle, warnings, motion, position, vehicles, tripStartTime } =
+    useSelector((state: ReduxAppState) => state.trip);
+
+  // Elapsed time hook - uses Redux tripStartTime
+  const elapsedTime = useElapsedTime(tripStartTime);
 
   // Location update handler
   const handleLocationUpdate = useCallback(
@@ -102,10 +119,12 @@ export const HomeScreen = () => {
     if (currentVehicle.id != null && vehicles.length > 0) {
       const myVehicle = vehicles.find((v) => v.id === currentVehicle.id);
       if (myVehicle) {
-        dispatch(TripAction.setPosition({
-          percentage: myVehicle.percentagePosition,
-          calculated: myVehicle.pos,
-        }));
+        dispatch(
+          TripAction.setPosition({
+            percentage: myVehicle.percentagePosition,
+            calculated: myVehicle.pos,
+          })
+        );
       }
     }
   }, [vehicles, currentVehicle.id]);
@@ -114,12 +133,17 @@ export const HomeScreen = () => {
   useEffect(() => {
     if (isFollowingVehicle) {
       // If trip is active, follow own vehicle; otherwise follow first available vehicle
-      const vehicleToFollow = currentVehicle.id != null
-        ? vehicles.find((v) => v.id === currentVehicle.id)
-        : vehicles[0];
+      const vehicleToFollow =
+        currentVehicle.id != null
+          ? vehicles.find((v) => v.id === currentVehicle.id)
+          : vehicles[0];
 
       if (vehicleToFollow) {
-        animateCamera(vehicleToFollow.pos.lat, vehicleToFollow.pos.lng, vehicleToFollow.heading ?? 0);
+        animateCamera(
+          vehicleToFollow.pos.lat,
+          vehicleToFollow.pos.lng,
+          vehicleToFollow.heading ?? 0
+        );
       }
     } else if (isFollowingUser && location) {
       animateCamera(location.coords.latitude, location.coords.longitude, location.coords.heading);
@@ -174,15 +198,22 @@ export const HomeScreen = () => {
     const allVehicles = currentState.trip.vehicles;
 
     // Follow own vehicle if trip is active, otherwise follow first available vehicle
-    const vehicleToFollow = vehicleId != null
-      ? allVehicles.find((v) => v.id === vehicleId)
-      : allVehicles[0];
+    const vehicleToFollow =
+      vehicleId != null ? allVehicles.find((v) => v.id === vehicleId) : allVehicles[0];
 
     if (vehicleToFollow) {
-      centerOnPosition(vehicleToFollow.pos.lat, vehicleToFollow.pos.lng, vehicleToFollow.heading ?? 0);
+      centerOnPosition(
+        vehicleToFollow.pos.lat,
+        vehicleToFollow.pos.lng,
+        vehicleToFollow.heading ?? 0
+      );
       setIsFollowingVehicle(true);
     }
   }, [store, centerOnPosition, setIsFollowingVehicle]);
+
+  const handleOpenDrawer = useCallback(() => {
+    navigation.dispatch(DrawerActions.openDrawer());
+  }, [navigation]);
 
   const handleStopTrip = useCallback(() => {
     Alert.alert(
@@ -201,6 +232,17 @@ export const HomeScreen = () => {
       ]
     );
   }, [localizedStrings, dispatch, store]);
+
+  const handleStartTrip = useCallback(() => {
+    // Open QR scanner as primary method
+    setIsQRScannerVisible(true);
+  }, []);
+
+  const handleManualEntryPress = useCallback(() => {
+    // Close QR scanner and open manual selection
+    setIsQRScannerVisible(false);
+    setIsManualSelectionVisible(true);
+  }, []);
 
   const handleStartVehicleSelect = useCallback(
     (vehicle: Vehicle) => {
@@ -225,20 +267,21 @@ export const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      {(isActive || isFollowingVehicle) && (
-        <TripHeader
-          distance={motion.distanceTravelled}
+      {/* Minimal trip overlay - replaces TripHeader */}
+      {isActive && (
+        <MinimalTripOverlay
           speed={motion.speed}
-          nextVehicle={warnings.nextVehicle}
-          nextCrossing={warnings.nextLevelCrossing}
-          vehicleName={isActive ? (currentVehicle.name ?? '') : (vehicles[0]?.label ?? '')}
-          onChangeVehicle={isActive ? () => setIsChangeVehicleIdBottomSheetVisible(true) : undefined}
+          elapsedTime={elapsedTime}
+          onPress={handleOpenDrawer}
         />
       )}
+
       <TrackMapView
         mapRef={mapRef}
         cameraRef={cameraRef}
-        onRegionChange={(zoom, heading, isUserInteraction) => onRegionChange(zoom, heading, isUserInteraction)}
+        onRegionChange={(zoom, heading, isUserInteraction) =>
+          onRegionChange(zoom, heading, isUserInteraction)
+        }
         location={location}
         calculatedPosition={position.calculated}
         pointsOfInterest={track.pointsOfInterest}
@@ -248,21 +291,34 @@ export const HomeScreen = () => {
         useSmallMarker={useSmallMarker}
         mapHeading={cameraHeading}
       />
+
       <TripControls
         isActive={isActive}
         isFollowingUser={isFollowingUser}
         isFollowingVehicle={isFollowingVehicle}
         onLocationButtonClick={handleLocationButtonClick}
-        onStartTrip={() => setIsStartTripBottomSheetVisible(true)}
+        onStartTrip={handleStartTrip}
         onStopTrip={handleStopTrip}
         onCenterOnVehicle={handleCenterOnVehicle}
+        onOpenDrawer={handleOpenDrawer}
         warnings={warnings}
         speed={motion.speed}
         localizedStrings={localizedStrings}
       />
+
+      {/* QR Scanner - primary vehicle selection method */}
+      <QRScannerBottomSheet
+        isVisible={isQRScannerVisible}
+        setIsVisible={setIsQRScannerVisible}
+        vehicles={vehicles}
+        onVehicleSelected={handleStartVehicleSelect}
+        onManualEntryPress={handleManualEntryPress}
+      />
+
+      {/* Manual vehicle selection - fallback */}
       <VehicleSelectionBottomSheet
-        isVisible={isStartTripBottomSheetVisible}
-        setIsVisible={setIsStartTripBottomSheetVisible}
+        isVisible={isManualSelectionVisible}
+        setIsVisible={setIsManualSelectionVisible}
         title={localizedStrings.t('bottomSheetVehicleId')}
         subtitle={
           vehicles.length > 0
@@ -272,6 +328,8 @@ export const HomeScreen = () => {
         vehicles={vehicles}
         onVehicleSelected={handleStartVehicleSelect}
       />
+
+      {/* Change vehicle during trip */}
       <VehicleSelectionBottomSheet
         isVisible={isChangeVehicleIdBottomSheetVisible}
         setIsVisible={setIsChangeVehicleIdBottomSheetVisible}

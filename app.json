@@ -19,7 +19,8 @@
       "supportsTablet": true,
       "infoPlist": {
         "UIBackgroundModes": ["location"],
-        "NSLocationAlwaysAndWhenInUseUsageDescription": "This app uses the location to show the current position on a map."
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "This app uses the location to show the current position on a map.",
+        "NSCameraUsageDescription": "This app uses the camera to scan QR codes on draisines for vehicle selection."
       }
     },
     "android": {
@@ -34,7 +35,8 @@
         "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.ACCESS_BACKGROUND_LOCATION",
         "android.permission.FOREGROUND_SERVICE",
-        "android.permission.FOREGROUND_SERVICE_LOCATION"
+        "android.permission.FOREGROUND_SERVICE_LOCATION",
+        "android.permission.CAMERA"
       ],
       "softwareKeyboardLayoutMode": "pan"
     },
@@ -50,9 +52,16 @@
           "isAndroidForegroundServiceEnabled": true
         }
       ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow RailTrail to use the camera to scan QR codes on draisines."
+        }
+      ],
       "expo-localization",
       "expo-asset",
-      "expo-font"
+      "expo-font",
+      "@maplibre/maplibre-react-native"
     ],
     "extra": {
       "eas": {

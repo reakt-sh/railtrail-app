@@ -1,4 +1,4 @@
-import { Locale } from '../hooks/useTranslation';
+import { Locale } from '../constants';
 
 /**
  * Formatiert eine Distanz in Metern zu einem lesbaren String.

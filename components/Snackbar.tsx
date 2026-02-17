@@ -33,7 +33,7 @@ export const Snackbar = ({ title, message, state, onPress = () => {} }: Props) =
       >
         {title}
       </Text>
-      <Text style={{ color: state == SnackbarState.WARNING ? Color.white : Color.primary }}>
+      <Text style={[textStyles.bodyMedium, { color: state == SnackbarState.WARNING ? Color.white : Color.primary }]}>
         {message}
       </Text>
     </View>

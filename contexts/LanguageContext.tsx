@@ -1,7 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { StorageKeys } from '../constants';
-import { Locale } from '../hooks/useTranslation';
+import { Locale, StorageKeys } from '../constants';
 
 interface LanguageContextType {
   locale: Locale;

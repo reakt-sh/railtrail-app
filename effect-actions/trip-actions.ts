@@ -71,6 +71,21 @@ const calculateWarnings = (
         )
       : null;
 
+  // Next turning point
+  const nextTurningPoint = getNextPOI(
+    percentagePosition,
+    pointsOfInterest,
+    POIType.TurningPoint,
+    isPercentagePositionIncreasing
+  );
+  const nextTurningPointDist =
+    nextTurningPoint && percentagePosition != null && trackLength
+      ? percentToDistance(
+          trackLength,
+          Math.abs(nextTurningPoint.percentagePosition - percentagePosition)
+        )
+      : null;
+
   // Next vehicle (any direction)
   const nextVehicle = getNextVehicle(
     percentagePosition,
@@ -105,6 +120,7 @@ const calculateWarnings = (
 
   return {
     nextLevelCrossing: nextLevelCrossingDist,
+    nextTurningPoint: nextTurningPointDist,
     nextVehicle: nextVehicleDist,
     nextVehicleHeadingTowards: nextVehicleHeadingTowardsDist,
   };

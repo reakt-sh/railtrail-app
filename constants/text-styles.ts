@@ -17,7 +17,6 @@ export const textStyles = StyleSheet.create({
     fontFamily: Font.condensed,
     textTransform: 'uppercase',
     color: Color.text,
-
     fontSize: 20,
   },
   bodyMedium: {

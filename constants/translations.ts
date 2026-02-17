@@ -54,6 +54,27 @@ const translations = {
     headerNextCrossing: 'Next level crossing',
     headerVehicleId: 'Vehicle:',
 
+    // Trip Drawer
+    drawerNoActiveTrip: 'No active trip.\nStart a trip to see details here.',
+    drawerUnknownVehicle: 'Unknown vehicle',
+    drawerTripStats: 'Trip Statistics',
+    drawerSpeed: 'Speed',
+    drawerDistance: 'Distance traveled',
+    drawerElapsedTime: 'Elapsed time',
+    drawerUpcoming: 'Upcoming',
+    drawerNextDraisine: 'Next draisine',
+    drawerNextCrossing: 'Next level crossing',
+    drawerNextTurningPoint: 'Next turning point',
+    drawerRidingTips: 'Riding Tips',
+
+    // QR Scanner
+    qrScannerTitle: 'Scan QR Code',
+    qrScannerSubtitle: 'Point your camera at the QR code on your draisine',
+    qrScannerManualEntry: 'Enter number manually',
+    qrScannerLoadingCamera: 'Loading camera...',
+    qrScannerPermissionRequired: 'Camera permission is required to scan QR codes',
+    qrScannerGrantPermission: 'Grant Permission',
+
     // Info Menu
     infoTitleDraisineInfo: 'Draisine Explanations',
     infoTitleTripHistory: 'Past Trips',
@@ -188,6 +209,7 @@ const translations = {
     a11yCollapseSection: 'Double tap to collapse',
     a11yAcceptPrivacyPolicy: 'Accept privacy policy',
     a11yDeleteTrip: 'Delete trip',
+    a11yOpenDrawer: 'Open trip details',
   },
 
   de: {
@@ -248,6 +270,27 @@ const translations = {
     headerSpeed: 'Geschwindigkeit',
     headerNextCrossing: 'Nächster Bahnübergang',
     headerVehicleId: 'Draisine:',
+
+    // Trip Drawer
+    drawerNoActiveTrip: 'Keine aktive Fahrt.\nStarten Sie eine Fahrt, um Details hier zu sehen.',
+    drawerUnknownVehicle: 'Unbekanntes Fahrzeug',
+    drawerTripStats: 'Fahrtstatistik',
+    drawerSpeed: 'Geschwindigkeit',
+    drawerDistance: 'Zurückgelegte Distanz',
+    drawerElapsedTime: 'Verstrichene Zeit',
+    drawerUpcoming: 'Voraus',
+    drawerNextDraisine: 'Nächste Draisine',
+    drawerNextCrossing: 'Nächster Bahnübergang',
+    drawerNextTurningPoint: 'Nächster Wendepunkt',
+    drawerRidingTips: 'Fahr-Tipps',
+
+    // QR Scanner
+    qrScannerTitle: 'QR-Code scannen',
+    qrScannerSubtitle: 'Richten Sie Ihre Kamera auf den QR-Code Ihrer Draisine',
+    qrScannerManualEntry: 'Nummer manuell eingeben',
+    qrScannerLoadingCamera: 'Kamera wird geladen...',
+    qrScannerPermissionRequired: 'Kameraberechtigung wird zum Scannen von QR-Codes benötigt',
+    qrScannerGrantPermission: 'Berechtigung erteilen',
 
     // Info Menu
     infoTitleDraisineInfo: 'Erklärungen zur Draisine',
@@ -383,6 +426,7 @@ const translations = {
     a11yCollapseSection: 'Doppeltippen zum Schließen',
     a11yAcceptPrivacyPolicy: 'Datenschutzerklärung akzeptieren',
     a11yDeleteTrip: 'Fahrt löschen',
+    a11yOpenDrawer: 'Fahrtdetails öffnen',
   },
 };
 export { translations };

@@ -1,4 +1,5 @@
 export { BACKEND_TIMEOUT, positioningWsUrl } from './api';
+export { Locale } from './locale';
 export { Color } from './color';
 export { Font } from './fonts';
 export {

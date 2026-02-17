@@ -5,10 +5,10 @@ import React from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { DraisineIcon, MalenteLogoIcon } from '../assets/icons';
-import { Color } from '../constants';
+import { Color, Locale } from '../constants';
 import { textStyles } from '../constants/text-styles';
 import { useLanguage } from '../contexts/LanguageContext';
-import { Locale, useTranslation } from '../hooks/useTranslation';
+import { useTranslation } from '../hooks/useTranslation';
 
 type InfoStackParamList = {
   InfoMenu: undefined;
