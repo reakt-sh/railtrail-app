@@ -1,10 +1,15 @@
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { memo, useEffect, useMemo, useRef } from 'react';
-import { Keyboard, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Keyboard, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Color } from '../constants/color';
 import { textStyles } from '../constants/text-styles';
+import { reloadVehicles } from '../effect-actions/api-actions';
 import { useTranslation } from '../hooks';
 import { Vehicle } from '../types/vehicle';
+
+// Demo vehicle ID - should be excluded from "no vehicles" check
+const DEMO_VEHICLE_ID = 99;
 
 interface ExternalProps {
   readonly isVisible: boolean;
@@ -47,14 +52,20 @@ export const VehicleSelectionBottomSheet = memo(
     };
 
     const availableVehicles = useMemo(() => {
-      const filtered =
-        excludeVehicleId != null ? vehicles.filter((v) => v.id !== excludeVehicleId) : vehicles;
+      let filtered = vehicles;
+      // Optionally exclude the current vehicle (for vehicle change)
+      if (excludeVehicleId != null) {
+        filtered = filtered.filter((v) => v.id !== excludeVehicleId);
+      }
       return [...filtered].sort((a, b) => {
         const labelA = a.label ?? `${a.id}`;
         const labelB = b.label ?? `${b.id}`;
         return labelA.localeCompare(labelB, undefined, { numeric: true });
       });
     }, [vehicles, excludeVehicleId]);
+
+    // Check if there are real vehicles (excluding Demo) for the empty state
+    const hasNoRealVehicles = availableVehicles.filter((v) => v.id !== DEMO_VEHICLE_ID).length === 0;
 
     return (
       <BottomSheet
@@ -68,21 +79,32 @@ export const VehicleSelectionBottomSheet = memo(
         <View style={styles.contentContainer}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.subtitle}>{subtitle}</Text>
-          <ScrollView style={styles.vehicleList} contentContainerStyle={styles.vehicleGrid}>
-            {availableVehicles.map((vehicle) => (
-              <TouchableOpacity
-                key={vehicle.id}
-                style={styles.vehicleItem}
-                onPress={() => handleVehiclePress(vehicle)}
-                accessibilityRole="button"
-                accessibilityLabel={i18n.t('a11ySelectVehicle', {
-                  name: vehicle.label ?? `Draisine ${vehicle.id}`,
-                })}
-              >
-                <Text style={styles.vehicleLabel}>{vehicle.label ?? `${vehicle.id}`}</Text>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
+          {hasNoRealVehicles ? (
+            <View style={styles.emptyState}>
+              <MaterialCommunityIcons name="train-car" size={48} color={Color.darkGray} />
+              <Text style={styles.emptyText}>{i18n.t('bottomSheetNoVehicles')}</Text>
+              <Pressable style={styles.reloadButton} onPress={reloadVehicles}>
+                <MaterialCommunityIcons name="refresh" size={20} color={Color.white} />
+                <Text style={styles.reloadButtonText}>{i18n.t('bottomSheetReload')}</Text>
+              </Pressable>
+            </View>
+          ) : (
+            <ScrollView style={styles.vehicleList} contentContainerStyle={styles.vehicleGrid}>
+              {availableVehicles.map((vehicle) => (
+                <TouchableOpacity
+                  key={vehicle.id}
+                  style={styles.vehicleItem}
+                  onPress={() => handleVehiclePress(vehicle)}
+                  accessibilityRole="button"
+                  accessibilityLabel={i18n.t('a11ySelectVehicle', {
+                    name: vehicle.label ?? `Draisine ${vehicle.id}`,
+                  })}
+                >
+                  <Text style={styles.vehicleLabel}>{vehicle.label ?? `${vehicle.id}`}</Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          )}
         </View>
       </BottomSheet>
     );
@@ -127,5 +149,32 @@ const styles = StyleSheet.create({
   vehicleLabel: {
     ...textStyles.bodyMedium,
     textAlign: 'center',
+  },
+  emptyState: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 40,
+  },
+  emptyText: {
+    ...textStyles.bodyMedium,
+    color: Color.darkGray,
+    marginTop: 16,
+    marginBottom: 24,
+    textAlign: 'center',
+  },
+  reloadButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Color.primary,
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 8,
+    gap: 8,
+  },
+  reloadButtonText: {
+    ...textStyles.bodyMedium,
+    color: Color.white,
+    fontWeight: '600',
   },
 });

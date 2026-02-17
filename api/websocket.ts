@@ -2,10 +2,12 @@ import { positioningWsUrl } from '../constants';
 import { MapPosition } from '../types/map-position';
 
 type PositionCallback = (position: MapPosition) => void;
+type ReconnectCallback = () => void;
 
 class PositionWebSocket {
   private ws: WebSocket | null = null;
   private callbacks: PositionCallback[] = [];
+  private reconnectCallbacks: ReconnectCallback[] = [];
   private reconnectTimer: ReturnType<typeof setTimeout> | null = null;
   private heartbeatTimer: ReturnType<typeof setInterval> | null = null;
   private isConnecting = false;
@@ -25,6 +27,8 @@ class PositionWebSocket {
         if (__DEV__) console.log('[WebSocket] Connected');
         this.isConnecting = false;
         this.startHeartbeat();
+        // Notify reconnect listeners
+        this.reconnectCallbacks.forEach((cb) => cb());
       };
 
       this.ws.onmessage = (event) => {
@@ -96,6 +100,23 @@ class PositionWebSocket {
     return () => {
       this.callbacks = this.callbacks.filter((cb) => cb !== callback);
     };
+  }
+
+  onReconnect(callback: ReconnectCallback): () => void {
+    this.reconnectCallbacks.push(callback);
+    return () => {
+      this.reconnectCallbacks = this.reconnectCallbacks.filter((cb) => cb !== callback);
+    };
+  }
+
+  forceReconnect() {
+    if (__DEV__) console.log('[WebSocket] Force reconnecting...');
+    if (this.ws) {
+      this.ws.close();
+      this.ws = null;
+    }
+    this.cleanup();
+    this.connect();
   }
 
   disconnect() {

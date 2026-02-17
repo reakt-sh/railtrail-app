@@ -34,6 +34,7 @@ export interface Warnings {
   readonly nextVehicleHeadingTowards: number | null;
   readonly nextLevelCrossing: number | null;
   readonly nextTurningPoint: number | null;
+  readonly secondTurningPoint: number | null;
 }
 
 export interface TripState {
@@ -229,6 +230,7 @@ export const initialTripState: TripState = {
     nextVehicleHeadingTowards: null,
     nextLevelCrossing: null,
     nextTurningPoint: null,
+    secondTurningPoint: null,
   },
   vehicles: [],
   activeSegment: null,

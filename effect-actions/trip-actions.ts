@@ -71,18 +71,26 @@ const calculateWarnings = (
         )
       : null;
 
-  // Next turning point
-  const nextTurningPoint = getNextPOI(
+  // Next turning points (first and second)
+  const turningPoints = getNextPOIs(
     percentagePosition,
     pointsOfInterest,
     POIType.TurningPoint,
-    isPercentagePositionIncreasing
+    isPercentagePositionIncreasing,
+    2
   );
   const nextTurningPointDist =
-    nextTurningPoint && percentagePosition != null && trackLength
+    turningPoints[0] && percentagePosition != null && trackLength
       ? percentToDistance(
           trackLength,
-          Math.abs(nextTurningPoint.percentagePosition - percentagePosition)
+          Math.abs(turningPoints[0].percentagePosition - percentagePosition)
+        )
+      : null;
+  const secondTurningPointDist =
+    turningPoints[1] && percentagePosition != null && trackLength
+      ? percentToDistance(
+          trackLength,
+          Math.abs(turningPoints[1].percentagePosition - percentagePosition)
         )
       : null;
 
@@ -121,6 +129,7 @@ const calculateWarnings = (
   return {
     nextLevelCrossing: nextLevelCrossingDist,
     nextTurningPoint: nextTurningPointDist,
+    secondTurningPoint: secondTurningPointDist,
     nextVehicle: nextVehicleDist,
     nextVehicleHeadingTowards: nextVehicleHeadingTowardsDist,
   };
@@ -136,7 +145,22 @@ const getNextPOI = (
   type: POIType,
   isPercentagePositionIncreasing?: boolean
 ): PointOfInterest | null => {
-  if (percentagePosition == null) return null;
+  const pois = getNextPOIs(percentagePosition, pointsOfInterest, type, isPercentagePositionIncreasing, 1);
+  return pois[0] ?? null;
+};
+
+/**
+ * Finds the next N POIs of a given type in the current travel direction, sorted by distance.
+ * If direction is unknown, returns the closest POIs in either direction.
+ */
+const getNextPOIs = (
+  percentagePosition: number | null,
+  pointsOfInterest: PointOfInterest[],
+  type: POIType,
+  isPercentagePositionIncreasing?: boolean,
+  count: number = 1
+): PointOfInterest[] => {
+  if (percentagePosition == null) return [];
 
   // Filter by type first
   const poisOfType = pointsOfInterest.filter((poi) => poi.typeId === type);
@@ -151,12 +175,14 @@ const getNextPOI = (
             : poi.percentagePosition <= percentagePosition
         );
 
-  return filteredPOIs.reduce((closest: PointOfInterest | null, current) => {
-    if (!closest) return current;
-    const closestDist = Math.abs(closest.percentagePosition - percentagePosition);
-    const currentDist = Math.abs(current.percentagePosition - percentagePosition);
-    return currentDist < closestDist ? current : closest;
-  }, null);
+  // Sort by distance and return the first N
+  return filteredPOIs
+    .sort((a, b) => {
+      const distA = Math.abs(a.percentagePosition - percentagePosition);
+      const distB = Math.abs(b.percentagePosition - percentagePosition);
+      return distA - distB;
+    })
+    .slice(0, count);
 };
 
 /**

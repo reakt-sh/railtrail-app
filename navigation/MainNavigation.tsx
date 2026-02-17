@@ -1,4 +1,4 @@
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import React from 'react';
@@ -17,9 +17,16 @@ export const MainNavigation = () => {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarIcon: ({ color }) => {
-          const icon = route.name === localizedStrings.t('navigationMap') ? 'map' : 'info-outline';
-          return <MaterialIcons name={icon} size={24} color={Color.primary} />;
+        tabBarIcon: ({ color, focused }) => {
+          const isMapTab = route.name === localizedStrings.t('navigationMap');
+          const icon = isMapTab
+            ? focused
+              ? 'map'
+              : 'map-outline'
+            : focused
+              ? 'information'
+              : 'information-outline';
+          return <MaterialCommunityIcons name={icon} size={24} color={color} />;
         },
         tabBarActiveTintColor: Color.primary,
         tabBarInactiveTintColor: Color.darkGray,

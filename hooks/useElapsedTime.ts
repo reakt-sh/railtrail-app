@@ -7,12 +7,12 @@ import { formatElapsedTime } from '../util';
  * an ISO timestamp and calculates the diff on each render/interval.
  *
  * @param startTime - ISO timestamp string or null
- * @param updateIntervalMs - How often to update (default 10000ms = 10 seconds)
+ * @param updateIntervalMs - How often to update (default 1000ms = 1 second)
  * @returns Formatted elapsed time string (e.g., "01:23" for 1 hour 23 minutes)
  */
 export const useElapsedTime = (
   startTime: string | null,
-  updateIntervalMs: number = 10000
+  updateIntervalMs: number = 1000
 ): string => {
   const [elapsedTime, setElapsedTime] = useState(() => formatElapsedTime(startTime));
 

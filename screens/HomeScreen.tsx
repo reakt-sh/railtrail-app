@@ -7,8 +7,6 @@ import { Alert, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import {
   MinimalTripOverlay,
-  QRScannerBottomSheet,
-  StartTripBottomSheet,
   TrackMapView,
   TripControls,
   VehicleSelectionBottomSheet,
@@ -31,6 +29,7 @@ import { AppAction } from '../redux/app';
 import { ReduxAppState } from '../redux/init';
 import { TripAction } from '../redux/trip';
 import { Vehicle } from '../types/vehicle';
+import { AppEvents, events } from '../util/events';
 
 export const HomeScreen = () => {
   const mapRef = useRef<MapLibreGL.MapViewRef>(null);
@@ -61,9 +60,7 @@ export const HomeScreen = () => {
   const { startSimulation, stopSimulation } = useTripSimulation();
 
   // Bottom sheet visibility
-  const [isStartTripSheetVisible, setIsStartTripSheetVisible] = useState(false);
-  const [isQRScannerVisible, setIsQRScannerVisible] = useState(false);
-  const [isManualSelectionVisible, setIsManualSelectionVisible] = useState(false);
+  const [isVehicleSelectionVisible, setIsVehicleSelectionVisible] = useState(false);
   const [isChangeVehicleIdBottomSheetVisible, setIsChangeVehicleIdBottomSheetVisible] =
     useState(false);
 
@@ -109,6 +106,14 @@ export const HomeScreen = () => {
         stopSimulation();
       }
     };
+  }, []);
+
+  // Listen for vehicle change event from drawer
+  useEffect(() => {
+    const unsubscribe = events.on(AppEvents.SHOW_VEHICLE_CHANGE, () => {
+      setIsChangeVehicleIdBottomSheetVisible(true);
+    });
+    return unsubscribe;
   }, []);
 
   // Sync percentagePosition and calculated position from own vehicle in vehicles array
@@ -216,21 +221,7 @@ export const HomeScreen = () => {
   }, [localizedStrings, dispatch, store]);
 
   const handleStartTrip = useCallback(() => {
-    setIsStartTripSheetVisible(true);
-  }, []);
-
-  const handleScanQR = useCallback(() => {
-    setIsQRScannerVisible(true);
-  }, []);
-
-  const handleManualEntry = useCallback(() => {
-    setIsManualSelectionVisible(true);
-  }, []);
-
-  const handleManualEntryPress = useCallback(() => {
-    // Close QR scanner and open manual selection
-    setIsQRScannerVisible(false);
-    setIsManualSelectionVisible(true);
+    setIsVehicleSelectionVisible(true);
   }, []);
 
   const handleStartVehicleSelect = useCallback(
@@ -240,8 +231,9 @@ export const HomeScreen = () => {
       dispatch(TripAction.setCurrentVehicle(vehicle.id, vehicleName));
       dispatch(TripAction.startSegment(vehicle.id, vehicleName));
       dispatch(TripAction.start());
+      setIsFollowingVehicle(true);
     },
-    [dispatch]
+    [dispatch, setIsFollowingVehicle]
   );
 
   const handleChangeVehicle = useCallback(
@@ -294,27 +286,10 @@ export const HomeScreen = () => {
         localizedStrings={localizedStrings}
       />
 
-      {/* Start trip options - scan QR or manual selection */}
-      <StartTripBottomSheet
-        isVisible={isStartTripSheetVisible}
-        setIsVisible={setIsStartTripSheetVisible}
-        onScanQR={handleScanQR}
-        onManualEntry={handleManualEntry}
-      />
-
-      {/* QR Scanner - primary vehicle selection method */}
-      <QRScannerBottomSheet
-        isVisible={isQRScannerVisible}
-        setIsVisible={setIsQRScannerVisible}
-        vehicles={vehicles}
-        onVehicleSelected={handleStartVehicleSelect}
-        onManualEntryPress={handleManualEntryPress}
-      />
-
-      {/* Manual vehicle selection - fallback */}
+      {/* Vehicle selection for starting trip */}
       <VehicleSelectionBottomSheet
-        isVisible={isManualSelectionVisible}
-        setIsVisible={setIsManualSelectionVisible}
+        isVisible={isVehicleSelectionVisible}
+        setIsVisible={setIsVehicleSelectionVisible}
         title={localizedStrings.t('bottomSheetVehicleId')}
         subtitle={
           vehicles.length > 0

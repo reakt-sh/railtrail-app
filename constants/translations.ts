@@ -44,6 +44,7 @@ const translations = {
       'Enter the vehicle number to continue. The number can usually be found on the seat.',
     bottomSheetSelectVehicle: 'Select your draisine:',
     bottomSheetNoVehicles: 'No draisines available. Please wait for vehicles to appear on the map.',
+    bottomSheetReload: 'Reload',
     bottomSheetAlertVehicleIdNotFoundTitle: 'Vehicle not found',
     bottomSheetAlertVehicleIdNotFoundMessage:
       'The vehicle could not be found. Make sure the vehicle number is correct and the correct route is selected.',
@@ -66,6 +67,7 @@ const translations = {
     drawerNextDraisine: 'Next draisine',
     drawerNextCrossing: 'Next level crossing',
     drawerNextTurningPoint: 'Next turning point',
+    drawerSecondTurningPoint: 'Following turning point',
     drawerRidingTips: 'Riding Tips',
 
     // QR Scanner
@@ -267,6 +269,7 @@ const translations = {
     bottomSheetSelectVehicle: 'Wählen Sie Ihre Draisine:',
     bottomSheetNoVehicles:
       'Keine Draisinen verfügbar. Bitte warten Sie, bis Fahrzeuge auf der Karte erscheinen.',
+    bottomSheetReload: 'Neu laden',
     bottomSheetAlertVehicleIdNotFoundTitle: 'Fahrzeug nicht gefunden',
     bottomSheetAlertVehicleIdNotFoundMessage:
       'Das Fahrzeug konnte nicht gefunden werden. Stellen Sie sicher dass die Fahrzeugnummer korrekt ist und die richtige Strecke ausgewählt ist.',
@@ -289,6 +292,7 @@ const translations = {
     drawerNextDraisine: 'Nächste Draisine',
     drawerNextCrossing: 'Nächster Bahnübergang',
     drawerNextTurningPoint: 'Nächster Wendepunkt',
+    drawerSecondTurningPoint: 'Übernächster Wendepunkt',
     drawerRidingTips: 'Fahr-Tipps',
 
     // QR Scanner

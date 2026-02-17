@@ -57,7 +57,7 @@ export const formatDate = (isoString: string, locale: string): string => {
  * @param startTime - ISO timestamp string or null
  * @returns Formatted string like "01:23" (hours:minutes) or "--:--" if no start time
  */
-export const formatElapsedTime = (startTime: string | null, withSeconds = false): string => {
+export const formatElapsedTime = (startTime: string | null, withSeconds = true): string => {
   if (!startTime) return '--:--';
 
   const start = new Date(startTime);

@@ -8,6 +8,7 @@ import { Color } from '../constants/color';
 import { textStyles } from '../constants/text-styles';
 import { useTranslation } from '../hooks';
 import { ReduxAppState } from '../redux/init';
+import { AppEvents, events } from '../util/events';
 import { formatDistance, formatElapsedTime, formatSpeed } from '../util/formatters';
 
 interface InfoRowProps {
@@ -46,7 +47,7 @@ export const TripDrawerContent = memo((props: DrawerContentComponentProps) => {
     setElapsedTime(formatElapsedTime(tripStartTime, true));
     const interval = setInterval(() => {
       setElapsedTime(formatElapsedTime(tripStartTime, true));
-    }, 10000); // Update every 10 seconds
+    }, 1000); // Update every second
 
     return () => clearInterval(interval);
   }, [isActive, tripStartTime]);
@@ -72,6 +73,17 @@ export const TripDrawerContent = memo((props: DrawerContentComponentProps) => {
         <Text style={styles.vehicleName}>
           {currentVehicle.name ?? localizedStrings.t('drawerUnknownVehicle')}
         </Text>
+        <Pressable
+          style={styles.changeVehicleButton}
+          onPress={() => {
+            props.navigation.closeDrawer();
+            events.emit(AppEvents.SHOW_VEHICLE_CHANGE);
+          }}
+          accessibilityRole="button"
+          accessibilityLabel={localizedStrings.t('bottomSheetChangeVehicleId')}
+        >
+          <MaterialCommunityIcons name="swap-horizontal" size={24} color={Color.primary} />
+        </Pressable>
       </View>
 
       <View style={styles.section}>
@@ -100,7 +112,7 @@ export const TripDrawerContent = memo((props: DrawerContentComponentProps) => {
         <Text style={styles.sectionTitle}>{localizedStrings.t('drawerUpcoming')}</Text>
 
         <InfoRow
-          icon="train"
+          icon="bicycle-cargo"
           label={localizedStrings.t('drawerNextDraisine')}
           value={warnings.nextVehicle != null ? `${Math.round(warnings.nextVehicle)} m` : '-'}
         />
@@ -118,6 +130,14 @@ export const TripDrawerContent = memo((props: DrawerContentComponentProps) => {
           label={localizedStrings.t('drawerNextTurningPoint')}
           value={
             warnings.nextTurningPoint != null ? `${Math.round(warnings.nextTurningPoint)} m` : '-'
+          }
+        />
+
+        <InfoRow
+          icon="rotate-3d-variant"
+          label={localizedStrings.t('drawerSecondTurningPoint')}
+          value={
+            warnings.secondTurningPoint != null ? `${Math.round(warnings.secondTurningPoint)} m` : '-'
           }
         />
       </View>
@@ -161,6 +181,11 @@ const styles = StyleSheet.create({
   vehicleName: {
     ...textStyles.headerTextHuge,
     marginLeft: 12,
+    flex: 1,
+  },
+  changeVehicleButton: {
+    padding: 8,
+    marginLeft: 8,
   },
   section: {
     paddingHorizontal: 16,
