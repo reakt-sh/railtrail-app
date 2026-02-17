@@ -121,6 +121,10 @@ interface TripActionEndSegment {
   readonly type: 'trip/end-segment';
 }
 
+interface TripActionClearVehiclesExceptDemo {
+  readonly type: 'trip/clear-vehicles-except-demo';
+}
+
 export type TripAction =
   | TripActionReset
   | TripActionStart
@@ -134,7 +138,8 @@ export type TripAction =
   | TripActionUpdateVehicleFromWebSocket
   | TripActionBatchUpdate
   | TripActionStartSegment
-  | TripActionEndSegment;
+  | TripActionEndSegment
+  | TripActionClearVehiclesExceptDemo;
 
 export const TripAction = {
   reset: (): TripActionReset => ({
@@ -204,6 +209,10 @@ export const TripAction = {
 
   endSegment: (): TripActionEndSegment => ({
     type: 'trip/end-segment',
+  }),
+
+  clearVehiclesExceptDemo: (): TripActionClearVehiclesExceptDemo => ({
+    type: 'trip/clear-vehicles-except-demo',
   }),
 };
 
@@ -283,6 +292,14 @@ const reducer = (state = initialTripState, action: RailTrailReduxAction): TripSt
 
     case 'trip/set-vehicles':
       return { ...state, vehicles: action.payload };
+
+    case 'trip/clear-vehicles-except-demo': {
+      const DEMO_VEHICLE_ID = 99;
+      return {
+        ...state,
+        vehicles: state.vehicles.filter((v) => v.id === DEMO_VEHICLE_ID),
+      };
+    }
 
     case 'trip/update-vehicle-from-websocket': {
       const { vehicle, speed } = action.payload;

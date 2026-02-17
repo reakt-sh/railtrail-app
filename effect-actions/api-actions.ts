@@ -44,10 +44,9 @@ const DEMO_VEHICLE_ID = 99;
 export const setupPositionUpdates = (dispatch: Dispatch): (() => void) => {
   // Bei Reconnect: Fahrzeuge leeren (außer Demo), damit frische Daten kommen
   const unsubscribeReconnect = positionSocket.onReconnect(() => {
-    if (__DEV__) console.log('[WebSocket] Reconnected - clearing vehicle cache');
-    // Vehicles werden durch setVehicles mit leerem Array geleert,
-    // Demo wird vom Simulator wieder hinzugefügt
-    dispatch(TripAction.setVehicles([]));
+    if (__DEV__) console.log('[WebSocket] Reconnected - clearing vehicle cache (keeping Demo)');
+    // Vehicles werden geleert, aber Demo wird behalten
+    dispatch(TripAction.clearVehiclesExceptDemo());
     lastPositions.clear();
   });
 

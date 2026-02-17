@@ -94,17 +94,13 @@ export const HomeScreen = () => {
       startForegroundTracking(handleLocationUpdate);
     }
 
-    // Auto-start simulation in dev mode
-    if (__DEV__) {
-      startSimulation();
-    }
+    // Start simulation for Demo vehicle
+    startSimulation();
 
     return () => {
       unsubscribePositions();
       disconnectFromServer();
-      if (__DEV__) {
-        stopSimulation();
-      }
+      stopSimulation();
     };
   }, []);
 
@@ -232,8 +228,10 @@ export const HomeScreen = () => {
       dispatch(TripAction.startSegment(vehicle.id, vehicleName));
       dispatch(TripAction.start());
       setIsFollowingVehicle(true);
+      // Zoom to vehicle position
+      centerOnPosition(vehicle.pos.lat, vehicle.pos.lng, vehicle.heading ?? 0, 17);
     },
-    [dispatch, setIsFollowingVehicle]
+    [dispatch, setIsFollowingVehicle, centerOnPosition]
   );
 
   const handleChangeVehicle = useCallback(

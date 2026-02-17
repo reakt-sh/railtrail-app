@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
+import { Dispatch } from 'redux';
 import { MalenteLogoIcon } from '../assets/icons';
 import { Button, Checkbox } from '../components';
 import { privacySections, StorageKeys } from '../constants';
@@ -14,10 +15,10 @@ import {
   requestForegroundPermission,
 } from '../effect-actions/permissions';
 import { useTranslation } from '../hooks';
-import { AppAction } from '../redux/app';
+import { AppAction, type AppAction as AppActionType } from '../redux/app';
 
 export const LandingPageScreen = ({ navigation }: any) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AppActionType>>();
   const localizedStrings = useTranslation();
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
   const [isPrivacyModalVisible, setIsPrivacyModalVisible] = useState(false);
@@ -86,7 +87,10 @@ export const LandingPageScreen = ({ navigation }: any) => {
       >
         <Text style={textStyles.bodyMedium}>
           {localizedStrings.t('landingPagePrivacyPolicyPrefix')}
-          <Text style={[textStyles.bodyMedium, styles.link]} onPress={() => setIsPrivacyModalVisible(true)}>
+          <Text
+            style={[textStyles.bodyMedium, styles.link]}
+            onPress={() => setIsPrivacyModalVisible(true)}
+          >
             {localizedStrings.t('landingPagePrivacyPolicyLink')}
           </Text>
           {localizedStrings.t('landingPagePrivacyPolicySuffix')}

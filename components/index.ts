@@ -5,7 +5,6 @@ export { LocationButton } from './LocationButton';
 export { MapMarkers } from './MapMarkers';
 export { MinimalTripOverlay } from './MinimalTripOverlay';
 export { PointOfInterestMarker } from './PointOfInterestMarker';
-export { QRScannerBottomSheet } from './QRScannerBottomSheet';
 export { Snackbar, SnackbarState } from './Snackbar';
 export { StartTripBottomSheet } from './StartTripBottomSheet';
 export { Track } from './Track';

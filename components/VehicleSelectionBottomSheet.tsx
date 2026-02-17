@@ -1,7 +1,15 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { memo, useEffect, useMemo, useRef } from 'react';
-import { Keyboard, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Keyboard,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { Color } from '../constants/color';
 import { textStyles } from '../constants/text-styles';
 import { reloadVehicles } from '../effect-actions/api-actions';
@@ -65,7 +73,8 @@ export const VehicleSelectionBottomSheet = memo(
     }, [vehicles, excludeVehicleId]);
 
     // Check if there are real vehicles (excluding Demo) for the empty state
-    const hasNoRealVehicles = availableVehicles.filter((v) => v.id !== DEMO_VEHICLE_ID).length === 0;
+    const hasNoRealVehicles =
+      availableVehicles.filter((v) => v.id !== DEMO_VEHICLE_ID).length === 0;
 
     return (
       <BottomSheet
@@ -79,32 +88,30 @@ export const VehicleSelectionBottomSheet = memo(
         <View style={styles.contentContainer}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.subtitle}>{subtitle}</Text>
-          {hasNoRealVehicles ? (
-            <View style={styles.emptyState}>
-              <MaterialCommunityIcons name="train-car" size={48} color={Color.darkGray} />
-              <Text style={styles.emptyText}>{i18n.t('bottomSheetNoVehicles')}</Text>
-              <Pressable style={styles.reloadButton} onPress={reloadVehicles}>
-                <MaterialCommunityIcons name="refresh" size={20} color={Color.white} />
-                <Text style={styles.reloadButtonText}>{i18n.t('bottomSheetReload')}</Text>
-              </Pressable>
-            </View>
-          ) : (
-            <ScrollView style={styles.vehicleList} contentContainerStyle={styles.vehicleGrid}>
-              {availableVehicles.map((vehicle) => (
-                <TouchableOpacity
-                  key={vehicle.id}
-                  style={styles.vehicleItem}
-                  onPress={() => handleVehiclePress(vehicle)}
-                  accessibilityRole="button"
-                  accessibilityLabel={i18n.t('a11ySelectVehicle', {
-                    name: vehicle.label ?? `Draisine ${vehicle.id}`,
-                  })}
-                >
-                  <Text style={styles.vehicleLabel}>{vehicle.label ?? `${vehicle.id}`}</Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          )}
+          <ScrollView style={styles.vehicleList} contentContainerStyle={styles.vehicleGrid}>
+            {availableVehicles.map((vehicle) => (
+              <TouchableOpacity
+                key={vehicle.id}
+                style={styles.vehicleItem}
+                onPress={() => handleVehiclePress(vehicle)}
+                accessibilityRole="button"
+                accessibilityLabel={i18n.t('a11ySelectVehicle', {
+                  name: vehicle.label ?? `Draisine ${vehicle.id}`,
+                })}
+              >
+                <Text style={styles.vehicleLabel}>{vehicle.label ?? `${vehicle.id}`}</Text>
+              </TouchableOpacity>
+            ))}
+            {hasNoRealVehicles && (
+              <View style={styles.reloadContainer}>
+                <Text style={styles.reloadHint}>{i18n.t('bottomSheetNoVehicles')}</Text>
+                <Pressable style={styles.reloadButton} onPress={reloadVehicles}>
+                  <MaterialCommunityIcons name="refresh" size={20} color={Color.white} />
+                  <Text style={styles.reloadButtonText}>{i18n.t('bottomSheetReload')}</Text>
+                </Pressable>
+              </View>
+            )}
+          </ScrollView>
         </View>
       </BottomSheet>
     );
@@ -122,6 +129,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   subtitle: {
+    ...textStyles.bodyMedium,
     color: Color.darkGray,
     marginBottom: 8,
     textAlign: 'center',
@@ -150,17 +158,16 @@ const styles = StyleSheet.create({
     ...textStyles.bodyMedium,
     textAlign: 'center',
   },
-  emptyState: {
-    flex: 1,
+  reloadContainer: {
+    width: '100%',
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 40,
+    paddingVertical: 24,
+    marginTop: 8,
   },
-  emptyText: {
-    ...textStyles.bodyMedium,
+  reloadHint: {
+    ...textStyles.bodySmall,
     color: Color.darkGray,
-    marginTop: 16,
-    marginBottom: 24,
+    marginBottom: 12,
     textAlign: 'center',
   },
   reloadButton: {
