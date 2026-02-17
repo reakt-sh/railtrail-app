@@ -15,7 +15,7 @@ import {
   requestForegroundPermission,
 } from '../effect-actions/permissions';
 import { useTranslation } from '../hooks';
-import { AppAction, type AppAction as AppActionType } from '../redux/app';
+import { AppAction, AppActionType } from '../redux/app';
 
 export const LandingPageScreen = ({ navigation }: any) => {
   const dispatch = useDispatch<Dispatch<AppActionType>>();

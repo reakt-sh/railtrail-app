@@ -5,6 +5,7 @@ import * as Location from 'expo-location';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector, useStore } from 'react-redux';
+import { Dispatch } from 'redux';
 import {
   MinimalTripOverlay,
   TrackMapView,
@@ -25,16 +26,16 @@ import {
   useTranslation,
   useTripSimulation,
 } from '../hooks';
-import { AppAction } from '../redux/app';
+import { AppAction, AppActionType } from '../redux/app';
 import { ReduxAppState } from '../redux/init';
-import { TripAction } from '../redux/trip';
+import { TripAction, TripActionType } from '../redux/trip';
 import { Vehicle } from '../types/vehicle';
 import { AppEvents, events } from '../util/events';
 
 export const HomeScreen = () => {
   const mapRef = useRef<MapLibreGL.MapViewRef>(null);
   const tripStartTimeRef = useRef<string | null>(null);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AppActionType | TripActionType>>();
   const store = useStore<ReduxAppState>();
   const navigation = useNavigation();
   const localizedStrings = useTranslation();
@@ -109,7 +110,9 @@ export const HomeScreen = () => {
     const unsubscribe = events.on(AppEvents.SHOW_VEHICLE_CHANGE, () => {
       setIsChangeVehicleIdBottomSheetVisible(true);
     });
-    return unsubscribe;
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   // Sync percentagePosition and calculated position from own vehicle in vehicles array

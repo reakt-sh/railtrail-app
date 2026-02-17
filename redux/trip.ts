@@ -125,7 +125,7 @@ interface TripActionClearVehiclesExceptDemo {
   readonly type: 'trip/clear-vehicles-except-demo';
 }
 
-export type TripAction =
+export type TripActionType =
   | TripActionReset
   | TripActionStart
   | TripActionStop
@@ -313,8 +313,7 @@ const reducer = (state = initialTripState, action: RailTrailReduxAction): TripSt
       }
 
       // Only update speed from the currently selected vehicle
-      const shouldUpdateSpeed =
-        speed !== undefined && state.currentVehicle.id === vehicle.id;
+      const shouldUpdateSpeed = speed !== undefined && state.currentVehicle.id === vehicle.id;
 
       return {
         ...state,

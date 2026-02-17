@@ -37,7 +37,7 @@ interface AppActionSetPermissions {
   readonly payload: Partial<Permissions>;
 }
 
-export type AppAction = AppActionSetTrack | AppActionSetLocation | AppActionSetPermissions;
+export type AppActionType = AppActionSetTrack | AppActionSetLocation | AppActionSetPermissions;
 
 export const AppAction = {
   setTrack: (track: Partial<Track>): AppActionSetTrack => ({

@@ -54,9 +54,10 @@ export const useTripSimulation = () => {
       const variation = (Math.random() - 0.5) * 8; // ±4 km/h
       const speed = Math.max(7, Math.min(15, baseSpeed + variation));
 
-      // Calculate distance traveled per second
-      const distancePerSecond = (speed * 1000) / 3600; // m/s
-      const percentageDelta = (distancePerSecond / trackLength) * 100;
+      // Calculate distance traveled per interval
+      const intervalSeconds = SIMULATION_INTERVAL_MS / 1000;
+      const distancePerInterval = ((speed * 1000) / 3600) * intervalSeconds; // m per interval
+      const percentageDelta = (distancePerInterval / trackLength) * 100;
 
       // Update percentage position
       percentageRef.current += percentageDelta * directionRef.current;
