@@ -289,7 +289,6 @@ export const HomeScreen = () => {
         onStartTrip={handleStartTrip}
         onStopTrip={handleStopTrip}
         onCenterOnVehicle={handleCenterOnVehicle}
-        onOpenDrawer={handleOpenDrawer}
         warnings={warnings}
         speed={motion.speed}
         localizedStrings={localizedStrings}

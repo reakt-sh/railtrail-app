@@ -128,6 +128,7 @@ const calculateWarnings = (
 
 /**
  * Finds the next POI of a given type in the current travel direction.
+ * If direction is unknown, returns the closest POI in either direction.
  */
 const getNextPOI = (
   percentagePosition: number | null,
@@ -137,13 +138,18 @@ const getNextPOI = (
 ): PointOfInterest | null => {
   if (percentagePosition == null) return null;
 
-  const filteredPOIs = pointsOfInterest
-    .filter((poi) => poi.typeId === type)
-    .filter((poi) =>
-      isPercentagePositionIncreasing
-        ? poi.percentagePosition >= percentagePosition
-        : poi.percentagePosition <= percentagePosition
-    );
+  // Filter by type first
+  const poisOfType = pointsOfInterest.filter((poi) => poi.typeId === type);
+
+  // If direction is known, filter by direction; otherwise include all
+  const filteredPOIs =
+    isPercentagePositionIncreasing === undefined
+      ? poisOfType
+      : poisOfType.filter((poi) =>
+          isPercentagePositionIncreasing
+            ? poi.percentagePosition >= percentagePosition
+            : poi.percentagePosition <= percentagePosition
+        );
 
   return filteredPOIs.reduce((closest: PointOfInterest | null, current) => {
     if (!closest) return current;
