@@ -3,7 +3,6 @@ export { Locale } from './locale';
 export { Color } from './color';
 export { Font } from './fonts';
 export {
-  BACKGROUND_LOCATION_TASK,
   MIN_LOCATION_UPDATE_DISTANCE_INTERVAL,
   MIN_LOCATION_UPDATE_TIME_INTERVAL,
 } from './location';

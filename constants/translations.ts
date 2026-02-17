@@ -4,6 +4,7 @@ const translations = {
     alertOk: 'OK',
     alertYes: 'Yes',
     alertNo: 'No',
+    alertLater: 'Later',
     buttonContinue: 'Continue',
 
     navigationMap: 'Map',
@@ -223,6 +224,7 @@ const translations = {
     alertOk: 'Ok',
     alertYes: 'Ja',
     alertNo: 'Nein',
+    alertLater: 'Später',
     buttonContinue: 'Weiter',
 
     navigationMap: 'Karte',

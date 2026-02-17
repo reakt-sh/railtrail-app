@@ -18,7 +18,6 @@ import {
   initializeApp,
   setupPositionUpdates,
 } from '../effect-actions/api-actions';
-import { getBackgroundPermissionStatus } from '../effect-actions/permissions';
 import { updateDistances } from '../effect-actions/trip-actions';
 import { saveAndStopTrip } from '../effect-actions/trip-storage';
 import {
@@ -57,8 +56,7 @@ export const HomeScreen = () => {
     centerOnPosition,
   } = useMapCamera();
 
-  const { startForegroundTracking, stopTracking, requestBackgroundAndSwitch } =
-    useLocationTracking();
+  const { startForegroundTracking } = useLocationTracking();
 
   const { startSimulation, stopSimulation } = useTripSimulation();
 
@@ -97,9 +95,6 @@ export const HomeScreen = () => {
 
     if (permissions.foreground) {
       startForegroundTracking(handleLocationUpdate);
-      getBackgroundPermissionStatus().then((result) => {
-        dispatch(AppAction.setPermissions({ background: result }));
-      });
     }
 
     // Auto-start simulation in dev mode
@@ -152,20 +147,7 @@ export const HomeScreen = () => {
     }
   }, [location, vehicles, currentVehicle.id, isFollowingUser, isFollowingVehicle]);
 
-  // Handle trip start/stop
-  useEffect(() => {
-    if (!isActive) {
-      if (permissions.background) {
-        stopTracking();
-        startForegroundTracking(handleLocationUpdate);
-      }
-      return;
-    }
-
-    if (permissions.foreground) {
-      requestBackgroundAndSwitch(handleLocationUpdate);
-    }
-  }, [isActive]);
+  // Trip start/stop - foreground tracking is already running, no changes needed
 
   // Calculate distances and direction
   useEffect(() => {
