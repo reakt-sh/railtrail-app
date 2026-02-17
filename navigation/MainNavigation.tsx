@@ -1,5 +1,7 @@
+import { MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Text } from 'react-native';
+
+import React from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Color } from '../constants';
 import { useTranslation } from '../hooks';
@@ -16,8 +18,8 @@ export const MainNavigation = () => {
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarIcon: ({ color }) => {
-          const icon = route.name === localizedStrings.t('navigationMap') ? '🗺️' : 'ℹ️';
-          return <Text style={{ fontSize: 20 }}>{icon}</Text>;
+          const icon = route.name === localizedStrings.t('navigationMap') ? 'map' : 'info-outline';
+          return <MaterialIcons name={icon} size={24} color={Color.primary} />;
         },
         tabBarActiveTintColor: Color.primary,
         tabBarInactiveTintColor: Color.darkGray,

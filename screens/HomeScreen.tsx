@@ -8,6 +8,7 @@ import { useDispatch, useSelector, useStore } from 'react-redux';
 import {
   MinimalTripOverlay,
   QRScannerBottomSheet,
+  StartTripBottomSheet,
   TrackMapView,
   TripControls,
   VehicleSelectionBottomSheet,
@@ -62,6 +63,7 @@ export const HomeScreen = () => {
   const { startSimulation, stopSimulation } = useTripSimulation();
 
   // Bottom sheet visibility
+  const [isStartTripSheetVisible, setIsStartTripSheetVisible] = useState(false);
   const [isQRScannerVisible, setIsQRScannerVisible] = useState(false);
   const [isManualSelectionVisible, setIsManualSelectionVisible] = useState(false);
   const [isChangeVehicleIdBottomSheetVisible, setIsChangeVehicleIdBottomSheetVisible] =
@@ -234,8 +236,15 @@ export const HomeScreen = () => {
   }, [localizedStrings, dispatch, store]);
 
   const handleStartTrip = useCallback(() => {
-    // Open QR scanner as primary method
+    setIsStartTripSheetVisible(true);
+  }, []);
+
+  const handleScanQR = useCallback(() => {
     setIsQRScannerVisible(true);
+  }, []);
+
+  const handleManualEntry = useCallback(() => {
+    setIsManualSelectionVisible(true);
   }, []);
 
   const handleManualEntryPress = useCallback(() => {
@@ -304,6 +313,14 @@ export const HomeScreen = () => {
         warnings={warnings}
         speed={motion.speed}
         localizedStrings={localizedStrings}
+      />
+
+      {/* Start trip options - scan QR or manual selection */}
+      <StartTripBottomSheet
+        isVisible={isStartTripSheetVisible}
+        setIsVisible={setIsStartTripSheetVisible}
+        onScanQR={handleScanQR}
+        onManualEntry={handleManualEntry}
       />
 
       {/* QR Scanner - primary vehicle selection method */}

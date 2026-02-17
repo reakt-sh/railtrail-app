@@ -70,7 +70,7 @@ const translations = {
     // QR Scanner
     qrScannerTitle: 'Scan QR Code',
     qrScannerSubtitle: 'Point your camera at the QR code on your draisine',
-    qrScannerManualEntry: 'Enter number manually',
+    qrScannerManualEntry: 'Select draisine manually',
     qrScannerLoadingCamera: 'Loading camera...',
     qrScannerPermissionRequired: 'Camera permission is required to scan QR codes',
     qrScannerGrantPermission: 'Grant Permission',
@@ -193,6 +193,11 @@ const translations = {
     languageLabel: 'Language',
     languageValue: 'English',
 
+    // Trip Controls
+    tripControlsScanDraisine: 'Scan draisine',
+    tripControlsSelectDraisine: 'Select draisine',
+    tripControlsEnterNumber: 'Enter number',
+
     // Accessibility
     a11yGoBack: 'Go back',
     a11yLocationTrackingActive: 'Location tracking active',
@@ -287,7 +292,7 @@ const translations = {
     // QR Scanner
     qrScannerTitle: 'QR-Code scannen',
     qrScannerSubtitle: 'Richten Sie Ihre Kamera auf den QR-Code Ihrer Draisine',
-    qrScannerManualEntry: 'Nummer manuell eingeben',
+    qrScannerManualEntry: 'Draisine manuell wählen',
     qrScannerLoadingCamera: 'Kamera wird geladen...',
     qrScannerPermissionRequired: 'Kameraberechtigung wird zum Scannen von QR-Codes benötigt',
     qrScannerGrantPermission: 'Berechtigung erteilen',
@@ -409,6 +414,11 @@ const translations = {
     // Language Selection
     languageLabel: 'Sprache',
     languageValue: 'Deutsch',
+
+    // Trip Controls
+    tripControlsScanDraisine: 'Draisine scannen',
+    tripControlsSelectDraisine: 'Draisine auswählen',
+    tripControlsEnterNumber: 'Nummer eingeben',
 
     // Accessibility
     a11yGoBack: 'Zurück',

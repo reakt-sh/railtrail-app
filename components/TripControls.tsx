@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { I18n } from 'i18n-js';
 import React, { memo } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Color } from '../constants/color';
 import { FAB } from './Fab';
@@ -69,32 +69,58 @@ export const TripControls = memo(
             speed={speed}
           />
         )}
-        <LocationButton
-          onPress={onLocationButtonClick}
-          isActive={isFollowingUser}
-          accessibilityLabelActive={localizedStrings.t('a11yLocationTrackingActive')}
-          accessibilityLabelInactive={localizedStrings.t('a11yShowMyLocation')}
-        />
-        {isActive && (
-          <FAB
-            onPress={onCenterOnVehicle}
-            accessibilityLabel={localizedStrings.t('a11yCenterOnVehicle')}
-          >
-            <MaterialCommunityIcons
-              name="navigation-variant"
-              size={26}
-              color={isFollowingVehicle ? Color.primary : Color.black}
-            />
-          </FAB>
-        )}
         {isActive ? (
-          <FAB onPress={onStopTrip} accessibilityLabel={localizedStrings.t('a11yStopTrip')}>
-            <MaterialCommunityIcons name="stop-circle" size={30} color={Color.warning} />
-          </FAB>
+          <>
+            <LocationButton
+              onPress={onLocationButtonClick}
+              isActive={isFollowingUser}
+              accessibilityLabelActive={localizedStrings.t('a11yLocationTrackingActive')}
+              accessibilityLabelInactive={localizedStrings.t('a11yShowMyLocation')}
+            />
+            <FAB
+              onPress={onCenterOnVehicle}
+              accessibilityLabel={localizedStrings.t('a11yCenterOnVehicle')}
+            >
+              <MaterialCommunityIcons
+                name={isFollowingVehicle ? 'navigation-variant' : 'navigation-variant-outline'}
+                size={32}
+                color={isFollowingVehicle ? Color.primary : Color.black}
+              />
+            </FAB>
+            <FAB onPress={onStopTrip} accessibilityLabel={localizedStrings.t('a11yStopTrip')}>
+              <MaterialCommunityIcons name="stop-circle" size={32} color={Color.warning} />
+            </FAB>
+          </>
         ) : (
-          <FAB onPress={onStartTrip} accessibilityLabel={localizedStrings.t('a11yStartTrip')}>
-            <MaterialCommunityIcons name="play-circle" size={30} color={Color.primary} />
-          </FAB>
+          <View style={styles.startTripRow}>
+            <Pressable
+              style={styles.startTripButton}
+              onPress={onStartTrip}
+              accessibilityRole="button"
+              accessibilityLabel={localizedStrings.t('a11yStartTrip')}
+            >
+              <MaterialCommunityIcons name="play" size={24} color={Color.primary} />
+              <Text style={styles.startTripButtonText}>
+                {localizedStrings.t('homeSnackbarStartTitle')}
+              </Text>
+            </Pressable>
+            <Pressable
+              style={styles.locationFab}
+              onPress={onLocationButtonClick}
+              accessibilityRole="button"
+              accessibilityLabel={
+                isFollowingUser
+                  ? localizedStrings.t('a11yLocationTrackingActive')
+                  : localizedStrings.t('a11yShowMyLocation')
+              }
+            >
+              <MaterialCommunityIcons
+                name={isFollowingUser ? 'crosshairs-gps' : 'crosshairs'}
+                size={32}
+                color={isFollowingUser ? Color.primary : Color.black}
+              />
+            </Pressable>
+          </View>
         )}
       </View>
     );
@@ -124,5 +150,43 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+  },
+  startTripRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 8,
+    paddingBottom: 8,
+    gap: 8,
+  },
+  startTripButton: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Color.white,
+    paddingVertical: 16,
+    paddingHorizontal: 24,
+    borderRadius: 16,
+    gap: 12,
+    shadowColor: Color.black,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  startTripButtonText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: Color.primary,
+  },
+  locationFab: {
+    padding: 14,
+    borderRadius: 16,
+    backgroundColor: Color.white,
+    shadowColor: Color.black,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    elevation: 3,
   },
 });

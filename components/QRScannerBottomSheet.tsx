@@ -45,7 +45,8 @@ export const QRScannerBottomSheet = memo(
         // QR code contains just the vehicle number (e.g., "42")
         const scannedLabel = data.trim();
         const matchedVehicle = vehicles.find(
-          (v) => v.label === scannedLabel || v.label === `${scannedLabel}` || `${v.id}` === scannedLabel
+          (v) =>
+            v.label === scannedLabel || v.label === `${scannedLabel}` || `${v.id}` === scannedLabel
         );
 
         if (matchedVehicle) {
@@ -70,7 +71,9 @@ export const QRScannerBottomSheet = memo(
       if (!permission) {
         return (
           <View style={styles.permissionContainer}>
-            <Text style={styles.permissionText}>{localizedStrings.t('qrScannerLoadingCamera')}</Text>
+            <Text style={styles.permissionText}>
+              {localizedStrings.t('qrScannerLoadingCamera')}
+            </Text>
           </View>
         );
       }
@@ -79,9 +82,13 @@ export const QRScannerBottomSheet = memo(
         return (
           <View style={styles.permissionContainer}>
             <MaterialCommunityIcons name="camera-off" size={48} color={Color.darkGray} />
-            <Text style={styles.permissionText}>{localizedStrings.t('qrScannerPermissionRequired')}</Text>
+            <Text style={styles.permissionText}>
+              {localizedStrings.t('qrScannerPermissionRequired')}
+            </Text>
             <Pressable style={styles.permissionButton} onPress={handleRequestPermission}>
-              <Text style={styles.permissionButtonText}>{localizedStrings.t('qrScannerGrantPermission')}</Text>
+              <Text style={styles.permissionButtonText}>
+                {localizedStrings.t('qrScannerGrantPermission')}
+              </Text>
             </Pressable>
           </View>
         );
@@ -132,7 +139,7 @@ export const QRScannerBottomSheet = memo(
           {renderCameraContent()}
 
           <Pressable style={styles.manualEntryButton} onPress={handleManualEntry}>
-            <MaterialCommunityIcons name="format-list-numbered" size={20} color={Color.primary} />
+            <MaterialCommunityIcons name="format-list-bulleted" size={20} color={Color.primary} />
             <Text style={styles.manualEntryText}>{localizedStrings.t('qrScannerManualEntry')}</Text>
           </Pressable>
         </View>
