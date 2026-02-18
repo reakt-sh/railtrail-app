@@ -32,8 +32,8 @@ interface Props {
   readonly vehicle: Vehicle;
   /** Current map heading for counter-rotating the direction indicator */
   readonly mapHeading: number;
-  /** Use smaller markers when zoomed out */
-  readonly useSmallMarker: boolean;
+  /** Current map zoom level (quantized to whole numbers) */
+  readonly zoomLevel: number;
 }
 
 /**
@@ -42,7 +42,8 @@ interface Props {
  * - Train icon (foreground, always upright)
  * - Optional label below the icon
  */
-export const VehicleMarker = memo(({ vehicle, mapHeading, useSmallMarker }: Props) => {
+export const VehicleMarker = memo(({ vehicle, mapHeading, zoomLevel }: Props) => {
+  const useSmallMarker = zoomLevel < 15;
   const size = useSmallMarker ? MARKER_SIZE.small : MARKER_SIZE.large;
   const hasHeading = vehicle.heading != null;
   const rotation = hasHeading ? vehicle.heading! - mapHeading : 0;

@@ -18,7 +18,7 @@ interface ExternalProps {
   readonly vehicles: Vehicle[];
   readonly passingPosition: Position | null;
   readonly track: GeoJSON.FeatureCollection | null;
-  readonly useSmallMarker: boolean;
+  readonly zoomLevel: number;
   readonly mapHeading: number;
 }
 
@@ -35,7 +35,7 @@ export const TrackMapView = memo(
     vehicles,
     passingPosition,
     track,
-    useSmallMarker,
+    zoomLevel,
     mapHeading,
   }: Props) => {
     return (
@@ -67,7 +67,7 @@ export const TrackMapView = memo(
           vehicles={vehicles}
           passingPosition={passingPosition}
           track={track}
-          useSmallMarker={useSmallMarker}
+          zoomLevel={zoomLevel}
           mapHeading={mapHeading}
         />
       </MapLibreGL.MapView>

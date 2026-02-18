@@ -48,7 +48,7 @@ export const HomeScreen = () => {
     isFollowingUser,
     isFollowingVehicle,
     cameraHeading,
-    useSmallMarker,
+    zoomLevel,
     setIsFollowingVehicle,
     animateCamera,
     onLocationButtonClicked,
@@ -270,7 +270,7 @@ export const HomeScreen = () => {
         vehicles={vehicles}
         passingPosition={position.passing}
         track={track.path}
-        useSmallMarker={useSmallMarker}
+        zoomLevel={zoomLevel}
         mapHeading={cameraHeading}
       />
 

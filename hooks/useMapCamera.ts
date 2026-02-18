@@ -6,7 +6,7 @@ interface UseMapCameraReturn {
   isFollowingUser: boolean;
   isFollowingVehicle: boolean;
   cameraHeading: number;
-  useSmallMarker: boolean;
+  zoomLevel: number;
   setIsFollowingUser: (following: boolean) => void;
   setIsFollowingVehicle: (following: boolean) => void;
   animateCamera: (lat: number, lng: number, heading: number | null) => void;
@@ -22,7 +22,7 @@ export const useMapCamera = (): UseMapCameraReturn => {
   const [isFollowingUser, setIsFollowingUserState] = useState<boolean>(true);
   const [isFollowingVehicle, setIsFollowingVehicleState] = useState<boolean>(false);
   const [cameraHeading, setCameraHeading] = useState<number>(0);
-  const [useSmallMarker, setUseSmallMarker] = useState<boolean>(false);
+  const [zoomLevel, setZoomLevel] = useState<number>(15);
   const isProgrammaticMove = useRef<boolean>(false);
 
   const setIsFollowingUser = useCallback((following: boolean) => {
@@ -63,7 +63,7 @@ export const useMapCamera = (): UseMapCameraReturn => {
 
   const onRegionChange = useCallback(
     (zoom: number, heading: number, isUserInteraction: boolean = false) => {
-      setUseSmallMarker(zoom < 15);
+      setZoomLevel(Math.round(zoom));
       setCameraHeading(heading);
       // Only disable following on explicit user interaction (scroll/zoom gesture)
       if (isUserInteraction) {
@@ -94,7 +94,7 @@ export const useMapCamera = (): UseMapCameraReturn => {
     isFollowingUser,
     isFollowingVehicle,
     cameraHeading,
-    useSmallMarker,
+    zoomLevel,
     setIsFollowingUser,
     setIsFollowingVehicle,
     animateCamera,

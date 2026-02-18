@@ -1,12 +1,12 @@
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Color } from '../constants';
 import { POIType } from '../types/init';
 
 interface ExternalProps {
   readonly pointOfInterestType: POIType;
-  readonly useSmallMarker?: boolean;
+  readonly zoomLevel: number;
 }
 
 type Props = ExternalProps;
@@ -46,11 +46,24 @@ const markerConfigs: Record<POIType, MarkerConfig> = {
   [POIType.RoadCrossing]: { icon: 'road', color: Color.warning },
 };
 
-export const PointOfInterestMarker = memo(({ pointOfInterestType, useSmallMarker }: Props) => {
+export const PointOfInterestMarker = memo(({ pointOfInterestType, zoomLevel }: Props) => {
   const config = markerConfigs[pointOfInterestType] ?? markerConfigs[POIType.Generic];
-  const size = useSmallMarker ? 6 : 24;
+  const useSmallMarker = zoomLevel < 15;
+  // const size = useSmallMarker ? 6 : 24;
+
   const iconSize = useSmallMarker ? (config.iconSizeSmall ?? 0) : (config.iconSizeLarge ?? 16);
   const iconColor = config.iconColor ?? Color.white;
+
+  const size = useMemo(() => {
+    if (zoomLevel < 10) {
+      return 6;
+    }
+    if (zoomLevel > 15) {
+      return 24;
+    }
+
+    return 12;
+  }, [zoomLevel]);
 
   return (
     <View style={[styles.circle, { width: size, height: size, backgroundColor: config.color }]}>

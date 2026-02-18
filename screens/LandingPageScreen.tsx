@@ -1,11 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CommonActions } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
-import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 import { Dispatch } from 'redux';
-import { MalenteLogoIcon } from '../assets/icons';
 import { Button, Checkbox } from '../components';
 import { privacySections, StorageKeys } from '../constants';
 import { Color } from '../constants/color';
@@ -67,18 +66,21 @@ export const LandingPageScreen = ({ navigation }: any) => {
   return (
     <SafeAreaView style={styles.container}>
       <SafeAreaView style={styles.textContainer}>
-        <View style={styles.logoContainer}>
-          <MalenteLogoIcon width={120} height={104} />
+        <Image
+          style={{ width: '100%', height: 104, resizeMode: 'contain' }}
+          source={require('../assets/logos/Logo_NDHS.png')}
+        />
+        <View>
+          <Text style={[textStyles.headerTextHuge, styles.text]}>
+            {localizedStrings.t('landingPageWelcome')}
+          </Text>
+          <Text style={[textStyles.bodyMedium, styles.text]}>
+            {localizedStrings.t('landingPageDescription')}
+          </Text>
+          <Text style={[textStyles.bodyMedium, styles.text]}>
+            {localizedStrings.t('landingPagePermissionExplanation')}
+          </Text>
         </View>
-        <Text style={[textStyles.headerTextHuge, { textAlign: 'center', marginBottom: 24 }]}>
-          {localizedStrings.t('landingPageWelcome')}
-        </Text>
-        <Text style={[textStyles.bodyMedium, { textAlign: 'center', marginBottom: 24 }]}>
-          {localizedStrings.t('landingPageDescription')}
-        </Text>
-        <Text style={[textStyles.bodyMedium, { textAlign: 'center' }]}>
-          {localizedStrings.t('landingPagePermissionExplanation')}
-        </Text>
       </SafeAreaView>
       <Checkbox
         isChecked={isCheckboxChecked}
@@ -87,10 +89,7 @@ export const LandingPageScreen = ({ navigation }: any) => {
       >
         <Text style={textStyles.bodyMedium}>
           {localizedStrings.t('landingPagePrivacyPolicyPrefix')}
-          <Text
-            style={[textStyles.bodyMedium, styles.link]}
-            onPress={() => setIsPrivacyModalVisible(true)}
-          >
+          <Text style={textStyles.link} onPress={() => setIsPrivacyModalVisible(true)}>
             {localizedStrings.t('landingPagePrivacyPolicyLink')}
           </Text>
           {localizedStrings.t('landingPagePrivacyPolicySuffix')}
@@ -140,22 +139,19 @@ export const LandingPageScreen = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Color.backgroundLight,
+    backgroundColor: Color.white,
     padding: 24,
   },
   textContainer: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-around',
   },
-  logoContainer: {
-    alignItems: 'center',
+  text: {
+    textAlign: 'center',
     marginBottom: 24,
   },
-  buttonMargin: { marginBottom: 16, marginTop: 16 },
-  link: {
-    color: Color.primary,
-    textDecorationLine: 'underline',
-  },
+  buttonMargin: { marginBottom: 24, marginTop: 16 },
+
   modalContainer: {
     flex: 1,
     marginTop: 64,

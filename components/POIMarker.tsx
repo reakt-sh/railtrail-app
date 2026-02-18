@@ -11,8 +11,8 @@ interface Props {
   readonly poi: PointOfInterest;
   /** Unique index for generating the marker ID */
   readonly index: number;
-  /** Use smaller markers when zoomed out */
-  readonly useSmallMarker: boolean;
+  /** Current map zoom level (quantized to whole numbers) */
+  readonly zoomLevel: number;
 }
 
 /**
@@ -20,7 +20,7 @@ interface Props {
  * - An icon indicating the POI type (crossing, picnic area, etc.)
  * - A tooltip/callout showing details when tapped
  */
-export const POIMarker = memo(({ poi, index, useSmallMarker }: Props) => {
+export const POIMarker = memo(({ poi, index, zoomLevel }: Props) => {
   const i18n = useTranslation();
   const title = getPOITitle(i18n, poi.name, poi.typeId, poi.originalType);
 
@@ -35,7 +35,7 @@ export const POIMarker = memo(({ poi, index, useSmallMarker }: Props) => {
       <View>
         <PointOfInterestMarker
           pointOfInterestType={poi.typeId}
-          useSmallMarker={useSmallMarker}
+          zoomLevel={zoomLevel}
         />
       </View>
       {/* Callout disabled on Android due to fontSize bug with New Architecture */}

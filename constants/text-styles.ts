@@ -19,6 +19,11 @@ export const textStyles = StyleSheet.create({
     color: Color.text,
     fontSize: 20,
   },
+  bodyLarge: {
+    fontFamily: Font.regular,
+    fontSize: 18,
+    color: Color.text,
+  },
   bodyMedium: {
     fontFamily: Font.regular,
     fontSize: 16,

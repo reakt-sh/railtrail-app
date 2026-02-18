@@ -22,8 +22,8 @@ interface Props {
   readonly passingPosition: Position | null;
   /** GeoJSON track geometry for rendering the rail line */
   readonly track: GeoJSON.FeatureCollection | null;
-  /** Use smaller markers when zoomed out */
-  readonly useSmallMarker: boolean;
+  /** Current map zoom level (quantized to whole numbers) */
+  readonly zoomLevel: number;
   /** Current map heading for rotating vehicle direction indicators */
   readonly mapHeading: number;
 }
@@ -40,7 +40,7 @@ export const MapMarkers = memo(
     vehicles,
     passingPosition,
     track,
-    useSmallMarker,
+    zoomLevel,
     mapHeading,
   }: Props) => (
     <>
@@ -56,7 +56,7 @@ export const MapMarkers = memo(
           key={`poi-${index}`}
           poi={poi}
           index={index}
-          useSmallMarker={useSmallMarker}
+          zoomLevel={zoomLevel}
         />
       ))}
 
@@ -66,7 +66,7 @@ export const MapMarkers = memo(
           key={`vehicle-${vehicle.id}`}
           vehicle={vehicle}
           mapHeading={mapHeading}
-          useSmallMarker={useSmallMarker}
+          zoomLevel={zoomLevel}
         />
       ))}
 
@@ -74,7 +74,7 @@ export const MapMarkers = memo(
       {passingPosition && (
         <PassingPositionMarker
           position={passingPosition}
-          useSmallMarker={useSmallMarker}
+          zoomLevel={zoomLevel}
         />
       )}
 
