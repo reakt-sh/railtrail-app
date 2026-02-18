@@ -28,7 +28,13 @@ class PositionWebSocket {
         this.isConnecting = false;
         this.startHeartbeat();
         // Notify reconnect listeners
-        this.reconnectCallbacks.forEach((cb) => cb());
+        this.reconnectCallbacks.forEach((cb) => {
+          try {
+            cb();
+          } catch (error) {
+            if (__DEV__) console.warn('[WebSocket] Reconnect callback error:', error);
+          }
+        });
       };
 
       this.ws.onmessage = (event) => {
@@ -40,9 +46,15 @@ class PositionWebSocket {
               `[WebSocket] Received position: vehicle ${position.vehicle}: [${position.latitude}, ${position.longitude}]. Time: ${now}`
             );
           }
-          this.callbacks.forEach((cb) => cb(position));
+          this.callbacks.forEach((cb) => {
+            try {
+              cb(position);
+            } catch (callbackError) {
+              if (__DEV__) console.warn('[WebSocket] Callback error:', callbackError);
+            }
+          });
         } catch (error) {
-          console.error('[WebSocket] Failed to parse message:', error);
+          if (__DEV__) console.warn('[WebSocket] Failed to parse message:', error);
         }
       };
 
@@ -53,11 +65,11 @@ class PositionWebSocket {
       };
 
       this.ws.onerror = (error) => {
-        console.error('[WebSocket] Error:', error);
+        if (__DEV__) console.warn('[WebSocket] Error:', error);
         this.isConnecting = false;
       };
     } catch (error) {
-      console.error('[WebSocket] Failed to connect:', error);
+      if (__DEV__) console.warn('[WebSocket] Failed to connect:', error);
       this.isConnecting = false;
       this.scheduleReconnect();
     }
@@ -134,8 +146,12 @@ class PositionWebSocket {
   }
 
   sendHeartbeat() {
-    if (this.ws?.readyState === WebSocket.OPEN) {
-      this.ws.send('ping');
+    try {
+      if (this.ws?.readyState === WebSocket.OPEN) {
+        this.ws.send('ping');
+      }
+    } catch (error) {
+      if (__DEV__) console.warn('[WebSocket] Heartbeat failed:', error);
     }
   }
 
