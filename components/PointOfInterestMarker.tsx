@@ -33,17 +33,17 @@ const markerConfigs: Record<POIType, MarkerConfig> = {
     color: Color.warning,
     library: 'MaterialIcons',
   },
-  [POIType.Picnic]: { icon: 'silverware-fork-knife', color: Color.success },
   [POIType.TrackEnd]: { icon: 'sign-direction', color: Color.track },
   [POIType.TurningPoint]: { icon: 'arrow-u-left-bottom', color: Color.primary },
   [POIType.Generic]: { icon: 'sign-direction', color: Color.white, iconColor: Color.success },
-  [POIType.Halt]: { icon: 'bus-stop', color: Color.primary },
-  [POIType.EndOfTheLine]: { icon: 'sign-direction', color: Color.track },
+  [POIType.Halt]: { icon: 'table-picnic', color: Color.white, iconColor: Color.black },
   [POIType.TouristInfo]: {
     icon: 'information-variant',
     color: Color.white,
     iconColor: Color.primary,
   },
+  [POIType.Bridge]: { icon: 'bridge', color: Color.track },
+  [POIType.RoadCrossing]: { icon: 'road', color: Color.warning },
 };
 
 export const PointOfInterestMarker = memo(({ pointOfInterestType, useSmallMarker }: Props) => {
