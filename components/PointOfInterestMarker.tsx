@@ -49,7 +49,6 @@ const markerConfigs: Record<POIType, MarkerConfig> = {
 export const PointOfInterestMarker = memo(({ pointOfInterestType, zoomLevel }: Props) => {
   const config = markerConfigs[pointOfInterestType] ?? markerConfigs[POIType.Generic];
   const useSmallMarker = zoomLevel < 15;
-  // const size = useSmallMarker ? 6 : 24;
 
   const iconSize = useSmallMarker ? (config.iconSizeSmall ?? 0) : (config.iconSizeLarge ?? 16);
   const iconColor = config.iconColor ?? Color.white;
@@ -67,19 +66,20 @@ export const PointOfInterestMarker = memo(({ pointOfInterestType, zoomLevel }: P
 
   return (
     <View style={[styles.circle, { width: size, height: size, backgroundColor: config.color }]}>
-      {config.library === 'MaterialIcons' ? (
-        <MaterialIcons
-          name={config.icon as keyof typeof MaterialIcons.glyphMap}
-          size={iconSize}
-          color={iconColor}
-        />
-      ) : (
-        <MaterialCommunityIcons
-          name={config.icon as keyof typeof MaterialCommunityIcons.glyphMap}
-          size={iconSize}
-          color={iconColor}
-        />
-      )}
+      {iconSize > 0 &&
+        (config.library === 'MaterialIcons' ? (
+          <MaterialIcons
+            name={config.icon as keyof typeof MaterialIcons.glyphMap}
+            size={iconSize}
+            color={iconColor}
+          />
+        ) : (
+          <MaterialCommunityIcons
+            name={config.icon as keyof typeof MaterialCommunityIcons.glyphMap}
+            size={iconSize}
+            color={iconColor}
+          />
+        ))}
     </View>
   );
 });
