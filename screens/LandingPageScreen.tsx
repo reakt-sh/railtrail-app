@@ -1,10 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CommonActions } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
-import { Image, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 import { Dispatch } from 'redux';
+import AppLogo from '../assets/icons/AppLogo';
 import { Button, Checkbox } from '../components';
 import { privacySections, StorageKeys } from '../constants';
 import { Color } from '../constants/color';
@@ -66,10 +67,7 @@ export const LandingPageScreen = ({ navigation }: any) => {
   return (
     <SafeAreaView style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
-        <Image
-          style={{ width: '100%', height: 104, resizeMode: 'contain' }}
-          source={require('../assets/logos/Logo_NDHS.png')}
-        />
+        <AppLogo width={'100%'} height={112} />
         <View style={styles.textWrapper}>
           <Text style={[textStyles.headerTextHuge, styles.text]}>
             {localizedStrings.t('landingPageWelcome')}
@@ -146,11 +144,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   textWrapper: {
-    marginTop: 40,
+    marginTop: 32,
     marginBottom: 64,
   },
   text: {
-    // textAlign: 'center',
     marginBottom: 24,
   },
   buttonMargin: { marginBottom: 24, marginTop: 16 },

@@ -1,10 +1,12 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { DraisineIcon, MalenteLogoIcon } from '../assets/icons';
+import { DraisineIcon } from '../assets/icons';
+import AppLogo from '../assets/icons/AppLogo';
 import { Color, Locale } from '../constants';
 import { textStyles } from '../constants/text-styles';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -51,9 +53,10 @@ export const InfoMenuScreen = () => {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
+      <StatusBar style="dark" />
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View style={styles.logoContainer}>
-          <MalenteLogoIcon width={100} height={80} />
+          <AppLogo width={'100%'} height={112} />
         </View>
 
         <View style={styles.menuContainer}>
@@ -152,7 +155,7 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     alignItems: 'center',
-    paddingVertical: 32,
+    paddingVertical: 24,
   },
   menuContainer: {
     backgroundColor: Color.white,

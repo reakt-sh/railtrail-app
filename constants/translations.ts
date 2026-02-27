@@ -9,7 +9,7 @@ const translations = {
 
     navigationMap: 'Map',
     navigationInfo: 'Info',
-    landingPageWelcome: 'Welcome to the Naturpark Draisine',
+    landingPageWelcome: 'Welcome!',
     landingPageDescription:
       'With this App you can enjoy improved safety and see a lot of useful information on your trips.',
     landingPagePermissionExplanation:
@@ -196,8 +196,8 @@ const translations = {
     tripControlsSelectDraisine: 'Select railbike',
 
     // Feedback
-    feedbackTitle: 'How did you like the tour?',
-    feedbackPlaceholder: 'Space for comments, praise and criticism...',
+    feedbackTitle: 'How did you like the trip?',
+    feedbackPlaceholder: 'Space for comments, feedback and criticism...',
     feedbackSubmit: 'Submit rating',
     feedbackSkip: 'Later',
 
@@ -235,7 +235,7 @@ const translations = {
     navigationMap: 'Karte',
     navigationInfo: 'Info',
 
-    landingPageWelcome: 'Willkommen bei der Naturpark-Draisine',
+    landingPageWelcome: 'Willkommen!',
     landingPageDescription:
       'Mit dieser App sind Sie auf der Schiene sicher unterwegs und bekommen viele nützliche Informationen angezeigt.',
     landingPagePermissionExplanation:
