@@ -65,12 +65,12 @@ export const LandingPageScreen = ({ navigation }: any) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <SafeAreaView style={styles.textContainer}>
+      <SafeAreaView style={styles.safeArea}>
         <Image
           style={{ width: '100%', height: 104, resizeMode: 'contain' }}
           source={require('../assets/logos/Logo_NDHS.png')}
         />
-        <View>
+        <View style={styles.textWrapper}>
           <Text style={[textStyles.headerTextHuge, styles.text]}>
             {localizedStrings.t('landingPageWelcome')}
           </Text>
@@ -142,12 +142,15 @@ const styles = StyleSheet.create({
     backgroundColor: Color.white,
     padding: 24,
   },
-  textContainer: {
+  safeArea: {
     flex: 1,
-    justifyContent: 'space-around',
+  },
+  textWrapper: {
+    marginTop: 40,
+    marginBottom: 64,
   },
   text: {
-    textAlign: 'center',
+    // textAlign: 'center',
     marginBottom: 24,
   },
   buttonMargin: { marginBottom: 24, marginTop: 16 },
