@@ -42,7 +42,7 @@ const markerConfigs: Record<POIType, MarkerConfig> = {
     color: Color.white,
     iconColor: Color.primary,
   },
-  [POIType.Bridge]: { icon: 'bridge', color: Color.track },
+  [POIType.Bridge]: { icon: 'bridge', color: Color.skyBlue },
   [POIType.RoadCrossing]: { icon: 'road', color: Color.warning },
 };
 

@@ -1,4 +1,5 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { ReactNode } from 'react';
 import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Color } from '../constants';
 import { textStyles } from '../constants/text-styles';
@@ -10,9 +11,10 @@ export interface ContactCardProps {
   phone?: string;
   email?: string;
   address?: string;
+  logo?: ReactNode;
 }
 
-export const ContactCard = ({ title, subtitle, phone, email, address }: ContactCardProps) => {
+export const ContactCard = ({ title, subtitle, phone, email, address, logo }: ContactCardProps) => {
   const i18n = useTranslation();
 
   const handlePhonePress = () => {
@@ -29,6 +31,7 @@ export const ContactCard = ({ title, subtitle, phone, email, address }: ContactC
 
   return (
     <View style={styles.card}>
+      {logo && <View style={styles.logoContainer}>{logo}</View>}
       <Text style={styles.cardTitle}>{title}</Text>
       {subtitle && <Text style={styles.cardSubtitle}>{subtitle}</Text>}
 
@@ -72,6 +75,9 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,
+  },
+  logoContainer: {
+    alignItems: 'flex-end',
   },
   cardTitle: {
     ...textStyles.headerTextMedium,

@@ -11,9 +11,9 @@ const translations = {
     navigationInfo: 'Info',
     landingPageWelcome: 'Welcome to the Naturpark-Draisine',
     landingPageDescription:
-      'With RailTrail you can enjoy improved safety and see a lot of useful information on your trips.',
+      'With this App you can enjoy improved safety and see a lot of useful information on your trips.',
     landingPagePermissionExplanation:
-      'In order to be able to use the app to its full extent, we recommend activating the location permissions for the app.',
+      'In order to be able to use the full functionality, we recommend activating the location permissions for the app.',
     landingPageButtonWithLocation: "Let's go",
     landingPagePrivacyPolicyPrefix: 'I accept the ',
     landingPagePrivacyPolicyLink: 'privacy policy',
@@ -227,9 +227,9 @@ const translations = {
 
     landingPageWelcome: 'Willkommen bei der Naturpark-Draisine',
     landingPageDescription:
-      'Mit RailTrail sind Sie auf der Schiene sicher unterwegs und bekommen viele nützliche Informationen angezeigt.',
+      'Mit dieser App sind Sie auf der Schiene sicher unterwegs und bekommen viele nützliche Informationen angezeigt.',
     landingPagePermissionExplanation:
-      'Um die App im vollen Funktionsumfang nutzen zu können, empfehlen wir Ihnen die Standortdaten für die App zu aktivieren.',
+      'Um den vollen Funktionsumfang nutzen zu können, empfehlen wir Ihnen den Zugriff auf ihre Standortdaten zu genehmigen.',
     landingPageButtonWithLocation: "Los geht's",
     landingPagePrivacyPolicyPrefix: 'Ich stimme der ',
     landingPagePrivacyPolicyLink: 'Datenschutzerklärung',
