@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "RailTrail",
+    "name": "Naturpark Draisine",
     "slug": "Train-Project",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -14,7 +14,7 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "bundleIdentifier": "de.cau.railtrail",
+      "bundleIdentifier": "de.hlb.naturparkdraisine",
       "buildNumber": "1.0.0",
       "supportsTablet": true,
       "infoPlist": {
@@ -24,7 +24,7 @@
       }
     },
     "android": {
-      "package": "de.cau.railtrail",
+      "package": "de.hlb.naturparkdraisine",
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
@@ -47,7 +47,7 @@
       [
         "expo-location",
         {
-          "locationAlwaysAndWhenInUsePermission": "Allow RailTrail to use your location.",
+          "locationAlwaysAndWhenInUsePermission": "Allow Naturpark Draisine to use your location.",
           "isAndroidBackgroundLocationEnabled": true,
           "isAndroidForegroundServiceEnabled": true
         }
@@ -55,7 +55,7 @@
       [
         "expo-camera",
         {
-          "cameraPermission": "Allow RailTrail to use the camera to scan QR codes on draisines."
+          "cameraPermission": "Allow Naturpark Draisine to use the camera to scan QR codes on draisines."
         }
       ],
       "expo-localization",
