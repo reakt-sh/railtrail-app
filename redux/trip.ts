@@ -268,7 +268,7 @@ const reducer = (state = initialTripState, action: RailTrailReduxAction): TripSt
       return { ...state, isActive: true, tripStartTime: new Date().toISOString() };
 
     case 'trip/stop':
-      return { ...initialTripState, vehicles: state.vehicles };
+      return { ...initialTripState, vehicles: state.vehicles, isLoadingVehicles: false };
 
     case 'trip/set-current-vehicle':
       return {
