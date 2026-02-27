@@ -2,7 +2,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MalenteLogoIcon } from '../assets/icons';
 import { Color, Locale } from '../constants';
@@ -53,7 +53,7 @@ export const InfoMenuScreen = () => {
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View style={styles.logoContainer}>
-          <MalenteLogoIcon width={180} height={156} />
+          <MalenteLogoIcon width={100} height={80} />
         </View>
 
         <View style={styles.menuContainer}>
@@ -124,6 +124,15 @@ export const InfoMenuScreen = () => {
             </View>
           </Pressable>
         </View>
+
+        <View style={styles.supportSection}>
+          <Text style={textStyles.bodySmall}>{i18n.t('fundedBy')}</Text>
+          <Image
+            source={require('../assets/logos/support_logo.png')}
+            style={styles.supportLogo}
+            resizeMode="contain"
+          />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -192,5 +201,15 @@ const styles = StyleSheet.create({
   },
   languageOptionTextActive: {
     color: Color.white,
+  },
+  supportSection: {
+    marginTop: 32,
+    paddingVertical: 16,
+  },
+
+  supportLogo: {
+    width: '90%',
+    height: 168,
+    alignSelf: 'center',
   },
 });

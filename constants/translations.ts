@@ -190,6 +190,9 @@ const translations = {
     languageLabel: 'Language',
     languageValue: 'English',
 
+    // Funding
+    fundedBy: 'Funded by:',
+
     // Trip Controls
     tripControlsSelectDraisine: 'Select draisine',
     tripControlsEnterNumber: 'Enter number',
@@ -329,10 +332,10 @@ const translations = {
       'Die Draisine wird durch Treten angetrieben, ähnlich wie ein Fahrrad. Wichtig: Draisinen haben einen langen Bremsweg – fahren Sie vorausschauend!\n\nEs herrscht Einbahnverkehr, das Wenden erfolgt am Wendepunkt.',
     faqRules: 'Was muss ich bei der Fahrt beachten?',
     faqRulesAnswer:
-      '• An allen Bahnübergängen anhalten – Straßenverkehr hat Vorfahrt\n• Nicht in der Nähe von Privatgrundstücken anhalten\n• Tiere sind wegen des Lärmpegels nicht empfohlen\n• Tragen Sie lange, feste Kleidung und festes Schuhwerk (Vegetation entlang der Strecke)',
+      '• An allen Bahnübergängen anhalten – Straßenverkehr hat Vorfahrt\n• Pro Draisine muss mindestens ein Erwachsener mitfahren. \n•Das Mitnehmen von Tieren auf der Draisine wird u.a. aufgrund der Lautstärke nicht empfohlen. \n• Wir empfehlen aufgrund der Vegetation an der Strecke das Tragen von langer und robuster Kleidung sowie festem Schuhwerk.',
     faqVouchers: 'Gibt es Gutscheine für Draisinenfahrten?',
     faqVouchersAnswer:
-      'Ja, Gutscheine sind erhältlich und 3 Jahre gültig. Fragen Sie bei der Tourist-Info Malente nach.',
+      'Ja, für die Draisinenfahrten können auch Gutscheine erworben werden. Der Wert des Gutscheins kann selbst bestimmt werden, er ist ab Kauf 3 Jahre lang gültig.\n\nDie Gutscheine gibt es vor Ort bei der Tourist Information in Malente oder auf Bestellung zzgl. einer kleinen Versandpauschale per Post auf Rechnung.\n\nBei Interesse und weiteren Fragen meldet euch gern bei der Malenter Tourist Information. ',
 
     // Imprint Screen
     imprintOperator: 'Betreiber',
@@ -407,6 +410,9 @@ const translations = {
     // Language Selection
     languageLabel: 'Sprache',
     languageValue: 'Deutsch',
+
+    // Funding
+    fundedBy: 'Gefördert von:',
 
     // Trip Controls
     tripControlsSelectDraisine: 'Draisine auswählen',
