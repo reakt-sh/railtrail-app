@@ -197,6 +197,12 @@ const translations = {
     tripControlsSelectDraisine: 'Select draisine',
     tripControlsEnterNumber: 'Enter number',
 
+    // Feedback
+    feedbackTitle: 'How was the trip?',
+    feedbackPlaceholder: 'Optional comment...',
+    feedbackSubmit: 'Submit rating',
+    feedbackSkip: 'Skip',
+
     // Accessibility
     a11yGoBack: 'Go back',
     a11yLocationTrackingActive: 'Location tracking active',
@@ -399,7 +405,7 @@ const translations = {
     // Trip History Screen
     tripHistoryTitle: 'Vergangene Fahrten',
     tripHistoryDeleteTitle: 'Fahrt löschen',
-    tripHistoryDeleteMessage: 'Möchtest du diese Fahrt wirklich löschen?',
+    tripHistoryDeleteMessage: 'Möchten Sie diese Fahrt wirklich löschen?',
     tripHistoryDeleteCancel: 'Abbrechen',
     tripHistoryDeleteConfirm: 'Löschen',
     tripHistoryEmpty: 'Noch keine Fahrten aufgezeichnet.',
@@ -417,6 +423,12 @@ const translations = {
     // Trip Controls
     tripControlsSelectDraisine: 'Draisine auswählen',
     tripControlsEnterNumber: 'Nummer eingeben',
+
+    // Feedback
+    feedbackTitle: 'Wie war die Fahrt?',
+    feedbackPlaceholder: 'Optionaler Kommentar...',
+    feedbackSubmit: 'Bewertung abschicken',
+    feedbackSkip: 'Überspringen',
 
     // Accessibility
     a11yGoBack: 'Zurück',

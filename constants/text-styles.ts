@@ -50,6 +50,11 @@ export const textStyles = StyleSheet.create({
     color: Color.primary,
     textDecorationLine: 'underline',
   },
+  textButton: {
+    fontFamily: Font.regular,
+    fontSize: 16,
+    color: Color.primary,
+  },
   itemText: {
     fontSize: 16,
   },

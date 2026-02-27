@@ -1,6 +1,7 @@
 export { Button } from './Button';
 export { Checkbox } from './Checkbox';
 export { FAB } from './Fab';
+export { FeedbackBottomSheet } from './FeedbackBottomSheet';
 export { LocationButton } from './LocationButton';
 export { MapMarkers } from './MapMarkers';
 export { MinimalTripOverlay } from './MinimalTripOverlay';

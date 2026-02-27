@@ -7,6 +7,55 @@ import { TripAction } from '../redux/trip';
 import { TripHistoryAction } from '../redux/tripHistory';
 import { SavedTrip, VehicleSegment } from '../types/saved-trip';
 
+export const getVehicleWithLongestDistance = (segments: VehicleSegment[]): number | null => {
+  if (segments.length === 0) return null;
+
+  // Aggregate distance per vehicle
+  const distanceByVehicle = segments.reduce(
+    (acc, seg) => {
+      acc[seg.vehicleId] = (acc[seg.vehicleId] || 0) + seg.distanceTravelled;
+      return acc;
+    },
+    {} as Record<number, number>
+  );
+
+  // Find vehicle with maximum distance
+  let maxVehicle = segments[0].vehicleId;
+  let maxDistance = 0;
+
+  for (const [vehicleId, distance] of Object.entries(distanceByVehicle)) {
+    if (distance > maxDistance) {
+      maxDistance = distance;
+      maxVehicle = Number(vehicleId);
+    }
+  }
+
+  return maxVehicle;
+};
+
+// Save trip data without stopping (used when trip is already stopped)
+export const saveTrip = async (
+  dispatch: Dispatch<RailTrailReduxAction>,
+  trip: SavedTrip
+): Promise<void> => {
+  try {
+    // Load existing trips
+    const existingJson = await AsyncStorage.getItem(StorageKeys.SAVED_TRIPS);
+    const existingTrips: SavedTrip[] = existingJson ? JSON.parse(existingJson) : [];
+
+    // Add new trip at the beginning
+    const updatedTrips = [trip, ...existingTrips];
+
+    // Save to storage
+    await AsyncStorage.setItem(StorageKeys.SAVED_TRIPS, JSON.stringify(updatedTrips));
+
+    // Update Redux state
+    dispatch(TripHistoryAction.addTrip(trip));
+  } catch (error) {
+    console.error('Failed to save trip:', error);
+  }
+};
+
 export const saveAndStopTrip = async (
   dispatch: Dispatch<RailTrailReduxAction>,
   getState: () => ReduxAppState,

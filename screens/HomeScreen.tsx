@@ -7,6 +7,7 @@ import { Alert, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { Dispatch } from 'redux';
 import {
+  FeedbackBottomSheet,
   MinimalTripOverlay,
   TrackMapView,
   TripControls,
@@ -18,7 +19,12 @@ import {
   setupPositionUpdates,
 } from '../effect-actions/api-actions';
 import { updateDistances } from '../effect-actions/trip-actions';
-import { saveAndStopTrip } from '../effect-actions/trip-storage';
+import {
+  getVehicleWithLongestDistance,
+  saveTrip,
+} from '../effect-actions/trip-storage';
+import { submitFeedback } from '../api/feedback';
+import { SavedTrip, VehicleSegment } from '../types/saved-trip';
 import {
   useElapsedTime,
   useLocationTracking,
@@ -64,6 +70,8 @@ export const HomeScreen = () => {
   const [isVehicleSelectionVisible, setIsVehicleSelectionVisible] = useState(false);
   const [isChangeVehicleIdBottomSheetVisible, setIsChangeVehicleIdBottomSheetVisible] =
     useState(false);
+  const [isFeedbackVisible, setIsFeedbackVisible] = useState(false);
+  const [pendingTripData, setPendingTripData] = useState<SavedTrip | null>(null);
 
   // Direction tracking
   const [isPercentagePositionIncreasing, setIsPercentagePositionIncreasing] = useState<
@@ -210,14 +218,46 @@ export const HomeScreen = () => {
         {
           text: localizedStrings.t('alertYes'),
           onPress: () => {
+            const state = store.getState();
+            const { currentVehicle: vehicle, activeSegment, completedSegments, motion } = state.trip;
             const startTime = tripStartTimeRef.current ?? new Date().toISOString();
-            saveAndStopTrip(dispatch, store.getState, startTime);
+            const endTime = new Date().toISOString();
+
+            // Build segments array: completed segments + finalized active segment
+            const segments: VehicleSegment[] = [...completedSegments];
+            if (activeSegment) {
+              segments.push({
+                vehicleId: activeSegment.vehicleId,
+                vehicleName: activeSegment.vehicleName,
+                startTime: activeSegment.startTime,
+                endTime,
+                distanceTravelled: motion.distanceTravelled - activeSegment.startDistance,
+              });
+            }
+
+            // Build complete SavedTrip object
+            const savedTrip: SavedTrip = {
+              id: `trip_${Date.now()}`,
+              startTime,
+              endTime,
+              totalDistance: motion.distanceTravelled,
+              segments,
+              vehicleId: vehicle.id ?? undefined,
+              vehicleName: vehicle.name ?? undefined,
+            };
+
+            // Stop the trip immediately
+            dispatch(TripAction.stop());
             tripStartTimeRef.current = null;
+
+            // Show feedback dialog
+            setPendingTripData(savedTrip);
+            setIsFeedbackVisible(true);
           },
         },
       ]
     );
-  }, [localizedStrings, dispatch, store]);
+  }, [localizedStrings, store, dispatch]);
 
   const handleStartTrip = useCallback(() => {
     setIsVehicleSelectionVisible(true);
@@ -246,6 +286,29 @@ export const HomeScreen = () => {
     },
     [dispatch]
   );
+
+  const handleFeedbackSubmit = useCallback(
+    async (rating: number, text?: string) => {
+      if (pendingTripData) {
+        const vehicleId = getVehicleWithLongestDistance(pendingTripData.segments);
+        if (vehicleId) {
+          await submitFeedback({ rating, text, vehicle: vehicleId });
+        }
+        await saveTrip(dispatch, pendingTripData);
+      }
+      setIsFeedbackVisible(false);
+      setPendingTripData(null);
+    },
+    [pendingTripData, dispatch]
+  );
+
+  const handleFeedbackSkip = useCallback(async () => {
+    if (pendingTripData) {
+      await saveTrip(dispatch, pendingTripData);
+    }
+    setIsFeedbackVisible(false);
+    setPendingTripData(null);
+  }, [pendingTripData, dispatch]);
 
   return (
     <View style={styles.container}>
@@ -310,6 +373,13 @@ export const HomeScreen = () => {
         vehicles={vehicles}
         excludeVehicleId={currentVehicle.id}
         onVehicleSelected={handleChangeVehicle}
+      />
+
+      {/* Feedback after trip ends */}
+      <FeedbackBottomSheet
+        isVisible={isFeedbackVisible}
+        onSubmit={handleFeedbackSubmit}
+        onSkip={handleFeedbackSkip}
       />
     </View>
   );
