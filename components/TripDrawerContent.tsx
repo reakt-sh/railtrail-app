@@ -4,6 +4,7 @@ import React, { memo, useEffect, useState } from 'react';
 import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
+import { DraisineIcon } from '../assets/icons';
 import { Color } from '../constants/color';
 import { textStyles } from '../constants/text-styles';
 import { useTranslation } from '../hooks';
@@ -14,12 +15,17 @@ import { formatDistance, formatElapsedTime, formatSpeed } from '../util/formatte
 interface InfoRowProps {
   label: string;
   value: string;
-  icon: keyof typeof MaterialCommunityIcons.glyphMap;
+  icon?: keyof typeof MaterialCommunityIcons.glyphMap;
+  customIcon?: React.ReactNode;
 }
 
-const InfoRow = memo(({ label, value, icon }: InfoRowProps) => (
+const InfoRow = memo(({ label, value, icon, customIcon }: InfoRowProps) => (
   <View style={styles.infoRow}>
-    <MaterialCommunityIcons name={icon} size={24} color={Color.primary} style={styles.rowIcon} />
+    {customIcon ? (
+      <View style={styles.rowIcon}>{customIcon}</View>
+    ) : (
+      <MaterialCommunityIcons name={icon!} size={24} color={Color.primary} style={styles.rowIcon} />
+    )}
     <View style={styles.rowContent}>
       <Text style={styles.rowLabel}>{label}</Text>
       <Text style={styles.rowValue}>{value}</Text>
@@ -59,7 +65,7 @@ export const TripDrawerContent = memo((props: DrawerContentComponentProps) => {
     return (
       <DrawerContentScrollView {...props} style={[styles.container, { paddingTop: insets.top }]}>
         <View style={styles.emptyState}>
-          <MaterialCommunityIcons name="train-car" size={48} color={Color.darkGray} />
+          <DraisineIcon width={48} height={48} color={Color.darkGray} />
           <Text style={styles.emptyStateText}>{localizedStrings.t('drawerNoActiveTrip')}</Text>
         </View>
       </DrawerContentScrollView>
@@ -69,7 +75,7 @@ export const TripDrawerContent = memo((props: DrawerContentComponentProps) => {
   return (
     <DrawerContentScrollView {...props} style={styles.container}>
       <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
-        <MaterialCommunityIcons name="bicycle-cargo" size={32} color={Color.primary} />
+        <DraisineIcon width={32} height={32} color={Color.primary} />
         <Text style={styles.vehicleName}>
           {currentVehicle.name ?? localizedStrings.t('drawerUnknownVehicle')}
         </Text>
@@ -112,7 +118,7 @@ export const TripDrawerContent = memo((props: DrawerContentComponentProps) => {
         <Text style={styles.sectionTitle}>{localizedStrings.t('drawerUpcoming')}</Text>
 
         <InfoRow
-          icon="bicycle-cargo"
+          customIcon={<DraisineIcon width={24} height={24} color={Color.primary} />}
           label={localizedStrings.t('drawerNextDraisine')}
           value={warnings.nextVehicle != null ? `${Math.round(warnings.nextVehicle)} m` : '-'}
         />

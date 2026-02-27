@@ -4,7 +4,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { MalenteLogoIcon } from '../assets/icons';
+import { DraisineIcon, MalenteLogoIcon } from '../assets/icons';
 import { Color, Locale } from '../constants';
 import { textStyles } from '../constants/text-styles';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -31,7 +31,7 @@ const menuItems: MenuItem[] = [
   { titleKey: 'infoTitleTripHistory', icon: 'history', screen: 'TripHistory' },
   {
     titleKey: 'infoTitleDraisineInfo',
-    icon: 'bicycle-cargo',
+    customIcon: <DraisineIcon width={24} height={24} color={Color.primary} />,
     screen: 'DraisineInfo',
   },
   { titleKey: 'infoTitleGoodToKnow', icon: 'lightbulb-outline', screen: 'GoodToKnow' },

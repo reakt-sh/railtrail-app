@@ -179,7 +179,7 @@ const translations = {
     // Trip History Screen
     tripHistoryTitle: 'Past Trips',
     tripHistoryDeleteTitle: 'Delete trip',
-    tripHistoryDeleteMessage: 'Do you really want to delete this trip?',
+    tripHistoryDeleteMessage: 'Do you want to remove this trip from your history?',
     tripHistoryDeleteCancel: 'Cancel',
     tripHistoryDeleteConfirm: 'Delete',
     tripHistoryEmpty: 'No trips recorded yet.',
@@ -409,7 +409,7 @@ const translations = {
     // Trip History Screen
     tripHistoryTitle: 'Vergangene Fahrten',
     tripHistoryDeleteTitle: 'Fahrt löschen',
-    tripHistoryDeleteMessage: 'Möchten Sie diese Fahrt wirklich löschen?',
+    tripHistoryDeleteMessage: 'Möchten Sie diese Fahrt aus der Hostorie löschen?',
     tripHistoryDeleteCancel: 'Abbrechen',
     tripHistoryDeleteConfirm: 'Löschen',
     tripHistoryEmpty: 'Noch keine Fahrten aufgezeichnet.',
