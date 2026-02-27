@@ -34,10 +34,16 @@ export const textStyles = StyleSheet.create({
     fontSize: 14,
     color: Color.text,
   },
-  titleSmall: {
+  titleMedium: {
     fontFamily: Font.semiBold,
-    fontSize: 14,
+    fontSize: 18,
     color: Color.text,
+  },
+  buttonText: {
+    fontFamily: Font.semiBold,
+    fontSize: 18,
+    fontWeight: '600',
+    color: Color.primary,
   },
   hint: {
     fontFamily: Font.regular,

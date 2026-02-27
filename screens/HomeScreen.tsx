@@ -8,6 +8,7 @@ import { useDispatch, useSelector, useStore } from 'react-redux';
 import { Dispatch } from 'redux';
 import {
   FeedbackBottomSheet,
+  LoadingVehiclesOverlay,
   MinimalTripOverlay,
   TrackMapView,
   TripControls,
@@ -80,8 +81,16 @@ export const HomeScreen = () => {
 
   // Redux state
   const { track, location, permissions } = useSelector((state: ReduxAppState) => state.app);
-  const { isActive, currentVehicle, warnings, motion, position, vehicles, tripStartTime } =
-    useSelector((state: ReduxAppState) => state.trip);
+  const {
+    isActive,
+    currentVehicle,
+    warnings,
+    motion,
+    position,
+    vehicles,
+    tripStartTime,
+    isLoadingVehicles,
+  } = useSelector((state: ReduxAppState) => state.trip);
 
   // Elapsed time hook - uses Redux tripStartTime
   const elapsedTime = useElapsedTime(tripStartTime);
@@ -336,6 +345,8 @@ export const HomeScreen = () => {
         zoomLevel={zoomLevel}
         mapHeading={cameraHeading}
       />
+
+      {isLoadingVehicles && <LoadingVehiclesOverlay />}
 
       <TripControls
         isActive={isActive}

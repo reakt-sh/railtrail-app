@@ -2,6 +2,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { I18n } from 'i18n-js';
 import React, { memo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { textStyles } from '../constants';
 import { Color } from '../constants/color';
 import { FAB } from './Fab';
 import { LocationButton } from './LocationButton';
@@ -83,7 +84,7 @@ export const TripControls = memo(
               accessibilityLabel={localizedStrings.t('a11yStartTrip')}
             >
               <MaterialCommunityIcons name="play" size={24} color={Color.primary} />
-              <Text style={styles.startTripButtonText}>
+              <Text style={textStyles.buttonText}>
                 {localizedStrings.t('homeSnackbarStartTitle')}
               </Text>
             </Pressable>
@@ -142,11 +143,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 4,
-  },
-  startTripButtonText: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: Color.primary,
   },
   locationFab: {
     padding: 14,

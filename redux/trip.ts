@@ -47,6 +47,7 @@ export interface TripState {
   readonly vehicles: Vehicle[];
   readonly activeSegment: ActiveSegment | null;
   readonly completedSegments: VehicleSegment[];
+  readonly isLoadingVehicles: boolean;
 }
 
 // Action interfaces
@@ -125,6 +126,11 @@ interface TripActionClearVehiclesExceptDemo {
   readonly type: 'trip/clear-vehicles-except-demo';
 }
 
+interface TripActionSetLoadingVehicles {
+  readonly type: 'trip/set-loading-vehicles';
+  readonly payload: boolean;
+}
+
 export type TripActionType =
   | TripActionReset
   | TripActionStart
@@ -139,7 +145,8 @@ export type TripActionType =
   | TripActionBatchUpdate
   | TripActionStartSegment
   | TripActionEndSegment
-  | TripActionClearVehiclesExceptDemo;
+  | TripActionClearVehiclesExceptDemo
+  | TripActionSetLoadingVehicles;
 
 export const TripAction = {
   reset: (): TripActionReset => ({
@@ -214,6 +221,11 @@ export const TripAction = {
   clearVehiclesExceptDemo: (): TripActionClearVehiclesExceptDemo => ({
     type: 'trip/clear-vehicles-except-demo',
   }),
+
+  setLoadingVehicles: (isLoading: boolean): TripActionSetLoadingVehicles => ({
+    type: 'trip/set-loading-vehicles',
+    payload: isLoading,
+  }),
 };
 
 export const initialTripState: TripState = {
@@ -244,6 +256,7 @@ export const initialTripState: TripState = {
   vehicles: [],
   activeSegment: null,
   completedSegments: [],
+  isLoadingVehicles: true,
 };
 
 const reducer = (state = initialTripState, action: RailTrailReduxAction): TripState => {
@@ -374,6 +387,9 @@ const reducer = (state = initialTripState, action: RailTrailReduxAction): TripSt
         completedSegments: [...state.completedSegments, completedSegment],
       };
     }
+
+    case 'trip/set-loading-vehicles':
+      return { ...state, isLoadingVehicles: action.payload };
 
     default:
       return state;

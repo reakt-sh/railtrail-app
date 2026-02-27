@@ -39,17 +39,52 @@ const lastPositions = new Map<number, number>();
 // Schwellwert für Positionsänderung (in Prozent der Strecke)
 const POSITION_CHANGE_THRESHOLD = 0.001;
 
-// Demo vehicle ID (should not be cleared on reconnect)
+// Timeout für Loading-State (falls keine Draisinen verfügbar sind)
+const LOADING_TIMEOUT_MS = 5000;
+
+// Debounce für Loading-State: Warte bis keine neuen Fahrzeuge mehr kommen
+const LOADING_DEBOUNCE_MS = 1500;
+
+// Demo-Draisine ID - wird bei Loading-Prüfung ignoriert
 const DEMO_VEHICLE_ID = 99;
 
 // Richtet WebSocket-Updates ein und konvertiert MapPosition zu Vehicle-Format
 export const setupPositionUpdates = (dispatch: Dispatch<TripActionType>): (() => void) => {
+  let loadingTimeoutId: ReturnType<typeof setTimeout> | null = null;
+  let loadingDebounceId: ReturnType<typeof setTimeout> | null = null;
+  let knownVehicleIds = new Set<number>();
+
+  // Start loading state
+  dispatch(TripAction.setLoadingVehicles(true));
+
+  // Timeout: Loading nach 5 Sekunden beenden, falls keine Fahrzeuge kommen
+  loadingTimeoutId = setTimeout(() => {
+    if (knownVehicleIds.size === 0) {
+      if (__DEV__) console.log('[WebSocket] Loading timeout - no vehicles received');
+      dispatch(TripAction.setLoadingVehicles(false));
+    }
+  }, LOADING_TIMEOUT_MS);
+
   // Bei Reconnect: Fahrzeuge leeren (außer Demo), damit frische Daten kommen
   const unsubscribeReconnect = positionSocket.onReconnect(() => {
     if (__DEV__) console.log('[WebSocket] Reconnected - clearing vehicle cache (keeping Demo)');
     // Vehicles werden geleert, aber Demo wird behalten
     dispatch(TripAction.clearVehiclesExceptDemo());
     lastPositions.clear();
+    // Loading state und Tracking zurücksetzen bei Reconnect
+    knownVehicleIds.clear();
+    if (loadingDebounceId) {
+      clearTimeout(loadingDebounceId);
+      loadingDebounceId = null;
+    }
+    dispatch(TripAction.setLoadingVehicles(true));
+    // Neuer Timeout starten
+    if (loadingTimeoutId) clearTimeout(loadingTimeoutId);
+    loadingTimeoutId = setTimeout(() => {
+      if (knownVehicleIds.size === 0) {
+        dispatch(TripAction.setLoadingVehicles(false));
+      }
+    }, LOADING_TIMEOUT_MS);
   });
 
   const unsubscribePositions = positionSocket.subscribe((mapPosition: MapPosition) => {
@@ -84,12 +119,38 @@ export const setupPositionUpdates = (dispatch: Dispatch<TripActionType>): (() =>
         speed: effectiveSpeed,
       })
     );
+
+    // Debounce: Bei neuem Fahrzeug Timer zurücksetzen (Demo ignorieren)
+    const isNewVehicle = !knownVehicleIds.has(mapPosition.vehicle);
+    if (isNewVehicle && mapPosition.vehicle !== DEMO_VEHICLE_ID) {
+      knownVehicleIds.add(mapPosition.vehicle);
+
+      // Debounce: Timer zurücksetzen bei jedem neuen Fahrzeug
+      if (loadingDebounceId) {
+        clearTimeout(loadingDebounceId);
+      }
+      loadingDebounceId = setTimeout(() => {
+        dispatch(TripAction.setLoadingVehicles(false));
+        if (loadingTimeoutId) {
+          clearTimeout(loadingTimeoutId);
+          loadingTimeoutId = null;
+        }
+        if (__DEV__) console.log(`[WebSocket] Loading complete - ${knownVehicleIds.size} vehicles loaded`);
+      }, LOADING_DEBOUNCE_MS);
+    }
   });
 
   // Cleanup function
   return () => {
     unsubscribeReconnect();
     unsubscribePositions();
+    if (loadingTimeoutId) {
+      clearTimeout(loadingTimeoutId);
+    }
+    if (loadingDebounceId) {
+      clearTimeout(loadingDebounceId);
+    }
+    knownVehicleIds.clear();
   };
 };
 

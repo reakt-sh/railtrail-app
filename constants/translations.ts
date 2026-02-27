@@ -20,11 +20,11 @@ const translations = {
     landingPagePrivacyPolicySuffix: '.',
 
     homeSnackbarStartTitle: 'Start trip',
-    homeSnackbarStartMessage: 'Click here to select a vehicle and start the trip',
+    homeSnackbarStartMessage: 'Click here to select a railbike and start the trip',
     homeSnackbarWarningTitle: 'Warning',
     homeSnackbarWarningCrossingMessage: 'Level crossing in %{distance} m',
     homeSnackbarWarningVehicleMessage: 'Vehicle in %{distance} m',
-    homeSnackbarWarningVehicleHeadingTowardsUserMessage: 'Oncoming vehicle in %{distance} m',
+    homeSnackbarWarningVehicleHeadingTowardsUserMessage: 'Oncoming railbike in %{distance} m',
     homeDialogEndTripTitle: 'End Trip',
     homeDialogEndTripMessage: 'Do you really want to end the current trip?',
     homeDialogBackgroundPermissionTripTitle: 'Location Permission',
@@ -34,37 +34,38 @@ const translations = {
     // Draisine Info Screen
     infoDraisineEquipment: 'Equipment of the Draisine',
     infoDraisineRules: 'Rules',
-    infoDraisineTurning: 'Rotating and turning the draisine',
+    infoDraisineTurning: 'Rotating and turning the railbike',
 
     // Bottom Sheet
     bottomSheetVehicleId: 'Vehicle number',
     bottomSheetChangeVehicleId:
-      'If you change your vehicle during the trip, you can select the new vehicle number here.',
+      'If you change your railbike during the trip, you can select the new railbike number here.',
     bottomSheetStartTripMessage:
-      'Enter the vehicle number to continue. The number can usually be found on the seat.',
-    bottomSheetSelectVehicle: 'Select your draisine:',
-    bottomSheetNoVehicles: 'No draisines available. Please wait for vehicles to appear on the map.',
+      'Enter the railbike number to continue. The number can usually be found on the seat.',
+    bottomSheetSelectVehicle: 'Select your railbike:',
+    bottomSheetNoVehicles:
+      'No railbikes available. Please wait for railbikes to appear on the map.',
     bottomSheetReload: 'Reload',
     bottomSheetAlertVehicleIdNotFoundTitle: 'Vehicle not found',
     bottomSheetAlertVehicleIdNotFoundMessage:
-      'The vehicle could not be found. Make sure the vehicle number is correct and the correct route is selected.',
+      'The railbike could not be found. Make sure the railbike number is correct and the correct route is selected.',
 
     // Trip Header
     headerDistance: 'Distance traveled',
-    headerNextVehicle: 'Next vehicle',
+    headerNextVehicle: 'Next railbike',
     headerSpeed: 'Speed',
     headerNextCrossing: 'Next level crossing',
     headerVehicleId: 'Vehicle:',
 
     // Trip Drawer
     drawerNoActiveTrip: 'No active trip.\nStart a trip to see details here.',
-    drawerUnknownVehicle: 'Unknown vehicle',
+    drawerUnknownVehicle: 'Unknown railbike',
     drawerTripStats: 'Trip Statistics',
     drawerSpeed: 'Speed',
     drawerDistance: 'Distance traveled',
     drawerElapsedTime: 'Elapsed time',
     drawerUpcoming: 'Upcoming',
-    drawerNextDraisine: 'Next draisine',
+    drawerNextDraisine: 'Next railbike',
     drawerNextCrossing: 'Next level crossing',
     drawerNextTurningPoint: 'Next turning point',
     drawerSecondTurningPoint: 'Following turning point',
@@ -92,9 +93,9 @@ const translations = {
 
     // Contacts Screen
     contactTouristInfoMalente: 'Tourist Info Malente',
-    contactTouristInfoMalenteSubtitle: 'Booking & handout of draisines',
+    contactTouristInfoMalenteSubtitle: 'Booking & handout of railbikes',
     contactTouristInfoLuetjenburg: 'Tourist Info Lütjenburg',
-    contactTourismuszentraleSubtitle: 'Operator of the draisine railway',
+    contactTourismuszentraleSubtitle: 'Operator of the Naturpark Draisine',
 
     // Good to Know Screen (FAQ)
     faqDepartureTimes: 'What are the departure times?',
@@ -102,17 +103,17 @@ const translations = {
       'May–September: Weekdays and Saturdays at 10:00 AM (3–6 hrs) and 1:30 PM (3 hrs). Sundays at 10:00 AM (3 hrs).\n\nOctober–April: Weekdays at 10:00 AM and 1:30 PM. Weekends on request.\n\nPlease arrive 30 minutes before departure for formalities and handover.',
     faqPassengers: 'How many people can ride?',
     faqPassengersAnswer:
-      'Up to 4 people can ride on each draisine – 2 people pedal, 2 people can relax. At least one adult per draisine is required.',
-    faqPrice: 'What does a draisine cost?',
+      'Up to 4 people can ride on each railbike – 2 people pedal, 2 people can relax. At least one adult per railbike is required.',
+    faqPrice: 'What does a railbike cost?',
     faqPriceAnswer:
-      '3-hour tour: €50 per draisine\nFamily price (with children under 16): €40\nostseecard holders receive €2 discount.\n\nGroup tours with up to 60 people are possible.',
-    faqHowItWorks: 'How does a draisine work?',
+      '3-hour tour: €50 per railbike\nFamily price (with children under 16): €40\nostseecard holders receive €2 discount.\n\nGroup tours with up to 60 people are possible.',
+    faqHowItWorks: 'How does a railbike work?',
     faqHowItWorksAnswer:
-      'The draisine is powered by pedaling, similar to a bicycle. Important: Draisines have a long braking distance – drive with foresight!\n\nThere is one-way traffic, turning is done at the turning point.',
+      'The railbike is powered by pedaling, similar to a bicycle. Important: Draisines have a long braking distance – drive with foresight!\n\nThere is one-way traffic, turning is done at the turning point.',
     faqRules: 'What should I pay attention to during the ride?',
     faqRulesAnswer:
       '• Stop at all level crossings – road traffic has right of way\n• Do not stop near private properties\n• Animals are not recommended due to noise level\n• Wear long, sturdy clothing and solid footwear (vegetation along the track)',
-    faqVouchers: 'Are there vouchers for draisine rides?',
+    faqVouchers: 'Are there vouchers for railbike rides?',
     faqVouchersAnswer:
       'Yes, vouchers are available and valid for 3 years. Ask at the Tourist Info Malente.',
 
@@ -133,15 +134,15 @@ const translations = {
 
     privacySection2Title: '2. Overview of Data Processing',
     privacySection2Content:
-      'This app serves as a digital on-board computer for the draisine rental service on the Malente–Lütjenburg railway line. It has been deliberately designed to be privacy-friendly: there is no user registration, no login, no tracking, and no analytics tools. The app processes as little personal data as possible.\n\nIn the following, we inform you about what data is processed when using the app, for what purpose, and on what legal basis.',
+      'This app serves as a digital on-board computer for the railbike rental service on the Malente–Lütjenburg railway line. It has been deliberately designed to be privacy-friendly: there is no user registration, no login, no tracking, and no analytics tools. The app processes as little personal data as possible.\n\nIn the following, we inform you about what data is processed when using the app, for what purpose, and on what legal basis.',
 
     privacySection3Title: '3. Location Data (GPS)',
     privacySection3Content:
-      "3.1 Local Use of Your Location Data\n\nIf you grant the app permission to access your mobile device's location, your GPS data is processed exclusively locally on your device. The location data is used to:\n\n• Display your own position on the route map,\n• Project your position onto the route (so-called snapping),\n• Calculate trip information such as speed and distance traveled.\n\nYour GPS data is never transmitted to a server. It does not leave your device and is not stored. When you close the app, the location data is discarded.\n\nLegal basis: Your consent pursuant to Art. 6(1)(a) GDPR, which you grant via the location permission of your operating system (iOS/Android). You can revoke the permission at any time in the device settings. The app can also be used without location permission – in this case, only the position of your draisine based on GNSS tracker data will be displayed.\n\n3.2 No Background Location Collection\n\nThe app only collects your location while it is active in the foreground. No location collection takes place in the background.",
+      "3.1 Local Use of Your Location Data\n\nIf you grant the app permission to access your mobile device's location, your GPS data is processed exclusively locally on your device. The location data is used to:\n\n• Display your own position on the route map,\n• Project your position onto the route (so-called snapping),\n• Calculate trip information such as speed and distance traveled.\n\nYour GPS data is never transmitted to a server. It does not leave your device and is not stored. When you close the app, the location data is discarded.\n\nLegal basis: Your consent pursuant to Art. 6(1)(a) GDPR, which you grant via the location permission of your operating system (iOS/Android). You can revoke the permission at any time in the device settings. The app can also be used without location permission – in this case, only the position of your railbike based on GNSS tracker data will be displayed.\n\n3.2 No Background Location Collection\n\nThe app only collects your location while it is active in the foreground. No location collection takes place in the background.",
 
     privacySection4Title: '4. Reception of Draisine Position Data',
     privacySection4Content:
-      'The app receives position data of all draisines on the route from the backend server via a WebSocket connection. This data comes from the GNSS trackers (hardware) mounted on the draisines and is not generated by the app or your device.\n\nWhen establishing the WebSocket connection, your IP address is technically transmitted to the backend server. During operation, the app only sends a technical heartbeat signal ("ping") to maintain the connection. No personal data is sent to the server.\n\nServer location: The backend server is operated by Christian-Albrechts-Universität zu Kiel (CAU) in Germany.\n\nLegal basis: Legitimate interest pursuant to Art. 6(1)(f) GDPR. The connection is required for the core function of the app (display of draisine positions). The IP address is only processed within the scope of the technically necessary connection.',
+      'The app receives position data of all railbikes on the route from the backend server via a WebSocket connection. This data comes from the GNSS trackers (hardware) mounted on the railbikes and is not generated by the app or your device.\n\nWhen establishing the WebSocket connection, your IP address is technically transmitted to the backend server. During operation, the app only sends a technical heartbeat signal ("ping") to maintain the connection. No personal data is sent to the server.\n\nServer location: The backend server is operated by Christian-Albrechts-Universität zu Kiel (CAU) in Germany.\n\nLegal basis: Legitimate interest pursuant to Art. 6(1)(f) GDPR. The connection is required for the core function of the app (display of railbike positions). The IP address is only processed within the scope of the technically necessary connection.',
 
     privacySection5Title: '5. Local Data Storage',
     privacySection5Content:
@@ -153,11 +154,11 @@ const translations = {
 
     privacySection7Title: '7. Embedded YouTube Videos',
     privacySection7Content:
-      "The app contains embedded YouTube videos (e.g., instructions for using the draisines and securing level crossings). The embedding is done via YouTube's enhanced privacy mode.\n\nWhen playing a video, a connection is established to servers of Google Ireland Limited (Gordon House, Barrow Street, Dublin 4, Ireland). The following data is transmitted to Google:\n\n• Your IP address,\n• The video accessed,\n• Technical information about your device and browser.\n\nIf you are logged into your Google account, Google may associate the video access with your profile. Google may also transfer the data to the USA. The transfer to the USA is based on the EU-US Data Privacy Framework (adequacy decision of the EU Commission pursuant to Art. 45 GDPR).\n\nMore information can be found in Google's privacy policy: https://policies.google.com/privacy\n\nLegal basis: Consent pursuant to Art. 6(1)(a) GDPR. The videos are only loaded when you actively play them.",
+      "The app contains embedded YouTube videos (e.g., instructions for using the railbikes and securing level crossings). The embedding is done via YouTube's enhanced privacy mode.\n\nWhen playing a video, a connection is established to servers of Google Ireland Limited (Gordon House, Barrow Street, Dublin 4, Ireland). The following data is transmitted to Google:\n\n• Your IP address,\n• The video accessed,\n• Technical information about your device and browser.\n\nIf you are logged into your Google account, Google may associate the video access with your profile. Google may also transfer the data to the USA. The transfer to the USA is based on the EU-US Data Privacy Framework (adequacy decision of the EU Commission pursuant to Art. 45 GDPR).\n\nMore information can be found in Google's privacy policy: https://policies.google.com/privacy\n\nLegal basis: Consent pursuant to Art. 6(1)(a) GDPR. The videos are only loaded when you actively play them.",
 
     privacySection8Title: '8. Feedback Form',
     privacySection8Content:
-      'The app offers an anonymous feedback form where you can submit a star rating and optionally a free-text comment. The rating is transmitted without any personal reference – no IP address, device ID, draisine number, or other identifying characteristics are sent.\n\nLegal basis: Since no personal data is processed, the GDPR is not applicable to the mere feedback submission. If you provide personal data in the free text, processing is based on your consent pursuant to Art. 6(1)(a) GDPR.',
+      'The app offers an anonymous feedback form where you can submit a star rating and optionally a free-text comment. The rating is transmitted without any personal reference – no IP address, device ID, railbike number, or other identifying characteristics are sent.\n\nLegal basis: Since no personal data is processed, the GDPR is not applicable to the mere feedback submission. If you provide personal data in the free text, processing is based on your consent pursuant to Art. 6(1)(a) GDPR.',
 
     privacySection9Title: '9. No Further Data Processing',
     privacySection9Content:
@@ -194,7 +195,7 @@ const translations = {
     fundedBy: 'Funded by:',
 
     // Trip Controls
-    tripControlsSelectDraisine: 'Select draisine',
+    tripControlsSelectDraisine: 'Select railbike',
     tripControlsEnterNumber: 'Enter number',
 
     // Feedback
@@ -203,15 +204,18 @@ const translations = {
     feedbackSubmit: 'Submit rating',
     feedbackSkip: 'Skip',
 
+    // Loading
+    loadingVehicles: 'Loading railbikes...',
+
     // Accessibility
     a11yGoBack: 'Go back',
     a11yLocationTrackingActive: 'Location tracking active',
     a11yShowMyLocation: 'Show my location',
-    a11yCenterOnVehicle: 'Center on vehicle',
+    a11yCenterOnVehicle: 'Center on railbike',
     a11yStartTrip: 'Start trip',
     a11yStopTrip: 'Stop trip',
-    a11yChangeVehicle: 'Change vehicle',
-    a11yChangeVehicleHint: 'Opens vehicle selection',
+    a11yChangeVehicle: 'Change railbike',
+    a11yChangeVehicleHint: 'Opens railbike selection',
     a11ySelectVehicle: 'Select %{name}',
     a11yCallPhone: 'Call %{phone}',
     a11ySendEmail: 'Send email to %{email}',
@@ -429,6 +433,9 @@ const translations = {
     feedbackPlaceholder: 'Optionaler Kommentar...',
     feedbackSubmit: 'Bewertung abschicken',
     feedbackSkip: 'Überspringen',
+
+    // Loading
+    loadingVehicles: 'Draisinen werden geladen...',
 
     // Accessibility
     a11yGoBack: 'Zurück',
