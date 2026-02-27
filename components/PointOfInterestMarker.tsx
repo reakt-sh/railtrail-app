@@ -48,20 +48,18 @@ const markerConfigs: Record<POIType, MarkerConfig> = {
 
 export const PointOfInterestMarker = memo(({ pointOfInterestType, zoomLevel }: Props) => {
   const config = markerConfigs[pointOfInterestType] ?? markerConfigs[POIType.Generic];
-  const useSmallMarker = zoomLevel < 15;
 
-  const iconSize = useSmallMarker ? (config.iconSizeSmall ?? 0) : (config.iconSizeLarge ?? 16);
   const iconColor = config.iconColor ?? Color.white;
 
-  const size = useMemo(() => {
+  const { size, iconSize } = useMemo(() => {
     if (zoomLevel < 10) {
-      return 6;
+      return { size: 6, iconSize: 0 };
     }
     if (zoomLevel > 15) {
-      return 24;
+      return { size: 24, iconSize: 16 };
     }
 
-    return 12;
+    return { size: 12, iconSize: 10 };
   }, [zoomLevel]);
 
   return (
