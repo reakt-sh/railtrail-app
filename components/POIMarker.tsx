@@ -1,6 +1,6 @@
 import * as MapLibreGL from '@maplibre/maplibre-react-native';
 import React, { memo } from 'react';
-import { Platform, View } from 'react-native';
+import { View } from 'react-native';
 import { useTranslation } from '../hooks/useTranslation';
 import { PointOfInterest } from '../types/init';
 import { getPOITitle } from '../util/poi';
@@ -29,8 +29,7 @@ export const POIMarker = memo(({ poi, index, zoomLevel }: Props) => {
       key={`poi-${index}`}
       id={`poi-${index}`}
       coordinate={[poi.pos.lng, poi.pos.lat]}
-      // title disabled on Android - MapLibre's internal callout causes fontSize bug with New Architecture
-      title={Platform.OS === 'ios' ? title : undefined}
+      title={title}
     >
       <View>
         <PointOfInterestMarker pointOfInterestType={poi.typeId} zoomLevel={zoomLevel} />
