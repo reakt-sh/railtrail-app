@@ -11,7 +11,14 @@ import { MapMarkers } from './MapMarkers';
 interface ExternalProps {
   readonly mapRef: RefObject<MapLibreGL.MapViewRef | null>;
   readonly cameraRef: RefObject<MapLibreGL.CameraRef>;
-  readonly onRegionChange: (zoom: number, heading: number, isUserInteraction?: boolean) => void;
+  readonly onRegionChange: (
+    zoom: number,
+    heading: number,
+    center?: [number, number] | null
+  ) => void;
+  readonly onUserInteraction: () => void;
+  readonly userHasInteracted: boolean;
+  readonly currentCameraCenter: [number, number] | null;
   readonly location: Location.LocationObject | null;
   readonly calculatedPosition: Position | null;
   readonly pointsOfInterest: PointOfInterest[];
@@ -29,6 +36,9 @@ export const TrackMapView = memo(
     mapRef,
     cameraRef,
     onRegionChange,
+    onUserInteraction,
+    userHasInteracted,
+    currentCameraCenter,
     location,
     calculatedPosition,
     pointsOfInterest,
@@ -45,20 +55,38 @@ export const TrackMapView = memo(
         mapStyle={mapStyleUrl}
         logoEnabled={false}
         attributionEnabled={false}
+        onRegionWillChange={(feature: any) => {
+          const isUserInteraction = feature?.properties?.isUserInteraction ?? false;
+          if (isUserInteraction) {
+            onUserInteraction();
+          }
+        }}
         onRegionDidChange={(feature: any) => {
           const zoom = feature?.properties?.zoomLevel ?? 14;
           const heading = feature?.properties?.heading ?? 0;
-          const isUserInteraction = feature?.properties?.isUserInteraction ?? false;
-          onRegionChange(zoom, heading, isUserInteraction);
+          const visibleBounds = feature?.properties?.visibleBounds;
+
+          // Calculate center from visibleBounds [[ne_lng, ne_lat], [sw_lng, sw_lat]]
+          let center: [number, number] | null = null;
+          if (visibleBounds && visibleBounds.length === 2) {
+            const [ne, sw] = visibleBounds;
+            center = [(ne[0] + sw[0]) / 2, (ne[1] + sw[1]) / 2];
+          }
+
+          onRegionChange(zoom, heading, center);
         }}
         onPress={() => {}}
       >
         <MapLibreGL.Camera
+          key={userHasInteracted ? 'free' : 'track'}
           ref={cameraRef}
           defaultSettings={{
-            centerCoordinate: [initialRegion.longitude, initialRegion.latitude],
-            zoomLevel: 14,
+            centerCoordinate: currentCameraCenter ?? [initialRegion.longitude, initialRegion.latitude],
+            zoomLevel: zoomLevel,
+            pitch: 0,
+            heading: mapHeading,
           }}
+          followUserLocation={false}
         />
         <MapMarkers
           location={location}

@@ -1,4 +1,4 @@
-# RailTrail Bordcomputer
+# Naturpark Draisine Bordcomputer
 
 > Digitaler Bordcomputer für Draisinen-Fahrzeuge auf der Strecke Malente–Lütjenburg
 
@@ -12,12 +12,12 @@ Dieses Projekt ist eine Weiterentwicklung des [RailTrail-Prototyps](https://gith
 
 ### Projektkontext
 
-| | |
-|---|---|
-| **Auftraggeber** | HLB GmbH |
-| **Projekt** | REAKT Cross-Re-Tour - Digitaler Bordcomputer für Draisinenverleih |
-| **Strecke** | Malente–Lütjenburg (17 km, eingleisig, 7 Bahnübergänge) |
-| **Ziel** | MVP einer produktionsreifen App für iOS & Android |
+|                  |                                                                   |
+| ---------------- | ----------------------------------------------------------------- |
+| **Auftraggeber** | HLB GmbH                                                          |
+| **Projekt**      | REAKT Cross-Re-Tour - Digitaler Bordcomputer für Draisinenverleih |
+| **Strecke**      | Malente–Lütjenburg (17 km, eingleisig, 7 Bahnübergänge)           |
+| **Ziel**         | MVP einer produktionsreifen App für iOS & Android                 |
 
 ### Was der Prototyp bereits bietet
 
@@ -113,6 +113,7 @@ MAP_STYLE_URL=https://tiles.openfreemap.org/styles/liberty
 ### Backend
 
 Das Backend wird separat entwickelt:
+
 - **Repository:** https://github.com/reakt-sh/railtrail
 - **Production Server:** `railtrail.rtsys.informatik.uni-kiel.de`
 
@@ -191,6 +192,7 @@ npx expo start --clear
 Diese App verwendet `patch-package` für Fixes in Dependencies. Patches liegen in `/patches/` und werden automatisch bei `npm install` angewendet.
 
 Aktuell gepatchte Packages:
+
 - `expo-localization` - Swift exhaustive switch fix für neuere Xcode-Versionen
 
 ## Mitwirken

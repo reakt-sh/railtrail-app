@@ -35,14 +35,10 @@ export const POIMarker = memo(({ poi, index, zoomLevel }: Props) => {
       <View>
         <PointOfInterestMarker pointOfInterestType={poi.typeId} zoomLevel={zoomLevel} />
       </View>
-      {/* Callout disabled on Android due to fontSize bug with New Architecture */}
-      {Platform.OS === 'ios' ? (
-        <MapLibreGL.Callout title={title}>
-          <POITooltip name={poi.name} type={poi.typeId} originalType={poi.originalType} />
-        </MapLibreGL.Callout>
-      ) : (
-        <></>
-      )}
+
+      <MapLibreGL.Callout title={title}>
+        <POITooltip name={poi.name} type={poi.typeId} originalType={poi.originalType} />
+      </MapLibreGL.Callout>
     </MapLibreGL.PointAnnotation>
   );
 });

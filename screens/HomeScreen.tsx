@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { Dispatch } from 'redux';
+import { submitFeedback } from '../api/feedback';
 import {
   FeedbackBottomSheet,
   LoadingVehiclesOverlay,
@@ -20,12 +21,7 @@ import {
   setupPositionUpdates,
 } from '../effect-actions/api-actions';
 import { updateDistances } from '../effect-actions/trip-actions';
-import {
-  getVehicleWithLongestDistance,
-  saveTrip,
-} from '../effect-actions/trip-storage';
-import { submitFeedback } from '../api/feedback';
-import { SavedTrip, VehicleSegment } from '../types/saved-trip';
+import { getVehicleWithLongestDistance, saveTrip } from '../effect-actions/trip-storage';
 import {
   useElapsedTime,
   useLocationTracking,
@@ -36,6 +32,7 @@ import {
 import { AppAction, AppActionType } from '../redux/app';
 import { ReduxAppState } from '../redux/init';
 import { TripAction, TripActionType } from '../redux/trip';
+import { SavedTrip, VehicleSegment } from '../types/saved-trip';
 import { Vehicle } from '../types/vehicle';
 import { AppEvents, events } from '../util/events';
 
@@ -54,12 +51,15 @@ export const HomeScreen = () => {
     cameraRef,
     isFollowingUser,
     isFollowingVehicle,
+    userHasInteracted,
+    currentCameraCenter,
     cameraHeading,
     zoomLevel,
     setIsFollowingVehicle,
     animateCamera,
     onLocationButtonClicked,
     onRegionChange,
+    onUserInteraction,
     centerOnPosition,
   } = useMapCamera();
 
@@ -228,7 +228,12 @@ export const HomeScreen = () => {
           text: localizedStrings.t('alertYes'),
           onPress: () => {
             const state = store.getState();
-            const { currentVehicle: vehicle, activeSegment, completedSegments, motion } = state.trip;
+            const {
+              currentVehicle: vehicle,
+              activeSegment,
+              completedSegments,
+              motion,
+            } = state.trip;
             const startTime = tripStartTimeRef.current ?? new Date().toISOString();
             const endTime = new Date().toISOString();
 
@@ -333,9 +338,10 @@ export const HomeScreen = () => {
       <TrackMapView
         mapRef={mapRef}
         cameraRef={cameraRef}
-        onRegionChange={(zoom, heading, isUserInteraction) =>
-          onRegionChange(zoom, heading, isUserInteraction)
-        }
+        onRegionChange={onRegionChange}
+        onUserInteraction={onUserInteraction}
+        userHasInteracted={userHasInteracted}
+        currentCameraCenter={currentCameraCenter}
         location={location}
         calculatedPosition={position.calculated}
         pointsOfInterest={track.pointsOfInterest}
