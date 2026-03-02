@@ -39,6 +39,11 @@ export const textStyles = StyleSheet.create({
     fontSize: 18,
     color: Color.text,
   },
+  titleSmall: {
+    fontFamily: Font.semiBold,
+    fontSize: 14,
+    color: Color.text,
+  },
   buttonText: {
     fontFamily: Font.semiBold,
     fontSize: 18,

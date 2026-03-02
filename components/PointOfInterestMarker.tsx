@@ -4,12 +4,12 @@ import { StyleSheet, View } from 'react-native';
 import { Color } from '../constants';
 import { POIType } from '../types/init';
 
-interface ExternalProps {
+interface Props {
   readonly pointOfInterestType: POIType;
   readonly zoomLevel: number;
+  readonly onPress?: () => void;
+  readonly accessibilityLabel?: string;
 }
-
-type Props = ExternalProps;
 
 interface MarkerConfig {
   icon: keyof typeof MaterialCommunityIcons.glyphMap | keyof typeof MaterialIcons.glyphMap;
@@ -44,7 +44,7 @@ const markerConfigs: Record<POIType, MarkerConfig> = {
   [POIType.RoadCrossing]: { icon: 'road', color: Color.warning },
 };
 
-export const PointOfInterestMarker = memo(({ pointOfInterestType, zoomLevel }: Props) => {
+export const PointOfInterestMarker = memo(({ pointOfInterestType, zoomLevel, onPress, accessibilityLabel }: Props) => {
   const config = markerConfigs[pointOfInterestType] ?? markerConfigs[POIType.Generic];
 
   const iconColor = config.iconColor ?? Color.white;
@@ -65,6 +65,12 @@ export const PointOfInterestMarker = memo(({ pointOfInterestType, zoomLevel }: P
   return (
     <View
       collapsable={false}
+      accessible={!!onPress}
+      accessibilityRole={onPress ? 'button' : undefined}
+      accessibilityLabel={accessibilityLabel}
+      onStartShouldSetResponder={onPress ? () => true : undefined}
+      onResponderTerminationRequest={onPress ? () => true : undefined}
+      onResponderRelease={onPress}
       style={[styles.circle, { width: size, height: size, backgroundColor: config.color }]}
     >
       {iconSize > 0 &&

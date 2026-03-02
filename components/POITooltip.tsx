@@ -15,7 +15,7 @@ export const POITooltip = ({ name, type, originalType }: POITooltipProps) => {
   const i18n = useTranslation();
 
   return (
-    <View style={[styles.tooltip]}>
+    <View collapsable={false} style={[styles.tooltip]}>
       {name && <Text style={styles.tooltipTitle}>{name}</Text>}
       <Text style={styles.tooltipType}>{getPOITypeLabel(i18n, type, originalType)}</Text>
     </View>
@@ -25,9 +25,10 @@ export const POITooltip = ({ name, type, originalType }: POITooltipProps) => {
 const styles = StyleSheet.create({
   tooltip: {
     backgroundColor: Color.white,
-    padding: 8,
-    borderRadius: 6,
-    minWidth: 160,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 8,
+    maxWidth: 200,
     textAlign: 'center',
   },
   tooltipTitle: {

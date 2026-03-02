@@ -1,6 +1,6 @@
 import * as MapLibreGL from '@maplibre/maplibre-react-native';
 import * as Location from 'expo-location';
-import React, { memo, RefObject } from 'react';
+import React, { memo, RefObject, useCallback, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { initialRegion, mapStyleUrl } from '../constants';
 import { PointOfInterest } from '../types/init';
@@ -48,6 +48,12 @@ export const TrackMapView = memo(
     zoomLevel,
     mapHeading,
   }: Props) => {
+    const [activeTooltip, setActiveTooltip] = useState<number | null>(null);
+    const onPOIPress = useCallback((index: number) => {
+      setActiveTooltip((prev) => (prev === index ? null : index));
+    }, []);
+    const dismissTooltip = useCallback(() => setActiveTooltip(null), []);
+
     return (
       <MapLibreGL.MapView
         ref={mapRef}
@@ -75,7 +81,7 @@ export const TrackMapView = memo(
 
           onRegionChange(zoom, heading, center);
         }}
-        onPress={() => {}}
+        onPress={dismissTooltip}
       >
         <MapLibreGL.Camera
           key={userHasInteracted ? 'free' : 'track'}
@@ -97,6 +103,8 @@ export const TrackMapView = memo(
           track={track}
           zoomLevel={zoomLevel}
           mapHeading={mapHeading}
+          activeTooltip={activeTooltip}
+          onPOIPress={onPOIPress}
         />
       </MapLibreGL.MapView>
     );

@@ -26,6 +26,10 @@ interface Props {
   readonly zoomLevel: number;
   /** Current map heading for rotating vehicle direction indicators */
   readonly mapHeading: number;
+  /** Index of the currently active POI tooltip, or null */
+  readonly activeTooltip: number | null;
+  /** Called when a POI marker is tapped */
+  readonly onPOIPress: (index: number) => void;
 }
 
 /**
@@ -42,6 +46,8 @@ export const MapMarkers = memo(
     track,
     zoomLevel,
     mapHeading,
+    activeTooltip,
+    onPOIPress,
   }: Props) => (
     <>
       {/* Track line overlay (rendered first = below markers) */}
@@ -60,6 +66,8 @@ export const MapMarkers = memo(
           poi={poi}
           index={index}
           zoomLevel={zoomLevel}
+          showTooltip={activeTooltip === index}
+          onPress={onPOIPress}
         />
       ))}
 
