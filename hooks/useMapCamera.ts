@@ -5,15 +5,22 @@ interface UseMapCameraReturn {
   cameraRef: RefObject<MapLibreGL.CameraRef>;
   isFollowingUser: boolean;
   isFollowingVehicle: boolean;
+  userHasInteracted: boolean;
+  currentCameraCenter: [number, number] | null;
   cameraHeading: number;
-  useSmallMarker: boolean;
+  zoomLevel: number;
   setIsFollowingUser: (following: boolean) => void;
   setIsFollowingVehicle: (following: boolean) => void;
   animateCamera: (lat: number, lng: number, heading: number | null) => void;
   onLocationButtonClicked: (
     location: { latitude: number; longitude: number; heading: number | null } | null
   ) => void;
-  onRegionChange: (zoom: number, heading: number, isUserInteraction?: boolean) => void;
+  onRegionChange: (
+    zoom: number,
+    heading: number,
+    center?: [number, number] | null
+  ) => void;
+  onUserInteraction: () => void;
   centerOnPosition: (lat: number, lng: number, heading: number, zoomLevel?: number) => void;
 }
 
@@ -21,9 +28,10 @@ export const useMapCamera = (): UseMapCameraReturn => {
   const cameraRef = useRef<MapLibreGL.CameraRef>(null);
   const [isFollowingUser, setIsFollowingUserState] = useState<boolean>(true);
   const [isFollowingVehicle, setIsFollowingVehicleState] = useState<boolean>(false);
+  const [userHasInteracted, setUserHasInteracted] = useState<boolean>(false);
+  const [currentCameraCenter, setCurrentCameraCenter] = useState<[number, number] | null>(null);
   const [cameraHeading, setCameraHeading] = useState<number>(0);
-  const [useSmallMarker, setUseSmallMarker] = useState<boolean>(false);
-  const isProgrammaticMove = useRef<boolean>(false);
+  const [zoomLevel, setZoomLevel] = useState<number>(15);
 
   const setIsFollowingUser = useCallback((following: boolean) => {
     setIsFollowingUserState(following);
@@ -40,7 +48,7 @@ export const useMapCamera = (): UseMapCameraReturn => {
   }, []);
 
   const animateCamera = useCallback((lat: number, lng: number, heading: number | null) => {
-    isProgrammaticMove.current = true;
+    setUserHasInteracted(false);
     cameraRef.current?.setCamera({
       centerCoordinate: [lng, lat],
       heading: heading ?? 0,
@@ -62,22 +70,30 @@ export const useMapCamera = (): UseMapCameraReturn => {
   );
 
   const onRegionChange = useCallback(
-    (zoom: number, heading: number, isUserInteraction: boolean = false) => {
-      setUseSmallMarker(zoom < 15);
+    (
+      zoom: number,
+      heading: number,
+      center?: [number, number] | null
+    ) => {
+      setZoomLevel(Math.round(zoom));
       setCameraHeading(heading);
-      // Only disable following on explicit user interaction (scroll/zoom gesture)
-      if (isUserInteraction) {
-        isProgrammaticMove.current = false;
-        setIsFollowingUserState(false);
-        setIsFollowingVehicleState(false);
+      if (center) {
+        setCurrentCameraCenter(center);
       }
     },
     []
   );
 
+  // Called when user touches the map - disables following
+  const onUserInteraction = useCallback(() => {
+    setUserHasInteracted(true);
+    setIsFollowingUserState(false);
+    setIsFollowingVehicleState(false);
+  }, []);
+
   const centerOnPosition = useCallback(
     (lat: number, lng: number, heading: number, zoomLevel: number = 20) => {
-      isProgrammaticMove.current = true;
+      setUserHasInteracted(false);
       cameraRef.current?.setCamera({
         centerCoordinate: [lng, lat],
         heading,
@@ -93,13 +109,16 @@ export const useMapCamera = (): UseMapCameraReturn => {
     cameraRef,
     isFollowingUser,
     isFollowingVehicle,
+    userHasInteracted,
+    currentCameraCenter,
     cameraHeading,
-    useSmallMarker,
+    zoomLevel,
     setIsFollowingUser,
     setIsFollowingVehicle,
     animateCamera,
     onLocationButtonClicked,
     onRegionChange,
+    onUserInteraction,
     centerOnPosition,
   };
 };

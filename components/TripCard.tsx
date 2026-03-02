@@ -3,9 +3,8 @@ import { I18n } from 'i18n-js';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import { DraisineIcon } from '../assets/icons';
-import { Color } from '../constants';
+import { Color, Locale } from '../constants';
 import { textStyles } from '../constants/text-styles';
-import { Locale } from '../hooks/useTranslation';
 import { SavedTrip } from '../types/saved-trip';
 import { formatDate, formatDistance, formatDuration } from '../util/formatters';
 

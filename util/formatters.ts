@@ -1,4 +1,4 @@
-import { Locale } from '../hooks/useTranslation';
+import { Locale } from '../constants';
 
 /**
  * Formatiert eine Distanz in Metern zu einem lesbaren String.
@@ -49,4 +49,32 @@ export const formatDate = (isoString: string, locale: string): string => {
     hour: '2-digit',
     minute: '2-digit',
   });
+};
+
+/**
+ * Formats the elapsed time since the given start time.
+ *
+ * @param startTime - ISO timestamp string or null
+ * @returns Formatted string like "01:23" (hours:minutes) or "--:--" if no start time
+ */
+export const formatElapsedTime = (startTime: string | null, withSeconds = true): string => {
+  if (!startTime) return '--:--';
+
+  const start = new Date(startTime);
+  const now = new Date();
+  const diffMs = now.getTime() - start.getTime();
+
+  // Handle negative diff (shouldn't happen, but be safe)
+  if (diffMs < 0) return withSeconds ? '00:00:00' : '00:00';
+
+  const diffMins = Math.floor(diffMs / 60000);
+  const hours = Math.floor(diffMins / 60);
+  const mins = diffMins % 60;
+  const seconds = Math.floor((diffMs % 60000) / 1000);
+
+  const hoursAndMins = `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
+  if (withSeconds) {
+    return `${hoursAndMins}:${seconds.toString().padStart(2, '0')}`;
+  }
+  return hoursAndMins;
 };

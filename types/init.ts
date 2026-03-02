@@ -17,11 +17,12 @@ export enum POIType {
   Generic = 'generic',
   LevelCrossing = 'crossing',
   LesserLevelCrossing = 'lesser-crossing',
-  Picnic = 'picnic',
   TrackEnd = 'track-end',
   TurningPoint = 'turning-point',
   Halt = 'halt',
-  EndOfTheLine = 'end-of-the-line',
+  TouristInfo = 'tourist-info',
+  Bridge = 'bridge',
+  RoadCrossing = 'road-crossing',
 }
 
 export interface PointOfInterest {

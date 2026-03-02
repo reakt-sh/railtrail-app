@@ -22,10 +22,14 @@ interface Props {
   readonly passingPosition: Position | null;
   /** GeoJSON track geometry for rendering the rail line */
   readonly track: GeoJSON.FeatureCollection | null;
-  /** Use smaller markers when zoomed out */
-  readonly useSmallMarker: boolean;
+  /** Current map zoom level (quantized to whole numbers) */
+  readonly zoomLevel: number;
   /** Current map heading for rotating vehicle direction indicators */
   readonly mapHeading: number;
+  /** Index of the currently active POI tooltip, or null */
+  readonly activeTooltip: number | null;
+  /** Called when a POI marker is tapped */
+  readonly onPOIPress: (index: number) => void;
 }
 
 /**
@@ -40,10 +44,15 @@ export const MapMarkers = memo(
     vehicles,
     passingPosition,
     track,
-    useSmallMarker,
+    zoomLevel,
     mapHeading,
+    activeTooltip,
+    onPOIPress,
   }: Props) => (
     <>
+      {/* Track line overlay (rendered first = below markers) */}
+      {track && <Track track={track} />}
+
       {/* User's current location */}
       <UserLocationMarker
         calculatedPosition={calculatedPosition}
@@ -56,7 +65,9 @@ export const MapMarkers = memo(
           key={`poi-${index}`}
           poi={poi}
           index={index}
-          useSmallMarker={useSmallMarker}
+          zoomLevel={zoomLevel}
+          showTooltip={activeTooltip === index}
+          onPress={onPOIPress}
         />
       ))}
 
@@ -66,7 +77,7 @@ export const MapMarkers = memo(
           key={`vehicle-${vehicle.id}`}
           vehicle={vehicle}
           mapHeading={mapHeading}
-          useSmallMarker={useSmallMarker}
+          zoomLevel={zoomLevel}
         />
       ))}
 
@@ -74,12 +85,9 @@ export const MapMarkers = memo(
       {passingPosition && (
         <PassingPositionMarker
           position={passingPosition}
-          useSmallMarker={useSmallMarker}
+          zoomLevel={zoomLevel}
         />
       )}
-
-      {/* Track line overlay */}
-      {track && <Track track={track} />}
     </>
   )
 );

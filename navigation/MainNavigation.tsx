@@ -1,5 +1,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import React from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Color } from '../constants';
 import { useTranslation } from '../hooks';
@@ -15,15 +17,16 @@ export const MainNavigation = () => {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName: any;
-
-          if (route.name === localizedStrings.t('navigationMap')) {
-            iconName = focused ? 'map' : 'map-outline';
-          } else if (route.name === localizedStrings.t('navigationInfo')) {
-            iconName = focused ? 'information' : 'information-outline';
-          }
-          return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
+        tabBarIcon: ({ color, focused }) => {
+          const isMapTab = route.name === localizedStrings.t('navigationMap');
+          const icon = isMapTab
+            ? focused
+              ? 'map'
+              : 'map-outline'
+            : focused
+              ? 'information'
+              : 'information-outline';
+          return <MaterialCommunityIcons name={icon} size={24} color={color} />;
         },
         tabBarActiveTintColor: Color.primary,
         tabBarInactiveTintColor: Color.darkGray,

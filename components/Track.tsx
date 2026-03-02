@@ -13,6 +13,7 @@ export const Track = memo(({ track }: Props) => {
     <MapLibreGL.ShapeSource id="track-source" shape={track}>
       <MapLibreGL.LineLayer
         id="track-line"
+        layerIndex={100}
         style={{
           lineColor: Color.track,
           lineWidth: 6,

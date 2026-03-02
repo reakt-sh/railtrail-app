@@ -1,22 +1,21 @@
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Color } from '../constants';
 import { POIType } from '../types/init';
 
-interface ExternalProps {
+interface Props {
   readonly pointOfInterestType: POIType;
-  readonly useSmallMarker?: boolean;
+  readonly zoomLevel: number;
+  readonly onPress?: () => void;
+  readonly accessibilityLabel?: string;
 }
-
-type Props = ExternalProps;
 
 interface MarkerConfig {
   icon: keyof typeof MaterialCommunityIcons.glyphMap | keyof typeof MaterialIcons.glyphMap;
   color: string;
   iconColor?: string;
-  iconSizeSmall?: number;
-  iconSizeLarge?: number;
+  biggerIcon?: boolean;
 
   library?: 'MaterialIcons' | 'MaterialCommunityIcons';
 }
@@ -25,51 +24,83 @@ const markerConfigs: Record<POIType, MarkerConfig> = {
   [POIType.LevelCrossing]: {
     icon: 'alpha-x',
     color: Color.error,
-    iconSizeSmall: 0,
-    iconSizeLarge: 24,
+    biggerIcon: true,
   },
   [POIType.LesserLevelCrossing]: {
     icon: 'warning-amber',
     color: Color.warning,
     library: 'MaterialIcons',
   },
-  [POIType.Picnic]: { icon: 'silverware-fork-knife', color: Color.success },
   [POIType.TrackEnd]: { icon: 'sign-direction', color: Color.track },
   [POIType.TurningPoint]: { icon: 'arrow-u-left-bottom', color: Color.primary },
-  [POIType.Generic]: { icon: 'information-variant', color: Color.white, iconColor: Color.primary },
-  [POIType.Halt]: { icon: 'bus-stop', color: Color.primary },
-  [POIType.EndOfTheLine]: { icon: 'sign-direction', color: Color.track },
+  [POIType.Generic]: { icon: 'sign-direction', color: Color.white, iconColor: Color.success },
+  [POIType.Halt]: { icon: 'table-picnic', color: Color.white, iconColor: Color.black },
+  [POIType.TouristInfo]: {
+    icon: 'information-variant',
+    color: Color.white,
+    iconColor: Color.primary,
+  },
+  [POIType.Bridge]: { icon: 'bridge', color: Color.skyBlue },
+  [POIType.RoadCrossing]: { icon: 'road', color: Color.warning },
 };
 
-export const PointOfInterestMarker = memo(({ pointOfInterestType, useSmallMarker }: Props) => {
-  const config = markerConfigs[pointOfInterestType] ?? markerConfigs[POIType.Generic];
-  const size = useSmallMarker ? 6 : 24;
-  const iconSize = useSmallMarker ? (config.iconSizeSmall ?? 0) : (config.iconSizeLarge ?? 16);
-  const iconColor = config.iconColor ?? Color.white;
+export const PointOfInterestMarker = memo(
+  ({ pointOfInterestType, zoomLevel, onPress, accessibilityLabel }: Props) => {
+    const config = markerConfigs[pointOfInterestType] ?? markerConfigs[POIType.Generic];
 
-  return (
-    <View style={[styles.circle, { width: size, height: size, backgroundColor: config.color }]}>
-      {config.library === 'MaterialIcons' ? (
-        <MaterialIcons
-          name={config.icon as keyof typeof MaterialIcons.glyphMap}
-          size={iconSize}
-          color={iconColor}
-        />
-      ) : (
-        <MaterialCommunityIcons
-          name={config.icon as keyof typeof MaterialCommunityIcons.glyphMap}
-          size={iconSize}
-          color={iconColor}
-        />
-      )}
-    </View>
-  );
-});
+    const iconColor = config.iconColor ?? Color.white;
+
+    const { size, iconSize, extraIconSize } = useMemo(() => {
+      if (zoomLevel < 10) {
+        return { size: 6, iconSize: 0, extraIconSize: 0 };
+      }
+      if (zoomLevel > 15) {
+        return { size: 24, iconSize: 16, extraIconSize: 8 };
+      }
+
+      return { size: 12, iconSize: 8, extraIconSize: 4 };
+    }, [zoomLevel]);
+
+    const actualIconSize = iconSize + (config.biggerIcon ? extraIconSize : 0);
+    const minHitSize = 32;
+    const hitSize = Math.max(minHitSize, size);
+    return (
+      <View
+        collapsable={false}
+        accessible={!!onPress}
+        accessibilityRole={onPress ? 'button' : undefined}
+        accessibilityLabel={accessibilityLabel}
+        onStartShouldSetResponder={onPress ? () => true : undefined}
+        onResponderTerminationRequest={onPress ? () => true : undefined}
+        onResponderRelease={onPress}
+        style={{ width: hitSize, height: hitSize, alignItems: 'center', justifyContent: 'center' }}
+      >
+        <View style={[styles.circle, { width: size, height: size, backgroundColor: config.color }]}>
+          {iconSize > 0 &&
+            (config.library === 'MaterialIcons' ? (
+              <MaterialIcons
+                name={config.icon as keyof typeof MaterialIcons.glyphMap}
+                size={actualIconSize}
+                color={iconColor}
+              />
+            ) : (
+              <MaterialCommunityIcons
+                name={config.icon as keyof typeof MaterialCommunityIcons.glyphMap}
+                size={actualIconSize}
+                color={iconColor}
+              />
+            ))}
+        </View>
+      </View>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   circle: {
     borderRadius: 999,
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 100,
   },
 });

@@ -2,10 +2,12 @@ import { positioningWsUrl } from '../constants';
 import { MapPosition } from '../types/map-position';
 
 type PositionCallback = (position: MapPosition) => void;
+type ReconnectCallback = () => void;
 
 class PositionWebSocket {
   private ws: WebSocket | null = null;
   private callbacks: PositionCallback[] = [];
+  private reconnectCallbacks: ReconnectCallback[] = [];
   private reconnectTimer: ReturnType<typeof setTimeout> | null = null;
   private heartbeatTimer: ReturnType<typeof setInterval> | null = null;
   private isConnecting = false;
@@ -25,6 +27,14 @@ class PositionWebSocket {
         if (__DEV__) console.log('[WebSocket] Connected');
         this.isConnecting = false;
         this.startHeartbeat();
+        // Notify reconnect listeners
+        this.reconnectCallbacks.forEach((cb) => {
+          try {
+            cb();
+          } catch (error) {
+            if (__DEV__) console.warn('[WebSocket] Reconnect callback error:', error);
+          }
+        });
       };
 
       this.ws.onmessage = (event) => {
@@ -36,9 +46,15 @@ class PositionWebSocket {
               `[WebSocket] Received position: vehicle ${position.vehicle}: [${position.latitude}, ${position.longitude}]. Time: ${now}`
             );
           }
-          this.callbacks.forEach((cb) => cb(position));
+          this.callbacks.forEach((cb) => {
+            try {
+              cb(position);
+            } catch (callbackError) {
+              if (__DEV__) console.warn('[WebSocket] Callback error:', callbackError);
+            }
+          });
         } catch (error) {
-          console.error('[WebSocket] Failed to parse message:', error);
+          if (__DEV__) console.warn('[WebSocket] Failed to parse message:', error);
         }
       };
 
@@ -49,11 +65,11 @@ class PositionWebSocket {
       };
 
       this.ws.onerror = (error) => {
-        console.error('[WebSocket] Error:', error);
+        if (__DEV__) console.warn('[WebSocket] Error:', error);
         this.isConnecting = false;
       };
     } catch (error) {
-      console.error('[WebSocket] Failed to connect:', error);
+      if (__DEV__) console.warn('[WebSocket] Failed to connect:', error);
       this.isConnecting = false;
       this.scheduleReconnect();
     }
@@ -98,6 +114,23 @@ class PositionWebSocket {
     };
   }
 
+  onReconnect(callback: ReconnectCallback): () => void {
+    this.reconnectCallbacks.push(callback);
+    return () => {
+      this.reconnectCallbacks = this.reconnectCallbacks.filter((cb) => cb !== callback);
+    };
+  }
+
+  forceReconnect() {
+    if (__DEV__) console.log('[WebSocket] Force reconnecting...');
+    if (this.ws) {
+      this.ws.close();
+      this.ws = null;
+    }
+    this.cleanup();
+    this.connect();
+  }
+
   disconnect() {
     if (__DEV__) console.log('[WebSocket] Disconnecting...');
     if (this.reconnectTimer) {
@@ -113,8 +146,12 @@ class PositionWebSocket {
   }
 
   sendHeartbeat() {
-    if (this.ws?.readyState === WebSocket.OPEN) {
-      this.ws.send('ping');
+    try {
+      if (this.ws?.readyState === WebSocket.OPEN) {
+        this.ws.send('ping');
+      }
+    } catch (error) {
+      if (__DEV__) console.warn('[WebSocket] Heartbeat failed:', error);
     }
   }
 

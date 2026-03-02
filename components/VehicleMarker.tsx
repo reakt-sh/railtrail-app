@@ -6,8 +6,8 @@ import {
   TrainBackgroundHeadingIcon,
   TrainBackgroundNeutralIcon,
 } from '../assets/icons';
-import { textStyles } from '../constants';
 import { Color } from '../constants/color';
+import { Font } from '../constants/fonts';
 import { Vehicle } from '../types/vehicle';
 
 /** Size configurations for marker elements */
@@ -16,14 +16,14 @@ const MARKER_SIZE = {
     background: 32,
     foregroundWidth: 16,
     foregroundHeight: 16,
-    labelTop: 12,
+    labelTop: 40,
     labelFontSize: 8,
   },
   large: {
     background: 40, // uses default icon size
     foregroundWidth: 20,
     foregroundHeight: 20,
-    labelTop: 18,
+    labelTop: 50,
     labelFontSize: 12,
   },
 } as const;
@@ -32,8 +32,8 @@ interface Props {
   readonly vehicle: Vehicle;
   /** Current map heading for counter-rotating the direction indicator */
   readonly mapHeading: number;
-  /** Use smaller markers when zoomed out */
-  readonly useSmallMarker: boolean;
+  /** Current map zoom level (quantized to whole numbers) */
+  readonly zoomLevel: number;
 }
 
 /**
@@ -42,7 +42,8 @@ interface Props {
  * - Train icon (foreground, always upright)
  * - Optional label below the icon
  */
-export const VehicleMarker = memo(({ vehicle, mapHeading, useSmallMarker }: Props) => {
+export const VehicleMarker = memo(({ vehicle, mapHeading, zoomLevel }: Props) => {
+  const useSmallMarker = zoomLevel < 15;
   const size = useSmallMarker ? MARKER_SIZE.small : MARKER_SIZE.large;
   const hasHeading = vehicle.heading != null;
   const rotation = hasHeading ? vehicle.heading! - mapHeading : 0;
@@ -53,7 +54,16 @@ export const VehicleMarker = memo(({ vehicle, mapHeading, useSmallMarker }: Prop
       id={`vehicle-${vehicle.id}`}
       coordinate={[vehicle.pos.lng, vehicle.pos.lat]}
     >
-      <View style={styles.container}>
+      <View
+        collapsable={false}
+        style={[
+          styles.container,
+          {
+            minWidth: size.background,
+            height: vehicle.label ? size.labelTop + size.labelFontSize + 8 : size.background,
+          },
+        ]}
+      >
         {/* Background: Direction indicator - rotates with vehicle heading */}
         <View style={[styles.backgroundLayer, { transform: [{ rotate: `${rotation}deg` }] }]}>
           <VehicleBackground hasHeading={hasHeading} size={size.background} />
@@ -66,9 +76,11 @@ export const VehicleMarker = memo(({ vehicle, mapHeading, useSmallMarker }: Prop
 
         {/* Label below the icon */}
         {vehicle.label && (
-          <Text style={[styles.label, { top: size.labelTop, fontSize: size.labelFontSize }]}>
-            {vehicle.label}
-          </Text>
+          <View style={[styles.labelContainer, { top: size.labelTop }]}>
+            <Text style={useSmallMarker ? styles.labelSmall : styles.labelLarge} numberOfLines={1}>
+              {vehicle.label}
+            </Text>
+          </View>
         )}
       </View>
     </MapLibreGL.PointAnnotation>
@@ -89,6 +101,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 100,
   },
   backgroundLayer: {
     position: 'absolute',
@@ -96,13 +109,21 @@ const styles = StyleSheet.create({
   foregroundLayer: {
     position: 'absolute',
   },
-  label: {
-    ...textStyles.hint,
+  labelContainer: {
     position: 'absolute',
-    color: Color.text,
+    alignSelf: 'center',
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
     paddingHorizontal: 4,
     borderRadius: 4,
-    overflow: 'hidden',
+  },
+  labelSmall: {
+    fontFamily: Font.regular,
+    fontSize: 8,
+    color: Color.text,
+  },
+  labelLarge: {
+    fontFamily: Font.regular,
+    fontSize: 12,
+    color: Color.text,
   },
 });

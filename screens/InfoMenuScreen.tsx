@@ -1,14 +1,16 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { DraisineIcon, MalenteLogoIcon } from '../assets/icons';
-import { Color } from '../constants';
+import { DraisineIcon } from '../assets/icons';
+import AppLogo from '../assets/icons/AppLogo';
+import { Color, Locale } from '../constants';
 import { textStyles } from '../constants/text-styles';
 import { useLanguage } from '../contexts/LanguageContext';
-import { Locale, useTranslation } from '../hooks/useTranslation';
+import { useTranslation } from '../hooks/useTranslation';
 
 type InfoStackParamList = {
   InfoMenu: undefined;
@@ -28,12 +30,12 @@ interface MenuItem {
 }
 
 const menuItems: MenuItem[] = [
+  { titleKey: 'infoTitleTripHistory', icon: 'history', screen: 'TripHistory' },
   {
     titleKey: 'infoTitleDraisineInfo',
     customIcon: <DraisineIcon width={24} height={24} color={Color.primary} />,
     screen: 'DraisineInfo',
   },
-  { titleKey: 'infoTitleTripHistory', icon: 'history', screen: 'TripHistory' },
   { titleKey: 'infoTitleGoodToKnow', icon: 'lightbulb-outline', screen: 'GoodToKnow' },
   { titleKey: 'infoTitleContacts', icon: 'phone', screen: 'Contacts' },
   { titleKey: 'infoTitleImprint', icon: 'file-document-outline', screen: 'Imprint' },
@@ -51,9 +53,10 @@ export const InfoMenuScreen = () => {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
+      <StatusBar style="dark" />
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View style={styles.logoContainer}>
-          <MalenteLogoIcon width={180} height={156} />
+          <AppLogo width={'100%'} height={112} />
         </View>
 
         <View style={styles.menuContainer}>
@@ -124,6 +127,15 @@ export const InfoMenuScreen = () => {
             </View>
           </Pressable>
         </View>
+
+        <View style={styles.supportSection}>
+          <Text style={textStyles.bodySmall}>{i18n.t('fundedBy')}</Text>
+          <Image
+            source={require('../assets/logos/support_logo.png')}
+            style={styles.supportLogo}
+            resizeMode="contain"
+          />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -143,7 +155,7 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     alignItems: 'center',
-    paddingVertical: 32,
+    paddingVertical: 24,
   },
   menuContainer: {
     backgroundColor: Color.white,
@@ -192,5 +204,15 @@ const styles = StyleSheet.create({
   },
   languageOptionTextActive: {
     color: Color.white,
+  },
+  supportSection: {
+    marginTop: 32,
+    paddingVertical: 16,
+  },
+
+  supportLogo: {
+    width: '90%',
+    height: 168,
+    alignSelf: 'center',
   },
 });

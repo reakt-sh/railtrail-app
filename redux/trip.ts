@@ -33,10 +33,13 @@ export interface Warnings {
   readonly nextVehicle: number | null;
   readonly nextVehicleHeadingTowards: number | null;
   readonly nextLevelCrossing: number | null;
+  readonly nextTurningPoint: number | null;
+  readonly secondTurningPoint: number | null;
 }
 
 export interface TripState {
   readonly isActive: boolean;
+  readonly tripStartTime: string | null;
   readonly currentVehicle: CurrentVehicle;
   readonly motion: Motion;
   readonly position: TripPosition;
@@ -44,6 +47,7 @@ export interface TripState {
   readonly vehicles: Vehicle[];
   readonly activeSegment: ActiveSegment | null;
   readonly completedSegments: VehicleSegment[];
+  readonly isLoadingVehicles: boolean;
 }
 
 // Action interfaces
@@ -118,7 +122,16 @@ interface TripActionEndSegment {
   readonly type: 'trip/end-segment';
 }
 
-export type TripAction =
+interface TripActionClearVehiclesExceptDemo {
+  readonly type: 'trip/clear-vehicles-except-demo';
+}
+
+interface TripActionSetLoadingVehicles {
+  readonly type: 'trip/set-loading-vehicles';
+  readonly payload: boolean;
+}
+
+export type TripActionType =
   | TripActionReset
   | TripActionStart
   | TripActionStop
@@ -131,7 +144,9 @@ export type TripAction =
   | TripActionUpdateVehicleFromWebSocket
   | TripActionBatchUpdate
   | TripActionStartSegment
-  | TripActionEndSegment;
+  | TripActionEndSegment
+  | TripActionClearVehiclesExceptDemo
+  | TripActionSetLoadingVehicles;
 
 export const TripAction = {
   reset: (): TripActionReset => ({
@@ -202,10 +217,20 @@ export const TripAction = {
   endSegment: (): TripActionEndSegment => ({
     type: 'trip/end-segment',
   }),
+
+  clearVehiclesExceptDemo: (): TripActionClearVehiclesExceptDemo => ({
+    type: 'trip/clear-vehicles-except-demo',
+  }),
+
+  setLoadingVehicles: (isLoading: boolean): TripActionSetLoadingVehicles => ({
+    type: 'trip/set-loading-vehicles',
+    payload: isLoading,
+  }),
 };
 
 export const initialTripState: TripState = {
   isActive: false,
+  tripStartTime: null,
   currentVehicle: {
     id: null,
     name: null,
@@ -225,10 +250,13 @@ export const initialTripState: TripState = {
     nextVehicle: null,
     nextVehicleHeadingTowards: null,
     nextLevelCrossing: null,
+    nextTurningPoint: null,
+    secondTurningPoint: null,
   },
   vehicles: [],
   activeSegment: null,
   completedSegments: [],
+  isLoadingVehicles: true,
 };
 
 const reducer = (state = initialTripState, action: RailTrailReduxAction): TripState => {
@@ -237,10 +265,10 @@ const reducer = (state = initialTripState, action: RailTrailReduxAction): TripSt
       return { ...initialTripState };
 
     case 'trip/start':
-      return { ...state, isActive: true };
+      return { ...state, isActive: true, tripStartTime: new Date().toISOString() };
 
     case 'trip/stop':
-      return { ...initialTripState, vehicles: state.vehicles };
+      return { ...initialTripState, vehicles: state.vehicles, isLoadingVehicles: false };
 
     case 'trip/set-current-vehicle':
       return {
@@ -278,6 +306,14 @@ const reducer = (state = initialTripState, action: RailTrailReduxAction): TripSt
     case 'trip/set-vehicles':
       return { ...state, vehicles: action.payload };
 
+    case 'trip/clear-vehicles-except-demo': {
+      const DEMO_VEHICLE_ID = 99;
+      return {
+        ...state,
+        vehicles: state.vehicles.filter((v) => v.id === DEMO_VEHICLE_ID),
+      };
+    }
+
     case 'trip/update-vehicle-from-websocket': {
       const { vehicle, speed } = action.payload;
       const existingIndex = state.vehicles.findIndex((v) => v.id === vehicle.id);
@@ -290,8 +326,7 @@ const reducer = (state = initialTripState, action: RailTrailReduxAction): TripSt
       }
 
       // Only update speed from the currently selected vehicle
-      const shouldUpdateSpeed =
-        speed !== undefined && state.currentVehicle.id === vehicle.id;
+      const shouldUpdateSpeed = speed !== undefined && state.currentVehicle.id === vehicle.id;
 
       return {
         ...state,
@@ -352,6 +387,9 @@ const reducer = (state = initialTripState, action: RailTrailReduxAction): TripSt
         completedSegments: [...state.completedSegments, completedSegment],
       };
     }
+
+    case 'trip/set-loading-vehicles':
+      return { ...state, isLoadingVehicles: action.payload };
 
     default:
       return state;

@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
-import { MalenteLogoIcon } from '../assets/icons';
+import { Dispatch } from 'redux';
+import AppLogo from '../assets/icons/AppLogo';
 import { Button, Checkbox } from '../components';
 import { privacySections, StorageKeys } from '../constants';
 import { Color } from '../constants/color';
@@ -14,10 +15,10 @@ import {
   requestForegroundPermission,
 } from '../effect-actions/permissions';
 import { useTranslation } from '../hooks';
-import { AppAction } from '../redux/app';
+import { AppAction, AppActionType } from '../redux/app';
 
 export const LandingPageScreen = ({ navigation }: any) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AppActionType>>();
   const localizedStrings = useTranslation();
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
   const [isPrivacyModalVisible, setIsPrivacyModalVisible] = useState(false);
@@ -65,28 +66,28 @@ export const LandingPageScreen = ({ navigation }: any) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <SafeAreaView style={styles.textContainer}>
-        <View style={styles.logoContainer}>
-          <MalenteLogoIcon width={120} height={104} />
+      <SafeAreaView style={styles.safeArea}>
+        <AppLogo width={'100%'} height={112} />
+        <View style={styles.textWrapper}>
+          <Text style={[textStyles.headerTextHuge, styles.text]}>
+            {localizedStrings.t('landingPageWelcome')}
+          </Text>
+          <Text style={[textStyles.bodyMedium, styles.text]}>
+            {localizedStrings.t('landingPageDescription')}
+          </Text>
+          <Text style={[textStyles.bodyMedium, styles.text]}>
+            {localizedStrings.t('landingPagePermissionExplanation')}
+          </Text>
         </View>
-        <Text style={[textStyles.headerTextHuge, { textAlign: 'center', marginBottom: 24 }]}>
-          {localizedStrings.t('landingPageWelcome')}
-        </Text>
-        <Text style={{ textAlign: 'center', marginBottom: 24 }}>
-          {localizedStrings.t('landingPageDescription')}
-        </Text>
-        <Text style={{ textAlign: 'center' }}>
-          {localizedStrings.t('landingPagePermissionExplanation')}
-        </Text>
       </SafeAreaView>
       <Checkbox
         isChecked={isCheckboxChecked}
         setIsChecked={setIsCheckboxChecked}
         style={styles.buttonMargin}
       >
-        <Text>
+        <Text style={textStyles.bodyMedium}>
           {localizedStrings.t('landingPagePrivacyPolicyPrefix')}
-          <Text style={styles.link} onPress={() => setIsPrivacyModalVisible(true)}>
+          <Text style={textStyles.link} onPress={() => setIsPrivacyModalVisible(true)}>
             {localizedStrings.t('landingPagePrivacyPolicyLink')}
           </Text>
           {localizedStrings.t('landingPagePrivacyPolicySuffix')}
@@ -136,22 +137,21 @@ export const LandingPageScreen = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Color.backgroundLight,
+    backgroundColor: Color.white,
     padding: 24,
   },
-  textContainer: {
+  safeArea: {
     flex: 1,
-    justifyContent: 'center',
   },
-  logoContainer: {
-    alignItems: 'center',
+  textWrapper: {
+    marginTop: 32,
+    marginBottom: 64,
+  },
+  text: {
     marginBottom: 24,
   },
-  buttonMargin: { marginBottom: 16, marginTop: 16 },
-  link: {
-    color: Color.primary,
-    textDecorationLine: 'underline',
-  },
+  buttonMargin: { marginBottom: 24, marginTop: 16 },
+
   modalContainer: {
     flex: 1,
     marginTop: 64,

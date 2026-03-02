@@ -258,12 +258,20 @@
             "name": "Haltepunkt"
           },
           {
-            "id": "generic",
-            "name": "Generisch"
+            "id": "road-crossing",
+            "name": "Straßenüberführung"
           },
           {
             "id": "end-of-the-line",
             "name": "Streckenende"
+          },
+          {
+            "id": "tourist-info",
+            "name": "Tourist Information"
+          },
+          {
+            "id": "bridge",
+            "name": "Brücke"
           }
         ],
         "data": [
@@ -288,6 +296,7 @@
               "type": "Point",
               "coordinates": [10.61196690346371, 54.27742844944839]
             },
+            "description": "km 15,250 – Haltepunkt",
             "extra": {
               "isTurningPoint": false
             }
@@ -300,6 +309,7 @@
               "type": "Point",
               "coordinates": [10.60109862008053, 54.29287607855948]
             },
+            "description": "km 17,000–17,160 – Streckenende",
             "extra": {
               "isTurningPoint": true
             }
@@ -307,11 +317,12 @@
           {
             "id": "6",
             "name": "Eisenbahnüberführung Wasserlauf Kossau",
-            "type": "generic",
+            "type": "bridge",
             "position": {
               "type": "Point",
               "coordinates": [10.60304135198923, 54.29175833186886]
             },
+            "description": "km 16,945 – Länge 50 m",
             "extra": {
               "isTurningPoint": false
             }
@@ -319,11 +330,12 @@
           {
             "id": "7",
             "name": "Eisenbahnüberführung Bundesstraße 202",
-            "type": "generic",
+            "type": "bridge",
             "position": {
               "type": "Point",
               "coordinates": [10.60416687437752, 54.29051218074746]
             },
+            "description": "km 16,710 – Länge 27 m",
             "extra": {
               "isTurningPoint": false
             }
@@ -336,6 +348,7 @@
               "type": "Point",
               "coordinates": [10.61237992922058, 54.27525786435475]
             },
+            "description": "km 15,010",
             "extra": {
               "isTurningPoint": false
             }
@@ -348,6 +361,7 @@
               "type": "Point",
               "coordinates": [10.61371036342539, 54.26870156472734]
             },
+            "description": "km 14,278",
             "extra": {
               "isTurningPoint": false
             }
@@ -360,18 +374,20 @@
               "type": "Point",
               "coordinates": [10.61577489654581, 54.266984788424]
             },
+            "description": "km 13,940",
             "extra": {
               "isTurningPoint": false
             }
           },
           {
             "id": "11",
-            "name": "Feldweg Streckenkilometer 13,640",
+            "name": "Feldweg",
             "type": "minor-crossing",
             "position": {
               "type": "Point",
               "coordinates": [10.62002952391131, 54.26391446274761]
             },
+            "description": "km",
             "extra": {
               "isTurningPoint": false
             }
@@ -384,30 +400,46 @@
               "type": "Point",
               "coordinates": [10.62576951662293, 54.25879622285369]
             },
+            "description": "km 12,930 – Blinklichtanlage",
+            "extra": {
+              "isTurningPoint": false
+            }
+          },
+          {
+            "id": "52",
+            "name": "Blekendorf",
+            "type": "halt",
+            "position": {
+              "type": "Point",
+              "coordinates": [10.626846753985497, 54.257829691514644]
+            },
+            "description": "km 12,900 – Haltepunkt",
             "extra": {
               "isTurningPoint": false
             }
           },
           {
             "id": "13",
-            "name": "Feldweg Streckenkilometer 12,280",
+            "name": "Feldweg",
             "type": "minor-crossing",
             "position": {
               "type": "Point",
               "coordinates": [10.62989472998583, 54.25363660710594]
             },
+            "description": "km 12,280",
             "extra": {
               "isTurningPoint": false
             }
           },
           {
             "id": "14",
-            "name": "Feldweg Streckenkilometer 11,870",
+            "name": "Feldweg",
             "type": "minor-crossing",
             "position": {
               "type": "Point",
               "coordinates": [10.63078791247404, 54.24998860584117]
             },
+            "description": "km 11,870",
             "extra": {
               "isTurningPoint": false
             }
@@ -420,18 +452,20 @@
               "type": "Point",
               "coordinates": [10.62772484355162, 54.24413044427286]
             },
+            "description": "km 11,150 ",
             "extra": {
               "isTurningPoint": false
             }
           },
           {
             "id": "17",
-            "name": "Feldweg Streckenkilometer 10,480",
+            "name": "Feldweg",
             "type": "minor-crossing",
             "position": {
               "type": "Point",
               "coordinates": [10.62826397789307, 54.23782627117179]
             },
+            "description": "km 10,480",
             "extra": {
               "isTurningPoint": false
             }
@@ -444,6 +478,7 @@
               "type": "Point",
               "coordinates": [10.62245977399284, 54.23130478038833]
             },
+            "description": "km 9,610",
             "extra": {
               "isTurningPoint": true
             }
@@ -456,18 +491,20 @@
               "type": "Point",
               "coordinates": [10.62233083514409, 54.23083600854179]
             },
+            "description": "km 9,560",
             "extra": {
               "isTurningPoint": false
             }
           },
           {
             "id": "20",
-            "name": "Feldweg Streckenkilometer 9,170",
+            "name": "Feldweg",
             "type": "minor-crossing",
             "position": {
               "type": "Point",
               "coordinates": [10.62142435179138, 54.2273976630113]
             },
+            "description": "km 9,170",
             "extra": {
               "isTurningPoint": false
             }
@@ -475,11 +512,12 @@
           {
             "id": "21",
             "name": "Eisenbahnübergang Söhrener Au",
-            "type": "generic",
+            "type": "bridge",
             "position": {
               "type": "Point",
               "coordinates": [10.62116951783293, 54.22698529317409]
             },
+            "description": "km 9,114 – Graben Länge 6 m",
             "extra": {
               "isTurningPoint": false
             }
@@ -492,6 +530,7 @@
               "type": "Point",
               "coordinates": [10.61424944611967, 54.22189069636329]
             },
+            "description": "km 8,410 – Blinklichtanlage",
             "extra": {
               "isTurningPoint": false
             }
@@ -499,35 +538,38 @@
           {
             "id": "23",
             "name": "Bahnhof Benz",
-            "type": "generic",
+            "type": "halt",
             "position": {
               "type": "Point",
               "coordinates": [10.61256233320618, 54.2207208417749]
             },
+            "description": "km 8,320",
             "extra": {
               "isTurningPoint": false
             }
           },
           {
             "id": "24",
-            "name": "Feldweg Streckenkilometer 7,670",
+            "name": "Feldweg",
             "type": "minor-crossing",
             "position": {
               "type": "Point",
               "coordinates": [10.60759913783629, 54.21662138465484]
             },
+            "description": "km 7,670",
             "extra": {
               "isTurningPoint": false
             }
           },
           {
             "id": "25",
-            "name": "Feldweg Streckenkilometer 7,330",
+            "name": "Feldweg",
             "type": "minor-crossing",
             "position": {
               "type": "Point",
               "coordinates": [10.60677410549317, 54.21361475288094]
             },
+            "description": "km 7,330",
             "extra": {
               "isTurningPoint": false
             }
@@ -535,11 +577,12 @@
           {
             "id": "26",
             "name": "Eisenbahnübergang Malenter Au",
-            "type": "generic",
+            "type": "bridge",
             "position": {
               "type": "Point",
               "coordinates": [10.60610891765747, 54.21116317437699]
             },
+            "description": "km 7,049 – Länge 4 m",
             "extra": {
               "isTurningPoint": false
             }
@@ -552,6 +595,7 @@
               "type": "Point",
               "coordinates": [10.60516746573637, 54.2081514392386]
             },
+            "description": "km 6,885 – Fußweg",
             "extra": {
               "isTurningPoint": false
             }
@@ -564,6 +608,7 @@
               "type": "Point",
               "coordinates": [10.6049852201354, 54.20788633328737]
             },
+            "description": "km 6,850",
             "extra": {
               "isTurningPoint": false
             }
@@ -576,6 +621,7 @@
               "type": "Point",
               "coordinates": [10.5970001358429, 54.19835550732333]
             },
+            "description": "km 5,460 – Blinklichtanlage",
             "extra": {
               "isTurningPoint": true
             }
@@ -588,6 +634,7 @@
               "type": "Point",
               "coordinates": [10.59683377690739, 54.19814839336756]
             },
+            "description": "km 5,440",
             "extra": {
               "isTurningPoint": false
             }
@@ -595,11 +642,12 @@
           {
             "id": "31",
             "name": "Forstweg",
-            "type": "generic",
+            "type": "road-crossing",
             "position": {
               "type": "Point",
               "coordinates": [10.5911, 54.195]
             },
+            "description": "km 4,920 – Länge 23 m (zurückgebaut)",
             "extra": {
               "isTurningPoint": false
             }
@@ -607,23 +655,25 @@
           {
             "id": "16",
             "name": "Landstraße L178",
-            "type": "generic",
+            "type": "road-crossing",
             "position": {
               "type": "Point",
               "coordinates": [10.62734077463407, 54.24268536586548]
             },
+            "description": "km 11,010 – Länge 12 m",
             "extra": {
               "isTurningPoint": false
             }
           },
           {
             "id": "33",
-            "name": "Weg",
+            "name": "Waldweg",
             "type": "crossing",
             "position": {
               "type": "Point",
               "coordinates": [10.59038043710785, 54.1862046354982]
             },
+            "description": "km 3,870",
             "extra": {
               "isTurningPoint": true
             }
@@ -636,6 +686,7 @@
               "type": "Point",
               "coordinates": [10.57018340322571, 54.18386758023301]
             },
+            "description": "km 2,500 – Blinklichtanlage",
             "extra": {
               "isTurningPoint": true
             }
@@ -648,6 +699,7 @@
               "type": "Point",
               "coordinates": [10.56342418830418, 54.18227755376287]
             },
+            "description": "km 2,010",
             "extra": {
               "isTurningPoint": false
             }
@@ -660,18 +712,20 @@
               "type": "Point",
               "coordinates": [10.56310774273071, 54.18217866559564]
             },
+            "description": "km 2,000 – Blinklichtanlage mit Halbschranken",
             "extra": {
               "isTurningPoint": true
             }
           },
           {
             "id": "37",
-            "name": "Feldweg Streckenkilometer 1,840",
+            "name": "Feldweg",
             "type": "minor-crossing",
             "position": {
               "type": "Point",
               "coordinates": [10.56095123635328, 54.18146917530204]
             },
+            "description": "km 1,840 – Fuß-/Feldweg",
             "extra": {
               "isTurningPoint": false
             }
@@ -679,11 +733,12 @@
           {
             "id": "38",
             "name": "Eisenbahnübergang Wasserlauf",
-            "type": "generic",
+            "type": "bridge",
             "position": {
               "type": "Point",
               "coordinates": [10.5570673873703, 54.17750239798882]
             },
+            "description": "km 1,313 – Länge 8 m",
             "extra": {
               "isTurningPoint": false
             }
@@ -696,6 +751,7 @@
               "type": "Point",
               "coordinates": [10.55686328469254, 54.17676613983736]
             },
+            "description": "km 1,240 – Blinklichtanlage",
             "extra": {
               "isTurningPoint": true
             }
@@ -708,6 +764,7 @@
               "type": "Point",
               "coordinates": [10.55600514307865, 54.17467189253872]
             },
+            "description": "km 0,991 – Blinklichtanlage",
             "extra": {
               "isTurningPoint": true
             }
@@ -715,11 +772,12 @@
           {
             "id": "41",
             "name": "Straßenüberführung Kreisstraße",
-            "type": "generic",
+            "type": "road-crossing",
             "position": {
               "type": "Point",
               "coordinates": [10.55139167471016, 54.16978909011717]
             },
+            "description": "km 0,360 – Länge 24 m",
             "extra": {
               "isTurningPoint": false
             }
@@ -732,6 +790,7 @@
               "type": "Point",
               "coordinates": [10.59052012545154, 54.18627840204964]
             },
+            "description": "km 3,890",
             "extra": {
               "isTurningPoint": false
             }
@@ -744,89 +803,31 @@
               "type": "Point",
               "coordinates": [10.55097608725436, 54.16820637323903]
             },
+            "description": "km 0,183",
             "extra": {
               "isTurningPoint": false
             }
           },
+
           {
-            "id": "43",
-            "name": "Auffahrt Uni",
-            "type": "minor-crossing",
+            "id": "50",
+            "name": "Malente Tourismus- und Service GmbH",
+            "type": "tourist-info",
             "position": {
               "type": "Point",
-              "coordinates": [10.11854763667607, 54.33642264772579]
+              "coordinates": [10.550507247251739, 54.16807395033756]
             },
             "extra": {
               "isTurningPoint": false
             }
           },
           {
-            "id": "42",
-            "name": "Auffahrt OS",
-            "type": "minor-crossing",
+            "id": "51",
+            "name": "Tourist Info Lütjenburg",
+            "type": "tourist-info",
             "position": {
               "type": "Point",
-              "coordinates": [10.11907295023828, 54.33965957496679]
-            },
-            "extra": {
-              "isTurningPoint": false
-            }
-          },
-          {
-            "id": "44",
-            "name": "Alte Bahnschienen oder so",
-            "type": "generic",
-            "position": {
-              "type": "Point",
-              "coordinates": [10.1189875740448, 54.33797703010066]
-            },
-            "extra": {
-              "isTurningPoint": false
-            }
-          },
-          {
-            "id": "45",
-            "name": "Brücke Gutenbergstraße",
-            "type": "generic",
-            "position": {
-              "type": "Point",
-              "coordinates": [10.11690619362183, 54.3325411265145]
-            },
-            "extra": {
-              "isTurningPoint": false
-            }
-          },
-          {
-            "id": "47",
-            "name": "Brücke Eckernförder Straße",
-            "type": "generic",
-            "position": {
-              "type": "Point",
-              "coordinates": [10.11523252274166, 54.33048292714004]
-            },
-            "extra": {
-              "isTurningPoint": false
-            }
-          },
-          {
-            "id": "48",
-            "name": "Kronshagener Weg",
-            "type": "crossing",
-            "position": {
-              "type": "Point",
-              "coordinates": [10.1093853002029, 54.32641940133347]
-            },
-            "extra": {
-              "isTurningPoint": false
-            }
-          },
-          {
-            "id": "49",
-            "name": "Hasseldieksdammer Weg",
-            "type": "crossing",
-            "position": {
-              "type": "Point",
-              "coordinates": [10.0992304224411, 54.31928770949525]
+              "coordinates": [10.59025325928048, 54.29294786587569]
             },
             "extra": {
               "isTurningPoint": false

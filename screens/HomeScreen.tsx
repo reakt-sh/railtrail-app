@@ -1,29 +1,47 @@
 import * as MapLibreGL from '@maplibre/maplibre-react-native';
+import { DrawerActions, useNavigation } from '@react-navigation/native';
 import { useKeepAwake } from 'expo-keep-awake';
 import * as Location from 'expo-location';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector, useStore } from 'react-redux';
-import { TrackMapView, TripControls, TripHeader, VehicleSelectionBottomSheet } from '../components';
+import { Dispatch } from 'redux';
+import { submitFeedback } from '../api/feedback';
+import {
+  FeedbackBottomSheet,
+  LoadingVehiclesOverlay,
+  MinimalTripOverlay,
+  TrackMapView,
+  TripControls,
+  VehicleSelectionBottomSheet,
+} from '../components';
 import {
   disconnectFromServer,
   initializeApp,
   setupPositionUpdates,
 } from '../effect-actions/api-actions';
-import { getBackgroundPermissionStatus } from '../effect-actions/permissions';
 import { updateDistances } from '../effect-actions/trip-actions';
-import { saveAndStopTrip } from '../effect-actions/trip-storage';
-import { useLocationTracking, useMapCamera, useTranslation, useTripSimulation } from '../hooks';
-import { AppAction } from '../redux/app';
+import { getVehicleWithLongestDistance, saveTrip } from '../effect-actions/trip-storage';
+import {
+  useElapsedTime,
+  useLocationTracking,
+  useMapCamera,
+  useTranslation,
+  useTripSimulation,
+} from '../hooks';
+import { AppAction, AppActionType } from '../redux/app';
 import { ReduxAppState } from '../redux/init';
-import { TripAction } from '../redux/trip';
+import { TripAction, TripActionType } from '../redux/trip';
+import { SavedTrip, VehicleSegment } from '../types/saved-trip';
 import { Vehicle } from '../types/vehicle';
+import { AppEvents, events } from '../util/events';
 
 export const HomeScreen = () => {
   const mapRef = useRef<MapLibreGL.MapViewRef>(null);
   const tripStartTimeRef = useRef<string | null>(null);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AppActionType | TripActionType>>();
   const store = useStore<ReduxAppState>();
+  const navigation = useNavigation();
   const localizedStrings = useTranslation();
 
   useKeepAwake();
@@ -33,24 +51,28 @@ export const HomeScreen = () => {
     cameraRef,
     isFollowingUser,
     isFollowingVehicle,
+    userHasInteracted,
+    currentCameraCenter,
     cameraHeading,
-    useSmallMarker,
+    zoomLevel,
     setIsFollowingVehicle,
     animateCamera,
     onLocationButtonClicked,
     onRegionChange,
+    onUserInteraction,
     centerOnPosition,
   } = useMapCamera();
 
-  const { startForegroundTracking, stopTracking, requestBackgroundAndSwitch } =
-    useLocationTracking();
+  const { startForegroundTracking } = useLocationTracking();
 
   const { startSimulation, stopSimulation } = useTripSimulation();
 
   // Bottom sheet visibility
-  const [isStartTripBottomSheetVisible, setIsStartTripBottomSheetVisible] = useState(false);
+  const [isVehicleSelectionVisible, setIsVehicleSelectionVisible] = useState(false);
   const [isChangeVehicleIdBottomSheetVisible, setIsChangeVehicleIdBottomSheetVisible] =
     useState(false);
+  const [isFeedbackVisible, setIsFeedbackVisible] = useState(false);
+  const [pendingTripData, setPendingTripData] = useState<SavedTrip | null>(null);
 
   // Direction tracking
   const [isPercentagePositionIncreasing, setIsPercentagePositionIncreasing] = useState<
@@ -59,9 +81,19 @@ export const HomeScreen = () => {
 
   // Redux state
   const { track, location, permissions } = useSelector((state: ReduxAppState) => state.app);
-  const { isActive, currentVehicle, warnings, motion, position, vehicles } = useSelector(
-    (state: ReduxAppState) => state.trip
-  );
+  const {
+    isActive,
+    currentVehicle,
+    warnings,
+    motion,
+    position,
+    vehicles,
+    tripStartTime,
+    isLoadingVehicles,
+  } = useSelector((state: ReduxAppState) => state.trip);
+
+  // Elapsed time hook - uses Redux tripStartTime
+  const elapsedTime = useElapsedTime(tripStartTime);
 
   // Location update handler
   const handleLocationUpdate = useCallback(
@@ -78,22 +110,25 @@ export const HomeScreen = () => {
 
     if (permissions.foreground) {
       startForegroundTracking(handleLocationUpdate);
-      getBackgroundPermissionStatus().then((result) => {
-        dispatch(AppAction.setPermissions({ background: result }));
-      });
     }
 
-    // Auto-start simulation in dev mode
-    if (__DEV__) {
-      startSimulation();
-    }
+    // Start simulation for Demo vehicle
+    startSimulation();
 
     return () => {
       unsubscribePositions();
       disconnectFromServer();
-      if (__DEV__) {
-        stopSimulation();
-      }
+      stopSimulation();
+    };
+  }, []);
+
+  // Listen for vehicle change event from drawer
+  useEffect(() => {
+    const unsubscribe = events.on(AppEvents.SHOW_VEHICLE_CHANGE, () => {
+      setIsChangeVehicleIdBottomSheetVisible(true);
+    });
+    return () => {
+      unsubscribe();
     };
   }, []);
 
@@ -102,10 +137,12 @@ export const HomeScreen = () => {
     if (currentVehicle.id != null && vehicles.length > 0) {
       const myVehicle = vehicles.find((v) => v.id === currentVehicle.id);
       if (myVehicle) {
-        dispatch(TripAction.setPosition({
-          percentage: myVehicle.percentagePosition,
-          calculated: myVehicle.pos,
-        }));
+        dispatch(
+          TripAction.setPosition({
+            percentage: myVehicle.percentagePosition,
+            calculated: myVehicle.pos,
+          })
+        );
       }
     }
   }, [vehicles, currentVehicle.id]);
@@ -114,32 +151,22 @@ export const HomeScreen = () => {
   useEffect(() => {
     if (isFollowingVehicle) {
       // If trip is active, follow own vehicle; otherwise follow first available vehicle
-      const vehicleToFollow = currentVehicle.id != null
-        ? vehicles.find((v) => v.id === currentVehicle.id)
-        : vehicles[0];
+      const vehicleToFollow =
+        currentVehicle.id != null ? vehicles.find((v) => v.id === currentVehicle.id) : vehicles[0];
 
       if (vehicleToFollow) {
-        animateCamera(vehicleToFollow.pos.lat, vehicleToFollow.pos.lng, vehicleToFollow.heading ?? 0);
+        animateCamera(
+          vehicleToFollow.pos.lat,
+          vehicleToFollow.pos.lng,
+          vehicleToFollow.heading ?? 0
+        );
       }
     } else if (isFollowingUser && location) {
       animateCamera(location.coords.latitude, location.coords.longitude, location.coords.heading);
     }
   }, [location, vehicles, currentVehicle.id, isFollowingUser, isFollowingVehicle]);
 
-  // Handle trip start/stop
-  useEffect(() => {
-    if (!isActive) {
-      if (permissions.background) {
-        stopTracking();
-        startForegroundTracking(handleLocationUpdate);
-      }
-      return;
-    }
-
-    if (permissions.foreground) {
-      requestBackgroundAndSwitch(handleLocationUpdate);
-    }
-  }, [isActive]);
+  // Trip start/stop - foreground tracking is already running, no changes needed
 
   // Calculate distances and direction
   useEffect(() => {
@@ -174,15 +201,22 @@ export const HomeScreen = () => {
     const allVehicles = currentState.trip.vehicles;
 
     // Follow own vehicle if trip is active, otherwise follow first available vehicle
-    const vehicleToFollow = vehicleId != null
-      ? allVehicles.find((v) => v.id === vehicleId)
-      : allVehicles[0];
+    const vehicleToFollow =
+      vehicleId != null ? allVehicles.find((v) => v.id === vehicleId) : allVehicles[0];
 
     if (vehicleToFollow) {
-      centerOnPosition(vehicleToFollow.pos.lat, vehicleToFollow.pos.lng, vehicleToFollow.heading ?? 0);
+      centerOnPosition(
+        vehicleToFollow.pos.lat,
+        vehicleToFollow.pos.lng,
+        vehicleToFollow.heading ?? 0
+      );
       setIsFollowingVehicle(true);
     }
   }, [store, centerOnPosition, setIsFollowingVehicle]);
+
+  const handleOpenDrawer = useCallback(() => {
+    navigation.dispatch(DrawerActions.openDrawer());
+  }, [navigation]);
 
   const handleStopTrip = useCallback(() => {
     Alert.alert(
@@ -193,14 +227,55 @@ export const HomeScreen = () => {
         {
           text: localizedStrings.t('alertYes'),
           onPress: () => {
+            const state = store.getState();
+            const {
+              currentVehicle: vehicle,
+              activeSegment,
+              completedSegments,
+              motion,
+            } = state.trip;
             const startTime = tripStartTimeRef.current ?? new Date().toISOString();
-            saveAndStopTrip(dispatch, store.getState, startTime);
+            const endTime = new Date().toISOString();
+
+            // Build segments array: completed segments + finalized active segment
+            const segments: VehicleSegment[] = [...completedSegments];
+            if (activeSegment) {
+              segments.push({
+                vehicleId: activeSegment.vehicleId,
+                vehicleName: activeSegment.vehicleName,
+                startTime: activeSegment.startTime,
+                endTime,
+                distanceTravelled: motion.distanceTravelled - activeSegment.startDistance,
+              });
+            }
+
+            // Build complete SavedTrip object
+            const savedTrip: SavedTrip = {
+              id: `trip_${Date.now()}`,
+              startTime,
+              endTime,
+              totalDistance: motion.distanceTravelled,
+              segments,
+              vehicleId: vehicle.id ?? undefined,
+              vehicleName: vehicle.name ?? undefined,
+            };
+
+            // Stop the trip immediately
+            dispatch(TripAction.stop());
             tripStartTimeRef.current = null;
+
+            // Show feedback dialog
+            setPendingTripData(savedTrip);
+            setIsFeedbackVisible(true);
           },
         },
       ]
     );
-  }, [localizedStrings, dispatch, store]);
+  }, [localizedStrings, store, dispatch]);
+
+  const handleStartTrip = useCallback(() => {
+    setIsVehicleSelectionVisible(true);
+  }, []);
 
   const handleStartVehicleSelect = useCallback(
     (vehicle: Vehicle) => {
@@ -209,8 +284,11 @@ export const HomeScreen = () => {
       dispatch(TripAction.setCurrentVehicle(vehicle.id, vehicleName));
       dispatch(TripAction.startSegment(vehicle.id, vehicleName));
       dispatch(TripAction.start());
+      setIsFollowingVehicle(true);
+      // Zoom to vehicle position
+      centerOnPosition(vehicle.pos.lat, vehicle.pos.lng, vehicle.heading ?? 0, 17);
     },
-    [dispatch]
+    [dispatch, setIsFollowingVehicle, centerOnPosition]
   );
 
   const handleChangeVehicle = useCallback(
@@ -223,46 +301,76 @@ export const HomeScreen = () => {
     [dispatch]
   );
 
+  const handleFeedbackSubmit = useCallback(
+    async (rating: number, text?: string) => {
+      if (pendingTripData) {
+        const vehicleId = getVehicleWithLongestDistance(pendingTripData.segments);
+        if (vehicleId) {
+          await submitFeedback({ rating, text, vehicle: vehicleId });
+        }
+        await saveTrip(dispatch, pendingTripData);
+      }
+      setIsFeedbackVisible(false);
+      setPendingTripData(null);
+    },
+    [pendingTripData, dispatch]
+  );
+
+  const handleFeedbackSkip = useCallback(async () => {
+    if (pendingTripData) {
+      await saveTrip(dispatch, pendingTripData);
+    }
+    setIsFeedbackVisible(false);
+    setPendingTripData(null);
+  }, [pendingTripData, dispatch]);
+
   return (
     <View style={styles.container}>
-      {(isActive || isFollowingVehicle) && (
-        <TripHeader
-          distance={motion.distanceTravelled}
+      {/* Minimal trip overlay - replaces TripHeader */}
+      {isActive && (
+        <MinimalTripOverlay
           speed={motion.speed}
-          nextVehicle={warnings.nextVehicle}
-          nextCrossing={warnings.nextLevelCrossing}
-          vehicleName={isActive ? (currentVehicle.name ?? '') : (vehicles[0]?.label ?? '')}
-          onChangeVehicle={isActive ? () => setIsChangeVehicleIdBottomSheetVisible(true) : undefined}
+          elapsedTime={elapsedTime}
+          onPress={handleOpenDrawer}
         />
       )}
+
       <TrackMapView
         mapRef={mapRef}
         cameraRef={cameraRef}
-        onRegionChange={(zoom, heading, isUserInteraction) => onRegionChange(zoom, heading, isUserInteraction)}
+        onRegionChange={onRegionChange}
+        onUserInteraction={onUserInteraction}
+        userHasInteracted={userHasInteracted}
+        currentCameraCenter={currentCameraCenter}
         location={location}
         calculatedPosition={position.calculated}
         pointsOfInterest={track.pointsOfInterest}
         vehicles={vehicles}
         passingPosition={position.passing}
         track={track.path}
-        useSmallMarker={useSmallMarker}
+        zoomLevel={zoomLevel}
         mapHeading={cameraHeading}
       />
+
+      {isLoadingVehicles && <LoadingVehiclesOverlay />}
+
       <TripControls
         isActive={isActive}
         isFollowingUser={isFollowingUser}
         isFollowingVehicle={isFollowingVehicle}
         onLocationButtonClick={handleLocationButtonClick}
-        onStartTrip={() => setIsStartTripBottomSheetVisible(true)}
+        onStartTrip={handleStartTrip}
         onStopTrip={handleStopTrip}
         onCenterOnVehicle={handleCenterOnVehicle}
         warnings={warnings}
         speed={motion.speed}
         localizedStrings={localizedStrings}
       />
+
+      {/* Vehicle selection for starting trip */}
       <VehicleSelectionBottomSheet
-        isVisible={isStartTripBottomSheetVisible}
-        setIsVisible={setIsStartTripBottomSheetVisible}
+        isVisible={isVehicleSelectionVisible}
+        setIsVisible={setIsVehicleSelectionVisible}
         title={localizedStrings.t('bottomSheetVehicleId')}
         subtitle={
           vehicles.length > 0
@@ -272,6 +380,8 @@ export const HomeScreen = () => {
         vehicles={vehicles}
         onVehicleSelected={handleStartVehicleSelect}
       />
+
+      {/* Change vehicle during trip */}
       <VehicleSelectionBottomSheet
         isVisible={isChangeVehicleIdBottomSheetVisible}
         setIsVisible={setIsChangeVehicleIdBottomSheetVisible}
@@ -280,6 +390,13 @@ export const HomeScreen = () => {
         vehicles={vehicles}
         excludeVehicleId={currentVehicle.id}
         onVehicleSelected={handleChangeVehicle}
+      />
+
+      {/* Feedback after trip ends */}
+      <FeedbackBottomSheet
+        isVisible={isFeedbackVisible}
+        onSubmit={handleFeedbackSubmit}
+        onSkip={handleFeedbackSkip}
       />
     </View>
   );

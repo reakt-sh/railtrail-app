@@ -4,7 +4,7 @@ import * as NavigationBar from 'expo-navigation-bar';
 import { Platform } from 'react-native';
 import { Color } from '../constants';
 import { LandingPageScreen } from '../screens';
-import { MainNavigation } from './MainNavigation';
+import { DrawerNavigation } from './DrawerNavigation';
 
 export const RootNavigation = () => {
   if (Platform.OS === 'android') {
@@ -21,7 +21,7 @@ export const RootNavigation = () => {
           headerShown: false,
         })}
       >
-        <Stack.Screen name="Main" component={MainNavigation} />
+        <Stack.Screen name="Main" component={DrawerNavigation} />
         <Stack.Screen name="Landing Page" component={LandingPageScreen} />
       </Stack.Navigator>
     </NavigationContainer>

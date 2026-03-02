@@ -12,7 +12,6 @@ export interface Track {
 
 export interface Permissions {
   readonly foreground: boolean;
-  readonly background: boolean;
 }
 
 export interface AppState {
@@ -37,7 +36,7 @@ interface AppActionSetPermissions {
   readonly payload: Partial<Permissions>;
 }
 
-export type AppAction = AppActionSetTrack | AppActionSetLocation | AppActionSetPermissions;
+export type AppActionType = AppActionSetTrack | AppActionSetLocation | AppActionSetPermissions;
 
 export const AppAction = {
   setTrack: (track: Partial<Track>): AppActionSetTrack => ({
@@ -66,7 +65,6 @@ export const initialAppState: AppState = {
   location: null,
   permissions: {
     foreground: false,
-    background: false,
   },
 };
 

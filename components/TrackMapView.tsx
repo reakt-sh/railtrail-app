@@ -1,6 +1,6 @@
 import * as MapLibreGL from '@maplibre/maplibre-react-native';
 import * as Location from 'expo-location';
-import React, { memo, RefObject } from 'react';
+import React, { memo, RefObject, useCallback, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { initialRegion, mapStyleUrl } from '../constants';
 import { PointOfInterest } from '../types/init';
@@ -9,16 +9,23 @@ import { Vehicle } from '../types/vehicle';
 import { MapMarkers } from './MapMarkers';
 
 interface ExternalProps {
-  readonly mapRef: RefObject<MapLibreGL.MapViewRef>;
+  readonly mapRef: RefObject<MapLibreGL.MapViewRef | null>;
   readonly cameraRef: RefObject<MapLibreGL.CameraRef>;
-  readonly onRegionChange: (zoom: number, heading: number, isUserInteraction?: boolean) => void;
+  readonly onRegionChange: (
+    zoom: number,
+    heading: number,
+    center?: [number, number] | null
+  ) => void;
+  readonly onUserInteraction: () => void;
+  readonly userHasInteracted: boolean;
+  readonly currentCameraCenter: [number, number] | null;
   readonly location: Location.LocationObject | null;
   readonly calculatedPosition: Position | null;
   readonly pointsOfInterest: PointOfInterest[];
   readonly vehicles: Vehicle[];
   readonly passingPosition: Position | null;
   readonly track: GeoJSON.FeatureCollection | null;
-  readonly useSmallMarker: boolean;
+  readonly zoomLevel: number;
   readonly mapHeading: number;
 }
 
@@ -29,15 +36,24 @@ export const TrackMapView = memo(
     mapRef,
     cameraRef,
     onRegionChange,
+    onUserInteraction,
+    userHasInteracted,
+    currentCameraCenter,
     location,
     calculatedPosition,
     pointsOfInterest,
     vehicles,
     passingPosition,
     track,
-    useSmallMarker,
+    zoomLevel,
     mapHeading,
   }: Props) => {
+    const [activeTooltip, setActiveTooltip] = useState<number | null>(null);
+    const onPOIPress = useCallback((index: number) => {
+      setActiveTooltip((prev) => (prev === index ? null : index));
+    }, []);
+    const dismissTooltip = useCallback(() => setActiveTooltip(null), []);
+
     return (
       <MapLibreGL.MapView
         ref={mapRef}
@@ -45,20 +61,38 @@ export const TrackMapView = memo(
         mapStyle={mapStyleUrl}
         logoEnabled={false}
         attributionEnabled={false}
+        onRegionWillChange={(feature: any) => {
+          const isUserInteraction = feature?.properties?.isUserInteraction ?? false;
+          if (isUserInteraction) {
+            onUserInteraction();
+          }
+        }}
         onRegionDidChange={(feature: any) => {
           const zoom = feature?.properties?.zoomLevel ?? 14;
           const heading = feature?.properties?.heading ?? 0;
-          const isUserInteraction = feature?.properties?.isUserInteraction ?? false;
-          onRegionChange(zoom, heading, isUserInteraction);
+          const visibleBounds = feature?.properties?.visibleBounds;
+
+          // Calculate center from visibleBounds [[ne_lng, ne_lat], [sw_lng, sw_lat]]
+          let center: [number, number] | null = null;
+          if (visibleBounds && visibleBounds.length === 2) {
+            const [ne, sw] = visibleBounds;
+            center = [(ne[0] + sw[0]) / 2, (ne[1] + sw[1]) / 2];
+          }
+
+          onRegionChange(zoom, heading, center);
         }}
-        onPress={() => {}}
+        onPress={dismissTooltip}
       >
         <MapLibreGL.Camera
+          key={userHasInteracted ? 'free' : 'track'}
           ref={cameraRef}
           defaultSettings={{
-            centerCoordinate: [initialRegion.longitude, initialRegion.latitude],
-            zoomLevel: 14,
+            centerCoordinate: currentCameraCenter ?? [initialRegion.longitude, initialRegion.latitude],
+            zoomLevel: zoomLevel,
+            pitch: 0,
+            heading: mapHeading,
           }}
+          followUserLocation={false}
         />
         <MapMarkers
           location={location}
@@ -67,8 +101,10 @@ export const TrackMapView = memo(
           vehicles={vehicles}
           passingPosition={passingPosition}
           track={track}
-          useSmallMarker={useSmallMarker}
+          zoomLevel={zoomLevel}
           mapHeading={mapHeading}
+          activeTooltip={activeTooltip}
+          onPOIPress={onPOIPress}
         />
       </MapLibreGL.MapView>
     );

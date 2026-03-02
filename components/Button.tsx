@@ -1,8 +1,17 @@
 import React from 'react';
-import { Pressable, StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
+import {
+  Pressable,
+  PressableProps,
+  StyleProp,
+  StyleSheet,
+  Text,
+  View,
+  ViewStyle,
+} from 'react-native';
+import { textStyles } from '../constants';
 import { Color } from '../constants/color';
 
-interface ExternalProps {
+interface ExternalProps extends PressableProps {
   readonly text: string;
   readonly onPress: () => void;
   readonly isSecondary?: boolean;
@@ -16,28 +25,34 @@ type Props = ExternalProps;
 
 export const Button = ({
   text,
-  onPress,
   isSecondary,
-  disabled,
   style,
   accessibilityLabel,
   accessibilityHint,
+  ...props
 }: Props) => (
   <Pressable
-    onPress={() => {
-      if (!disabled) onPress();
-    }}
-    style={({ pressed }) => [style, pressed && !disabled ? { opacity: 0.8 } : {}]}
     accessibilityRole="button"
     accessibilityLabel={accessibilityLabel ?? text}
     accessibilityHint={accessibilityHint}
-    accessibilityState={{ disabled: !!disabled }}
+    accessibilityState={{ disabled: !!props.disabled }}
+    {...props}
   >
-    <View style={isSecondary ? styles.secondary : disabled ? styles.disabled : styles.primary}>
+    <View
+      style={[
+        styles.buttonContainer,
+        props.disabled ? styles.disabled : isSecondary ? {} : styles.primary,
+      ]}
+    >
       <Text
-        style={
-          isSecondary ? (disabled ? styles.textDisabled : styles.textSecondary) : styles.textPrimary
-        }
+        style={[
+          styles.buttonText,
+          props.disabled
+            ? styles.textDisabled
+            : isSecondary
+              ? styles.textSecondary
+              : styles.textPrimary,
+        ]}
       >
         {text}
       </Text>
@@ -46,33 +61,28 @@ export const Button = ({
 );
 
 const styles = StyleSheet.create({
-  primary: {
+  buttonContainer: {
     borderRadius: 48,
     padding: 16,
+  },
+  primary: {
     backgroundColor: Color.primary,
   },
-  secondary: {
-    borderRadius: 48,
-    padding: 16,
-  },
   disabled: {
-    borderRadius: 48,
-    padding: 16,
-    backgroundColor: Color.darkGray,
+    backgroundColor: Color.outline,
+  },
+  buttonText: {
+    ...textStyles.bodyLarge,
+    textAlign: 'center',
   },
   textPrimary: {
     color: Color.white,
-    fontSize: 18,
-    textAlign: 'center',
   },
   textSecondary: {
+    ...textStyles.bodyMedium,
     color: Color.primary,
-    fontSize: 18,
-    textAlign: 'center',
   },
   textDisabled: {
-    color: Color.darkGray,
-    fontSize: 18,
-    textAlign: 'center',
+    color: Color.white,
   },
 });

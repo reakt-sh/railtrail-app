@@ -17,8 +17,12 @@ export const textStyles = StyleSheet.create({
     fontFamily: Font.condensed,
     textTransform: 'uppercase',
     color: Color.text,
-
     fontSize: 20,
+  },
+  bodyLarge: {
+    fontFamily: Font.regular,
+    fontSize: 18,
+    color: Color.text,
   },
   bodyMedium: {
     fontFamily: Font.regular,
@@ -30,10 +34,21 @@ export const textStyles = StyleSheet.create({
     fontSize: 14,
     color: Color.text,
   },
+  titleMedium: {
+    fontFamily: Font.semiBold,
+    fontSize: 18,
+    color: Color.text,
+  },
   titleSmall: {
     fontFamily: Font.semiBold,
     fontSize: 14,
     color: Color.text,
+  },
+  buttonText: {
+    fontFamily: Font.semiBold,
+    fontSize: 18,
+    fontWeight: '600',
+    color: Color.primary,
   },
   hint: {
     fontFamily: Font.regular,
@@ -45,6 +60,11 @@ export const textStyles = StyleSheet.create({
     fontSize: 16,
     color: Color.primary,
     textDecorationLine: 'underline',
+  },
+  textButton: {
+    fontFamily: Font.regular,
+    fontSize: 16,
+    color: Color.primary,
   },
   itemText: {
     fontSize: 16,

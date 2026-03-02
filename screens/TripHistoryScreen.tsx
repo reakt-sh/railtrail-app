@@ -43,7 +43,6 @@ export const TripHistoryScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea} edges={[]}>
       <View style={styles.container}>
-        <Text style={textStyles.headerTextHuge}>{i18n.t('tripHistoryTitle')}</Text>
         {isLoading ? (
           <ActivityIndicator size="large" color={Color.primary} style={styles.loader} />
         ) : (

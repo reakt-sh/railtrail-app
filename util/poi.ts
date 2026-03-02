@@ -5,11 +5,12 @@ export const poiTypeTranslationKeys: Record<POIType, string> = {
   [POIType.Generic]: 'poiGeneric',
   [POIType.LevelCrossing]: 'poiLevelCrossing',
   [POIType.LesserLevelCrossing]: 'poiLesserLevelCrossing',
-  [POIType.Picnic]: 'poiPicnic',
   [POIType.TrackEnd]: 'poiTrackEnd',
   [POIType.TurningPoint]: 'poiTurningPoint',
   [POIType.Halt]: 'poiHalt',
-  [POIType.EndOfTheLine]: 'poiEndOfTheLine',
+  [POIType.TouristInfo]: 'poiTouristInfo',
+  [POIType.Bridge]: 'poiBridge',
+  [POIType.RoadCrossing]: 'poiRoadCrossing',
 };
 
 export const getPOITypeLabel = (i18n: I18n, typeId: POIType, originalType?: POIType): string => {

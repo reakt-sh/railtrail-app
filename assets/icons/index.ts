@@ -1,3 +1,4 @@
+export { default as AppLogo } from './AppLogo';
 export { default as DraisineIcon } from './Draisine';
 export { default as GenericMarkerIcon } from './GenericMarker';
 export { default as LesserLevelCrossingIcon } from './LesserLevelCrossing';

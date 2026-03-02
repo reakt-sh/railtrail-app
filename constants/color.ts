@@ -12,4 +12,5 @@ export const Color = {
   warning: '#ffcc00',
   success: '#28a745',
   track: '#32415a',
+  skyBlue: '#87CEEB',
 };

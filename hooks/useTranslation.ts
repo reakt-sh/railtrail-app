@@ -1,12 +1,7 @@
 import { I18n } from 'i18n-js';
 import { useMemo } from 'react';
-import { translations } from '../constants/translations';
+import { Locale, translations } from '../constants';
 import { useLanguage } from '../contexts/LanguageContext';
-
-export enum Locale {
-  de = 'de',
-  en = 'en',
-}
 
 export const useTranslation = (): I18n => {
   const { locale } = useLanguage();
