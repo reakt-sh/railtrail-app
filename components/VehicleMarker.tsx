@@ -55,10 +55,11 @@ export const VehicleMarker = memo(({ vehicle, mapHeading, zoomLevel }: Props) =>
       coordinate={[vehicle.pos.lng, vehicle.pos.lat]}
     >
       <View
+        collapsable={false}
         style={[
           styles.container,
           {
-            width: size.background,
+            minWidth: size.background,
             height: vehicle.label ? size.labelTop + size.labelFontSize + 8 : size.background,
           },
         ]}
@@ -76,7 +77,7 @@ export const VehicleMarker = memo(({ vehicle, mapHeading, zoomLevel }: Props) =>
         {/* Label below the icon */}
         {vehicle.label && (
           <View style={[styles.labelContainer, { top: size.labelTop }]}>
-            <Text style={useSmallMarker ? styles.labelSmall : styles.labelLarge}>
+            <Text style={useSmallMarker ? styles.labelSmall : styles.labelLarge} numberOfLines={1}>
               {vehicle.label}
             </Text>
           </View>
@@ -110,10 +111,10 @@ const styles = StyleSheet.create({
   },
   labelContainer: {
     position: 'absolute',
+    alignSelf: 'center',
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
     paddingHorizontal: 4,
     borderRadius: 4,
-    overflow: 'visible',
   },
   labelSmall: {
     fontFamily: Font.regular,
