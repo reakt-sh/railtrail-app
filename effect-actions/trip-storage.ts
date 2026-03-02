@@ -5,6 +5,7 @@ import { RailTrailReduxAction } from '../redux/action';
 import { ReduxAppState } from '../redux/init';
 import { TripAction } from '../redux/trip';
 import { TripHistoryAction } from '../redux/tripHistory';
+import { ActiveSegment } from '../redux/trip';
 import { SavedTrip, VehicleSegment } from '../types/saved-trip';
 
 export const getVehicleWithLongestDistance = (segments: VehicleSegment[]): number | null => {
@@ -152,6 +153,67 @@ export const loadSavedTrips = async (dispatch: Dispatch<RailTrailReduxAction>): 
   }
 
   dispatch(TripHistoryAction.setLoading(false));
+};
+
+// --- Active trip persistence (background/kill recovery) ---
+
+interface PersistedTripState {
+  tripStartTime: string;
+  currentVehicle: { id: number; name: string };
+  distanceTravelled: number;
+  activeSegment: ActiveSegment | null;
+  completedSegments: VehicleSegment[];
+}
+
+export const persistActiveTrip = async (getState: () => ReduxAppState): Promise<void> => {
+  const { trip } = getState();
+  if (!trip.isActive || trip.currentVehicle.id == null || trip.tripStartTime == null) {
+    return;
+  }
+
+  const data: PersistedTripState = {
+    tripStartTime: trip.tripStartTime,
+    currentVehicle: {
+      id: trip.currentVehicle.id,
+      name: trip.currentVehicle.name ?? `Draisine ${trip.currentVehicle.id}`,
+    },
+    distanceTravelled: trip.motion.distanceTravelled,
+    activeSegment: trip.activeSegment,
+    completedSegments: trip.completedSegments,
+  };
+
+  try {
+    await AsyncStorage.setItem(StorageKeys.ACTIVE_TRIP, JSON.stringify(data));
+  } catch (error) {
+    console.error('Failed to persist active trip:', error);
+  }
+};
+
+export const restoreActiveTrip = async (
+  dispatch: Dispatch<RailTrailReduxAction>
+): Promise<boolean> => {
+  try {
+    const json = await AsyncStorage.getItem(StorageKeys.ACTIVE_TRIP);
+    if (!json) return false;
+
+    const data: PersistedTripState = JSON.parse(json);
+    dispatch(TripAction.restore(data));
+
+    // Clear the persisted state after successful restore
+    await AsyncStorage.removeItem(StorageKeys.ACTIVE_TRIP);
+    return true;
+  } catch (error) {
+    console.error('Failed to restore active trip:', error);
+    return false;
+  }
+};
+
+export const clearPersistedTrip = async (): Promise<void> => {
+  try {
+    await AsyncStorage.removeItem(StorageKeys.ACTIVE_TRIP);
+  } catch (error) {
+    console.error('Failed to clear persisted trip:', error);
+  }
 };
 
 export const deleteSavedTrip = async (

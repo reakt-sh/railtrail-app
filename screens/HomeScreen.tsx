@@ -3,7 +3,7 @@ import { DrawerActions, useNavigation } from '@react-navigation/native';
 import { useKeepAwake } from 'expo-keep-awake';
 import * as Location from 'expo-location';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
+import { Alert, AppState, AppStateStatus, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { Dispatch } from 'redux';
 import { submitFeedback } from '../api/feedback';
@@ -21,7 +21,13 @@ import {
   setupPositionUpdates,
 } from '../effect-actions/api-actions';
 import { updateDistances } from '../effect-actions/trip-actions';
-import { getVehicleWithLongestDistance, saveTrip } from '../effect-actions/trip-storage';
+import {
+  clearPersistedTrip,
+  getVehicleWithLongestDistance,
+  persistActiveTrip,
+  restoreActiveTrip,
+  saveTrip,
+} from '../effect-actions/trip-storage';
 import {
   useElapsedTime,
   useLocationTracking,
@@ -105,7 +111,19 @@ export const HomeScreen = () => {
 
   // Initialize app and WebSocket connection
   useEffect(() => {
-    initializeApp(dispatch);
+    const init = async () => {
+      await initializeApp(dispatch);
+
+      // Restore active trip if app was killed during a trip
+      const restored = await restoreActiveTrip(dispatch);
+      if (restored) {
+        const state = store.getState();
+        tripStartTimeRef.current = state.trip.tripStartTime;
+        setIsFollowingVehicle(true);
+      }
+    };
+
+    init();
     const unsubscribePositions = setupPositionUpdates(dispatch);
 
     if (permissions.foreground) {
@@ -115,10 +133,23 @@ export const HomeScreen = () => {
     // Start simulation for Demo vehicle
     startSimulation();
 
+    // Persist active trip when app goes to background
+    const handleAppStateChange = (nextState: AppStateStatus) => {
+      if (nextState === 'background' || nextState === 'inactive') {
+        const currentState = store.getState();
+        if (currentState.trip.isActive) {
+          persistActiveTrip(store.getState);
+        }
+      }
+    };
+
+    const appStateSubscription = AppState.addEventListener('change', handleAppStateChange);
+
     return () => {
       unsubscribePositions();
       disconnectFromServer();
       stopSimulation();
+      appStateSubscription.remove();
     };
   }, []);
 
@@ -262,6 +293,7 @@ export const HomeScreen = () => {
 
             // Stop the trip immediately
             dispatch(TripAction.stop());
+            clearPersistedTrip();
             tripStartTimeRef.current = null;
 
             // Show feedback dialog

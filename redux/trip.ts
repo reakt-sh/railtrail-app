@@ -131,6 +131,17 @@ interface TripActionSetLoadingVehicles {
   readonly payload: boolean;
 }
 
+interface TripActionRestore {
+  readonly type: 'trip/restore';
+  readonly payload: {
+    tripStartTime: string;
+    currentVehicle: { id: number; name: string };
+    distanceTravelled: number;
+    activeSegment: ActiveSegment | null;
+    completedSegments: VehicleSegment[];
+  };
+}
+
 export type TripActionType =
   | TripActionReset
   | TripActionStart
@@ -146,7 +157,8 @@ export type TripActionType =
   | TripActionStartSegment
   | TripActionEndSegment
   | TripActionClearVehiclesExceptDemo
-  | TripActionSetLoadingVehicles;
+  | TripActionSetLoadingVehicles
+  | TripActionRestore;
 
 export const TripAction = {
   reset: (): TripActionReset => ({
@@ -225,6 +237,11 @@ export const TripAction = {
   setLoadingVehicles: (isLoading: boolean): TripActionSetLoadingVehicles => ({
     type: 'trip/set-loading-vehicles',
     payload: isLoading,
+  }),
+
+  restore: (payload: TripActionRestore['payload']): TripActionRestore => ({
+    type: 'trip/restore',
+    payload,
   }),
 };
 
@@ -390,6 +407,20 @@ const reducer = (state = initialTripState, action: RailTrailReduxAction): TripSt
 
     case 'trip/set-loading-vehicles':
       return { ...state, isLoadingVehicles: action.payload };
+
+    case 'trip/restore':
+      return {
+        ...state,
+        isActive: true,
+        tripStartTime: action.payload.tripStartTime,
+        currentVehicle: action.payload.currentVehicle,
+        motion: {
+          ...state.motion,
+          distanceTravelled: action.payload.distanceTravelled,
+        },
+        activeSegment: action.payload.activeSegment,
+        completedSegments: action.payload.completedSegments,
+      };
 
     default:
       return state;
