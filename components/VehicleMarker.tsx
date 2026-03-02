@@ -1,6 +1,6 @@
 import * as MapLibreGL from '@maplibre/maplibre-react-native';
 import React, { memo } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import {
   DraisineIcon,
   TrainBackgroundHeadingIcon,
@@ -65,8 +65,8 @@ export const VehicleMarker = memo(({ vehicle, mapHeading, zoomLevel }: Props) =>
           <DraisineIcon width={size.foregroundWidth} height={size.foregroundHeight} />
         </View>
 
-        {/* Label below the icon - disabled on Android due to fontSize bug with New Architecture */}
-        {Platform.OS === 'ios' && vehicle.label && (
+        {/* Label below the icon */}
+        {vehicle.label && (
           <View style={[styles.labelContainer, { top: size.labelTop }]}>
             <Text style={useSmallMarker ? styles.labelSmall : styles.labelLarge}>
               {vehicle.label}

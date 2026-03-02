@@ -44,6 +44,9 @@ export const MapMarkers = memo(
     mapHeading,
   }: Props) => (
     <>
+      {/* Track line overlay (rendered first = below markers) */}
+      {track && <Track track={track} />}
+
       {/* User's current location */}
       <UserLocationMarker
         calculatedPosition={calculatedPosition}
@@ -77,9 +80,6 @@ export const MapMarkers = memo(
           zoomLevel={zoomLevel}
         />
       )}
-
-      {/* Track line overlay */}
-      {track && <Track track={track} />}
     </>
   )
 );

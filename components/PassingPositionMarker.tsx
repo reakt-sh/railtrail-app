@@ -21,10 +21,7 @@ export const PassingPositionMarker = memo(({ position, zoomLevel }: Props) => {
   const useSmallMarker = zoomLevel < 15;
 
   return (
-    <MapLibreGL.PointAnnotation
-      id="passing-position"
-      coordinate={[position.lng, position.lat]}
-    >
+    <MapLibreGL.PointAnnotation id="passing-position" coordinate={[position.lng, position.lat]}>
       <View>
         {useSmallMarker ? (
           <PassingPositionIcon width={SMALL_MARKER_SIZE} height={SMALL_MARKER_SIZE} />
