@@ -16,14 +16,14 @@ const MARKER_SIZE = {
     background: 32,
     foregroundWidth: 16,
     foregroundHeight: 16,
-    labelTop: 30,
+    labelTop: 40,
     labelFontSize: 8,
   },
   large: {
     background: 40, // uses default icon size
     foregroundWidth: 20,
     foregroundHeight: 20,
-    labelTop: 36,
+    labelTop: 50,
     labelFontSize: 12,
   },
 } as const;
@@ -54,7 +54,15 @@ export const VehicleMarker = memo(({ vehicle, mapHeading, zoomLevel }: Props) =>
       id={`vehicle-${vehicle.id}`}
       coordinate={[vehicle.pos.lng, vehicle.pos.lat]}
     >
-      <View style={[styles.container, { width: size.background, height: vehicle.label ? size.labelTop + size.labelFontSize + 8 : size.background }]}>
+      <View
+        style={[
+          styles.container,
+          {
+            width: size.background,
+            height: vehicle.label ? size.labelTop + size.labelFontSize + 8 : size.background,
+          },
+        ]}
+      >
         {/* Background: Direction indicator - rotates with vehicle heading */}
         <View style={[styles.backgroundLayer, { transform: [{ rotate: `${rotation}deg` }] }]}>
           <VehicleBackground hasHeading={hasHeading} size={size.background} />
@@ -105,7 +113,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
     paddingHorizontal: 4,
     borderRadius: 4,
-    top: 10,
     overflow: 'visible',
   },
   labelSmall: {

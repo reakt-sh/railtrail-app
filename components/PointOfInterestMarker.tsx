@@ -60,22 +60,25 @@ export const PointOfInterestMarker = memo(({ pointOfInterestType, zoomLevel }: P
     return { size: 12, iconSize: 10, extraIconSize: 4 };
   }, [zoomLevel]);
 
+  const actualIconSize = iconSize + (config.biggerIcon ? extraIconSize : 0);
+
   return (
-    <View style={[styles.circle, { width: size, height: size, backgroundColor: config.color }]}>
+    <View
+      collapsable={false}
+      style={[styles.circle, { width: size, height: size, backgroundColor: config.color }]}
+    >
       {iconSize > 0 &&
         (config.library === 'MaterialIcons' ? (
           <MaterialIcons
             name={config.icon as keyof typeof MaterialIcons.glyphMap}
-            size={iconSize + (config.biggerIcon ? extraIconSize : 0)}
+            size={actualIconSize}
             color={iconColor}
-            style={styles.icon}
           />
         ) : (
           <MaterialCommunityIcons
             name={config.icon as keyof typeof MaterialCommunityIcons.glyphMap}
-            size={iconSize + (config.biggerIcon ? extraIconSize : 0)}
+            size={actualIconSize}
             color={iconColor}
-            style={styles.icon}
           />
         ))}
     </View>
@@ -88,9 +91,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 100,
-  },
-  icon: {
-    textAlign: 'center',
-    textAlignVertical: 'center',
   },
 });
