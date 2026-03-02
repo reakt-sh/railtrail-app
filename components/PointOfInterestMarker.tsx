@@ -64,7 +64,6 @@ export const PointOfInterestMarker = memo(
     const actualIconSize = iconSize + (config.biggerIcon ? extraIconSize : 0);
     const minHitSize = 32;
     const hitSize = Math.max(minHitSize, size);
-    console.log('SIZE', size, actualIconSize);
     return (
       <View
         collapsable={false}
