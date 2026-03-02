@@ -15,8 +15,7 @@ interface MarkerConfig {
   icon: keyof typeof MaterialCommunityIcons.glyphMap | keyof typeof MaterialIcons.glyphMap;
   color: string;
   iconColor?: string;
-  iconSizeSmall?: number;
-  iconSizeLarge?: number;
+  biggerIcon?: boolean;
 
   library?: 'MaterialIcons' | 'MaterialCommunityIcons';
 }
@@ -25,8 +24,7 @@ const markerConfigs: Record<POIType, MarkerConfig> = {
   [POIType.LevelCrossing]: {
     icon: 'alpha-x',
     color: Color.error,
-    iconSizeSmall: 0,
-    iconSizeLarge: 24,
+    biggerIcon: true,
   },
   [POIType.LesserLevelCrossing]: {
     icon: 'warning-amber',
@@ -51,15 +49,15 @@ export const PointOfInterestMarker = memo(({ pointOfInterestType, zoomLevel }: P
 
   const iconColor = config.iconColor ?? Color.white;
 
-  const { size, iconSize } = useMemo(() => {
+  const { size, iconSize, extraIconSize } = useMemo(() => {
     if (zoomLevel < 10) {
-      return { size: 6, iconSize: 0 };
+      return { size: 6, iconSize: 0, extraIconSize: 0 };
     }
     if (zoomLevel > 15) {
-      return { size: 24, iconSize: 16 };
+      return { size: 24, iconSize: 16, extraIconSize: 8 };
     }
 
-    return { size: 12, iconSize: 10 };
+    return { size: 12, iconSize: 10, extraIconSize: 4 };
   }, [zoomLevel]);
 
   return (
@@ -68,14 +66,16 @@ export const PointOfInterestMarker = memo(({ pointOfInterestType, zoomLevel }: P
         (config.library === 'MaterialIcons' ? (
           <MaterialIcons
             name={config.icon as keyof typeof MaterialIcons.glyphMap}
-            size={iconSize}
+            size={iconSize + (config.biggerIcon ? extraIconSize : 0)}
             color={iconColor}
+            style={styles.icon}
           />
         ) : (
           <MaterialCommunityIcons
             name={config.icon as keyof typeof MaterialCommunityIcons.glyphMap}
-            size={iconSize}
+            size={iconSize + (config.biggerIcon ? extraIconSize : 0)}
             color={iconColor}
+            style={styles.icon}
           />
         ))}
     </View>
@@ -87,5 +87,10 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 100,
+  },
+  icon: {
+    textAlign: 'center',
+    textAlignVertical: 'center',
   },
 });
