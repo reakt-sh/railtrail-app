@@ -44,52 +44,58 @@ const markerConfigs: Record<POIType, MarkerConfig> = {
   [POIType.RoadCrossing]: { icon: 'road', color: Color.warning },
 };
 
-export const PointOfInterestMarker = memo(({ pointOfInterestType, zoomLevel, onPress, accessibilityLabel }: Props) => {
-  const config = markerConfigs[pointOfInterestType] ?? markerConfigs[POIType.Generic];
+export const PointOfInterestMarker = memo(
+  ({ pointOfInterestType, zoomLevel, onPress, accessibilityLabel }: Props) => {
+    const config = markerConfigs[pointOfInterestType] ?? markerConfigs[POIType.Generic];
 
-  const iconColor = config.iconColor ?? Color.white;
+    const iconColor = config.iconColor ?? Color.white;
 
-  const { size, iconSize, extraIconSize } = useMemo(() => {
-    if (zoomLevel < 10) {
-      return { size: 6, iconSize: 0, extraIconSize: 0 };
-    }
-    if (zoomLevel > 15) {
-      return { size: 24, iconSize: 16, extraIconSize: 8 };
-    }
+    const { size, iconSize, extraIconSize } = useMemo(() => {
+      if (zoomLevel < 10) {
+        return { size: 6, iconSize: 0, extraIconSize: 0 };
+      }
+      if (zoomLevel > 15) {
+        return { size: 24, iconSize: 16, extraIconSize: 8 };
+      }
 
-    return { size: 12, iconSize: 10, extraIconSize: 4 };
-  }, [zoomLevel]);
+      return { size: 12, iconSize: 8, extraIconSize: 4 };
+    }, [zoomLevel]);
 
-  const actualIconSize = iconSize + (config.biggerIcon ? extraIconSize : 0);
-
-  return (
-    <View
-      collapsable={false}
-      accessible={!!onPress}
-      accessibilityRole={onPress ? 'button' : undefined}
-      accessibilityLabel={accessibilityLabel}
-      onStartShouldSetResponder={onPress ? () => true : undefined}
-      onResponderTerminationRequest={onPress ? () => true : undefined}
-      onResponderRelease={onPress}
-      style={[styles.circle, { width: size, height: size, backgroundColor: config.color }]}
-    >
-      {iconSize > 0 &&
-        (config.library === 'MaterialIcons' ? (
-          <MaterialIcons
-            name={config.icon as keyof typeof MaterialIcons.glyphMap}
-            size={actualIconSize}
-            color={iconColor}
-          />
-        ) : (
-          <MaterialCommunityIcons
-            name={config.icon as keyof typeof MaterialCommunityIcons.glyphMap}
-            size={actualIconSize}
-            color={iconColor}
-          />
-        ))}
-    </View>
-  );
-});
+    const actualIconSize = iconSize + (config.biggerIcon ? extraIconSize : 0);
+    const minHitSize = 32;
+    const hitSize = Math.max(minHitSize, size);
+    console.log('SIZE', size, actualIconSize);
+    return (
+      <View
+        collapsable={false}
+        accessible={!!onPress}
+        accessibilityRole={onPress ? 'button' : undefined}
+        accessibilityLabel={accessibilityLabel}
+        onStartShouldSetResponder={onPress ? () => true : undefined}
+        onResponderTerminationRequest={onPress ? () => true : undefined}
+        onResponderRelease={onPress}
+        style={{ width: hitSize, height: hitSize, alignItems: 'center', justifyContent: 'center' }}
+      >
+        <View style={[styles.circle, { width: size, height: size, backgroundColor: config.color }]}>
+          {iconSize > 0 &&
+            (config.library === 'MaterialIcons' ? (
+              <MaterialIcons
+                name={config.icon as keyof typeof MaterialIcons.glyphMap}
+                size={actualIconSize}
+                color={iconColor}
+              />
+            ) : (
+              <MaterialCommunityIcons
+                name={config.icon as keyof typeof MaterialCommunityIcons.glyphMap}
+                size={actualIconSize}
+                color={iconColor}
+              />
+            ))}
+        </View>
+      </View>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   circle: {
