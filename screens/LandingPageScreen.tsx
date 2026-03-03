@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CommonActions } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
-import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -22,6 +22,7 @@ export const LandingPageScreen = ({ navigation }: any) => {
   const localizedStrings = useTranslation();
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
   const [isPrivacyModalVisible, setIsPrivacyModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const checkInitialState = async () => {
@@ -42,6 +43,8 @@ export const LandingPageScreen = ({ navigation }: any) => {
             routes: [{ name: 'Main' }],
           })
         );
+      } else {
+        setIsLoading(false);
       }
     };
 
@@ -63,6 +66,14 @@ export const LandingPageScreen = ({ navigation }: any) => {
       })
     );
   };
+
+  if (isLoading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color={Color.primary} />
+      </View>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -135,6 +146,12 @@ export const LandingPageScreen = ({ navigation }: any) => {
 };
 
 const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    backgroundColor: Color.white,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   container: {
     flex: 1,
     backgroundColor: Color.white,
