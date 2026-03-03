@@ -1,30 +1,43 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { I18n } from 'i18n-js';
+import { useRef, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import { DraisineIcon } from '../assets/icons';
 import { Color, Locale } from '../constants';
 import { textStyles } from '../constants/text-styles';
 import { SavedTrip } from '../types/saved-trip';
-import { formatDate, formatDistance, formatDuration } from '../util/formatters';
+import { formatDate, formatDistance, formatDuration, formatVehicleNames } from '../util/formatters';
+import { ContextMenu, ContextMenuItem } from './ContextMenu';
 
 interface TripCardProps {
   trip: SavedTrip;
   onDelete: (tripId: string) => void;
+  onMenuAction: (tripId: string, action: string) => void;
   i18n: I18n;
 }
 
-const formatVehicleNames = (trip: SavedTrip): string => {
-  if (!trip.segments?.length) {
-    return trip.vehicleName ?? '';
-  }
-  const uniqueNames = [...new Set(trip.segments.map((s) => s.vehicleName))];
-  return uniqueNames.join(', ');
-};
-
-export const TripCard = ({ trip, onDelete, i18n }: TripCardProps) => {
+export const TripCard = ({ trip, onDelete, onMenuAction, i18n }: TripCardProps) => {
   const locale = i18n.locale as Locale;
   const vehicleDisplayName = formatVehicleNames(trip);
+  const menuButtonRef = useRef<View>(null);
+  const [menuVisible, setMenuVisible] = useState(false);
+  const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
+
+  const handleMenuOpen = () => {
+    menuButtonRef.current?.measure((_x, _y, width, _height, pageX, pageY) => {
+      setMenuPosition({ x: pageX + width - 180, y: pageY });
+      setMenuVisible(true);
+    });
+  };
+
+  const menuItems: ContextMenuItem[] = [
+    {
+      label: i18n.t('tripCardMenuFeedback'),
+      icon: 'star-outline',
+      onPress: () => onMenuAction(trip.id, 'feedback'),
+    },
+  ];
 
   const renderDeleteAction = () => (
     <TouchableOpacity
@@ -45,6 +58,11 @@ export const TripCard = ({ trip, onDelete, i18n }: TripCardProps) => {
           <Text style={[textStyles.headerTextMedium, styles.vehicleName]}>
             {vehicleDisplayName}
           </Text>
+          <TouchableOpacity onPress={handleMenuOpen} hitSlop={8} style={styles.menuButton}>
+            <View ref={menuButtonRef} collapsable={false}>
+              <MaterialCommunityIcons name="dots-vertical" size={20} color={Color.darkGray} />
+            </View>
+          </TouchableOpacity>
         </View>
         <Text style={[textStyles.bodySmall, styles.date]}>
           {formatDate(trip.startTime, locale)}
@@ -67,6 +85,12 @@ export const TripCard = ({ trip, onDelete, i18n }: TripCardProps) => {
           </View>
         </View>
       </View>
+      <ContextMenu
+        visible={menuVisible}
+        onClose={() => setMenuVisible(false)}
+        items={menuItems}
+        anchorPosition={menuPosition}
+      />
     </ReanimatedSwipeable>
   );
 };
@@ -91,6 +115,9 @@ const styles = StyleSheet.create({
   vehicleName: {
     marginLeft: 8,
     flex: 1,
+  },
+  menuButton: {
+    padding: 4,
   },
   date: {
     color: Color.darkGray,

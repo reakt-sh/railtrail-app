@@ -22,7 +22,7 @@ interface Props {
 
 export const FeedbackBottomSheet = memo(({ isVisible, onSubmit, onSkip }: Props) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
-  const snapPoints = useMemo(() => ['55%'], []);
+  const snapPoints = useMemo(() => ['60%'], []);
   const i18n = useTranslation();
 
   const [rating, setRating] = useState(0);

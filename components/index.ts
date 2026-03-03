@@ -1,5 +1,6 @@
 export { Button } from './Button';
 export { Checkbox } from './Checkbox';
+export { ContextMenu } from './ContextMenu';
 export { FAB } from './Fab';
 export { FeedbackBottomSheet } from './FeedbackBottomSheet';
 export { LoadingVehiclesOverlay } from './LoadingVehiclesOverlay';

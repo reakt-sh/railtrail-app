@@ -1,4 +1,5 @@
 import { Locale } from '../constants';
+import { SavedTrip } from '../types/saved-trip';
 
 /**
  * Formatiert eine Distanz in Metern zu einem lesbaren String.
@@ -77,4 +78,12 @@ export const formatElapsedTime = (startTime: string | null, withSeconds = true):
     return `${hoursAndMins}:${seconds.toString().padStart(2, '0')}`;
   }
   return hoursAndMins;
+};
+
+export const formatVehicleNames = (trip: SavedTrip): string => {
+  if (!trip.segments?.length) {
+    return trip.vehicleName ?? '';
+  }
+  const uniqueNames = [...new Set(trip.segments.map((s) => s.vehicleName))];
+  return uniqueNames.join(', ');
 };

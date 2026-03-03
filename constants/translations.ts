@@ -200,9 +200,15 @@ const translations = {
     feedbackPlaceholder: 'Space for comments, feedback and criticism...',
     feedbackSubmit: 'Submit rating',
     feedbackSkip: 'Later',
+    feedbackThankYouTitle: 'Thank you!',
+    feedbackThankYouMessage:
+      'Thank you for your feedback. See you on the next tour with the Naturpark Draisine!',
 
     // Loading
     loadingVehicles: 'Rolling railbikes onto the track...',
+
+    // Context Menu
+    tripCardMenuFeedback: 'Rate this trip',
 
     // Accessibility
     a11yGoBack: 'Go back',
@@ -426,12 +432,18 @@ const translations = {
 
     // Feedback
     feedbackTitle: 'Wie hat Ihnen die Tour gefallen?',
-    feedbackPlaceholder: 'Platz für Berichte, Lob und Kritik...',
+    feedbackPlaceholder: 'Platz für Fahrtberichte, Lob und Kritik...',
     feedbackSubmit: 'Bewertung abschicken',
     feedbackSkip: 'Später',
+    feedbackThankYouTitle: 'Danke!',
+    feedbackThankYouMessage:
+      'Vielen Dank für deine Meinung. Bis zur nächsten Tour mit der Naturpark Draisine!',
 
     // Loading
     loadingVehicles: 'Draisinen trudeln auf der Strecke ein...',
+
+    // Context Menu
+    tripCardMenuFeedback: 'Tour bewerten',
 
     // Accessibility
     a11yGoBack: 'Zurück',
