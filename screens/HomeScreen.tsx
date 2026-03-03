@@ -344,6 +344,10 @@ export const HomeScreen = () => {
       }
       setIsFeedbackVisible(false);
       setPendingTripData(null);
+      Alert.alert(
+        'Danke!',
+        'Vielen Dank für deine Meinung. Bis zur nächsten Tour mit der Naturpark Draisine!'
+      );
     },
     [pendingTripData, dispatch]
   );
