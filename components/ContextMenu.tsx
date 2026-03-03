@@ -7,6 +7,7 @@ export interface ContextMenuItem {
   label: string;
   icon: string;
   onPress: () => void;
+  destructive?: boolean;
 }
 
 interface ContextMenuProps {
@@ -37,9 +38,17 @@ export const ContextMenu = ({ visible, onClose, items, anchorPosition }: Context
               <MaterialCommunityIcons
                 name={item.icon as keyof typeof MaterialCommunityIcons.glyphMap}
                 size={20}
-                color={Color.darkGray}
+                color={item.destructive ? Color.error : Color.darkGray}
               />
-              <Text style={[textStyles.bodyMedium, styles.menuItemLabel]}>{item.label}</Text>
+              <Text
+                style={[
+                  textStyles.bodyMedium,
+                  styles.menuItemLabel,
+                  item.destructive && { color: Color.error },
+                ]}
+              >
+                {item.label}
+              </Text>
             </TouchableOpacity>
           ))}
         </View>

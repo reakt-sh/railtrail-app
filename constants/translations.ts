@@ -209,6 +209,7 @@ const translations = {
 
     // Context Menu
     tripCardMenuFeedback: 'Rate this trip',
+    tripCardMenuDelete: 'Delete trip',
 
     // Accessibility
     a11yGoBack: 'Go back',
@@ -412,7 +413,7 @@ const translations = {
     // Trip History Screen
     tripHistoryTitle: 'Vergangene Fahrten',
     tripHistoryDeleteTitle: 'Fahrt löschen',
-    tripHistoryDeleteMessage: 'Möchten Sie diese Fahrt aus der Hostorie löschen?',
+    tripHistoryDeleteMessage: 'Möchten Sie diese Fahrt aus der Historie löschen?',
     tripHistoryDeleteCancel: 'Abbrechen',
     tripHistoryDeleteConfirm: 'Löschen',
     tripHistoryEmpty: 'Noch keine Fahrten aufgezeichnet.',
@@ -444,6 +445,7 @@ const translations = {
 
     // Context Menu
     tripCardMenuFeedback: 'Tour bewerten',
+    tripCardMenuDelete: 'Fahrt löschen',
 
     // Accessibility
     a11yGoBack: 'Zurück',

@@ -37,6 +37,12 @@ export const TripCard = ({ trip, onDelete, onMenuAction, i18n }: TripCardProps) 
       icon: 'star-outline',
       onPress: () => onMenuAction(trip.id, 'feedback'),
     },
+    {
+      label: i18n.t('tripCardMenuDelete'),
+      icon: 'delete-outline',
+      onPress: () => onDelete(trip.id),
+      destructive: true,
+    },
   ];
 
   const renderDeleteAction = () => (
