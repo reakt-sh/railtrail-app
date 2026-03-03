@@ -54,7 +54,7 @@ export default function App() {
         <LanguageProvider>
           <GestureHandlerRootView style={{ flex: 1 }}>
             <RootNavigation />
-            <StatusBar style="dark" />
+            <StatusBar style="dark" translucent backgroundColor="transparent" />
           </GestureHandlerRootView>
         </LanguageProvider>
       </Provider>
