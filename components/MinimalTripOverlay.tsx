@@ -4,6 +4,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Color } from '../constants/color';
 import { textStyles } from '../constants/text-styles';
+import { useTranslation } from '../hooks';
 import { formatSpeed } from '../util/formatters';
 
 interface ExternalProps {
@@ -18,6 +19,7 @@ type Props = ExternalProps;
 export const MinimalTripOverlay = memo(({ speed, elapsedTime, onPress, onStopTrip }: Props) => {
   const insets = useSafeAreaInsets();
   const formattedSpeed = formatSpeed(speed);
+  const i18n = useTranslation();
 
   return (
     <View style={[styles.container, { top: insets.top + 32 }]}>
@@ -31,7 +33,7 @@ export const MinimalTripOverlay = memo(({ speed, elapsedTime, onPress, onStopTri
       >
         <View style={styles.menuContainer}>
           <MaterialCommunityIcons name="menu" size={24} color={Color.white} />
-          <Text style={styles.menuLabel}>Menü</Text>
+          <Text style={styles.menuLabel}>{i18n.t('menuButtonLabel')}</Text>
         </View>
         <View style={styles.divider} />
         <View style={styles.speedContainer}>
