@@ -87,13 +87,15 @@ const translations = {
     poiGeneric: 'Info',
     poiLevelCrossing: 'Level crossing',
     poiLesserLevelCrossing: 'Crossing',
-    poiPicnic: 'Picnic area',
+    poiPicnic: 'Stop/Picnic area',
     poiTrackEnd: 'End of track',
     poiTurningPoint: 'Turning point',
     poiHalt: 'Stop',
     poiTouristInfo: 'Tourist Info',
     poiBridge: 'Bridge',
-    poiRoadCrossing: 'Road overpass',
+    poiRoadCrossing: 'Road crossing',
+
+    levelCrossingHint: '🦺 Please stop and secure!',
 
     // Contacts Screen
     contactTouristInfoMalente: 'Tourist Info Malente',
@@ -335,6 +337,8 @@ const translations = {
     poiTouristInfo: 'Tourist Info',
     poiBridge: 'Brücke',
     poiRoadCrossing: 'Straßenüberführung',
+
+    levelCrossingHint: '🦺 bitte anhalten & sichern!',
 
     // Contacts Screen
     contactTouristInfoMalente: 'Tourist Info Malente',
