@@ -16,8 +16,8 @@ export const POITooltip = ({ name, type, originalType }: POITooltipProps) => {
 
   return (
     <View collapsable={false} style={styles.tooltip}>
-      {name && <Text style={styles.tooltipTitle}>{name}</Text>}
-      <Text style={styles.tooltipType}>{getPOITypeLabel(i18n, type, originalType)}</Text>
+      {name && <Text style={styles.tooltipTitle}>{getPOITypeLabel(i18n, type, originalType)}</Text>}
+      <Text style={styles.tooltipType}>{name}</Text>
     </View>
   );
 };
