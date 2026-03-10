@@ -1,5 +1,6 @@
 import * as MapLibreGL from '@maplibre/maplibre-react-native';
 import React, { memo, useCallback } from 'react';
+import { View } from 'react-native';
 import { useTranslation } from '../hooks/useTranslation';
 import { PointOfInterest } from '../types/init';
 import { getPOITitle } from '../util/poi';
@@ -43,15 +44,19 @@ export const POIMarker = memo(({ poi, index, zoomLevel, showTooltip, onPress }: 
         />
       </MapLibreGL.MarkerView>
 
-      {showTooltip && (
-        <MapLibreGL.MarkerView
-          id={`poi-tooltip-${index}`}
-          coordinate={coordinate}
-          anchor={{ x: 0.5, y: 1 }}
-        >
+      {/* Always render tooltip MarkerView to avoid native mount/unmount crashes
+         in MLRNMapView insertReactSubview. Control visibility via style instead. */}
+      <MapLibreGL.MarkerView
+        id={`poi-tooltip-${index}`}
+        coordinate={coordinate}
+        anchor={{ x: 0.5, y: 1 }}
+      >
+        {showTooltip ? (
           <POITooltip name={poi.name} type={poi.typeId} originalType={poi.originalType} />
-        </MapLibreGL.MarkerView>
-      )}
+        ) : (
+          <View />
+        )}
+      </MapLibreGL.MarkerView>
     </>
   );
 });

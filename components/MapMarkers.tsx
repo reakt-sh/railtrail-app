@@ -53,11 +53,14 @@ export const MapMarkers = memo(
       {/* Track line overlay (rendered first = below markers) */}
       {track && <Track track={track} />}
 
-      {/* User's current location */}
-      <UserLocationMarker
-        calculatedPosition={calculatedPosition}
-        location={location}
-      />
+      {/* User's current location - only render when coordinates available
+         to avoid mounting a PointAnnotation that returns null (crashes MLRNMapView) */}
+      {(calculatedPosition || location) && (
+        <UserLocationMarker
+          calculatedPosition={calculatedPosition}
+          location={location}
+        />
+      )}
 
       {/* Points of Interest along the track */}
       {pointsOfInterest.map((poi, index) => (
