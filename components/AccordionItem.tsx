@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   questionText: {
-    ...textStyles.headerTextThin,
+    ...textStyles.bodyLarge,
     flex: 1,
     marginRight: 8,
   },
