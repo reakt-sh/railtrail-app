@@ -82,6 +82,14 @@ npx expo prebuild
 npx expo run:ios    # oder run:android
 ```
 
+### Release Build
+
+Für Release Builds auf physischen Testgeräten (ohne Xcode/Android Studio):
+
+```bash
+ npx expo run:ios --device --configuration Release
+```
+
 ### Expo Go (eingeschränkt)
 
 Für schnelle UI-Änderungen ohne native Neukompilierung:

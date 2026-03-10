@@ -1,3 +1,4 @@
+import 'expo-dev-client';
 import { configureReanimatedLogger, ReanimatedLogLevel } from 'react-native-reanimated';
 import { RootNavigation } from './navigation';
 import { StatusBar } from 'expo-status-bar';
