@@ -31,6 +31,8 @@ const translations = {
     homeDialogBackgroundPermissionMessage:
       'For best app experience, it is recommended to enable background location access. In order to access the location, the app must remain open in the background.',
 
+    menuButtonLabel: 'More',
+
     // Draisine Info Screen
     infoDraisineDescription:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
@@ -267,6 +269,8 @@ const translations = {
     homeDialogBackgroundPermissionTripTitle: 'Standortberechtigungen',
     homeDialogBackgroundPermissionMessage:
       'Um die App optimal nutzen zu können, wird die Berechtigung für den Standortzugriff im Hintergrund benötigt. Die App muss dafür weiterhin im Hintergrund geöffnet bleiben.',
+
+    menuButtonLabel: 'Mehr',
 
     // Draisine Info Screen
     infoDraisineDescription:

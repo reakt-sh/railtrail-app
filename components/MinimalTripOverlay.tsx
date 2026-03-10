@@ -29,7 +29,10 @@ export const MinimalTripOverlay = memo(({ speed, elapsedTime, onPress, onStopTri
         accessibilityLabel="Open trip details"
         accessibilityHint="Opens drawer with full trip information"
       >
-        <MaterialCommunityIcons name="menu" size={24} color={Color.white} style={styles.menuIcon} />
+        <View style={styles.menuContainer}>
+          <MaterialCommunityIcons name="menu" size={24} color={Color.white} />
+          <Text style={styles.menuLabel}>Menü</Text>
+        </View>
         <View style={styles.divider} />
         <View style={styles.speedContainer}>
           <Text style={styles.speedValue}>{formattedSpeed}</Text>
@@ -83,8 +86,14 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingVertical: 12,
   },
-  menuIcon: {
-    opacity: 0.9,
+  menuContainer: {
+    alignItems: 'center',
+  },
+  menuLabel: {
+    color: Color.white,
+    fontSize: 10,
+    opacity: 0.7,
+    marginTop: 1,
   },
   speedContainer: {
     flexDirection: 'row',
