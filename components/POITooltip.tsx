@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
   },
   crossingHint: {
     ...textStyles.hint,
+    color: Color.warn,
     alignSelf: 'center',
     marginTop: 4,
   },
