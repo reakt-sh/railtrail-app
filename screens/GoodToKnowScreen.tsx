@@ -5,11 +5,10 @@ import { Color } from '../constants';
 import { useTranslation } from '../hooks/useTranslation';
 
 const faqKeys = [
-  { questionKey: 'faqDepartureTimes', answerKey: 'faqDepartureTimesAnswer' },
-  { questionKey: 'faqPassengers', answerKey: 'faqPassengersAnswer' },
-  { questionKey: 'faqPrice', answerKey: 'faqPriceAnswer' },
   { questionKey: 'faqHowItWorks', answerKey: 'faqHowItWorksAnswer' },
   { questionKey: 'faqRules', answerKey: 'faqRulesAnswer' },
+  { questionKey: 'faqDepartureTimes', answerKey: 'faqDepartureTimesAnswer' },
+  { questionKey: 'faqPrice', answerKey: 'faqPriceAnswer' },
   { questionKey: 'faqVouchers', answerKey: 'faqVouchersAnswer' },
 ];
 

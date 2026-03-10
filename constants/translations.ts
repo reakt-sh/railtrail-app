@@ -32,9 +32,10 @@ const translations = {
       'For best app experience, it is recommended to enable background location access. In order to access the location, the app must remain open in the background.',
 
     // Draisine Info Screen
-    infoDraisineEquipment: 'Equipment of the railbike',
+    infoDraisineDescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    infoDraisineEquipment: 'Setup',
     infoDraisineRules: 'Rules',
-    infoDraisineTurning: 'Rotating and turning the railbike',
+    infoDraisineTurning: 'Turning',
 
     // Bottom Sheet
     bottomSheetVehicleId: 'Railbike Selection',
@@ -70,7 +71,7 @@ const translations = {
     drawerRidingTips: 'Riding Tips',
 
     // Info Menu
-    infoTitleDraisineInfo: 'Railbike Explanations',
+    infoTitleDraisineInfo: 'About the Railbike',
     infoTitleTripHistory: 'Past Trips',
     infoTitleGoodToKnow: 'Good to Know',
     infoTitleContacts: 'Numbers and Addresses',
@@ -98,19 +99,16 @@ const translations = {
     // Good to Know Screen (FAQ)
     faqDepartureTimes: 'What are the departure times?',
     faqDepartureTimesAnswer:
-      'May–September: Weekdays and Saturdays at 10:00 AM (3–6 hrs) and 1:30 PM (3 hrs). Sundays at 10:00 AM (3 hrs).\n\nOctober–April: Weekdays at 10:00 AM and 1:30 PM. Weekends on request.\n\nPlease arrive 30 minutes before departure for formalities and handover.',
-    faqPassengers: 'How many people can ride?',
-    faqPassengersAnswer:
-      'Up to 4 people can ride on each railbike – 2 people pedal, 2 people can relax. At least one adult per railbike is required.',
-    faqPrice: 'What does a railbike cost?',
+      'Malente: Mon-Sat 10:00 a.m. and 1:30 p.m., Sun 10:00 a.m.\n\nLütjenburg: Mon-Sat 12:00 p.m.\n\nDay tours always start Mon-Sat at 10:00 a.m. from Malente and depart from Lütjenburg at 3:00 p.m. for the return trip.\n\n“Please arrive 30 minutes before departure for formalities and handover.”',
+    faqPrice: 'What does a railbike tour cost?',
     faqPriceAnswer:
       '3-hour tour: €50 per railbike\nFamily price (with children under 16): €40\nostseecard holders receive €2 discount.\n\nGroup tours with up to 60 people are possible.',
     faqHowItWorks: 'How does a railbike work?',
     faqHowItWorksAnswer:
-      'The railbike is powered by pedaling, similar to a bicycle. Important: Draisines have a long braking distance – drive with foresight!\n\nThere is one-way traffic, turning is done at the turning point.',
+      'The trolley is powered by pedaling, similar to a bicycle. Important: Trolleys have a long braking distance – drive with foresight! Traffic always flows in one direction to avoid oncoming traffic on the track. Be sure to adhere to the departure, turning, and return times! You can turn the draisine at all turning points. Up to 4 people can ride on each draisine – 2 people pedal, 2 people can relax. At least one adult per draisine is required.',
     faqRules: 'What should I pay attention to during the ride?',
     faqRulesAnswer:
-      '• Stop at all level crossings – road traffic has right of way\n• Do not stop near private properties\n• Animals are not recommended due to noise level\n• Wear long, sturdy clothing and solid footwear (vegetation along the track)',
+      '• A railbike never has right of way! Road and pedestrian traffic always has priority at all railroad crossings and road and path intersections. Therefore, please stop before every railroad crossing and only cross the road when there is no oncoming traffic. When crossing, one person wearing a high-visibility vest secures the crossing. • At least one adult must ride on each handcar. • Taking animals onto the railbike is not recommended, among other things due to the noise. • Due to the vegetation along the route, we recommend wearing long, sturdy clothing and sturdy shoes.',
     faqVouchers: 'Are there vouchers for railbike rides?',
     faqVouchersAnswer:
       'Yes, vouchers are available and valid for 3 years. Ask at the Tourist Info Malente.',
@@ -259,9 +257,10 @@ const translations = {
       'Um die App optimal nutzen zu können, wird die Berechtigung für den Standortzugriff im Hintergrund benötigt. Die App muss dafür weiterhin im Hintergrund geöffnet bleiben.',
 
     // Draisine Info Screen
-    infoDraisineEquipment: 'Ausrüstung der Draisine',
-    infoDraisineRules: 'Fahrtregeln',
-    infoDraisineTurning: 'Drehen und Wenden der Draisine',
+    infoDraisineDescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    infoDraisineEquipment: 'Aufbau',
+    infoDraisineRules: 'Regeln',
+    infoDraisineTurning: 'Drehen',
 
     // Bottom Sheet
     bottomSheetVehicleId: 'Draisinenauswahl',
@@ -299,7 +298,7 @@ const translations = {
     drawerRidingTips: 'Fahr-Tipps',
 
     // Info Menu
-    infoTitleDraisineInfo: 'Erklärungen zur Draisine',
+    infoTitleDraisineInfo: 'Zur Draisine',
     infoTitleTripHistory: 'Vergangene Fahrten',
     infoTitleGoodToKnow: 'Gut zu wissen',
     infoTitleContacts: 'Nummern und Adressen',
@@ -327,22 +326,19 @@ const translations = {
     // Good to Know Screen (FAQ)
     faqDepartureTimes: 'Wie sind die Abfahrtszeiten?',
     faqDepartureTimesAnswer:
-      'Mai–September: Wochentags und Samstags um 10:00 Uhr (3–6 Std) und 13:30 Uhr (3 Std). Sonntags um 10:00 Uhr (3 Std).\n\nOktober–April: Wochentags um 10:00 und 13:30 Uhr. Am Wochenende auf Anfrage.\n\nBitte erscheine 30 Minuten vor Abfahrt für Formalitäten und Übergabe.',
-    faqPassengers: 'Wie viele Personen können mitfahren?',
-    faqPassengersAnswer:
-      'Auf jeder Draisine können bis zu 4 Personen mitfahren – 2 Personen treten, 2 Personen können sich entspannen. Mindestens ein Erwachsener pro Draisine ist erforderlich.',
-    faqPrice: 'Was kostet eine Draisine?',
-    faqPriceAnswer:
-      '3-Stunden-Tour: 50€ pro Draisine\nFamilienpreis (mit Kindern unter 16): 40€\nostseecard-Inhaber erhalten 2€ Rabatt.\n\nGruppentouren mit bis zu 60 Personen sind möglich.',
+      'Malente: Mo-Sa 10:00 Uhr und 13:30 Uhr, So 10:00 Uhr\n\nLütjenburg: Mo-Sa 12:00 Uhr\n\nTagestouren starten immer Mo-Sa um 10:00 Uhr von Malente und machen sich um 15:00 Uhr von Lütjenburg aus auf die Rückfahrt.\n\n„Bitte erscheinen Sie 30 Minuten vor Abfahrt für Formalitäten und Übergabe“',
     faqHowItWorks: 'Wie funktioniert eine Draisine?',
     faqHowItWorksAnswer:
-      'Die Draisine wird durch Treten angetrieben, ähnlich wie ein Fahrrad. Wichtig: Draisinen haben einen langen Bremsweg – fahre vorausschauend!\n\nEs herrscht Einbahnverkehr, das Wenden erfolgt am Wendepunkt.',
+      'Die Draisine wird durch Treten angetrieben, ähnlich wie ein Fahrrad. Wichtig: Draisinen haben einen langen Bremsweg – fahre vorausschauend!\n\nDer Verkehr fließt immer in eine Fahrtrichtung, damit es nicht zu Gegenverkehr auf der Strecke kommt. Haltet Euch unbedingt an die Abfahrt-, Wende- und Rückgabezeiten! An allen Wendepunkten könnt Ihr die Draisine drehen.\n\nAuf jeder Draisine können bis zu 4 Personen mitfahren – 2 Personen treten, 2 Personen können sich entspannen. Mindestens ein Erwachsener pro Draisine ist erforderlich.',
     faqRules: 'Was muss ich bei der Fahrt beachten?',
     faqRulesAnswer:
-      '• An allen Bahnübergängen anhalten – Straßenverkehr hat Vorfahrt\n• Pro Draisine muss mindestens ein Erwachsener mitfahren. \n•Das Mitnehmen von Tieren auf der Draisine wird u.a. aufgrund der Lautstärke nicht empfohlen. \n• Wir empfehlen aufgrund der Vegetation an der Strecke das Tragen von langer und robuster Kleidung sowie festem Schuhwerk.',
+      '• Eine Draisine hat nie Vorfahrt! An allen Bahnübergängen sowie Straßen- und Wegkreuzungen hat der Straßen- und Fußgängerverkehr grundsätzlich Vorrang. Bitte haltet daher vor jedem Bahnübergang an und überquert die Straße erst, wenn sich kein kreuzender Verkehr nähert. Beim Überqueren sichert eine Person mit Warnweste den Übergang ab.\n• An allen Bahnübergängen anhalten – Straßenverkehr hat Vorfahrt\n• Pro Draisine muss mindestens ein Erwachsener mitfahren. \n•Das Mitnehmen von Tieren auf der Draisine wird u.a. aufgrund der Lautstärke nicht empfohlen. \n• Wir empfehlen aufgrund der Vegetation an der Strecke das Tragen von langer und robuster Kleidung sowie festem Schuhwerk.',
     faqVouchers: 'Gibt es Gutscheine für Draisinenfahrten?',
     faqVouchersAnswer:
       'Ja, für die Draisinenfahrten können auch Gutscheine erworben werden. Der Wert des Gutscheins kann selbst bestimmt werden, er ist ab Kauf 3 Jahre lang gültig.\n\nDie Gutscheine gibt es vor Ort bei der Tourist Information in Malente oder auf Bestellung zzgl. einer kleinen Versandpauschale per Post auf Rechnung.\n\nBei Interesse und weiteren Fragen meldet euch gern bei der Malenter Tourist Information. ',
+    faqPrice: 'Was kostet eine Draisinenfahrt?',
+    faqPriceAnswer:
+      '3-Stunden-Tour: 50€ pro Draisine\nFamilienpreis (mit Kindern unter 16): 40€\nostseecard-Inhaber erhalten 2€ Rabatt.\n\nGruppentouren mit bis zu 60 Personen sind möglich.',
 
     // Imprint Screen
     imprintOperator: 'Betreiber',
