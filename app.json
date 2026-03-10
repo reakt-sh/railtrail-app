@@ -2,25 +2,30 @@
   "expo": {
     "name": "Naturpark Draisine",
     "slug": "Train-Project",
+    "scheme": "naturparkdraisine",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "newArchEnabled": false,
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "bundleIdentifier": "de.hlb.naturparkdraisine",
       "buildNumber": "1.0.0",
       "supportsTablet": true,
       "infoPlist": {
-        "UIBackgroundModes": ["location"],
+        "UIBackgroundModes": [
+          "location"
+        ],
         "NSLocationAlwaysAndWhenInUseUsageDescription": "This app uses the location to show the current position on a map.",
-        "NSCameraUsageDescription": "This app uses the camera to scan QR codes on draisines for vehicle selection."
+        "NSCameraUsageDescription": "This app uses the camera to scan QR codes on draisines for vehicle selection.",
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
@@ -36,7 +41,8 @@
         "android.permission.ACCESS_BACKGROUND_LOCATION",
         "android.permission.FOREGROUND_SERVICE",
         "android.permission.FOREGROUND_SERVICE_LOCATION",
-        "android.permission.CAMERA"
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
       ],
       "softwareKeyboardLayoutMode": "pan"
     },
@@ -44,6 +50,7 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
+      "expo-dev-client",
       [
         "expo-location",
         {
@@ -65,8 +72,9 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "33c49930-36ac-4e4d-892d-dc2006fce072"
+        "projectId": "d25b4727-648c-493f-863c-3d41c9d38824"
       }
-    }
+    },
+    "owner": "railtrailapp"
   }
 }
