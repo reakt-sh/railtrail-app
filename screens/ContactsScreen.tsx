@@ -1,8 +1,8 @@
-import { Image, ScrollView, StyleSheet } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MalenteLogo from '../assets/icons/MalenteLogo';
 import { ContactCard } from '../components/ContactCard';
-import { Color } from '../constants';
+import { Color, textStyles } from '../constants';
 import { useTranslation } from '../hooks/useTranslation';
 
 export const ContactsScreen = () => {
@@ -13,7 +13,7 @@ export const ContactsScreen = () => {
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <ContactCard
           title={i18n.t('contactTouristInfoMalente')}
-          subtitle={i18n.t('contactTouristInfoMalenteSubtitle')}
+          subtitle={i18n.t('contactTouristInfoSubtitle')}
           address="Bahnhofstraße 3, Malente"
           phone="+49 4523 9842730"
           email="info@tourismus-malente.de"
@@ -22,6 +22,7 @@ export const ContactsScreen = () => {
 
         <ContactCard
           title={i18n.t('contactTouristInfoLuetjenburg')}
+          subtitle={i18n.t('contactTouristInfoSubtitle')}
           address="Markt 4, 24321 Lütjenburg"
           phone="+49 4381 - 419941"
           email="tourist-info@stadt-luetjenburg.de"
@@ -33,6 +34,8 @@ export const ContactsScreen = () => {
             />
           }
         />
+
+        <Text style={styles.serviceHint}>{i18n.t('contactTouristInfoHint')}</Text>
       </ScrollView>
     </SafeAreaView>
   );
@@ -56,5 +59,9 @@ const styles = StyleSheet.create({
   },
   malenteLogo: {
     marginBottom: -32,
+  },
+  serviceHint: {
+    ...textStyles.titleSmall,
+    padding: 8,
   },
 });

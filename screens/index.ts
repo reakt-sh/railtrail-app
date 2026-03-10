@@ -5,5 +5,7 @@ export { DraisineInfoScreen } from './DraisineInfoScreen';
 export { TripHistoryScreen } from './TripHistoryScreen';
 export { GoodToKnowScreen } from './GoodToKnowScreen';
 export { ContactsScreen } from './ContactsScreen';
+export { HeinLuettenborgScreen } from './HeinLuettenborgScreen';
+export { RailwayHistoryScreen } from './RailwayHistoryScreen';
 export { ImprintScreen } from './ImprintScreen';
 export { PrivacyPolicyScreen } from './PrivacyPolicyScreen';

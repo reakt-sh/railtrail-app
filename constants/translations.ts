@@ -32,7 +32,8 @@ const translations = {
       'For best app experience, it is recommended to enable background location access. In order to access the location, the app must remain open in the background.',
 
     // Draisine Info Screen
-    infoDraisineDescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    infoDraisineDescription:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     infoDraisineEquipment: 'Setup',
     infoDraisineRules: 'Rules',
     infoDraisineTurning: 'Turning',
@@ -74,7 +75,9 @@ const translations = {
     infoTitleDraisineInfo: 'About the Railbike',
     infoTitleTripHistory: 'Past Trips',
     infoTitleGoodToKnow: 'Good to Know',
-    infoTitleContacts: 'Numbers and Addresses',
+    infoTitleContacts: 'Distribution points / Service contacts',
+    infoTitleHeinLuettenborg: 'Project "Hein Lüttenborg"',
+    infoTitleRailwayHistory: 'History of the Railway',
     infoTitleImprint: 'Imprint',
     infoTitlePrivacyPolicy: 'Privacy Policy',
 
@@ -94,7 +97,8 @@ const translations = {
     contactTouristInfoMalente: 'Tourist Info Malente',
     contactTouristInfoMalenteSubtitle: 'Booking & handout of railbikes',
     contactTouristInfoLuetjenburg: 'Tourist Info Lütjenburg',
-    contactTourismuszentraleSubtitle: 'Operator of the Naturpark Draisine',
+    contactTouristInfoHint:
+      'Bei Problemen oder Fragen während der Fahrt wendet Euch an eure Ausgabestelle.',
 
     // Good to Know Screen (FAQ)
     faqDepartureTimes: 'What are the departure times?',
@@ -105,13 +109,21 @@ const translations = {
       '3-hour tour: €50 per railbike\nFamily price (with children under 16): €40\nostseecard holders receive €2 discount.\n\nGroup tours with up to 60 people are possible.',
     faqHowItWorks: 'How does a railbike work?',
     faqHowItWorksAnswer:
-      'The trolley is powered by pedaling, similar to a bicycle. Important: Trolleys have a long braking distance – drive with foresight! Traffic always flows in one direction to avoid oncoming traffic on the track. Be sure to adhere to the departure, turning, and return times! You can turn the draisine at all turning points. Up to 4 people can ride on each draisine – 2 people pedal, 2 people can relax. At least one adult per draisine is required.',
+      'The trolley is powered by pedaling, similar to a bicycle. Important: Trolleys have a long braking distance – drive with foresight! Traffic always flows in one direction to avoid oncoming traffic on the track. Be sure to adhere to the departure, turning, and return times! You can turn the railbike at all turning points. Up to 4 people can ride on each railbike – 2 people pedal, 2 people can relax. At least one adult per railbike is required.',
     faqRules: 'What should I pay attention to during the ride?',
     faqRulesAnswer:
       '• A railbike never has right of way! Road and pedestrian traffic always has priority at all railroad crossings and road and path intersections. Therefore, please stop before every railroad crossing and only cross the road when there is no oncoming traffic. When crossing, one person wearing a high-visibility vest secures the crossing. • At least one adult must ride on each handcar. • Taking animals onto the railbike is not recommended, among other things due to the noise. • Due to the vegetation along the route, we recommend wearing long, sturdy clothing and sturdy shoes.',
     faqVouchers: 'Are there vouchers for railbike rides?',
     faqVouchersAnswer:
       'Yes, vouchers are available and valid for 3 years. Ask at the Tourist Info Malente.',
+
+    // Hein Lüttenborg Screen
+    heinLuettenborgContent:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+
+    // Railway History Screen
+    railwayHistoryContent:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
 
     // Imprint Screen
     imprintOperator: 'Operator',
@@ -257,7 +269,8 @@ const translations = {
       'Um die App optimal nutzen zu können, wird die Berechtigung für den Standortzugriff im Hintergrund benötigt. Die App muss dafür weiterhin im Hintergrund geöffnet bleiben.',
 
     // Draisine Info Screen
-    infoDraisineDescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    infoDraisineDescription:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     infoDraisineEquipment: 'Aufbau',
     infoDraisineRules: 'Regeln',
     infoDraisineTurning: 'Drehen',
@@ -301,7 +314,9 @@ const translations = {
     infoTitleDraisineInfo: 'Zur Draisine',
     infoTitleTripHistory: 'Vergangene Fahrten',
     infoTitleGoodToKnow: 'Gut zu wissen',
-    infoTitleContacts: 'Nummern und Adressen',
+    infoTitleContacts: 'Ausgabestellen / Servicekontakte',
+    infoTitleHeinLuettenborg: 'Projekt „Hein Lüttenborg"',
+    infoTitleRailwayHistory: 'Geschichte der Bahnstrecke',
     infoTitleImprint: 'Impressum',
     infoTitlePrivacyPolicy: 'Datenschutzerklärung',
 
@@ -319,9 +334,10 @@ const translations = {
 
     // Contacts Screen
     contactTouristInfoMalente: 'Tourist Info Malente',
-    contactTouristInfoMalenteSubtitle: 'Buchung & Ausgabe der Draisinen',
+    contactTouristInfoSubtitle: 'Buchung & Ausgabe der Draisinen',
     contactTouristInfoLuetjenburg: 'Tourist Info Lütjenburg',
-    contactTourismuszentraleSubtitle: 'Betreiber der Draisinenbahn',
+    contactTouristInfoHint:
+      'If you encounter any problems or have any questions during your trip, please contact your issuing office.',
 
     // Good to Know Screen (FAQ)
     faqDepartureTimes: 'Wie sind die Abfahrtszeiten?',
@@ -339,6 +355,14 @@ const translations = {
     faqPrice: 'Was kostet eine Draisinenfahrt?',
     faqPriceAnswer:
       '3-Stunden-Tour: 50€ pro Draisine\nFamilienpreis (mit Kindern unter 16): 40€\nostseecard-Inhaber erhalten 2€ Rabatt.\n\nGruppentouren mit bis zu 60 Personen sind möglich.',
+
+    // Hein Lüttenborg Screen
+    heinLuettenborgContent:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+
+    // Railway History Screen
+    railwayHistoryContent:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
 
     // Imprint Screen
     imprintOperator: 'Betreiber',

@@ -5,9 +5,11 @@ import {
   ContactsScreen,
   DraisineInfoScreen,
   GoodToKnowScreen,
+  HeinLuettenborgScreen,
   ImprintScreen,
   InfoMenuScreen,
   PrivacyPolicyScreen,
+  RailwayHistoryScreen,
   TripHistoryScreen,
 } from '../screens';
 
@@ -17,6 +19,8 @@ export type InfoStackParamList = {
   TripHistory: undefined;
   GoodToKnow: undefined;
   Contacts: undefined;
+  HeinLuettenborg: undefined;
+  RailwayHistory: undefined;
   Imprint: undefined;
   PrivacyPolicy: undefined;
 };
@@ -53,6 +57,16 @@ export const InfoNavigation = () => {
         name="Contacts"
         component={ContactsScreen}
         options={{ title: localizedStrings.t('infoTitleContacts') }}
+      />
+      <Stack.Screen
+        name="HeinLuettenborg"
+        component={HeinLuettenborgScreen}
+        options={{ title: localizedStrings.t('infoTitleHeinLuettenborg') }}
+      />
+      <Stack.Screen
+        name="RailwayHistory"
+        component={RailwayHistoryScreen}
+        options={{ title: localizedStrings.t('infoTitleRailwayHistory') }}
       />
       <Stack.Screen
         name="Imprint"
