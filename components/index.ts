@@ -14,6 +14,5 @@ export { TrackMapView } from './TrackMapView';
 export { TripCard } from './TripCard';
 export { TripControls } from './TripControls';
 export { TripDrawerContent } from './TripDrawerContent';
-export { TripHeader } from './TripHeader';
 export { VehicleSelectionBottomSheet } from './VehicleSelectionBottomSheet';
 export { Warnings } from './Warnings';
