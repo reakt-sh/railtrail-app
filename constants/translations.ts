@@ -237,9 +237,9 @@ const translations = {
 
     landingPageWelcome: 'Willkommen!',
     landingPageDescription:
-      'Mit dieser App sind Sie auf der Schiene sicher unterwegs und bekommen viele nützliche Informationen angezeigt.',
+      'Mit dieser App bist du auf der Schiene sicher unterwegs und bekommst viele nützliche Informationen angezeigt.',
     landingPagePermissionExplanation:
-      'Um den vollen Funktionsumfang nutzen zu können, empfehlen wir Ihnen den Zugriff auf ihre Standortdaten zu genehmigen.',
+      'Um den vollen Funktionsumfang nutzen zu können, empfehlen wir dir den Zugriff auf deine Standortdaten zu genehmigen.',
     landingPageButtonWithLocation: "Los geht's",
     landingPagePrivacyPolicyPrefix: 'Ich stimme der ',
     landingPagePrivacyPolicyLink: 'Datenschutzerklärung',
@@ -253,7 +253,7 @@ const translations = {
     homeSnackbarWarningVehicleHeadingTowardsUserMessage:
       'Entgegenkommendes Fahrzeug in %{distance} m',
     homeDialogEndTripTitle: 'Fahrt beenden',
-    homeDialogEndTripMessage: 'Möchten Sie die aktuelle Fahrt wirklich beenden?',
+    homeDialogEndTripMessage: 'Möchtest du die aktuelle Fahrt wirklich beenden?',
     homeDialogBackgroundPermissionTripTitle: 'Standortberechtigungen',
     homeDialogBackgroundPermissionMessage:
       'Um die App optimal nutzen zu können, wird die Berechtigung für den Standortzugriff im Hintergrund benötigt. Die App muss dafür weiterhin im Hintergrund geöffnet bleiben.',
@@ -266,16 +266,16 @@ const translations = {
     // Bottom Sheet
     bottomSheetVehicleId: 'Draisinenauswahl',
     bottomSheetChangeVehicleId:
-      'Wenn Sie während des Ausfluges Ihr Fahrzeug wechseln, können Sie hier die neue Fahrzeugnummer wählen.',
+      'Wenn du während des Ausfluges dein Fahrzeug wechselst, kannst du hier die neue Fahrzeugnummer wählen.',
     bottomSheetStartTripMessage:
-      'Geben Sie die Fahrzeugnummer ein um fortzufahren. Die Nummer kann in der Regel auf der Sitzbank gefunden werden.',
-    bottomSheetSelectVehicle: 'Mit welcher Draisine sind Sie unterwegs?',
+      'Gib die Fahrzeugnummer ein um fortzufahren. Die Nummer kann in der Regel auf der Sitzbank gefunden werden.',
+    bottomSheetSelectVehicle: 'Mit welcher Draisine bist du unterwegs?',
     bottomSheetNoVehicles:
-      'Keine Draisinen verfügbar. Bitte warten Sie, bis Fahrzeuge auf der Karte erscheinen.',
+      'Keine Draisinen verfügbar. Bitte warte, bis Fahrzeuge auf der Karte erscheinen.',
     bottomSheetReload: 'Neu laden',
     bottomSheetAlertVehicleIdNotFoundTitle: 'Fahrzeug nicht gefunden',
     bottomSheetAlertVehicleIdNotFoundMessage:
-      'Das Fahrzeug konnte nicht gefunden werden. Stellen Sie sicher dass die Fahrzeugnummer korrekt ist und die richtige Strecke ausgewählt ist.',
+      'Das Fahrzeug konnte nicht gefunden werden. Stelle sicher, dass die Fahrzeugnummer korrekt ist und die richtige Strecke ausgewählt ist.',
 
     // Trip Header
     headerDistance: 'Zurückgelegte Distanz',
@@ -285,7 +285,7 @@ const translations = {
     headerVehicleId: 'Draisine:',
 
     // Trip Drawer
-    drawerNoActiveTrip: 'Keine aktive Fahrt.\nStarten Sie eine Fahrt, um Details hier zu sehen.',
+    drawerNoActiveTrip: 'Keine aktive Fahrt.\nStarte eine Fahrt, um Details hier zu sehen.',
     drawerUnknownVehicle: 'Unbekanntes Fahrzeug',
     drawerTripStats: 'Fahrtstatistik',
     drawerSpeed: 'Geschwindigkeit',
@@ -327,7 +327,7 @@ const translations = {
     // Good to Know Screen (FAQ)
     faqDepartureTimes: 'Wie sind die Abfahrtszeiten?',
     faqDepartureTimesAnswer:
-      'Mai–September: Wochentags und Samstags um 10:00 Uhr (3–6 Std) und 13:30 Uhr (3 Std). Sonntags um 10:00 Uhr (3 Std).\n\nOktober–April: Wochentags um 10:00 und 13:30 Uhr. Am Wochenende auf Anfrage.\n\nBitte erscheinen Sie 30 Minuten vor Abfahrt für Formalitäten und Übergabe.',
+      'Mai–September: Wochentags und Samstags um 10:00 Uhr (3–6 Std) und 13:30 Uhr (3 Std). Sonntags um 10:00 Uhr (3 Std).\n\nOktober–April: Wochentags um 10:00 und 13:30 Uhr. Am Wochenende auf Anfrage.\n\nBitte erscheine 30 Minuten vor Abfahrt für Formalitäten und Übergabe.',
     faqPassengers: 'Wie viele Personen können mitfahren?',
     faqPassengersAnswer:
       'Auf jeder Draisine können bis zu 4 Personen mitfahren – 2 Personen treten, 2 Personen können sich entspannen. Mindestens ein Erwachsener pro Draisine ist erforderlich.',
@@ -336,7 +336,7 @@ const translations = {
       '3-Stunden-Tour: 50€ pro Draisine\nFamilienpreis (mit Kindern unter 16): 40€\nostseecard-Inhaber erhalten 2€ Rabatt.\n\nGruppentouren mit bis zu 60 Personen sind möglich.',
     faqHowItWorks: 'Wie funktioniert eine Draisine?',
     faqHowItWorksAnswer:
-      'Die Draisine wird durch Treten angetrieben, ähnlich wie ein Fahrrad. Wichtig: Draisinen haben einen langen Bremsweg – fahren Sie vorausschauend!\n\nEs herrscht Einbahnverkehr, das Wenden erfolgt am Wendepunkt.',
+      'Die Draisine wird durch Treten angetrieben, ähnlich wie ein Fahrrad. Wichtig: Draisinen haben einen langen Bremsweg – fahre vorausschauend!\n\nEs herrscht Einbahnverkehr, das Wenden erfolgt am Wendepunkt.',
     faqRules: 'Was muss ich bei der Fahrt beachten?',
     faqRulesAnswer:
       '• An allen Bahnübergängen anhalten – Straßenverkehr hat Vorfahrt\n• Pro Draisine muss mindestens ein Erwachsener mitfahren. \n•Das Mitnehmen von Tieren auf der Draisine wird u.a. aufgrund der Lautstärke nicht empfohlen. \n• Wir empfehlen aufgrund der Vegetation an der Strecke das Tragen von langer und robuster Kleidung sowie festem Schuhwerk.',
@@ -361,43 +361,43 @@ const translations = {
 
     privacySection2Title: '2. Übersicht der Datenverarbeitung',
     privacySection2Content:
-      'Diese App dient als digitaler Bordcomputer für den Draisinenverleih auf der Bahnstrecke Malente–Lütjenburg. Sie wurde bewusst datenschutzfreundlich gestaltet: Es gibt keine Nutzerregistrierung, kein Login, kein Tracking und keine Analyse-Tools. Die App verarbeitet so wenig personenbezogene Daten wie möglich.\n\nIm Folgenden informieren wir Sie darüber, welche Daten bei der Nutzung der App verarbeitet werden, zu welchem Zweck und auf welcher Rechtsgrundlage.',
+      'Diese App dient als digitaler Bordcomputer für den Draisinenverleih auf der Bahnstrecke Malente–Lütjenburg. Sie wurde bewusst datenschutzfreundlich gestaltet: Es gibt keine Nutzerregistrierung, kein Login, kein Tracking und keine Analyse-Tools. Die App verarbeitet so wenig personenbezogene Daten wie möglich.\n\nIm Folgenden informieren wir dich darüber, welche Daten bei der Nutzung der App verarbeitet werden, zu welchem Zweck und auf welcher Rechtsgrundlage.',
 
     privacySection3Title: '3. Standortdaten (GPS)',
     privacySection3Content:
-      '3.1 Lokale Nutzung Ihrer Standortdaten\n\nWenn Sie der App die Berechtigung erteilen, auf den Standort Ihres Mobilgeräts zuzugreifen, werden Ihre GPS-Daten ausschließlich lokal auf Ihrem Gerät verarbeitet. Die Standortdaten werden verwendet, um:\n\n• Ihre eigene Position auf der Streckenkarte anzuzeigen,\n• Ihre Position auf den Streckenverlauf zu projizieren (sog. Snapping),\n• Fahrtinformationen wie Geschwindigkeit und zurückgelegte Distanz zu berechnen.\n\nIhre GPS-Daten werden zu keinem Zeitpunkt an einen Server übertragen. Sie verlassen Ihr Gerät nicht und werden nicht gespeichert. Wenn Sie die App schließen, werden die Standortdaten verworfen.\n\nRechtsgrundlage: Ihre Einwilligung gem. Art. 6 Abs. 1 lit. a DSGVO, die Sie über die Standortberechtigung Ihres Betriebssystems (iOS/Android) erteilen. Sie können die Berechtigung jederzeit in den Geräteeinstellungen widerrufen. Die App ist auch ohne Standortfreigabe nutzbar – in diesem Fall wird nur die Position Ihrer Draisine anhand der GNSS-Tracker-Daten angezeigt.\n\n3.2 Keine Hintergrund-Standorterfassung\n\nDie App erfasst Ihren Standort ausschließlich, während sie im Vordergrund aktiv ist. Es findet keine Standorterfassung im Hintergrund statt.',
+      '3.1 Lokale Nutzung deiner Standortdaten\n\nWenn du der App die Berechtigung erteilst, auf den Standort deines Mobilgeräts zuzugreifen, werden deine GPS-Daten ausschließlich lokal auf deinem Gerät verarbeitet. Die Standortdaten werden verwendet, um:\n\n• deine eigene Position auf der Streckenkarte anzuzeigen,\n• deine Position auf den Streckenverlauf zu projizieren (sog. Snapping),\n• Fahrtinformationen wie Geschwindigkeit und zurückgelegte Distanz zu berechnen.\n\nDeine GPS-Daten werden zu keinem Zeitpunkt an einen Server übertragen. Sie verlassen dein Gerät nicht und werden nicht gespeichert. Wenn du die App schließt, werden die Standortdaten verworfen.\n\nRechtsgrundlage: Deine Einwilligung gem. Art. 6 Abs. 1 lit. a DSGVO, die du über die Standortberechtigung deines Betriebssystems (iOS/Android) erteilst. Du kannst die Berechtigung jederzeit in den Geräteeinstellungen widerrufen. Die App ist auch ohne Standortfreigabe nutzbar – in diesem Fall wird nur die Position deiner Draisine anhand der GNSS-Tracker-Daten angezeigt.\n\n3.2 Keine Hintergrund-Standorterfassung\n\nDie App erfasst deinen Standort ausschließlich, während sie im Vordergrund aktiv ist. Es findet keine Standorterfassung im Hintergrund statt.',
 
     privacySection4Title: '4. Empfang von Draisinen-Positionsdaten',
     privacySection4Content:
-      'Die App empfängt über eine WebSocket-Verbindung die Positionsdaten aller Draisinen auf der Strecke vom Backend-Server. Diese Daten stammen von den an den Draisinen montierten GNSS-Trackern (Hardware) und werden nicht durch die App oder Ihr Gerät erzeugt.\n\nBeim Aufbau der WebSocket-Verbindung wird technisch bedingt Ihre IP-Adresse an den Backend-Server übertragen. Die App sendet im laufenden Betrieb lediglich ein technisches Heartbeat-Signal („Ping") zur Aufrechterhaltung der Verbindung. Es werden keine personenbezogenen Daten an den Server gesendet.\n\nServer-Standort: Der Backend-Server wird von der Christian-Albrechts-Universität zu Kiel (CAU) in Deutschland betrieben.\n\nRechtsgrundlage: Berechtigtes Interesse gem. Art. 6 Abs. 1 lit. f DSGVO. Die Verbindung ist für die Kernfunktion der App (Anzeige der Draisinen-Positionen) erforderlich. Die IP-Adresse wird nur im Rahmen der technisch notwendigen Verbindung verarbeitet.',
+      'Die App empfängt über eine WebSocket-Verbindung die Positionsdaten aller Draisinen auf der Strecke vom Backend-Server. Diese Daten stammen von den an den Draisinen montierten GNSS-Trackern (Hardware) und werden nicht durch die App oder dein Gerät erzeugt.\n\nBeim Aufbau der WebSocket-Verbindung wird technisch bedingt deine IP-Adresse an den Backend-Server übertragen. Die App sendet im laufenden Betrieb lediglich ein technisches Heartbeat-Signal („Ping") zur Aufrechterhaltung der Verbindung. Es werden keine personenbezogenen Daten an den Server gesendet.\n\nServer-Standort: Der Backend-Server wird von der Christian-Albrechts-Universität zu Kiel (CAU) in Deutschland betrieben.\n\nRechtsgrundlage: Berechtigtes Interesse gem. Art. 6 Abs. 1 lit. f DSGVO. Die Verbindung ist für die Kernfunktion der App (Anzeige der Draisinen-Positionen) erforderlich. Die IP-Adresse wird nur im Rahmen der technisch notwendigen Verbindung verarbeitet.',
 
     privacySection5Title: '5. Lokale Datenspeicherung',
     privacySection5Content:
-      'Die App speichert Zusammenfassungen Ihrer Fahrten lokal auf Ihrem Gerät (mittels AsyncStorage). Gespeichert werden ausschließlich:\n\n• Fahrt-ID (intern generiert),\n• Start- und Endzeit der Fahrt,\n• Draisinen-Nummer und -Name,\n• zurückgelegte Gesamtdistanz.\n\nEs werden keine GPS-Koordinaten, keine Bewegungsprofile und keine personenbezogenen Daten gespeichert. Diese Daten verbleiben ausschließlich auf Ihrem Gerät und werden nicht an Dritte übermittelt. Sie können diese Daten jederzeit löschen, indem Sie die App-Daten in Ihren Geräteeinstellungen löschen oder die App deinstallieren.\n\nRechtsgrundlage: Berechtigtes Interesse gem. Art. 6 Abs. 1 lit. f DSGVO (Bereitstellung der Fahrthistorie-Funktion). Die Daten werden nur lokal auf Ihrem Gerät gespeichert.',
+      'Die App speichert Zusammenfassungen deiner Fahrten lokal auf deinem Gerät (mittels AsyncStorage). Gespeichert werden ausschließlich:\n\n• Fahrt-ID (intern generiert),\n• Start- und Endzeit der Fahrt,\n• Draisinen-Nummer und -Name,\n• zurückgelegte Gesamtdistanz.\n\nEs werden keine GPS-Koordinaten, keine Bewegungsprofile und keine personenbezogenen Daten gespeichert. Diese Daten verbleiben ausschließlich auf deinem Gerät und werden nicht an Dritte übermittelt. Du kannst diese Daten jederzeit löschen, indem du die App-Daten in deinen Geräteeinstellungen löschst oder die App deinstallierst.\n\nRechtsgrundlage: Berechtigtes Interesse gem. Art. 6 Abs. 1 lit. f DSGVO (Bereitstellung der Fahrthistorie-Funktion). Die Daten werden nur lokal auf deinem Gerät gespeichert.',
 
     privacySection6Title: '6. Kartendarstellung (MapLibre)',
     privacySection6Content:
-      'Für die Kartendarstellung verwendet die App MapLibre, eine quelloffene Kartenbibliothek. Die Kartenkacheln (Tiles) werden von einem externen Server geladen. Dabei wird technisch bedingt Ihre IP-Adresse an den Tile-Server übertragen.\n\n[HINWEIS: Hier muss der konkrete Tile-Server-Anbieter ergänzt werden, z. B. OpenStreetMap Foundation, Maptiler, oder ein selbst gehosteter Server. Je nach Anbieter können unterschiedliche Datenschutzhinweise gelten.]\n\nRechtsgrundlage: Berechtigtes Interesse gem. Art. 6 Abs. 1 lit. f DSGVO. Die Kartenanzeige ist eine Kernfunktion der App.',
+      'Für die Kartendarstellung verwendet die App MapLibre, eine quelloffene Kartenbibliothek. Die Kartenkacheln (Tiles) werden von einem externen Server geladen. Dabei wird technisch bedingt deine IP-Adresse an den Tile-Server übertragen.\n\n[HINWEIS: Hier muss der konkrete Tile-Server-Anbieter ergänzt werden, z. B. OpenStreetMap Foundation, Maptiler, oder ein selbst gehosteter Server. Je nach Anbieter können unterschiedliche Datenschutzhinweise gelten.]\n\nRechtsgrundlage: Berechtigtes Interesse gem. Art. 6 Abs. 1 lit. f DSGVO. Die Kartenanzeige ist eine Kernfunktion der App.',
 
     privacySection7Title: '7. Eingebettete YouTube-Videos',
     privacySection7Content:
-      'Die App enthält eingebettete YouTube-Videos (z. B. Anleitungen zur Nutzung der Draisinen und zur Sicherung von Bahnübergängen). Die Einbettung erfolgt über den erweiterten Datenschutzmodus von YouTube.\n\nBeim Abspielen eines Videos wird eine Verbindung zu Servern von Google Ireland Limited (Gordon House, Barrow Street, Dublin 4, Irland) hergestellt. Dabei werden folgende Daten an Google übertragen:\n\n• Ihre IP-Adresse,\n• das aufgerufene Video,\n• technische Informationen zu Ihrem Gerät und Browser.\n\nSofern Sie in Ihrem Google-Konto eingeloggt sind, kann Google den Videoabruf Ihrem Profil zuordnen. Google kann die Daten auch in die USA übertragen. Die Übertragung in die USA erfolgt auf Grundlage des EU-US Data Privacy Framework (Angemessenheitsbeschluss der EU-Kommission gem. Art. 45 DSGVO).\n\nWeitere Informationen finden Sie in der Datenschutzerklärung von Google: https://policies.google.com/privacy\n\nRechtsgrundlage: Einwilligung gem. Art. 6 Abs. 1 lit. a DSGVO. Die Videos werden erst geladen, wenn Sie diese aktiv abspielen.',
+      'Die App enthält eingebettete YouTube-Videos (z. B. Anleitungen zur Nutzung der Draisinen und zur Sicherung von Bahnübergängen). Die Einbettung erfolgt über den erweiterten Datenschutzmodus von YouTube.\n\nBeim Abspielen eines Videos wird eine Verbindung zu Servern von Google Ireland Limited (Gordon House, Barrow Street, Dublin 4, Irland) hergestellt. Dabei werden folgende Daten an Google übertragen:\n\n• deine IP-Adresse,\n• das aufgerufene Video,\n• technische Informationen zu deinem Gerät und Browser.\n\nSofern du in deinem Google-Konto eingeloggt bist, kann Google den Videoabruf deinem Profil zuordnen. Google kann die Daten auch in die USA übertragen. Die Übertragung in die USA erfolgt auf Grundlage des EU-US Data Privacy Framework (Angemessenheitsbeschluss der EU-Kommission gem. Art. 45 DSGVO).\n\nWeitere Informationen findest du in der Datenschutzerklärung von Google: https://policies.google.com/privacy\n\nRechtsgrundlage: Einwilligung gem. Art. 6 Abs. 1 lit. a DSGVO. Die Videos werden erst geladen, wenn du diese aktiv abspielst.',
 
     privacySection8Title: '8. Feedback-Formular',
     privacySection8Content:
-      'Die App bietet ein anonymes Feedback-Formular, über das Sie eine Sternebewertung und optional einen Freitext-Kommentar abgeben können. Die Bewertung wird ohne jeglichen Personenbezug übermittelt – es werden keine IP-Adresse, Geräte-ID, Draisinen-Nummer oder sonstige identifizierenden Merkmale mitgesendet.\n\nRechtsgrundlage: Da keine personenbezogenen Daten verarbeitet werden, ist die DSGVO auf die reine Feedback-Übermittlung nicht anwendbar. Sollten Sie im Freitext personenbezogene Daten angeben, erfolgt die Verarbeitung auf Grundlage Ihrer Einwilligung gem. Art. 6 Abs. 1 lit. a DSGVO.',
+      'Die App bietet ein anonymes Feedback-Formular, über das du eine Sternebewertung und optional einen Freitext-Kommentar abgeben kannst. Die Bewertung wird ohne jeglichen Personenbezug übermittelt – es werden keine IP-Adresse, Geräte-ID, Draisinen-Nummer oder sonstige identifizierenden Merkmale mitgesendet.\n\nRechtsgrundlage: Da keine personenbezogenen Daten verarbeitet werden, ist die DSGVO auf die reine Feedback-Übermittlung nicht anwendbar. Solltest du im Freitext personenbezogene Daten angeben, erfolgt die Verarbeitung auf Grundlage deiner Einwilligung gem. Art. 6 Abs. 1 lit. a DSGVO.',
 
     privacySection9Title: '9. Keine weiteren Datenverarbeitungen',
     privacySection9Content:
       'Die App verwendet:\n\n• kein Nutzer-Tracking oder Analytics (z. B. Firebase, Google Analytics),\n• keine Werbung oder Werbe-IDs,\n• keine Social-Media-Plugins,\n• keine Nutzerkonten oder Registrierung,\n• keine Cookies oder vergleichbare Tracking-Technologien,\n• keine Weitergabe von Daten an Dritte (außer den oben genannten technischen Verbindungen).',
 
-    privacySection10Title: '10. Ihre Rechte',
+    privacySection10Title: '10. Deine Rechte',
     privacySection10Content:
-      'Sie haben nach der DSGVO folgende Rechte:\n\n• Auskunftsrecht (Art. 15 DSGVO): Sie können Auskunft über die von uns verarbeiteten personenbezogenen Daten verlangen.\n• Recht auf Berichtigung (Art. 16 DSGVO): Sie können die Berichtigung unrichtiger Daten verlangen.\n• Recht auf Löschung (Art. 17 DSGVO): Sie können die Löschung Ihrer Daten verlangen, sofern die Voraussetzungen vorliegen.\n• Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO)\n• Recht auf Datenübertragbarkeit (Art. 20 DSGVO)\n• Widerspruchsrecht (Art. 21 DSGVO): Sie können der Verarbeitung auf Grundlage berechtigter Interessen widersprechen.\n• Recht auf Widerruf der Einwilligung (Art. 7 Abs. 3 DSGVO): Erteilte Einwilligungen (z. B. Standortfreigabe) können Sie jederzeit mit Wirkung für die Zukunft widerrufen.\n\nZur Ausübung Ihrer Rechte wenden Sie sich bitte an die oben genannte verantwortliche Stelle.',
+      'Du hast nach der DSGVO folgende Rechte:\n\n• Auskunftsrecht (Art. 15 DSGVO): Du kannst Auskunft über die von uns verarbeiteten personenbezogenen Daten verlangen.\n• Recht auf Berichtigung (Art. 16 DSGVO): Du kannst die Berichtigung unrichtiger Daten verlangen.\n• Recht auf Löschung (Art. 17 DSGVO): Du kannst die Löschung deiner Daten verlangen, sofern die Voraussetzungen vorliegen.\n• Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO)\n• Recht auf Datenübertragbarkeit (Art. 20 DSGVO)\n• Widerspruchsrecht (Art. 21 DSGVO): Du kannst der Verarbeitung auf Grundlage berechtigter Interessen widersprechen.\n• Recht auf Widerruf der Einwilligung (Art. 7 Abs. 3 DSGVO): Erteilte Einwilligungen (z. B. Standortfreigabe) kannst du jederzeit mit Wirkung für die Zukunft widerrufen.\n\nZur Ausübung deiner Rechte wende dich bitte an die oben genannte verantwortliche Stelle.',
 
     privacySection11Title: '11. Beschwerderecht bei einer Aufsichtsbehörde',
     privacySection11Content:
-      'Wenn Sie der Ansicht sind, dass die Verarbeitung Ihrer personenbezogenen Daten gegen die DSGVO verstößt, haben Sie das Recht, Beschwerde bei einer Datenschutz-Aufsichtsbehörde einzulegen.\n\nDie zuständige Aufsichtsbehörde ist:\n\nUnabhängiges Landeszentrum für Datenschutz Schleswig-Holstein (ULD)\nHolstenstraße 98, 24103 Kiel\nTelefon: +49 431 988-1200\nE-Mail: mail@datenschutzzentrum.de\nhttps://www.datenschutzzentrum.de',
+      'Wenn du der Ansicht bist, dass die Verarbeitung deiner personenbezogenen Daten gegen die DSGVO verstößt, hast du das Recht, Beschwerde bei einer Datenschutz-Aufsichtsbehörde einzulegen.\n\nDie zuständige Aufsichtsbehörde ist:\n\nUnabhängiges Landeszentrum für Datenschutz Schleswig-Holstein (ULD)\nHolstenstraße 98, 24103 Kiel\nTelefon: +49 431 988-1200\nE-Mail: mail@datenschutzzentrum.de\nhttps://www.datenschutzzentrum.de',
 
     privacySection12Title: '12. Änderungen dieser Datenschutzerklärung',
     privacySection12Content:
@@ -406,7 +406,7 @@ const translations = {
     // Trip History Screen
     tripHistoryTitle: 'Vergangene Fahrten',
     tripHistoryDeleteTitle: 'Fahrt löschen',
-    tripHistoryDeleteMessage: 'Möchten Sie diese Fahrt aus der Hostorie löschen?',
+    tripHistoryDeleteMessage: 'Möchtest du diese Fahrt aus der Historie löschen?',
     tripHistoryDeleteCancel: 'Abbrechen',
     tripHistoryDeleteConfirm: 'Löschen',
     tripHistoryEmpty: 'Noch keine Fahrten aufgezeichnet.',
@@ -425,7 +425,7 @@ const translations = {
     tripControlsSelectDraisine: 'Draisine auswählen',
 
     // Feedback
-    feedbackTitle: 'Wie hat Ihnen die Tour gefallen?',
+    feedbackTitle: 'Wie hat dir die Tour gefallen?',
     feedbackPlaceholder: 'Platz für Berichte, Lob und Kritik...',
     feedbackSubmit: 'Bewertung abschicken',
     feedbackSkip: 'Später',
