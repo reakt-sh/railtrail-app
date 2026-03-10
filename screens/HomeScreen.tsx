@@ -332,6 +332,7 @@ export const HomeScreen = () => {
           speed={motion.speed}
           elapsedTime={elapsedTime}
           onPress={handleOpenDrawer}
+          onStopTrip={handleStopTrip}
         />
       )}
 
@@ -360,7 +361,6 @@ export const HomeScreen = () => {
         isFollowingVehicle={isFollowingVehicle}
         onLocationButtonClick={handleLocationButtonClick}
         onStartTrip={handleStartTrip}
-        onStopTrip={handleStopTrip}
         onCenterOnVehicle={handleCenterOnVehicle}
         warnings={warnings}
         speed={motion.speed}
