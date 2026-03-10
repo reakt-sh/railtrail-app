@@ -82,19 +82,13 @@ npx expo prebuild
 npx expo run:ios    # oder run:android
 ```
 
-### Preview Build (Testgeräte)
+### Release Build
 
-Für Builds auf physischen Testgeräten (ohne Xcode/Android Studio):
+Für Release Builds auf physischen Testgeräten (ohne Xcode/Android Studio):
 
 ```bash
-# EAS CLI global installieren
-npm install -g eas-cli
-
-# Preview Build starten (iOS + Android)
-eas build --profile preview --platform all
+ npx expo run:ios --device --configuration Release
 ```
-
-Siehe [PREVIEW-BUILD.md](PREVIEW-BUILD.md) für die vollständige Anleitung (Geräte-Registrierung, Installation, etc.).
 
 ### Expo Go (eingeschränkt)
 
