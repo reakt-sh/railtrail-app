@@ -72,6 +72,7 @@ const translations = {
     drawerNextTurningPoint: 'Next turning point',
     drawerSecondTurningPoint: 'Following turning point',
     drawerRidingTips: 'Riding Tips',
+    drawerChangeVehicle: 'Change railbike',
 
     // Info Menu
     infoTitleDraisineInfo: 'About the Railbike',
@@ -315,6 +316,7 @@ const translations = {
     drawerNextTurningPoint: 'Nächster Wendepunkt',
     drawerSecondTurningPoint: 'Übernächster Wendepunkt',
     drawerRidingTips: 'Fahr-Tipps',
+    drawerChangeVehicle: 'Draisine wechseln',
 
     // Info Menu
     infoTitleDraisineInfo: 'Zur Draisine',

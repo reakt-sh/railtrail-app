@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { DrawerContentComponentProps, DrawerContentScrollView } from '@react-navigation/drawer';
 import React, { memo, useEffect, useState } from 'react';
-import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import { DraisineIcon } from '../assets/icons';
@@ -88,7 +88,8 @@ export const TripDrawerContent = memo((props: DrawerContentComponentProps) => {
           accessibilityRole="button"
           accessibilityLabel={localizedStrings.t('bottomSheetChangeVehicleId')}
         >
-          <MaterialCommunityIcons name="swap-horizontal" size={24} color={Color.primary} />
+          <MaterialCommunityIcons name="swap-horizontal" size={28} color={Color.primary} />
+          <Text style={styles.changeVehicleLabel}>{localizedStrings.t('drawerChangeVehicle')}</Text>
         </Pressable>
       </View>
 
@@ -155,18 +156,16 @@ export const TripDrawerContent = memo((props: DrawerContentComponentProps) => {
 
         <Pressable
           style={styles.tipButton}
-          onPress={() => Linking.openURL('https://www.youtube.com/watch?v=Y_b3CLVxdr4')}
+          onPress={() => {
+            props.navigation.closeDrawer();
+            props.navigation.navigate('MainTabs', {
+              screen: localizedStrings.t('navigationInfo'),
+              params: { screen: 'DraisineInfo' },
+            });
+          }}
         >
-          <MaterialCommunityIcons name="play-circle" size={24} color={Color.primary} />
-          <Text style={styles.tipButtonText}>{localizedStrings.t('infoDraisineRules')}</Text>
-        </Pressable>
-
-        <Pressable
-          style={styles.tipButton}
-          onPress={() => Linking.openURL('https://www.youtube.com/watch?v=hUnVDZjz-_o')}
-        >
-          <MaterialCommunityIcons name="play-circle" size={24} color={Color.primary} />
-          <Text style={styles.tipButtonText}>{localizedStrings.t('infoDraisineTurning')}</Text>
+          <MaterialCommunityIcons name="information-outline" size={24} color={Color.primary} />
+          <Text style={styles.tipButtonText}>{localizedStrings.t('infoTitleDraisineInfo')}</Text>
         </Pressable>
       </View>
     </DrawerContentScrollView>
@@ -194,6 +193,12 @@ const styles = StyleSheet.create({
   changeVehicleButton: {
     padding: 8,
     marginLeft: 8,
+    alignItems: 'center',
+  },
+  changeVehicleLabel: {
+    ...textStyles.bodySmall,
+    color: Color.primary,
+    marginTop: 2,
   },
   section: {
     paddingHorizontal: 16,
