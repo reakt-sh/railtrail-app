@@ -32,17 +32,15 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 8,
     maxWidth: 200,
-    width: 176,
+    width: 160,
     textAlign: 'center',
-    marginBottom: 16,
+    marginBottom: 4,
   },
   tooltipTitle: {
     ...textStyles.titleSmall,
-    alignSelf: 'center',
   },
   tooltipType: {
     ...textStyles.hint,
-    alignSelf: 'center',
   },
   crossingHint: {
     ...textStyles.hint,

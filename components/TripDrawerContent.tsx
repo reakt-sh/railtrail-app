@@ -143,7 +143,9 @@ export const TripDrawerContent = memo((props: DrawerContentComponentProps) => {
           icon="rotate-3d-variant"
           label={localizedStrings.t('drawerSecondTurningPoint')}
           value={
-            warnings.secondTurningPoint != null ? `${Math.round(warnings.secondTurningPoint)} m` : '-'
+            warnings.secondTurningPoint != null
+              ? `${Math.round(warnings.secondTurningPoint)} m`
+              : '-'
           }
         />
       </View>

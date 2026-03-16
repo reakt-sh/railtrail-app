@@ -2,6 +2,7 @@ export { Button } from './Button';
 export { Checkbox } from './Checkbox';
 export { FAB } from './Fab';
 export { FeedbackBottomSheet } from './FeedbackBottomSheet';
+export { InversedButton } from './InversedButton';
 export { LoadingVehiclesOverlay } from './LoadingVehiclesOverlay';
 export { LocationButton } from './LocationButton';
 export { MapMarkers } from './MapMarkers';

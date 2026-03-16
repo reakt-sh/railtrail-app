@@ -157,7 +157,7 @@ export const InfoMenuScreen = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: Color.backgroundLight,
+    backgroundColor: Color.primary,
   },
   container: {
     flex: 1,
@@ -219,8 +219,10 @@ const styles = StyleSheet.create({
     color: Color.white,
   },
   supportSection: {
+    backgroundColor: Color.white,
+    borderRadius: 16,
     marginTop: 32,
-    paddingVertical: 16,
+    padding: 16,
   },
   logoRow: {
     flexDirection: 'row',

@@ -6,7 +6,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 import { Dispatch } from 'redux';
 import AppLogo from '../assets/icons/AppLogo';
-import { Button, Checkbox } from '../components';
+import { Checkbox } from '../components';
+import { InversedButton } from '../components/InversedButton';
 import { privacySections, StorageKeys } from '../constants';
 import { Color } from '../constants/color';
 import { textStyles } from '../constants/text-styles';
@@ -83,18 +84,22 @@ export const LandingPageScreen = ({ navigation }: any) => {
       <Checkbox
         isChecked={isCheckboxChecked}
         setIsChecked={setIsCheckboxChecked}
+        color={Color.white}
         style={styles.buttonMargin}
       >
-        <Text style={textStyles.bodyMedium}>
+        <Text style={[textStyles.bodyMedium, styles.white]}>
           {localizedStrings.t('landingPagePrivacyPolicyPrefix')}
-          <Text style={textStyles.link} onPress={() => setIsPrivacyModalVisible(true)}>
+          <Text
+            style={[textStyles.link, styles.white]}
+            onPress={() => setIsPrivacyModalVisible(true)}
+          >
             {localizedStrings.t('landingPagePrivacyPolicyLink')}
           </Text>
           {localizedStrings.t('landingPagePrivacyPolicySuffix')}
         </Text>
       </Checkbox>
 
-      <Button
+      <InversedButton
         text={localizedStrings.t('landingPageButtonWithLocation')}
         onPress={continueWithLocation}
         disabled={!isCheckboxChecked}
@@ -137,7 +142,8 @@ export const LandingPageScreen = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Color.white,
+    backgroundColor: Color.primary,
+
     padding: 24,
   },
   safeArea: {
@@ -146,12 +152,13 @@ const styles = StyleSheet.create({
   textWrapper: {
     marginTop: 32,
     marginBottom: 64,
+    padding: 16,
+    borderRadius: 12,
+    backgroundColor: Color.white,
+    minHeight: 200,
   },
-  text: {
-    marginBottom: 24,
-  },
+  text: { marginBottom: 24 },
   buttonMargin: { marginBottom: 24, marginTop: 16 },
-
   modalContainer: {
     flex: 1,
     marginTop: 64,
@@ -185,7 +192,7 @@ const styles = StyleSheet.create({
   },
   modalSubtitle: {
     ...textStyles.bodyMedium,
-    color: Color.darkGray,
+    color: Color.white,
     marginBottom: 24,
   },
   section: {
@@ -199,4 +206,5 @@ const styles = StyleSheet.create({
     ...textStyles.bodyMedium,
     lineHeight: 22,
   },
+  white: { color: Color.white },
 });

@@ -95,7 +95,7 @@ const translations = {
     poiBridge: 'Bridge',
     poiRoadCrossing: 'Road crossing',
 
-    levelCrossingHint: '🦺 Please stop and secure!',
+    levelCrossingHint: 'Please stop and secure! 🦺',
 
     // Contacts Screen
     contactTouristInfoMalente: 'Tourist Info Malente',
@@ -338,7 +338,7 @@ const translations = {
     poiBridge: 'Brücke',
     poiRoadCrossing: 'Straßenüberführung',
 
-    levelCrossingHint: '🦺 bitte anhalten und sichern!',
+    levelCrossingHint: 'Bitte anhalten und sichern! 🦺',
 
     // Contacts Screen
     contactTouristInfoMalente: 'Tourist Info Malente',
