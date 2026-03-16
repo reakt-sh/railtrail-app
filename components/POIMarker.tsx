@@ -1,6 +1,6 @@
 import * as MapLibreGL from '@maplibre/maplibre-react-native';
 import React, { memo, useCallback, useState } from 'react';
-import { LayoutChangeEvent, Platform, StyleSheet, View } from 'react-native';
+import { LayoutChangeEvent, StyleSheet, View } from 'react-native';
 import { useTranslation } from '../hooks/useTranslation';
 import { PointOfInterest } from '../types/init';
 import { getPOITitle } from '../util/poi';
@@ -41,22 +41,17 @@ export const POIMarker = memo(({ poi, index, zoomLevel, showTooltip, onPress }: 
 
   // On Android the tooltip lives in normal flow, growing the container.
   // Shift the anchor so the icon center stays on the geo-coordinate.
-  const anchor =
-    Platform.OS === 'android'
-      ? { x: 0.5, y: (containerHeight - ICON_HIT_SIZE / 2) / containerHeight }
-      : undefined;
+  const anchor = { x: 0.5, y: (containerHeight - ICON_HIT_SIZE / 2) / containerHeight };
 
   return (
     <MapLibreGL.MarkerView id={`poi-${index}`} coordinate={coordinate} anchor={anchor}>
       <View
         collapsable={false}
         style={styles.container}
-        onLayout={Platform.OS === 'android' ? handleLayout : undefined}
+        onLayout={handleLayout}
       >
         {showTooltip && (
-          <View style={styles.tooltipAnchor}>
-            <POITooltip name={poi.name} type={poi.typeId} originalType={poi.originalType} />
-          </View>
+          <POITooltip name={poi.name} type={poi.typeId} originalType={poi.originalType} />
         )}
         <PointOfInterestMarker
           pointOfInterestType={poi.typeId}
@@ -73,11 +68,4 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
   },
-  tooltipAnchor: Platform.select({
-    ios: {
-      position: 'absolute',
-      bottom: '100%',
-    },
-    default: {},
-  }),
 });

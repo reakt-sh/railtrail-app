@@ -32,20 +32,22 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 8,
     maxWidth: 200,
-    width: 160,
-    textAlign: 'center',
+    alignItems: 'center',
     marginBottom: 4,
   },
   tooltipTitle: {
     ...textStyles.titleSmall,
+    textAlign: 'center',
   },
   tooltipType: {
     ...textStyles.hint,
+    textAlign: 'center',
   },
   crossingHint: {
     ...textStyles.hint,
     color: Color.warn,
     alignSelf: 'center',
+    textAlign: 'center',
     marginTop: 4,
   },
 });
