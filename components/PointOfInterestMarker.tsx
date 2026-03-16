@@ -51,14 +51,14 @@ export const PointOfInterestMarker = memo(
     const iconColor = config.iconColor ?? Color.white;
 
     const { size, iconSize, extraIconSize } = useMemo(() => {
-      if (zoomLevel < 10) {
+      if (zoomLevel < 8) {
         return { size: 6, iconSize: 0, extraIconSize: 0 };
       }
       if (zoomLevel > 15) {
         return { size: 24, iconSize: 16, extraIconSize: 8 };
       }
 
-      return { size: 12, iconSize: 8, extraIconSize: 4 };
+      return { size: 16, iconSize: 12, extraIconSize: 6 };
     }, [zoomLevel]);
 
     const actualIconSize = iconSize + (config.biggerIcon ? extraIconSize : 0);
