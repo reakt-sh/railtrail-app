@@ -211,6 +211,7 @@ const translations = {
     tripControlsSelectDraisine: 'Select railbike',
 
     // Feedback
+    feedbackTripSummary: 'Your Trip',
     feedbackTitle: 'How did you like the trip?',
     feedbackPlaceholder: 'Space for comments, feedback and criticism...',
     feedbackSubmit: 'Submit rating',
@@ -455,6 +456,7 @@ const translations = {
     tripControlsSelectDraisine: 'Draisine auswählen',
 
     // Feedback
+    feedbackTripSummary: 'Deine Fahrt',
     feedbackTitle: 'Wie hat dir die Tour gefallen?',
     feedbackPlaceholder: 'Platz für Berichte, Lob und Kritik...',
     feedbackSubmit: 'Bewertung abschicken',

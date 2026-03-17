@@ -16,7 +16,7 @@ interface ExternalProps extends PressableProps {
   readonly onPress: () => void;
   readonly isSecondary?: boolean;
   readonly disabled?: boolean;
-  readonly style?: StyleProp<ViewStyle>;
+  readonly innerStyle?: StyleProp<ViewStyle>;
   readonly accessibilityLabel?: string;
   readonly accessibilityHint?: string;
 }
@@ -26,7 +26,7 @@ type Props = ExternalProps;
 export const Button = ({
   text,
   isSecondary,
-  style,
+  innerStyle,
   accessibilityLabel,
   accessibilityHint,
   ...props
@@ -41,6 +41,7 @@ export const Button = ({
     <View
       style={[
         styles.buttonContainer,
+        innerStyle,
         props.disabled ? styles.disabled : isSecondary ? {} : styles.primary,
       ]}
     >

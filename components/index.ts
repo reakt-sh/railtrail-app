@@ -13,6 +13,7 @@ export { StartTripBottomSheet } from './StartTripBottomSheet';
 export { Track } from './Track';
 export { TrackMapView } from './TrackMapView';
 export { TripCard } from './TripCard';
+export { TripSummaryModal } from './TripSummaryModal';
 export { TripControls } from './TripControls';
 export { TripDrawerContent } from './TripDrawerContent';
 export { VehicleSelectionBottomSheet } from './VehicleSelectionBottomSheet';

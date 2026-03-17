@@ -15,11 +15,12 @@ export const submitFeedback = async (payload: FeedbackPayload): Promise<void> =>
   }
 
   try {
-    await fetch(feedbackUrl, {
+    const res = await fetch(feedbackUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
+    console.log('[Feedback] Feedback submitted:', res);
   } catch (error) {
     // Silently ignore errors - feedback is optional
     if (__DEV__) {
