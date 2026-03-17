@@ -8,6 +8,7 @@ export const Color = {
   white: '#ffffff',
   black: '#000',
   error: '#c30707',
+  stop: '#ff5454',
   warn: '#ff8800',
   warning: '#ffcc00',
   success: '#28a745',

@@ -296,7 +296,7 @@
               "type": "Point",
               "coordinates": [10.61196690346371, 54.27742844944839]
             },
-            "description": "km 15,250 – Haltepunkt",
+            "description": "km 15,250",
             "extra": {
               "isTurningPoint": false
             }
@@ -309,14 +309,14 @@
               "type": "Point",
               "coordinates": [10.60109862008053, 54.29287607855948]
             },
-            "description": "km 17,000–17,160 – Streckenende",
+            "description": "km 17,000–17,160 \n Streckenende",
             "extra": {
               "isTurningPoint": true
             }
           },
           {
             "id": "6",
-            "name": "Eisenbahnüberführung Wasserlauf Kossau",
+            "name": "Kossau",
             "type": "bridge",
             "position": {
               "type": "Point",
@@ -342,20 +342,20 @@
           },
           {
             "id": "8",
-            "name": "Feldweg Streckenkilometer 15,010",
+            "name": "Feldweg",
             "type": "minor-crossing",
             "position": {
               "type": "Point",
               "coordinates": [10.61237992922058, 54.27525786435475]
             },
-            "description": "km 15,010",
+            "description": "km 15,010 \n Letzte Wendemöglichkeit für 2 km",
             "extra": {
-              "isTurningPoint": false
+              "isTurningPoint": true
             }
           },
           {
             "id": "9",
-            "name": "Feldweg Streckenkilometer 14,278",
+            "name": "Feldweg",
             "type": "minor-crossing",
             "position": {
               "type": "Point",
@@ -363,12 +363,12 @@
             },
             "description": "km 14,278",
             "extra": {
-              "isTurningPoint": false
+              "isTurningPoint": true
             }
           },
           {
             "id": "10",
-            "name": "Feldweg Streckenkilometer 13,940",
+            "name": "Feldweg",
             "type": "minor-crossing",
             "position": {
               "type": "Point",
@@ -387,9 +387,9 @@
               "type": "Point",
               "coordinates": [10.62002952391131, 54.26391446274761]
             },
-            "description": "km",
+            "description": "km 13,640",
             "extra": {
-              "isTurningPoint": false
+              "isTurningPoint": true
             }
           },
           {
@@ -413,7 +413,7 @@
               "type": "Point",
               "coordinates": [10.626846753985497, 54.257829691514644]
             },
-            "description": "km 12,900 – Haltepunkt",
+            "description": "km 12,900",
             "extra": {
               "isTurningPoint": false
             }
@@ -428,7 +428,7 @@
             },
             "description": "km 12,280",
             "extra": {
-              "isTurningPoint": false
+              "isTurningPoint": true
             }
           },
           {
@@ -441,9 +441,10 @@
             },
             "description": "km 11,870",
             "extra": {
-              "isTurningPoint": false
+              "isTurningPoint": true
             }
           },
+
           {
             "id": "15",
             "name": "Kletkamp",
@@ -458,6 +459,19 @@
             }
           },
           {
+            "id": "16",
+            "name": "Landstraße L178",
+            "type": "road-crossing",
+            "position": {
+              "type": "Point",
+              "coordinates": [10.62734077463407, 54.24268536586548]
+            },
+            "description": "km 11,010 – Länge 12 m",
+            "extra": {
+              "isTurningPoint": false
+            }
+          },
+          {
             "id": "17",
             "name": "Feldweg",
             "type": "minor-crossing",
@@ -467,7 +481,7 @@
             },
             "description": "km 10,480",
             "extra": {
-              "isTurningPoint": false
+              "isTurningPoint": true
             }
           },
           {
@@ -506,12 +520,12 @@
             },
             "description": "km 9,170",
             "extra": {
-              "isTurningPoint": false
+              "isTurningPoint": true
             }
           },
           {
             "id": "21",
-            "name": "Eisenbahnübergang Söhrener Au",
+            "name": "Söhrener Au",
             "type": "bridge",
             "position": {
               "type": "Point",
@@ -558,7 +572,7 @@
             },
             "description": "km 7,670",
             "extra": {
-              "isTurningPoint": false
+              "isTurningPoint": true
             }
           },
           {
@@ -571,12 +585,12 @@
             },
             "description": "km 7,330",
             "extra": {
-              "isTurningPoint": false
+              "isTurningPoint": true
             }
           },
           {
             "id": "26",
-            "name": "Eisenbahnübergang Malenter Au",
+            "name": "Malenter Au",
             "type": "bridge",
             "position": {
               "type": "Point",
@@ -606,16 +620,16 @@
             "type": "halt",
             "position": {
               "type": "Point",
-              "coordinates": [10.6049852201354, 54.20788633328737]
+              "coordinates": [10.605164, 54.208206]
             },
             "description": "km 6,850",
             "extra": {
-              "isTurningPoint": false
+              "isTurningPoint": true
             }
           },
           {
             "id": "29",
-            "name": "Brunskoppler Weg",
+            "name": "Bruhnskoppler Weg",
             "type": "crossing",
             "position": {
               "type": "Point",
@@ -628,39 +642,13 @@
           },
           {
             "id": "30",
-            "name": "Brunskoppel",
+            "name": "Bruhnskoppel",
             "type": "halt",
             "position": {
               "type": "Point",
-              "coordinates": [10.59683377690739, 54.19814839336756]
+              "coordinates": [10.5974, 54.199036]
             },
             "description": "km 5,440",
-            "extra": {
-              "isTurningPoint": false
-            }
-          },
-          {
-            "id": "31",
-            "name": "Forstweg",
-            "type": "road-crossing",
-            "position": {
-              "type": "Point",
-              "coordinates": [10.5911, 54.195]
-            },
-            "description": "km 4,920 – Länge 23 m (zurückgebaut)",
-            "extra": {
-              "isTurningPoint": false
-            }
-          },
-          {
-            "id": "16",
-            "name": "Landstraße L178",
-            "type": "road-crossing",
-            "position": {
-              "type": "Point",
-              "coordinates": [10.62734077463407, 54.24268536586548]
-            },
-            "description": "km 11,010 – Länge 12 m",
             "extra": {
               "isTurningPoint": false
             }
@@ -674,6 +662,19 @@
               "coordinates": [10.59038043710785, 54.1862046354982]
             },
             "description": "km 3,870",
+            "extra": {
+              "isTurningPoint": true
+            }
+          },
+          {
+            "id": "31",
+            "name": "Bottervogel Camp",
+            "type": "minor-crossing",
+            "position": {
+              "type": "Point",
+              "coordinates": [10.575, 54.1845]
+            },
+            "description": "km 2,840",
             "extra": {
               "isTurningPoint": true
             }
@@ -714,7 +715,7 @@
             },
             "description": "km 2,000 – Blinklichtanlage mit Halbschranken",
             "extra": {
-              "isTurningPoint": true
+              "isTurningPoint": false
             }
           },
           {
@@ -725,14 +726,14 @@
               "type": "Point",
               "coordinates": [10.56095123635328, 54.18146917530204]
             },
-            "description": "km 1,840 – Fuß-/Feldweg",
+            "description": "km 1,840",
             "extra": {
               "isTurningPoint": false
             }
           },
           {
             "id": "38",
-            "name": "Eisenbahnübergang Wasserlauf",
+            "name": "Malenter Au",
             "type": "bridge",
             "position": {
               "type": "Point",
@@ -753,7 +754,7 @@
             },
             "description": "km 1,240 – Blinklichtanlage",
             "extra": {
-              "isTurningPoint": true
+              "isTurningPoint": false
             }
           },
           {
@@ -766,7 +767,7 @@
             },
             "description": "km 0,991 – Blinklichtanlage",
             "extra": {
-              "isTurningPoint": true
+              "isTurningPoint": false
             }
           },
           {

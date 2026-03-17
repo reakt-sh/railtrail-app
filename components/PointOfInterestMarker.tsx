@@ -34,11 +34,11 @@ const markerConfigs: Record<POIType, MarkerConfig> = {
   [POIType.TrackEnd]: { icon: 'sign-direction', color: Color.track },
   [POIType.TurningPoint]: { icon: 'arrow-u-left-bottom', color: Color.primary },
   [POIType.Generic]: { icon: 'sign-direction', color: Color.white, iconColor: Color.success },
-  [POIType.Halt]: { icon: 'table-picnic', color: Color.white, iconColor: Color.black },
+  [POIType.Halt]: { icon: 'table-picnic', color: Color.black, iconColor: Color.white },
   [POIType.TouristInfo]: {
     icon: 'information-variant',
-    color: Color.white,
-    iconColor: Color.primary,
+    color: Color.primary,
+    iconColor: Color.white,
   },
   [POIType.Bridge]: { icon: 'bridge', color: Color.skyBlue },
   [POIType.RoadCrossing]: { icon: 'road', color: Color.warning },
@@ -51,14 +51,14 @@ export const PointOfInterestMarker = memo(
     const iconColor = config.iconColor ?? Color.white;
 
     const { size, iconSize, extraIconSize } = useMemo(() => {
-      if (zoomLevel < 10) {
+      if (zoomLevel < 8) {
         return { size: 6, iconSize: 0, extraIconSize: 0 };
       }
       if (zoomLevel > 15) {
         return { size: 24, iconSize: 16, extraIconSize: 8 };
       }
 
-      return { size: 12, iconSize: 8, extraIconSize: 4 };
+      return { size: 16, iconSize: 12, extraIconSize: 6 };
     }, [zoomLevel]);
 
     const actualIconSize = iconSize + (config.biggerIcon ? extraIconSize : 0);

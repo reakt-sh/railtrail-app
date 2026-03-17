@@ -3,6 +3,11 @@ import { Color } from './color';
 import { Font } from './fonts';
 
 export const textStyles = StyleSheet.create({
+  displayLarge: {
+    fontFamily: Font.regular,
+    color: Color.white,
+    fontSize: 26,
+  },
   headerTextHuge: {
     fontFamily: Font.semiBold,
     color: Color.text,
@@ -10,12 +15,6 @@ export const textStyles = StyleSheet.create({
   },
   headerTextMedium: {
     fontFamily: Font.semiBold,
-    color: Color.text,
-    fontSize: 20,
-  },
-  headerTextThin: {
-    fontFamily: Font.condensed,
-    textTransform: 'uppercase',
     color: Color.text,
     fontSize: 20,
   },

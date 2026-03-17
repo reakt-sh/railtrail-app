@@ -1,22 +1,21 @@
-import 'expo-dev-client';
-import { configureReanimatedLogger, ReanimatedLogLevel } from 'react-native-reanimated';
-import { RootNavigation } from './navigation';
-import { StatusBar } from 'expo-status-bar';
-import { initStore } from './redux/init';
-import { Provider } from 'react-redux';
-import { GestureHandlerRootView, gestureHandlerRootHOC } from 'react-native-gesture-handler';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { AppRegistry } from 'react-native';
-import { expo } from './app.json';
 import {
-  useFonts,
   SourceSans3_400Regular,
   SourceSans3_600SemiBold,
+  useFonts,
 } from '@expo-google-fonts/source-sans-3';
-import { BarlowCondensed_300Light } from '@expo-google-fonts/barlow-condensed';
-import { useCallback } from 'react';
+import 'expo-dev-client';
 import * as SplashScreen from 'expo-splash-screen';
+import { StatusBar } from 'expo-status-bar';
+import { useCallback } from 'react';
+import { AppRegistry } from 'react-native';
+import { gestureHandlerRootHOC, GestureHandlerRootView } from 'react-native-gesture-handler';
+import { configureReanimatedLogger, ReanimatedLogLevel } from 'react-native-reanimated';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Provider } from 'react-redux';
+import { expo } from './app.json';
 import { LanguageProvider } from './contexts/LanguageContext';
+import { RootNavigation } from './navigation';
+import { initStore } from './redux/init';
 
 // Suppress Reanimated strict mode warning from bottom-sheet library
 configureReanimatedLogger({
@@ -27,7 +26,6 @@ configureReanimatedLogger({
 // Keep splash screen visible while loading fonts
 SplashScreen.preventAutoHideAsync();
 
-
 export default function App() {
   AppRegistry.registerComponent(expo.name, () => gestureHandlerRootHOC(App));
 
@@ -36,7 +34,6 @@ export default function App() {
   const [fontsLoaded] = useFonts({
     SourceSans3_400Regular,
     SourceSans3_600SemiBold,
-    BarlowCondensed_300Light,
   });
 
   const onLayoutRootView = useCallback(async () => {

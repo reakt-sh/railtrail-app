@@ -9,6 +9,7 @@ interface ExternalProps {
   readonly children?: JSX.Element;
   readonly style?: StyleProp<ViewStyle>;
   readonly accessibilityLabel?: string;
+  readonly color?: string;
 }
 
 type Props = ExternalProps;
@@ -19,6 +20,7 @@ export const Checkbox = ({
   children,
   style,
   accessibilityLabel,
+  color,
 }: Props) => {
   return (
     <Pressable
@@ -31,9 +33,13 @@ export const Checkbox = ({
       accessibilityState={{ checked: isChecked }}
     >
       {isChecked ? (
-        <MaterialCommunityIcons name="checkbox-marked" size={24} color={Color.primary} />
+        <MaterialCommunityIcons name="checkbox-marked" size={24} color={color ?? Color.primary} />
       ) : (
-        <MaterialCommunityIcons name="checkbox-blank-outline" size={24} color={Color.text} />
+        <MaterialCommunityIcons
+          name="checkbox-blank-outline"
+          size={24}
+          color={color ?? Color.text}
+        />
       )}
       <View style={styles.childrenContainer}>{children}</View>
     </Pressable>

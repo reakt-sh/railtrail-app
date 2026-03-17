@@ -109,7 +109,7 @@ export const setupPositionUpdates = (dispatch: Dispatch<TripActionType>): (() =>
       percentagePosition: currentPos,
       heading: mapPosition.heading,
       headingTowardsUser: undefined, // Wird ggf. später berechnet
-      label: mapPosition.label,
+      label: mapPosition.label?.replace(/^0+/, '') || mapPosition.label,
     };
 
     // Vehicles-Array aktualisieren

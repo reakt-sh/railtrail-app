@@ -20,7 +20,6 @@ interface ExternalProps {
   readonly isFollowingVehicle: boolean;
   readonly onLocationButtonClick: () => void;
   readonly onStartTrip: () => void;
-  readonly onStopTrip: () => void;
   readonly onCenterOnVehicle: () => void;
   readonly warnings: WarningsState;
   readonly speed: number;
@@ -36,7 +35,6 @@ export const TripControls = memo(
     isFollowingVehicle,
     onLocationButtonClick,
     onStartTrip,
-    onStopTrip,
     onCenterOnVehicle,
     warnings,
     speed,
@@ -70,9 +68,6 @@ export const TripControls = memo(
                 size={32}
                 color={isFollowingVehicle ? Color.primary : Color.black}
               />
-            </FAB>
-            <FAB onPress={onStopTrip} accessibilityLabel={localizedStrings.t('a11yStopTrip')}>
-              <MaterialCommunityIcons name="stop-circle" size={32} color={Color.warning} />
             </FAB>
           </>
         ) : (

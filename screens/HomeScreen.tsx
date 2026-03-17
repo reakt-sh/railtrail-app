@@ -13,6 +13,7 @@ import {
   MinimalTripOverlay,
   TrackMapView,
   TripControls,
+  TripSummaryModal,
   VehicleSelectionBottomSheet,
 } from '../components';
 import {
@@ -71,6 +72,7 @@ export const HomeScreen = () => {
   const [isVehicleSelectionVisible, setIsVehicleSelectionVisible] = useState(false);
   const [isChangeVehicleIdBottomSheetVisible, setIsChangeVehicleIdBottomSheetVisible] =
     useState(false);
+  const [isSummaryVisible, setIsSummaryVisible] = useState(false);
   const [isFeedbackVisible, setIsFeedbackVisible] = useState(false);
   const [pendingTripData, setPendingTripData] = useState<SavedTrip | null>(null);
 
@@ -264,9 +266,9 @@ export const HomeScreen = () => {
             dispatch(TripAction.stop());
             tripStartTimeRef.current = null;
 
-            // Show feedback dialog
+            // Show trip summary, then feedback
             setPendingTripData(savedTrip);
-            setIsFeedbackVisible(true);
+            setIsSummaryVisible(true);
           },
         },
       ]
@@ -301,6 +303,11 @@ export const HomeScreen = () => {
     [dispatch]
   );
 
+  const handleSummaryContinue = useCallback(() => {
+    setIsSummaryVisible(false);
+    setIsFeedbackVisible(true);
+  }, []);
+
   const handleFeedbackSubmit = useCallback(
     async (rating: number, text?: string) => {
       if (pendingTripData) {
@@ -332,6 +339,7 @@ export const HomeScreen = () => {
           speed={motion.speed}
           elapsedTime={elapsedTime}
           onPress={handleOpenDrawer}
+          onStopTrip={handleStopTrip}
         />
       )}
 
@@ -360,7 +368,6 @@ export const HomeScreen = () => {
         isFollowingVehicle={isFollowingVehicle}
         onLocationButtonClick={handleLocationButtonClick}
         onStartTrip={handleStartTrip}
-        onStopTrip={handleStopTrip}
         onCenterOnVehicle={handleCenterOnVehicle}
         warnings={warnings}
         speed={motion.speed}
@@ -392,7 +399,14 @@ export const HomeScreen = () => {
         onVehicleSelected={handleChangeVehicle}
       />
 
-      {/* Feedback after trip ends */}
+      {/* Trip summary after trip ends */}
+      <TripSummaryModal
+        isVisible={isSummaryVisible}
+        tripData={pendingTripData}
+        onContinue={handleSummaryContinue}
+      />
+
+      {/* Feedback after summary */}
       <FeedbackBottomSheet
         isVisible={isFeedbackVisible}
         onSubmit={handleFeedbackSubmit}

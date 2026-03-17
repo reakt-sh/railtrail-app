@@ -16,8 +16,11 @@ export const POITooltip = ({ name, type, originalType }: POITooltipProps) => {
 
   return (
     <View collapsable={false} style={styles.tooltip}>
-      {name && <Text style={styles.tooltipTitle}>{name}</Text>}
-      <Text style={styles.tooltipType}>{getPOITypeLabel(i18n, type, originalType)}</Text>
+      {name && <Text style={styles.tooltipTitle}>{getPOITypeLabel(i18n, type, originalType)}</Text>}
+      <Text style={styles.tooltipType}>{name}</Text>
+      {(type === POIType.LevelCrossing || originalType === POIType.LevelCrossing) && (
+        <Text style={styles.crossingHint}>{i18n.t('levelCrossingHint')}</Text>
+      )}
     </View>
   );
 };
@@ -29,16 +32,22 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 8,
     maxWidth: 200,
-    width: 176,
-    textAlign: 'center',
-    marginBottom: 16,
+    alignItems: 'center',
+    marginBottom: 4,
   },
   tooltipTitle: {
     ...textStyles.titleSmall,
-    alignSelf: 'center',
+    textAlign: 'center',
   },
   tooltipType: {
     ...textStyles.hint,
+    textAlign: 'center',
+  },
+  crossingHint: {
+    ...textStyles.hint,
+    color: Color.warn,
     alignSelf: 'center',
+    textAlign: 'center',
+    marginTop: 4,
   },
 });

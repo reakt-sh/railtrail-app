@@ -7,6 +7,7 @@ import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-nati
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { DraisineIcon } from '../assets/icons';
 import AppLogo from '../assets/icons/AppLogo';
+import MalenteLogo from '../assets/icons/MalenteLogo';
 import { Color, Locale } from '../constants';
 import { textStyles } from '../constants/text-styles';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -18,6 +19,8 @@ type InfoStackParamList = {
   TripHistory: undefined;
   GoodToKnow: undefined;
   Contacts: undefined;
+  HeinLuettenborg: undefined;
+  RailwayHistory: undefined;
   Imprint: undefined;
   PrivacyPolicy: undefined;
 };
@@ -38,6 +41,8 @@ const menuItems: MenuItem[] = [
   },
   { titleKey: 'infoTitleGoodToKnow', icon: 'lightbulb-outline', screen: 'GoodToKnow' },
   { titleKey: 'infoTitleContacts', icon: 'phone', screen: 'Contacts' },
+  { titleKey: 'infoTitleHeinLuettenborg', icon: 'chart-line-variant', screen: 'HeinLuettenborg' },
+  { titleKey: 'infoTitleRailwayHistory', icon: 'book-clock', screen: 'RailwayHistory' },
   { titleKey: 'infoTitleImprint', icon: 'file-document-outline', screen: 'Imprint' },
   { titleKey: 'infoTitlePrivacyPolicy', icon: 'shield-lock-outline', screen: 'PrivacyPolicy' },
 ];
@@ -129,6 +134,14 @@ export const InfoMenuScreen = () => {
         </View>
 
         <View style={styles.supportSection}>
+          <View style={styles.logoRow}>
+            <Image
+              source={require('../assets/logos/Stadtlogo_2022_Luetjenburg.png')}
+              style={styles.luetjenburgLogo}
+              resizeMode="contain"
+            />
+            <MalenteLogo width={80} height={64} />
+          </View>
           <Text style={textStyles.bodySmall}>{i18n.t('fundedBy')}</Text>
           <Image
             source={require('../assets/logos/support_logo.png')}
@@ -144,7 +157,7 @@ export const InfoMenuScreen = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: Color.backgroundLight,
+    backgroundColor: Color.primary,
   },
   container: {
     flex: 1,
@@ -206,13 +219,23 @@ const styles = StyleSheet.create({
     color: Color.white,
   },
   supportSection: {
+    backgroundColor: Color.white,
+    borderRadius: 16,
     marginTop: 32,
-    paddingVertical: 16,
+    padding: 16,
   },
-
+  logoRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 24,
+  },
+  luetjenburgLogo: {
+    width: 180,
+    height: 64,
+  },
   supportLogo: {
     width: '90%',
-    height: 168,
+    height: 152,
     alignSelf: 'center',
   },
 });

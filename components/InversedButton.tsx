@@ -16,17 +16,16 @@ interface ExternalProps extends PressableProps {
   readonly onPress: () => void;
   readonly isSecondary?: boolean;
   readonly disabled?: boolean;
-  readonly innerStyle?: StyleProp<ViewStyle>;
+  readonly style?: StyleProp<ViewStyle>;
   readonly accessibilityLabel?: string;
   readonly accessibilityHint?: string;
 }
 
 type Props = ExternalProps;
 
-export const Button = ({
+export const InversedButton = ({
   text,
-  isSecondary,
-  innerStyle,
+  style,
   accessibilityLabel,
   accessibilityHint,
   ...props
@@ -38,23 +37,8 @@ export const Button = ({
     accessibilityState={{ disabled: !!props.disabled }}
     {...props}
   >
-    <View
-      style={[
-        styles.buttonContainer,
-        innerStyle,
-        props.disabled ? styles.disabled : isSecondary ? {} : styles.primary,
-      ]}
-    >
-      <Text
-        style={[
-          styles.buttonText,
-          props.disabled
-            ? styles.textDisabled
-            : isSecondary
-              ? styles.textSecondary
-              : styles.textPrimary,
-        ]}
-      >
+    <View style={[styles.buttonContainer, props.disabled ? styles.disabled : styles.primary]}>
+      <Text style={[styles.buttonText, props.disabled ? styles.textDisabled : styles.textPrimary]}>
         {text}
       </Text>
     </View>
@@ -67,23 +51,20 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   primary: {
-    backgroundColor: Color.primary,
+    backgroundColor: Color.white,
   },
   disabled: {
-    backgroundColor: Color.outline,
+    backgroundColor: Color.white,
   },
   buttonText: {
     ...textStyles.buttonText,
+    color: Color.primary,
     textAlign: 'center',
   },
   textPrimary: {
-    color: Color.white,
-  },
-  textSecondary: {
-    ...textStyles.bodyMedium,
     color: Color.primary,
   },
   textDisabled: {
-    color: Color.white,
+    color: Color.outline,
   },
 });
