@@ -1,4 +1,4 @@
-import { Locale } from '../constants';
+import { Locale, STILLSTAND_THRESHOLD_KMH } from '../constants';
 
 /**
  * Formatiert eine Distanz in Metern zu einem lesbaren String.
@@ -13,10 +13,10 @@ export const formatDistance = (meters: number): string => {
 
 /**
  * Formatiert Geschwindigkeit für die Anzeige.
- * Werte unter 1 km/h werden als 0 angezeigt.
+ * Werte unter Stillstand-Schwelle werden als 0 angezeigt.
  */
 export const formatSpeed = (kmh: number): number => {
-  return kmh < 1 ? 0 : Math.round(kmh);
+  return kmh < STILLSTAND_THRESHOLD_KMH ? 0 : Math.round(kmh);
 };
 
 export const formatDuration = (

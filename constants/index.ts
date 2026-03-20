@@ -3,8 +3,12 @@ export { Locale } from './locale';
 export { Color } from './color';
 export { Font } from './fonts';
 export {
+  MAX_GPS_ACCURACY,
+  MIN_DISTANCE_JITTER_FILTER,
   MIN_LOCATION_UPDATE_DISTANCE_INTERVAL,
   MIN_LOCATION_UPDATE_TIME_INTERVAL,
+  SPEED_SMOOTHING_ALPHA,
+  STILLSTAND_THRESHOLD_KMH,
 } from './location';
 export { initialRegion, mapStyleUrl } from './map';
 export { privacySections } from './privacy';

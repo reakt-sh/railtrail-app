@@ -35,6 +35,13 @@ import { ReduxAppState } from '../redux/init';
 import { TripAction, TripActionType } from '../redux/trip';
 import { SavedTrip, VehicleSegment } from '../types/saved-trip';
 import { Vehicle } from '../types/vehicle';
+import {
+  MAX_GPS_ACCURACY,
+  MIN_DISTANCE_JITTER_FILTER,
+  SPEED_SMOOTHING_ALPHA,
+  STILLSTAND_THRESHOLD_KMH,
+} from '../constants';
+import { calculateDistanceFromCoordinates } from '../util/calculators';
 import { AppEvents, events } from '../util/events';
 
 export const HomeScreen = () => {
@@ -47,6 +54,9 @@ export const HomeScreen = () => {
 
   useKeepAwake();
 
+  const lastLocationRef = useRef<Location.LocationObject | null>(null);
+  const smoothedSpeedRef = useRef<number>(0);
+
   // Custom hooks
   const {
     cameraRef,
@@ -56,7 +66,7 @@ export const HomeScreen = () => {
     currentCameraCenter,
     cameraHeading,
     zoomLevel,
-    setIsFollowingVehicle,
+    setIsFollowingUser,
     animateCamera,
     onLocationButtonClicked,
     onRegionChange,
@@ -97,12 +107,55 @@ export const HomeScreen = () => {
   // Elapsed time hook - uses Redux tripStartTime
   const elapsedTime = useElapsedTime(tripStartTime);
 
-  // Location update handler
+  // Location update handler — also bridges GPS to demo vehicle during active trip
   const handleLocationUpdate = useCallback(
     async (loc: Location.LocationObject) => {
+      // GPS accuracy gate: discard fixes with poor accuracy
+      if (loc.coords.accuracy != null && loc.coords.accuracy > MAX_GPS_ACCURACY) return;
+
       dispatch(AppAction.setLocation(loc));
+
+      // During active demo trip: use real GPS for speed + distance
+      const state = store.getState();
+      const { isActive: tripActive, currentVehicle: cv } = state.trip;
+      if (tripActive && cv.id === 99) {
+        // Speed from GPS (m/s → km/h)
+        const rawSpeedKmh = (loc.coords.speed ?? 0) >= 0
+          ? (loc.coords.speed ?? 0) * 3.6
+          : 0;
+
+        // Stillstand threshold
+        const speedKmh = rawSpeedKmh < STILLSTAND_THRESHOLD_KMH ? 0 : rawSpeedKmh;
+
+        // EMA smoothing
+        smoothedSpeedRef.current =
+          SPEED_SMOOTHING_ALPHA * speedKmh + (1 - SPEED_SMOOTHING_ALPHA) * smoothedSpeedRef.current;
+
+        // Post-EMA stillstand safety net: snap to 0 once smoothed value decays below threshold
+        if (smoothedSpeedRef.current < STILLSTAND_THRESHOLD_KMH) {
+          smoothedSpeedRef.current = 0;
+        }
+
+        // Distance from last GPS position
+        const lastLoc = lastLocationRef.current;
+        if (lastLoc) {
+          const dist = calculateDistanceFromCoordinates(
+            lastLoc.coords.latitude,
+            lastLoc.coords.longitude,
+            loc.coords.latitude,
+            loc.coords.longitude
+          );
+          if (dist > MIN_DISTANCE_JITTER_FILTER) {
+            dispatch(TripAction.addDistance(dist));
+          }
+        }
+
+        // Update demo vehicle speed with smoothed value
+        dispatch(TripAction.setMotion({ speed: smoothedSpeedRef.current }));
+        lastLocationRef.current = loc;
+      }
     },
-    [dispatch]
+    [dispatch, store]
   );
 
   // Initialize app and WebSocket connection
@@ -151,8 +204,8 @@ export const HomeScreen = () => {
 
   // Camera animation: follow vehicle position OR user GPS location
   useEffect(() => {
-    if (isFollowingVehicle) {
-      // If trip is active, follow own vehicle; otherwise follow first available vehicle
+    if (isFollowingVehicle && !isActive) {
+      // Follow vehicle marker only when no trip is active (observing other draisines)
       const vehicleToFollow =
         currentVehicle.id != null ? vehicles.find((v) => v.id === currentVehicle.id) : vehicles[0];
 
@@ -164,9 +217,10 @@ export const HomeScreen = () => {
         );
       }
     } else if (isFollowingUser && location) {
+      // Follow user GPS (during active trip = draisine position)
       animateCamera(location.coords.latitude, location.coords.longitude, location.coords.heading);
     }
-  }, [location, vehicles, currentVehicle.id, isFollowingUser, isFollowingVehicle]);
+  }, [location, vehicles, currentVehicle.id, isFollowingUser, isFollowingVehicle, isActive]);
 
   // Trip start/stop - foreground tracking is already running, no changes needed
 
@@ -196,25 +250,6 @@ export const HomeScreen = () => {
   const handleLocationButtonClick = useCallback(() => {
     onLocationButtonClicked(location ? { ...location.coords } : null);
   }, [location, onLocationButtonClicked]);
-
-  const handleCenterOnVehicle = useCallback(() => {
-    const currentState = store.getState();
-    const vehicleId = currentState.trip.currentVehicle.id;
-    const allVehicles = currentState.trip.vehicles;
-
-    // Follow own vehicle if trip is active, otherwise follow first available vehicle
-    const vehicleToFollow =
-      vehicleId != null ? allVehicles.find((v) => v.id === vehicleId) : allVehicles[0];
-
-    if (vehicleToFollow) {
-      centerOnPosition(
-        vehicleToFollow.pos.lat,
-        vehicleToFollow.pos.lng,
-        vehicleToFollow.heading ?? 0
-      );
-      setIsFollowingVehicle(true);
-    }
-  }, [store, centerOnPosition, setIsFollowingVehicle]);
 
   const handleOpenDrawer = useCallback(() => {
     navigation.dispatch(DrawerActions.openDrawer());
@@ -283,14 +318,16 @@ export const HomeScreen = () => {
     (vehicle: Vehicle) => {
       const vehicleName = vehicle.label ?? `Draisine ${vehicle.id}`;
       tripStartTimeRef.current = new Date().toISOString();
+      lastLocationRef.current = null; // Reset GPS distance tracking
+      smoothedSpeedRef.current = 0; // Reset EMA speed
       dispatch(TripAction.setCurrentVehicle(vehicle.id, vehicleName));
       dispatch(TripAction.startSegment(vehicle.id, vehicleName));
       dispatch(TripAction.start());
-      setIsFollowingVehicle(true);
+      setIsFollowingUser(true);
       // Zoom to vehicle position
       centerOnPosition(vehicle.pos.lat, vehicle.pos.lng, vehicle.heading ?? 0, 17);
     },
-    [dispatch, setIsFollowingVehicle, centerOnPosition]
+    [dispatch, setIsFollowingUser, centerOnPosition]
   );
 
   const handleChangeVehicle = useCallback(
@@ -358,6 +395,8 @@ export const HomeScreen = () => {
         track={track.path}
         zoomLevel={zoomLevel}
         mapHeading={cameraHeading}
+        isActive={isActive}
+        currentVehicleId={currentVehicle.id}
       />
 
       {isLoadingVehicles && <LoadingVehiclesOverlay />}
@@ -365,10 +404,8 @@ export const HomeScreen = () => {
       <TripControls
         isActive={isActive}
         isFollowingUser={isFollowingUser}
-        isFollowingVehicle={isFollowingVehicle}
         onLocationButtonClick={handleLocationButtonClick}
         onStartTrip={handleStartTrip}
-        onCenterOnVehicle={handleCenterOnVehicle}
         warnings={warnings}
         speed={motion.speed}
         localizedStrings={localizedStrings}

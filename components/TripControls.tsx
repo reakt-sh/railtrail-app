@@ -4,7 +4,6 @@ import React, { memo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { textStyles } from '../constants';
 import { Color } from '../constants/color';
-import { FAB } from './Fab';
 import { LocationButton } from './LocationButton';
 import { Warnings } from './Warnings';
 
@@ -17,10 +16,8 @@ interface WarningsState {
 interface ExternalProps {
   readonly isActive: boolean;
   readonly isFollowingUser: boolean;
-  readonly isFollowingVehicle: boolean;
   readonly onLocationButtonClick: () => void;
   readonly onStartTrip: () => void;
-  readonly onCenterOnVehicle: () => void;
   readonly warnings: WarningsState;
   readonly speed: number;
   readonly localizedStrings: I18n;
@@ -32,10 +29,8 @@ export const TripControls = memo(
   ({
     isActive,
     isFollowingUser,
-    isFollowingVehicle,
     onLocationButtonClick,
     onStartTrip,
-    onCenterOnVehicle,
     warnings,
     speed,
     localizedStrings,
@@ -52,24 +47,12 @@ export const TripControls = memo(
           />
         )}
         {isActive ? (
-          <>
-            <LocationButton
-              onPress={onLocationButtonClick}
-              isActive={isFollowingUser}
-              accessibilityLabelActive={localizedStrings.t('a11yLocationTrackingActive')}
-              accessibilityLabelInactive={localizedStrings.t('a11yShowMyLocation')}
-            />
-            <FAB
-              onPress={onCenterOnVehicle}
-              accessibilityLabel={localizedStrings.t('a11yCenterOnVehicle')}
-            >
-              <MaterialCommunityIcons
-                name={isFollowingVehicle ? 'navigation-variant' : 'navigation-variant-outline'}
-                size={32}
-                color={isFollowingVehicle ? Color.primary : Color.black}
-              />
-            </FAB>
-          </>
+          <LocationButton
+            onPress={onLocationButtonClick}
+            isActive={isFollowingUser}
+            accessibilityLabelActive={localizedStrings.t('a11yLocationTrackingActive')}
+            accessibilityLabelInactive={localizedStrings.t('a11yShowMyLocation')}
+          />
         ) : (
           <View style={styles.startTripRow}>
             <Pressable

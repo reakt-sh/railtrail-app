@@ -1,5 +1,5 @@
 import * as Location from 'expo-location';
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { PointOfInterest } from '../types/init';
 import { Position } from '../types/position';
 import { Vehicle } from '../types/vehicle';
@@ -26,6 +26,10 @@ interface Props {
   readonly zoomLevel: number;
   /** Current map heading for rotating vehicle direction indicators */
   readonly mapHeading: number;
+  /** Whether a trip is currently active */
+  readonly isActive: boolean;
+  /** ID of the user's current vehicle during an active trip */
+  readonly currentVehicleId: number | null;
   /** Index of the currently active POI tooltip, or null */
   readonly activeTooltip: number | null;
   /** Called when a POI marker is tapped */
@@ -46,51 +50,71 @@ export const MapMarkers = memo(
     track,
     zoomLevel,
     mapHeading,
+    isActive,
+    currentVehicleId,
     activeTooltip,
     onPOIPress,
-  }: Props) => (
-    <>
-      {/* Track line overlay (rendered first = below markers) */}
-      {track && <Track track={track} />}
+  }: Props) => {
+    // During active trip: override own vehicle's position with user GPS for smooth tracking
+    const processedVehicles = useMemo(() => {
+      if (!isActive || currentVehicleId == null || !location) return vehicles;
+      return vehicles.map((v) =>
+        v.id === currentVehicleId
+          ? {
+              ...v,
+              pos: { lat: location.coords.latitude, lng: location.coords.longitude },
+              heading: location.coords.heading ?? v.heading,
+            }
+          : v
+      );
+    }, [vehicles, isActive, currentVehicleId, location]);
 
-      {/* User's current location - only render when coordinates available
-         to avoid mounting a PointAnnotation that returns null (crashes MLRNMapView) */}
-      {(calculatedPosition || location) && (
-        <UserLocationMarker
-          calculatedPosition={calculatedPosition}
-          location={location}
-        />
-      )}
+    // Hide UserLocationMarker during active trip (the vehicle marker IS the user)
+    const showUserLocation = !isActive || currentVehicleId == null;
 
-      {/* Points of Interest along the track */}
-      {pointsOfInterest.map((poi, index) => (
-        <POIMarker
-          key={`poi-${index}`}
-          poi={poi}
-          index={index}
-          zoomLevel={zoomLevel}
-          showTooltip={activeTooltip === index}
-          onPress={onPOIPress}
-        />
-      ))}
+    return (
+      <>
+        {/* Track line overlay (rendered first = below markers) */}
+        {track && <Track track={track} />}
 
-      {/* Other vehicles on the track */}
-      {vehicles.map((vehicle) => (
-        <VehicleMarker
-          key={`vehicle-${vehicle.id}`}
-          vehicle={vehicle}
-          mapHeading={mapHeading}
-          zoomLevel={zoomLevel}
-        />
-      ))}
+        {/* User's current location - hidden during active trip */}
+        {showUserLocation && (calculatedPosition || location) && (
+          <UserLocationMarker
+            calculatedPosition={calculatedPosition}
+            location={location}
+          />
+        )}
 
-      {/* Designated passing position */}
-      {passingPosition && (
-        <PassingPositionMarker
-          position={passingPosition}
-          zoomLevel={zoomLevel}
-        />
-      )}
-    </>
-  )
+        {/* Points of Interest along the track */}
+        {pointsOfInterest.map((poi, index) => (
+          <POIMarker
+            key={`poi-${index}`}
+            poi={poi}
+            index={index}
+            zoomLevel={zoomLevel}
+            showTooltip={activeTooltip === index}
+            onPress={onPOIPress}
+          />
+        ))}
+
+        {/* Vehicles on the track (own vehicle uses GPS position during active trip) */}
+        {processedVehicles.map((vehicle) => (
+          <VehicleMarker
+            key={`vehicle-${vehicle.id}`}
+            vehicle={vehicle}
+            mapHeading={mapHeading}
+            zoomLevel={zoomLevel}
+          />
+        ))}
+
+        {/* Designated passing position */}
+        {passingPosition && (
+          <PassingPositionMarker
+            position={passingPosition}
+            zoomLevel={zoomLevel}
+          />
+        )}
+      </>
+    );
+  }
 );

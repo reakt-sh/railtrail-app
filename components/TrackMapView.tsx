@@ -27,6 +27,8 @@ interface ExternalProps {
   readonly track: GeoJSON.FeatureCollection | null;
   readonly zoomLevel: number;
   readonly mapHeading: number;
+  readonly isActive: boolean;
+  readonly currentVehicleId: number | null;
 }
 
 type Props = ExternalProps;
@@ -47,6 +49,8 @@ export const TrackMapView = memo(
     track,
     zoomLevel,
     mapHeading,
+    isActive,
+    currentVehicleId,
   }: Props) => {
     const [activeTooltip, setActiveTooltip] = useState<number | null>(null);
     const onPOIPress = useCallback((index: number) => {
@@ -103,6 +107,8 @@ export const TrackMapView = memo(
           track={track}
           zoomLevel={zoomLevel}
           mapHeading={mapHeading}
+          isActive={isActive}
+          currentVehicleId={currentVehicleId}
           activeTooltip={activeTooltip}
           onPOIPress={onPOIPress}
         />
