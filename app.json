@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Naturpark Draisine",
+    "name": "Naturpark-Draisine",
     "slug": "Train-Project",
     "scheme": "naturparkdraisine",
     "version": "1.0.0",
@@ -12,17 +12,13 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "bundleIdentifier": "de.hlb.naturparkdraisine",
       "buildNumber": "1.0.0",
       "supportsTablet": true,
       "infoPlist": {
-        "UIBackgroundModes": [
-          "location"
-        ],
+        "UIBackgroundModes": ["location"],
         "NSLocationAlwaysAndWhenInUseUsageDescription": "This app uses the location to show the current position on a map.",
         "NSCameraUsageDescription": "This app uses the camera to scan QR codes on draisines for vehicle selection.",
         "ITSAppUsesNonExemptEncryption": false
@@ -54,7 +50,7 @@
       [
         "expo-location",
         {
-          "locationAlwaysAndWhenInUsePermission": "Allow Naturpark Draisine to use your location.",
+          "locationAlwaysAndWhenInUsePermission": "Allow Naturpark-Draisine to use your location.",
           "isAndroidBackgroundLocationEnabled": true,
           "isAndroidForegroundServiceEnabled": true
         }
@@ -62,7 +58,7 @@
       [
         "expo-camera",
         {
-          "cameraPermission": "Allow Naturpark Draisine to use the camera to scan QR codes on draisines."
+          "cameraPermission": "Allow Naturpark-Draisine to use the camera to scan QR codes on draisines."
         }
       ],
       "expo-localization",

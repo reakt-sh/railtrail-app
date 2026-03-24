@@ -1,4 +1,4 @@
-# Naturpark Draisine Bordcomputer
+# Naturpark-Draisine Bordcomputer
 
 > Digitaler Bordcomputer für Draisinen-Fahrzeuge auf der Strecke Malente–Lütjenburg
 
