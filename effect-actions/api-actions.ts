@@ -98,6 +98,11 @@ export const setupPositionUpdates = (dispatch: Dispatch<TripActionType>): (() =>
       lastPos === undefined || Math.abs(currentPos - lastPos) > POSITION_CHANGE_THRESHOLD;
     const effectiveSpeed = positionChanged ? mapPosition.speed : 0;
 
+    // Fahrtrichtung aus aufeinanderfolgenden Positionen bestimmen
+    const isDirectionIncreasing = lastPos !== undefined && positionChanged
+      ? currentPos > lastPos
+      : undefined;
+
     // Letzte Position speichern
     lastPositions.set(mapPosition.vehicle, currentPos);
 
@@ -112,6 +117,7 @@ export const setupPositionUpdates = (dispatch: Dispatch<TripActionType>): (() =>
       heading: mapPosition.heading,
       headingTowardsUser: undefined, // Wird ggf. später berechnet
       label: mapPosition.label?.replace(/^0+/, '') || mapPosition.label,
+      isDirectionIncreasing,
     };
 
     // Vehicles-Array aktualisieren

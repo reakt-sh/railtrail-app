@@ -235,22 +235,21 @@ export const loadTrack = () => {
 // Export the loaded track data
 export const malenteLuetjenburgTrack = loadTrack();
 
+// Cached track coordinates and metrics — avoids recalculating Haversine on every call
+const cachedCoordinates = (malenteLuetjenburgTrack.path.features[0].geometry as GeoJSON.LineString)
+  .coordinates as [number, number][];
+const cachedMetrics = calculateTrackMetrics(cachedCoordinates);
+
 /** Projiziert GPS-Koordinaten auf den lokalen Track und gibt die Prozentposition (0-100) zurück. */
 export const positionToPercentage = (lat: number, lng: number): number => {
-  const coordinates = (malenteLuetjenburgTrack.path.features[0].geometry as GeoJSON.LineString)
-    .coordinates as [number, number][];
-  const { totalLength, cumulativeDistances } = calculateTrackMetrics(coordinates);
-  return findPercentagePosition(lng, lat, coordinates, cumulativeDistances, totalLength);
+  return findPercentagePosition(
+    lng, lat, cachedCoordinates, cachedMetrics.cumulativeDistances, cachedMetrics.totalLength
+  );
 };
 
 // Convert percentage position to lat/lng coordinates
 export const percentageToPosition = (percentage: number): Position => {
-  const track = malenteLuetjenburgTrack;
-  const coordinates = (track.path.features[0].geometry as GeoJSON.LineString).coordinates as [
-    number,
-    number,
-  ][];
-  const { totalLength, cumulativeDistances } = calculateTrackMetrics(coordinates);
+  const { totalLength, cumulativeDistances } = cachedMetrics;
 
   const targetDistance = (percentage / 100) * totalLength;
 
@@ -274,8 +273,8 @@ export const percentageToPosition = (percentage: number): Position => {
     t = (targetDistance - segmentStart) / segmentLength;
   }
 
-  const [lng1, lat1] = coordinates[segmentIndex];
-  const [lng2, lat2] = coordinates[segmentIndex + 1] ?? coordinates[segmentIndex];
+  const [lng1, lat1] = cachedCoordinates[segmentIndex];
+  const [lng2, lat2] = cachedCoordinates[segmentIndex + 1] ?? cachedCoordinates[segmentIndex];
 
   return {
     lat: lat1 + t * (lat2 - lat1),

@@ -186,11 +186,18 @@ export const HomeScreen = () => {
     };
   }, []);
 
+  // Ref to access latest vehicles without adding it as effect dependency
+  const vehiclesRef = useRef(vehicles);
+  vehiclesRef.current = vehicles;
+
   // Sync percentagePosition and calculated position from own vehicle in vehicles array
+  const lastSyncedPercentageRef = useRef<number | null>(null);
+
   useEffect(() => {
     if (currentVehicle.id != null && vehicles.length > 0) {
       const myVehicle = vehicles.find((v) => v.id === currentVehicle.id);
-      if (myVehicle) {
+      if (myVehicle && myVehicle.percentagePosition !== lastSyncedPercentageRef.current) {
+        lastSyncedPercentageRef.current = myVehicle.percentagePosition;
         dispatch(
           TripAction.setPosition({
             percentage: myVehicle.percentagePosition,
@@ -201,10 +208,16 @@ export const HomeScreen = () => {
     }
   }, [vehicles, currentVehicle.id]);
 
-  // Camera animation: follow vehicle position OR user GPS location
+  // Camera animation: follow user GPS location (during active trip)
+  useEffect(() => {
+    if (isFollowingUser && location) {
+      animateCamera(location.coords.latitude, location.coords.longitude, location.coords.heading);
+    }
+  }, [location, isFollowingUser]);
+
+  // Camera animation: follow vehicle marker (no active trip, observing other draisines)
   useEffect(() => {
     if (isFollowingVehicle && !isActive) {
-      // Follow vehicle marker only when no trip is active (observing other draisines)
       const vehicleToFollow =
         currentVehicle.id != null ? vehicles.find((v) => v.id === currentVehicle.id) : vehicles[0];
 
@@ -215,11 +228,8 @@ export const HomeScreen = () => {
           vehicleToFollow.heading ?? 0
         );
       }
-    } else if (isFollowingUser && location) {
-      // Follow user GPS (during active trip = draisine position)
-      animateCamera(location.coords.latitude, location.coords.longitude, location.coords.heading);
     }
-  }, [location, vehicles, currentVehicle.id, isFollowingUser, isFollowingVehicle, isActive]);
+  }, [vehicles, currentVehicle.id, isFollowingVehicle, isActive]);
 
   // Trip start/stop - foreground tracking is already running, no changes needed
 
@@ -255,13 +265,13 @@ export const HomeScreen = () => {
           position.percentage,
           position.lastPercentage,
           track.pointsOfInterest,
-          vehicles,
+          vehiclesRef.current,
           isPercentagePositionIncreasingRef.current,
           currentVehicle.id
         );
       }
     }
-  }, [position.percentage, vehicles, isActive, track.length, track.pointsOfInterest, currentVehicle.id, dispatch]);
+  }, [position.percentage, isActive, track.length, track.pointsOfInterest, currentVehicle.id, dispatch]);
 
   // Event handlers
   const handleLocationButtonClick = useCallback(() => {

@@ -207,8 +207,11 @@ const getNextVehicle = (
   let filtered = vehicles.filter((v) => excludeVehicleId == null || v.id !== excludeVehicleId);
 
   // Filter by heading towards user if specified
-  if (isHeadingTowardsUser != null) {
-    filtered = filtered.filter((v) => v.headingTowardsUser === isHeadingTowardsUser);
+  if (isHeadingTowardsUser === true && isPercentagePositionIncreasing !== undefined) {
+    // Entgegenkommend = Fahrzeug bewegt sich in die Gegenrichtung
+    filtered = filtered.filter(
+      (v) => v.isDirectionIncreasing !== undefined && v.isDirectionIncreasing !== isPercentagePositionIncreasing
+    );
   }
 
   // Filter by direction if known
