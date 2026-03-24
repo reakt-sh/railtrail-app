@@ -2,6 +2,7 @@ import * as MapLibreGL from '@maplibre/maplibre-react-native';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
 import { useKeepAwake } from 'expo-keep-awake';
 import * as Location from 'expo-location';
+import { StatusBar } from 'expo-status-bar';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector, useStore } from 'react-redux';
@@ -413,6 +414,7 @@ export const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
+      <StatusBar style="dark" />
       {/* Minimal trip overlay - replaces TripHeader */}
       {isActive && (
         <MinimalTripOverlay

@@ -38,12 +38,12 @@ export const LandingPageScreen = ({ navigation }: any) => {
 
       // Skip landing page if both privacy accepted and permission granted
       if (privacyAccepted === 'true' && isPermissionGranted) {
-        navigation.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [{ name: 'Main' }],
-          })
-        );
+        // navigation.dispatch(
+        //   CommonActions.reset({
+        //     index: 0,
+        //     routes: [{ name: 'Main' }],
+        //   })
+        // );
       }
     };
 

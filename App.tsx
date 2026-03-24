@@ -5,7 +5,6 @@ import {
 } from '@expo-google-fonts/source-sans-3';
 import 'expo-dev-client';
 import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
 import { useCallback } from 'react';
 import { AppRegistry } from 'react-native';
 import { gestureHandlerRootHOC, GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -52,7 +51,6 @@ export default function App() {
         <LanguageProvider>
           <GestureHandlerRootView style={{ flex: 1 }}>
             <RootNavigation />
-            <StatusBar style="dark" />
           </GestureHandlerRootView>
         </LanguageProvider>
       </Provider>
