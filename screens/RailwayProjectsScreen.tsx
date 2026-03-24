@@ -5,15 +5,15 @@ import { Color } from '../constants';
 import { textStyles } from '../constants/text-styles';
 import { useTranslation } from '../hooks/useTranslation';
 
-export const HeinLuettenborgScreen = () => {
+export const RailwayProjectsScreen = () => {
   const i18n = useTranslation();
 
   return (
     <SafeAreaView style={styles.safeArea} edges={[]}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{i18n.t('infoTitleHeinLuettenborg')}</Text>
-          <Text style={styles.text}>{i18n.t('heinLuettenborgContent')}</Text>
+          <Text style={styles.sectionTitle}>{i18n.t('infoTitleRailwayProjects')}</Text>
+          <Text style={styles.text}>{i18n.t('railwayProjectsContent')}</Text>
         </View>
       </ScrollView>
     </SafeAreaView>

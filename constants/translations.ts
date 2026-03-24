@@ -74,7 +74,7 @@ const translations = {
     infoTitleTripHistory: 'Past Trips',
     infoTitleGoodToKnow: 'Good to Know',
     infoTitleContacts: 'Distribution points / Service contacts',
-    infoTitleHeinLuettenborg: 'Project "Hein Lüttenborg"',
+    infoTitleProjects: 'Projects of the Railway ',
     infoTitleRailwayHistory: 'History of the Railway',
     infoTitleImprint: 'Imprint',
     infoTitlePrivacyPolicy: 'Privacy Policy',
@@ -117,8 +117,8 @@ const translations = {
     faqVouchersAnswer:
       'Yes, vouchers are available and valid for 3 years. Ask at the Tourist Info Malente.',
 
-    // Hein Lüttenborg Screen
-    heinLuettenborgContent:
+    //Railway Projects Screen
+    railwayProjectsContent:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
 
     // Railway History Screen
@@ -314,7 +314,7 @@ const translations = {
     infoTitleTripHistory: 'Vergangene Fahrten',
     infoTitleGoodToKnow: 'Gut zu wissen',
     infoTitleContacts: 'Ausgabestellen / Servicekontakte',
-    infoTitleHeinLuettenborg: 'Projekt „Hein Lüttenborg"',
+    infoTitleProjects: 'Projekte der Bahnstrecke',
     infoTitleRailwayHistory: 'Geschichte der Bahnstrecke',
     infoTitleImprint: 'Impressum',
     infoTitlePrivacyPolicy: 'Datenschutzerklärung',
@@ -357,8 +357,8 @@ const translations = {
     faqPriceAnswer:
       '3-Stunden-Tour: 50€ pro Draisine\nFamilienpreis (mit Kindern unter 16): 40€\nostseecard-Inhaber erhalten 2€ Rabatt.\n\nGruppentouren mit bis zu 60 Personen sind möglich.',
 
-    // Hein Lüttenborg Screen
-    heinLuettenborgContent:
+    // Railway Projects Screen
+    railwayProjectsContent:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
 
     // Railway History Screen

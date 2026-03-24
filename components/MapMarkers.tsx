@@ -1,10 +1,13 @@
+import * as MapLibreGL from '@maplibre/maplibre-react-native';
 import * as Location from 'expo-location';
 import React, { memo, useMemo } from 'react';
+import { View } from 'react-native';
 import { PointOfInterest } from '../types/init';
 import { Position } from '../types/position';
 import { Vehicle } from '../types/vehicle';
 import { PassingPositionMarker } from './PassingPositionMarker';
 import { POIMarker } from './POIMarker';
+import { POITooltip } from './POITooltip';
 import { Track } from './Track';
 import { UserLocationMarker } from './UserLocationMarker';
 import { VehicleMarker } from './VehicleMarker';
@@ -85,17 +88,39 @@ export const MapMarkers = memo(
           />
         )}
 
-        {/* Points of Interest along the track */}
+        {/* POI icons */}
         {pointsOfInterest.map((poi, index) => (
           <POIMarker
             key={`poi-${index}`}
             poi={poi}
             index={index}
             zoomLevel={zoomLevel}
-            showTooltip={activeTooltip === index}
             onPress={onPOIPress}
           />
         ))}
+
+        {/* Active tooltip — rendered after all POI markers so it stacks on top.
+            Separate MarkerView avoids the z-ordering problem: MarkerView ignores zIndex,
+            and React reconciliation prevents reordering within the same key set. */}
+        {activeTooltip != null && (
+          <MapLibreGL.MarkerView
+            key="poi-tooltip"
+            coordinate={[
+              pointsOfInterest[activeTooltip].pos.lng,
+              pointsOfInterest[activeTooltip].pos.lat,
+            ]}
+            anchor={{ x: 0.5, y: 1 }}
+          >
+            <View collapsable={false} style={{ alignItems: 'center', marginBottom: 4 }}>
+              <POITooltip
+                name={pointsOfInterest[activeTooltip].name}
+                type={pointsOfInterest[activeTooltip].typeId}
+                originalType={pointsOfInterest[activeTooltip].originalType}
+                description={pointsOfInterest[activeTooltip].description}
+              />
+            </View>
+          </MapLibreGL.MarkerView>
+        )}
 
         {/* Vehicles on the track (own vehicle uses GPS position during active trip) */}
         {processedVehicles.map((vehicle) => (

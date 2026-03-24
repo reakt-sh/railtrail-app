@@ -42,8 +42,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     maxWidth: 280,
     alignItems: 'center',
-    marginBottom: 4,
-    zIndex: 0,
   },
   tooltipTitle: {
     ...textStyles.titleSmall,

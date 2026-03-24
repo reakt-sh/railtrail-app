@@ -16,898 +16,229 @@
       "data": {
         "type": "LineString",
         "coordinates": [
-          [
-            10.601006,
-            54.292927
-          ],
-          [
-            10.601197,
-            54.292827
-          ],
-          [
-            10.601378,
-            54.292739
-          ],
-          [
-            10.601595,
-            54.292639
-          ],
-          [
-            10.601853,
-            54.292525
-          ],
-          [
-            10.602251,
-            54.292336
-          ],
-          [
-            10.602583,
-            54.292153
-          ],
-          [
-            10.602842,
-            54.291954
-          ],
-          [
-            10.603333,
-            54.29155
-          ],
-          [
-            10.603473,
-            54.291421
-          ],
-          [
-            10.603787,
-            54.291046
-          ],
-          [
-            10.604059,
-            54.290669
-          ],
-          [
-            10.604275,
-            54.290375
-          ],
-          [
-            10.604769,
-            54.2897
-          ],
-          [
-            10.605892,
-            54.288168
-          ],
-          [
-            10.606252,
-            54.2877
-          ],
-          [
-            10.609718,
-            54.283111
-          ],
-          [
-            10.610611,
-            54.281917
-          ],
-          [
-            10.611113,
-            54.28118
-          ],
-          [
-            10.611362,
-            54.280717
-          ],
-          [
-            10.61155,
-            54.280195
-          ],
-          [
-            10.611638,
-            54.279806
-          ],
-          [
-            10.611891,
-            54.278191
-          ],
-          [
-            10.612374,
-            54.275268
-          ],
-          [
-            10.612783,
-            54.272781
-          ],
-          [
-            10.613071,
-            54.271126
-          ],
-          [
-            10.613235,
-            54.270104
-          ],
-          [
-            10.613362,
-            54.269509
-          ],
-          [
-            10.613419,
-            54.269308
-          ],
-          [
-            10.6135,
-            54.269107
-          ],
-          [
-            10.613715,
-            54.268703
-          ],
-          [
-            10.61386,
-            54.26851
-          ],
-          [
-            10.61405,
-            54.268322
-          ],
-          [
-            10.614412,
-            54.267988
-          ],
-          [
-            10.614848,
-            54.267655
-          ],
-          [
-            10.615775,
-            54.26701
-          ],
-          [
-            10.61795,
-            54.265488
-          ],
-          [
-            10.620029,
-            54.263918
-          ],
-          [
-            10.622414,
-            54.26221
-          ],
-          [
-            10.622602,
-            54.262058
-          ],
-          [
-            10.623175,
-            54.261461
-          ],
-          [
-            10.625725,
-            54.258847
-          ],
-          [
-            10.62577,
-            54.2588
-          ],
-          [
-            10.629186,
-            54.255278
-          ],
-          [
-            10.629561,
-            54.254758
-          ],
-          [
-            10.629731,
-            54.254235
-          ],
-          [
-            10.629894,
-            54.253639
-          ],
-          [
-            10.630789,
-            54.249992
-          ],
-          [
-            10.630781,
-            54.249586
-          ],
-          [
-            10.630701,
-            54.249192
-          ],
-          [
-            10.630583,
-            54.24887
-          ],
-          [
-            10.630424,
-            54.248554
-          ],
-          [
-            10.628453,
-            54.245343
-          ],
-          [
-            10.627588,
-            54.243917
-          ],
-          [
-            10.627467,
-            54.24367
-          ],
-          [
-            10.627386,
-            54.243416
-          ],
-          [
-            10.627334,
-            54.243155
-          ],
-          [
-            10.627323,
-            54.242986
-          ],
-          [
-            10.627332,
-            54.242815
-          ],
-          [
-            10.627556,
-            54.240815
-          ],
-          [
-            10.627597,
-            54.240364
-          ],
-          [
-            10.627712,
-            54.239914
-          ],
-          [
-            10.628017,
-            54.238717
-          ],
-          [
-            10.628266,
-            54.237841
-          ],
-          [
-            10.628362,
-            54.237462
-          ],
-          [
-            10.628427,
-            54.237077
-          ],
-          [
-            10.628422,
-            54.236809
-          ],
-          [
-            10.628385,
-            54.236541
-          ],
-          [
-            10.628308,
-            54.236266
-          ],
-          [
-            10.628196,
-            54.23599
-          ],
-          [
-            10.628022,
-            54.235684
-          ],
-          [
-            10.627836,
-            54.235432
-          ],
-          [
-            10.627607,
-            54.23518
-          ],
-          [
-            10.62736,
-            54.234952
-          ],
-          [
-            10.627097,
-            54.234749
-          ],
-          [
-            10.62669,
-            54.234471
-          ],
-          [
-            10.625976,
-            54.234071
-          ],
-          [
-            10.624824,
-            54.233439
-          ],
-          [
-            10.624193,
-            54.233063
-          ],
-          [
-            10.623612,
-            54.232686
-          ],
-          [
-            10.623245,
-            54.232388
-          ],
-          [
-            10.622938,
-            54.232083
-          ],
-          [
-            10.622716,
-            54.231795
-          ],
-          [
-            10.622542,
-            54.231495
-          ],
-          [
-            10.622458,
-            54.231306
-          ],
-          [
-            10.62241,
-            54.231175
-          ],
-          [
-            10.621792,
-            54.228742
-          ],
-          [
-            10.621602,
-            54.228025
-          ],
-          [
-            10.621468,
-            54.227509
-          ],
-          [
-            10.621424,
-            54.227403
-          ],
-          [
-            10.621362,
-            54.227257
-          ],
-          [
-            10.621207,
-            54.227031
-          ],
-          [
-            10.621173,
-            54.226989
-          ],
-          [
-            10.620952,
-            54.226723
-          ],
-          [
-            10.620581,
-            54.226376
-          ],
-          [
-            10.614377,
-            54.221993
-          ],
-          [
-            10.614299,
-            54.221942
-          ],
-          [
-            10.61325,
-            54.221198
-          ],
-          [
-            10.610515,
-            54.219296
-          ],
-          [
-            10.609227,
-            54.218402
-          ],
-          [
-            10.608569,
-            54.217915
-          ],
-          [
-            10.60797,
-            54.217296
-          ],
-          [
-            10.607765,
-            54.216976
-          ],
-          [
-            10.607619,
-            54.216656
-          ],
-          [
-            10.607188,
-            54.215139
-          ],
-          [
-            10.606784,
-            54.213633
-          ],
-          [
-            10.605612,
-            54.209293
-          ],
-          [
-            10.605525,
-            54.208966
-          ],
-          [
-            10.605418,
-            54.208639
-          ],
-          [
-            10.605308,
-            54.208405
-          ],
-          [
-            10.605184,
-            54.208179
-          ],
-          [
-            10.605168,
-            54.208155
-          ],
-          [
-            10.605136,
-            54.208118
-          ],
-          [
-            10.604535,
-            54.207229
-          ],
-          [
-            10.604364,
-            54.206979
-          ],
-          [
-            10.604231,
-            54.206742
-          ],
-          [
-            10.604121,
-            54.206493
-          ],
-          [
-            10.604018,
-            54.2062
-          ],
-          [
-            10.603936,
-            54.205906
-          ],
-          [
-            10.60379,
-            54.205314
-          ],
-          [
-            10.603696,
-            54.205019
-          ],
-          [
-            10.603601,
-            54.204804
-          ],
-          [
-            10.603569,
-            54.204727
-          ],
-          [
-            10.603392,
-            54.204462
-          ],
-          [
-            10.603165,
-            54.204205
-          ],
-          [
-            10.602891,
-            54.203964
-          ],
-          [
-            10.602559,
-            54.203736
-          ],
-          [
-            10.602151,
-            54.203517
-          ],
-          [
-            10.601715,
-            54.203319
-          ],
-          [
-            10.600899,
-            54.202976
-          ],
-          [
-            10.60057,
-            54.202826
-          ],
-          [
-            10.600266,
-            54.202664
-          ],
-          [
-            10.600041,
-            54.202526
-          ],
-          [
-            10.599845,
-            54.202379
-          ],
-          [
-            10.599502,
-            54.202073
-          ],
-          [
-            10.599217,
-            54.201704
-          ],
-          [
-            10.598958,
-            54.201335
-          ],
-          [
-            10.598442,
-            54.200522
-          ],
-          [
-            10.597693,
-            54.199386
-          ],
-          [
-            10.597032,
-            54.198394
-          ],
-          [
-            10.597006,
-            54.198357
-          ],
-          [
-            10.596965,
-            54.198298
-          ],
-          [
-            10.596786,
-            54.198086
-          ],
-          [
-            10.596547,
-            54.197882
-          ],
-          [
-            10.595892,
-            54.197379
-          ],
-          [
-            10.595266,
-            54.1971
-          ],
-          [
-            10.594303,
-            54.196739
-          ],
-          [
-            10.593064,
-            54.196321
-          ],
-          [
-            10.592502,
-            54.196094
-          ],
-          [
-            10.591897,
-            54.195765
-          ],
-          [
-            10.591514,
-            54.195489
-          ],
-          [
-            10.590925,
-            54.194797
-          ],
-          [
-            10.590762,
-            54.194451
-          ],
-          [
-            10.590682,
-            54.19409
-          ],
-          [
-            10.590706,
-            54.193644
-          ],
-          [
-            10.59091,
-            54.193216
-          ],
-          [
-            10.59231,
-            54.191516
-          ],
-          [
-            10.59252,
-            54.191195
-          ],
-          [
-            10.592633,
-            54.190797
-          ],
-          [
-            10.592697,
-            54.190224
-          ],
-          [
-            10.592369,
-            54.188465
-          ],
-          [
-            10.592252,
-            54.188046
-          ],
-          [
-            10.592043,
-            54.187629
-          ],
-          [
-            10.591846,
-            54.187313
-          ],
-          [
-            10.59159,
-            54.187002
-          ],
-          [
-            10.591206,
-            54.18668
-          ],
-          [
-            10.590781,
-            54.186428
-          ],
-          [
-            10.590382,
-            54.186204
-          ],
-          [
-            10.590101,
-            54.186086
-          ],
-          [
-            10.589545,
-            54.1859
-          ],
-          [
-            10.587828,
-            54.185438
-          ],
-          [
-            10.586636,
-            54.185133
-          ],
-          [
-            10.585493,
-            54.184852
-          ],
-          [
-            10.58442,
-            54.184723
-          ],
-          [
-            10.583355,
-            54.184696
-          ],
-          [
-            10.581816,
-            54.184706
-          ],
-          [
-            10.577385,
-            54.184761
-          ],
-          [
-            10.576378,
-            54.184745
-          ],
-          [
-            10.57586,
-            54.184715
-          ],
-          [
-            10.574575,
-            54.184522
-          ],
-          [
-            10.570542,
-            54.183923
-          ],
-          [
-            10.570192,
-            54.183876
-          ],
-          [
-            10.567746,
-            54.183512
-          ],
-          [
-            10.566949,
-            54.183363
-          ],
-          [
-            10.566183,
-            54.183146
-          ],
-          [
-            10.563126,
-            54.182185
-          ],
-          [
-            10.561956,
-            54.181818
-          ],
-          [
-            10.561441,
-            54.181654
-          ],
-          [
-            10.560953,
-            54.181472
-          ],
-          [
-            10.56062,
-            54.181331
-          ],
-          [
-            10.560314,
-            54.181176
-          ],
-          [
-            10.559689,
-            54.180802
-          ],
-          [
-            10.559374,
-            54.180547
-          ],
-          [
-            10.559103,
-            54.180279
-          ],
-          [
-            10.558581,
-            54.179733
-          ],
-          [
-            10.557709,
-            54.178631
-          ],
-          [
-            10.557296,
-            54.178098
-          ],
-          [
-            10.557082,
-            54.177545
-          ],
-          [
-            10.557053,
-            54.177457
-          ],
-          [
-            10.55687,
-            54.17678
-          ],
-          [
-            10.556649,
-            54.176048
-          ],
-          [
-            10.556383,
-            54.175351
-          ],
-          [
-            10.556005,
-            54.174676
-          ],
-          [
-            10.555183,
-            54.173192
-          ],
-          [
-            10.554957,
-            54.172844
-          ],
-          [
-            10.554683,
-            54.172499
-          ],
-          [
-            10.554396,
-            54.172167
-          ],
-          [
-            10.554027,
-            54.171834
-          ],
-          [
-            10.552504,
-            54.170919
-          ],
-          [
-            10.552179,
-            54.170699
-          ],
-          [
-            10.551787,
-            54.170292
-          ],
-          [
-            10.551446,
-            54.169886
-          ],
-          [
-            10.551367,
-            54.169717
-          ],
-          [
-            10.551307,
-            54.169524
-          ],
-          [
-            10.551166,
-            54.169148
-          ],
-          [
-            10.550999,
-            54.168647
-          ],
-          [
-            10.550963,
-            54.168388
-          ],
-          [
-            10.550988,
-            54.168213
-          ],
-          [
-            10.551021,
-            54.168091
-          ],
-          [
-            10.551066,
-            54.16796
-          ],
-          [
-            10.551149,
-            54.167811
-          ],
-          [
-            10.551321,
-            54.167583
-          ],
-          [
-            10.551429,
-            54.167441
-          ]
+          [10.601006, 54.292927],
+          [10.601197, 54.292827],
+          [10.601378, 54.292739],
+          [10.601595, 54.292639],
+          [10.601853, 54.292525],
+          [10.602251, 54.292336],
+          [10.602583, 54.292153],
+          [10.602842, 54.291954],
+          [10.603333, 54.29155],
+          [10.603473, 54.291421],
+          [10.603787, 54.291046],
+          [10.604059, 54.290669],
+          [10.604275, 54.290375],
+          [10.604769, 54.2897],
+          [10.605892, 54.288168],
+          [10.606252, 54.2877],
+          [10.609718, 54.283111],
+          [10.610611, 54.281917],
+          [10.611113, 54.28118],
+          [10.611362, 54.280717],
+          [10.61155, 54.280195],
+          [10.611638, 54.279806],
+          [10.611891, 54.278191],
+          [10.612374, 54.275268],
+          [10.612783, 54.272781],
+          [10.613071, 54.271126],
+          [10.613235, 54.270104],
+          [10.613362, 54.269509],
+          [10.613419, 54.269308],
+          [10.6135, 54.269107],
+          [10.613715, 54.268703],
+          [10.61386, 54.26851],
+          [10.61405, 54.268322],
+          [10.614412, 54.267988],
+          [10.614848, 54.267655],
+          [10.615775, 54.26701],
+          [10.61795, 54.265488],
+          [10.620029, 54.263918],
+          [10.622414, 54.26221],
+          [10.622602, 54.262058],
+          [10.623175, 54.261461],
+          [10.625725, 54.258847],
+          [10.62577, 54.2588],
+          [10.629186, 54.255278],
+          [10.629561, 54.254758],
+          [10.629731, 54.254235],
+          [10.629894, 54.253639],
+          [10.630789, 54.249992],
+          [10.630781, 54.249586],
+          [10.630701, 54.249192],
+          [10.630583, 54.24887],
+          [10.630424, 54.248554],
+          [10.628453, 54.245343],
+          [10.627588, 54.243917],
+          [10.627467, 54.24367],
+          [10.627386, 54.243416],
+          [10.627334, 54.243155],
+          [10.627323, 54.242986],
+          [10.627332, 54.242815],
+          [10.627556, 54.240815],
+          [10.627597, 54.240364],
+          [10.627712, 54.239914],
+          [10.628017, 54.238717],
+          [10.628266, 54.237841],
+          [10.628362, 54.237462],
+          [10.628427, 54.237077],
+          [10.628422, 54.236809],
+          [10.628385, 54.236541],
+          [10.628308, 54.236266],
+          [10.628196, 54.23599],
+          [10.628022, 54.235684],
+          [10.627836, 54.235432],
+          [10.627607, 54.23518],
+          [10.62736, 54.234952],
+          [10.627097, 54.234749],
+          [10.62669, 54.234471],
+          [10.625976, 54.234071],
+          [10.624824, 54.233439],
+          [10.624193, 54.233063],
+          [10.623612, 54.232686],
+          [10.623245, 54.232388],
+          [10.622938, 54.232083],
+          [10.622716, 54.231795],
+          [10.622542, 54.231495],
+          [10.622458, 54.231306],
+          [10.62241, 54.231175],
+          [10.621792, 54.228742],
+          [10.621602, 54.228025],
+          [10.621468, 54.227509],
+          [10.621424, 54.227403],
+          [10.621362, 54.227257],
+          [10.621207, 54.227031],
+          [10.621173, 54.226989],
+          [10.620952, 54.226723],
+          [10.620581, 54.226376],
+          [10.614377, 54.221993],
+          [10.614299, 54.221942],
+          [10.61325, 54.221198],
+          [10.610515, 54.219296],
+          [10.609227, 54.218402],
+          [10.608569, 54.217915],
+          [10.60797, 54.217296],
+          [10.607765, 54.216976],
+          [10.607619, 54.216656],
+          [10.607188, 54.215139],
+          [10.606784, 54.213633],
+          [10.605612, 54.209293],
+          [10.605525, 54.208966],
+          [10.605418, 54.208639],
+          [10.605308, 54.208405],
+          [10.605184, 54.208179],
+          [10.605168, 54.208155],
+          [10.605136, 54.208118],
+          [10.604535, 54.207229],
+          [10.604364, 54.206979],
+          [10.604231, 54.206742],
+          [10.604121, 54.206493],
+          [10.604018, 54.2062],
+          [10.603936, 54.205906],
+          [10.60379, 54.205314],
+          [10.603696, 54.205019],
+          [10.603601, 54.204804],
+          [10.603569, 54.204727],
+          [10.603392, 54.204462],
+          [10.603165, 54.204205],
+          [10.602891, 54.203964],
+          [10.602559, 54.203736],
+          [10.602151, 54.203517],
+          [10.601715, 54.203319],
+          [10.600899, 54.202976],
+          [10.60057, 54.202826],
+          [10.600266, 54.202664],
+          [10.600041, 54.202526],
+          [10.599845, 54.202379],
+          [10.599502, 54.202073],
+          [10.599217, 54.201704],
+          [10.598958, 54.201335],
+          [10.598442, 54.200522],
+          [10.597693, 54.199386],
+          [10.597032, 54.198394],
+          [10.597006, 54.198357],
+          [10.596965, 54.198298],
+          [10.596786, 54.198086],
+          [10.596547, 54.197882],
+          [10.595892, 54.197379],
+          [10.595266, 54.1971],
+          [10.594303, 54.196739],
+          [10.593064, 54.196321],
+          [10.592502, 54.196094],
+          [10.591897, 54.195765],
+          [10.591514, 54.195489],
+          [10.590925, 54.194797],
+          [10.590762, 54.194451],
+          [10.590682, 54.19409],
+          [10.590706, 54.193644],
+          [10.59091, 54.193216],
+          [10.59231, 54.191516],
+          [10.59252, 54.191195],
+          [10.592633, 54.190797],
+          [10.592697, 54.190224],
+          [10.592369, 54.188465],
+          [10.592252, 54.188046],
+          [10.592043, 54.187629],
+          [10.591846, 54.187313],
+          [10.59159, 54.187002],
+          [10.591206, 54.18668],
+          [10.590781, 54.186428],
+          [10.590382, 54.186204],
+          [10.590101, 54.186086],
+          [10.589545, 54.1859],
+          [10.587828, 54.185438],
+          [10.586636, 54.185133],
+          [10.585493, 54.184852],
+          [10.58442, 54.184723],
+          [10.583355, 54.184696],
+          [10.581816, 54.184706],
+          [10.577385, 54.184761],
+          [10.576378, 54.184745],
+          [10.57586, 54.184715],
+          [10.574575, 54.184522],
+          [10.570542, 54.183923],
+          [10.570192, 54.183876],
+          [10.567746, 54.183512],
+          [10.566949, 54.183363],
+          [10.566183, 54.183146],
+          [10.563126, 54.182185],
+          [10.561956, 54.181818],
+          [10.561441, 54.181654],
+          [10.560953, 54.181472],
+          [10.56062, 54.181331],
+          [10.560314, 54.181176],
+          [10.559689, 54.180802],
+          [10.559374, 54.180547],
+          [10.559103, 54.180279],
+          [10.558581, 54.179733],
+          [10.557709, 54.178631],
+          [10.557296, 54.178098],
+          [10.557082, 54.177545],
+          [10.557053, 54.177457],
+          [10.55687, 54.17678],
+          [10.556649, 54.176048],
+          [10.556383, 54.175351],
+          [10.556005, 54.174676],
+          [10.555183, 54.173192],
+          [10.554957, 54.172844],
+          [10.554683, 54.172499],
+          [10.554396, 54.172167],
+          [10.554027, 54.171834],
+          [10.552504, 54.170919],
+          [10.552179, 54.170699],
+          [10.551787, 54.170292],
+          [10.551446, 54.169886],
+          [10.551367, 54.169717],
+          [10.551307, 54.169524],
+          [10.551166, 54.169148],
+          [10.550999, 54.168647],
+          [10.550963, 54.168388],
+          [10.550988, 54.168213],
+          [10.551021, 54.168091],
+          [10.551066, 54.16796],
+          [10.551149, 54.167811],
+          [10.551321, 54.167583],
+          [10.551429, 54.167441]
         ]
       },
       "markers": {
@@ -950,10 +281,7 @@
             "type": "minor-crossing",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.55104046371384,
-                54.16795514276929
-              ]
+              "coordinates": [10.55104046371384, 54.16795514276929]
             },
             "description": "Der Weg zum Kurpark",
             "extra": {
@@ -966,10 +294,7 @@
             "type": "halt",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.61196690346371,
-                54.27742844944839
-              ]
+              "coordinates": [10.61196690346371, 54.27742844944839]
             },
             "description": "km 15,250\n\nDer Haltepunkt wurde im Sommer 1954 mit der Einführung des Schienenbusbetriebs eröffnet und war ein Bedarfshaltepunkt, um das kleine Dorf anzubinden. Hier haben Züge nur gehalten, wenn jemand ein- oder aussteigen wollte. Am Haltepunkt Friederikenthal befindet sich ein Picknickplatz und Ihr habt einen tollen Blick in die schöne Landschaft. Perfekt für eine kleine Pause.",
             "extra": {
@@ -982,10 +307,7 @@
             "type": "end-of-the-line",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.60109862008053,
-                54.29287607855948
-              ]
+              "coordinates": [10.60109862008053, 54.29287607855948]
             },
             "description": "km 17,000–17,160 \n Streckenende\n\nDer Bahnhof Lütjenburg ist der Endpunkt der 17 km langen Bahnstrecke Malente-Lütjenburg. Er wurde 1892 eröffnet und verfügte einst über umfangreiche Gleisanlagen, auf denen ein reger Rangierbetrieb abgewickelt wurde. 13 (!) Gleise hatte das Gelände einst, da Lütjenburg wichtiger militärischer Verladebahnhof für die Kaserne in Lütjenburg und den Schießplatz der Bundeswehr in Todendorf war. Leider wurden ein Großteil der Anlagen und das Bahnhofsgebäude zwischen 2001 und 2008 zugunsten von Supermärkten abgerissen. Heute sind noch vier Gleise übrig, welche für den Betrieb genutzt werden. Mit einem Fußweg von 10 Minuten erreicht Ihr die sehenswerte Altstadt von Lütjenburg, die ein wenig an Lübeck erinnert. Mittelpunkt ist der Markt, ein wunderschöner zentraler Platz der Stadt. Sehenswert sind insbesondere die St.-Michaelis-Kirche (Baujahr 1156), das Färberhaus und das Rathaus. Zudem empfiehlt sich eine Wanderung zum Bismarckturm. Diesen könnt Ihr für zwei EUR erklimmen und habt von dort eine wunderschöne Aussicht über die gesamte Hohwachter Bucht und die Ostsee. Die Strände der Ostsee sind per Fahrrad oder Bus innerhalb von 15-20 Minuten erreichbar. Hier sind insbesondere Hohwacht und der Sehlendorfer Strand von überregionaler Bekanntheit.",
             "extra": {
@@ -998,10 +320,7 @@
             "type": "bridge",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.60304135198923,
-                54.29175833186886
-              ]
+              "coordinates": [10.60304135198923, 54.29175833186886]
             },
             "description": "km 16,945 – Länge 50 m\n\nDie Brücke über die Kossau ist das spektakulärste Kunstbauwerk der Bahnstrecke. Das Viadukt wurde 1892 fertiggestellt und für die schweren Militärzüge in den 1950er-Jahren mit einer Betonhülle umgossen – fast wie eine Brücke um die Brücke. Sie überquert das kleine Flüsschen Kossau. Bitte bedenkt, dass das Anhalten mit der Draisine auf den Brücken aus Sicherheitsgründen verboten ist.",
             "extra": {
@@ -1014,10 +333,7 @@
             "type": "bridge",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.60416687437752,
-                54.29051218074746
-              ]
+              "coordinates": [10.60416687437752, 54.29051218074746]
             },
             "description": "km 16,710 – Länge 27 m\n\nDie Brücke wurde mit dem Bau der Bundessstraße in den 1950er-Jahren errichtet. Sie überquert die B 202, welche eine wichtige Querverbindung von Kiel in Richtung Fehmarn darstellt. Die Bedeutung der Straße wird noch zunehmen, wenn der neue Tunnel zwischen Fehmarn und Dänemark fertiggestellt wird. Die Straße ist insbesondere durch den Urlaubs- und Tourismusverkehr stark frequentiert. Bitte bedenkt, dass das Anhalten mit der Draisine auf den Brücken aus Sicherheitsgründen verboten ist.",
             "extra": {
@@ -1030,10 +346,7 @@
             "type": "minor-crossing",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.61237992922058,
-                54.27525786435475
-              ]
+              "coordinates": [10.61237992922058, 54.27525786435475]
             },
             "description": "km 15,010 \n Letzte Wendemöglichkeit für 2 km",
             "extra": {
@@ -1046,10 +359,7 @@
             "type": "minor-crossing",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.61371036342539,
-                54.26870156472734
-              ]
+              "coordinates": [10.61371036342539, 54.26870156472734]
             },
             "description": "km 14,278",
             "extra": {
@@ -1062,10 +372,7 @@
             "type": "minor-crossing",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.61577489654581,
-                54.266984788424
-              ]
+              "coordinates": [10.61577489654581, 54.266984788424]
             },
             "description": "km 13,940",
             "extra": {
@@ -1078,10 +385,7 @@
             "type": "minor-crossing",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.62002952391131,
-                54.26391446274761
-              ]
+              "coordinates": [10.62002952391131, 54.26391446274761]
             },
             "description": "km 13,640",
             "extra": {
@@ -1094,10 +398,7 @@
             "type": "crossing",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.62576951662293,
-                54.25879622285369
-              ]
+              "coordinates": [10.62576951662293, 54.25879622285369]
             },
             "description": "km 12,930 – Blinklichtanlage",
             "extra": {
@@ -1110,10 +411,7 @@
             "type": "halt",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.626846753985497,
-                54.257829691514644
-              ]
+              "coordinates": [10.626846753985497, 54.257829691514644]
             },
             "description": "km 12,900\n\nDer Haltepunkt wurde im Sommer 1954 mit der Einführung des Schienenbusbetriebs eröffnet und war ein Bedarfshaltepunkt, um das kleine Dorf anzubinden. Hier haben Züge nur gehalten, wenn jemand ein- oder aussteigen wollte. Übrigens sollten Geocacher sich hier vielleicht etwas genauer umsehen… Sofern Ihr Eure Draisine abstellt oder eine Pause macht, stellt das Fahrzeug bitte nicht zu nah am Bahnübergang ab und stellt sicher, dass es gegen Wegrollen gesichert ist.",
             "extra": {
@@ -1126,10 +424,7 @@
             "type": "minor-crossing",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.62989472998583,
-                54.25363660710594
-              ]
+              "coordinates": [10.62989472998583, 54.25363660710594]
             },
             "description": "km 12,280",
             "extra": {
@@ -1142,10 +437,7 @@
             "type": "minor-crossing",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.63078791247404,
-                54.24998860584117
-              ]
+              "coordinates": [10.63078791247404, 54.24998860584117]
             },
             "description": "km 11,870",
             "extra": {
@@ -1158,10 +450,7 @@
             "type": "halt",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.62772484355162,
-                54.24413044427286
-              ]
+              "coordinates": [10.62772484355162, 54.24413044427286]
             },
             "description": "km 11,150 \n\nDer Bahnhof wurde am 08.12.1890 in Betrieb genommen und war für kurze Zeit Endpunkt der Strecke (bis zur Fertigstellung der restlichen Strecke). Er gehörte zum unweit gelegenen Gut Kletkamp. Insbesondere diente der Bahnhof für die Verladung von landwirtschaftlichen Erzeugnissen, daher hatte er auch einst mehrere Gleise. Die Güterverladerampe existiert noch heute, Ihr fahrt mit der Draisine direkt daran vorbei. Heute ist das Gut Kletkamp eine sehr beliebe Hochzeits- und Eventlocation. Hier wurden auch einige Szenen der bekannten Filmreihe „Die Mädels vom Immenhof“ gedreht. Der Bahnhof ist inzwischen in Privatbesitz, weshalb hier Halteverbot für die Draisinen gilt. Im oberen Teil des Bahnhofs befindet sich eine wunderschöne Ferienwohnung.",
             "extra": {
@@ -1174,10 +463,7 @@
             "type": "road-crossing",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.62734077463407,
-                54.24268536586548
-              ]
+              "coordinates": [10.62734077463407, 54.24268536586548]
             },
             "description": "km 11,010 – Länge 12 m",
             "extra": {
@@ -1190,10 +476,7 @@
             "type": "minor-crossing",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.62826397789307,
-                54.23782627117179
-              ]
+              "coordinates": [10.62826397789307, 54.23782627117179]
             },
             "description": "km 10,480",
             "extra": {
@@ -1206,10 +489,7 @@
             "type": "crossing",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.62245977399284,
-                54.23130478038833
-              ]
+              "coordinates": [10.62245977399284, 54.23130478038833]
             },
             "description": "km 9,610",
             "extra": {
@@ -1222,10 +502,7 @@
             "type": "halt",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.62233083514409,
-                54.23083600854179
-              ]
+              "coordinates": [10.62233083514409, 54.23083600854179]
             },
             "description": "km 9,560\n\nAnders als die anderen Bedarfshaltestellen an der Strecke wurde der Haltepunkt nicht im Sommer 1954 mit der Einführung des Schienenbusbetriebs eröffnet, sondern erst ein Jahr später 1955. Der Legende nach war es so, dass die Bundesbahn seinerzeit hier gar keinen Haltepunkt schaffen wollte, die Anwohnerinnen und Anwohner sich jedoch so sehr beschwerten, dass die Bundesbahn in Aussicht stellte, dass man hier halten würde, wenn die Landwirte den Bahnsteig selbst bauen würden. Die Bahn stellte das Material, die Landwirte bauten alles auf und dann wurde der Haltepunkt ein Jahr später tatsächlich in Betrieb genommen. Und auch bei der Reaktivierung der Bahnstrecke war es so. Der völlig zugewachsene Bahnsteig wurde von den umliegenden Landwirten saniert und wieder in seinen Originalzustand gebracht. So ist er heute ein beliebter Rastplatz für alle Menschen, die hier per Draisine, Fahrrad, auf einer Wanderung oder einem Pferderücken vorbeikommen. Ein tolles Beispiel einer echten „Bürgerbahn“, die von den Menschen auch selbst mitgestaltet wird. Der einst völlig zugewucherte „tote“ Bahnsteig ist wieder zu einem zentralen Begegnungsort im Dorf geworden. Am Bahnsteig steht ein kleiner Schaukasten, auf dem Ihr Euch ansehen könnt, wie es hier vor der Reaktivierung aussah und wie der Bahnstrecke dann wieder Leben eingehaucht wurde.",
             "extra": {
@@ -1238,10 +515,7 @@
             "type": "minor-crossing",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.62142435179138,
-                54.2273976630113
-              ]
+              "coordinates": [10.62142435179138, 54.2273976630113]
             },
             "description": "km 9,170",
             "extra": {
@@ -1254,10 +528,7 @@
             "type": "bridge",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.62116951783293,
-                54.22698529317409
-              ]
+              "coordinates": [10.62116951783293, 54.22698529317409]
             },
             "description": "km 9,114 – Graben Länge 6 m",
             "extra": {
@@ -1270,10 +541,7 @@
             "type": "crossing",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.61424944611967,
-                54.22189069636329
-              ]
+              "coordinates": [10.61424944611967, 54.22189069636329]
             },
             "description": "km 8,410 – Blinklichtanlage",
             "extra": {
@@ -1286,10 +554,7 @@
             "type": "halt",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.61256233320618,
-                54.2207208417749
-              ]
+              "coordinates": [10.61256233320618, 54.2207208417749]
             },
             "description": "km 8,320\n\nDer Bahnhof Benz war früher die Mittelstation der Bahnstrecke. Früher gab es hier ein sogenanntes Kreuzungsgleis, sodass sich die Züge von Malente und Lütjenburg kommend in diesem Bahnhof begegnen konnten. Er hatte zahlreiche Signale und sogar ein Stellwerk. Neben dem Kreuzungsgleis verfügte der Bahnhof noch über ein drittes Gleis, über das noch bis 1995 Güterverladungen der landwirtschaftlichen Erzeugnisse stattfanden. Früher war es eine wichtige Aufgabe ländlicher Bahnstrecken, den Transport von landwirtschaftlichen Erzeugnissen und Gütern auf die Märkte in den Städten sicherzustellen. Das Kreuzungsgleis wurde in den 1970er-Jahren abgebaut, das Güteranschlussgleis (Gleis 3) existiert noch heute, ist aber in Privatbesitz. Im Bahnhof Benz wurde gegen Ende des 2. Weltkriegs die Reichsbahndirektion Stettin aufgelöst. Die Leitung der Reichsbahndirektion floh damals vor den russischen Alliierten. Der Zug wurde auf die Bahnhöfe Lensahn und Benz aufgeteilt, in Benz erfolgte die formale Auflösung. Bis heute erinnert eine Gedenktafel am Bahnhofsgebäude hieran. Der Bahnhof selbst ist jedoch in Privateigentum, weshalb wir Euch bitten, hier nicht anzuhalten.",
             "extra": {
@@ -1302,10 +567,7 @@
             "type": "minor-crossing",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.60759913783629,
-                54.21662138465484
-              ]
+              "coordinates": [10.60759913783629, 54.21662138465484]
             },
             "description": "km 7,670",
             "extra": {
@@ -1318,10 +580,7 @@
             "type": "minor-crossing",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.60677410549317,
-                54.21361475288094
-              ]
+              "coordinates": [10.60677410549317, 54.21361475288094]
             },
             "description": "km 7,330",
             "extra": {
@@ -1334,10 +593,7 @@
             "type": "bridge",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.60610891765747,
-                54.21116317437699
-              ]
+              "coordinates": [10.60610891765747, 54.21116317437699]
             },
             "description": "km 7,049 – Länge 4 m",
             "extra": {
@@ -1350,10 +606,7 @@
             "type": "minor-crossing",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.60516746573637,
-                54.2081514392386
-              ]
+              "coordinates": [10.60516746573637, 54.2081514392386]
             },
             "description": "km 6,885 – Fußweg",
             "extra": {
@@ -1366,10 +619,7 @@
             "type": "halt",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.605164,
-                54.208206
-              ]
+              "coordinates": [10.605164, 54.208206]
             },
             "description": "km 6,850\n\nDer Haltepunkt Malkwitz wurde im Sommer 1954 als Halt im Schienenbusbetrieb eröffnet. Das eigentliche Dorf Malkwitz ist von hier noch ein Stück entfernt, in unmittelbarer Nähe war früher jedoch eine Ziegelei und der Bahnhalt diente als Anreisemöglichkeit für die Angestellten. Hierzu gab es in Malkwitz sogar einen Gleisanschluss, wo die Ziegel entsprechend in Züge verladen wurden. Heute ist Malkwitz ein wunderschöner Picknick-Spot für alle Draisinengäste. Bei einer Pause könnt Ihr hier den wunderschönen Blick ins Tal zum Benzer See genießen. Mit einem ca. 20-minütigen Fußmarsch könnt Ihr es Euch zudem im Feldcafè Ingenhof gemütlich machen. Ein wunderschönes Cafè mitten auf einem Feld und in den einzigen Weinhängen der Holsteinischen Schweiz. Ja, Ihr habt ganz richtig gelesen, hier wird tatsächlich Wein angebaut. Dieser kann direkt im Feldcafè vom Weingut Ingenhof verköstigt und auch gekauft werden. Wenn Ihr auf der Draisinenfahrt keine Zeit dafür habt, ist dies vielleicht ein weiteres lohnendes Ausflugsziel nach Eurer Tour.",
             "extra": {
@@ -1382,10 +632,7 @@
             "type": "crossing",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.5970001358429,
-                54.19835550732333
-              ]
+              "coordinates": [10.5970001358429, 54.19835550732333]
             },
             "description": "km 5,460 – Blinklichtanlage",
             "extra": {
@@ -1398,10 +645,7 @@
             "type": "halt",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.5974,
-                54.199036
-              ]
+              "coordinates": [10.5974, 54.199036]
             },
             "description": "km 5,440\n\nDer Bahnhof Bruhnskoppel wurde 1890 eröffnet und verfügt über eine Besonderheit – er hat nämlich zwei Bahnsteige. Einen Bahnsteig jeweils auf jeder Seite der Straße. So konnte der Zug früher zunächst die Straße überqueren und während die Fahrgäste ein- und ausstiegen, war die Straße bereits wieder frei. Der Bahnhof diente zur Anbindung für das Berghotel Bruhnskoppel. Neben dem Bahnhof Holsteinische Schweiz somit der zweite aus touristischen Gründen hergestellt Haltepunkt an der Strecke. Die Herstellung einer touristischen Anbindung spielte beim Bahnbau somit eine wesentliche Rolle. Das Berghotel Bruhnskoppel ist heute leider nur noch eine verfallene Ruine in den Wipfeln der Holsteinische Schweiz. Eine große wichtige Rolle spielte die Station zuletzt 1993, dort diente der Bahnhof als Drehort für den Film „ Das Kuckucksei“ aus der Krimireihe „Alles außer Mord“ des damals noch recht jungen TV-Senders Pro Sieben. Der Film feierte am 21.02.1995 Premiere und neben dem Bahnhof Bruhnskoppel spielte die legendäre Diesellok der Baureihe V 200 007 eine wichtige Rolle. Er kann noch heute in den Streamingportalen angeschaut werden. Heute ist Bruhnskoppel ein sehr schöner Picknickplatz, den Ihr für eine schattige Pause nutzen könnt. Allerdings bitte auf dem Bahnsteig, wo sich nicht das Bahnhofsgebäude befindet. Das Haus selbst ist nämlich inzwischen in Privatbesitz und für die Anwohner ist es sicher nicht so schön, wenn man direkt vor dem Wohnzimmerfenster Picknick macht. Haltet bitte daher auf der anderen Seite der Straße, dort ist genug Platz.",
             "extra": {
@@ -1414,10 +658,7 @@
             "type": "crossing",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.59038043710785,
-                54.1862046354982
-              ]
+              "coordinates": [10.59038043710785, 54.1862046354982]
             },
             "description": "km 3,870",
             "extra": {
@@ -1430,12 +671,9 @@
             "type": "minor-crossing",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.575,
-                54.1845
-              ]
+              "coordinates": [10.575, 54.1845]
             },
-            "description": "km 2,840",
+            "description": "km 2,800 \n\n Der Wendepunkt ist auch ein kleiner Draisinenbahnhof mit Zugang zum Outdoor Camp Bottervogel. Dieses befindet sich direkt im Tal neben der Bahnstrecke. Im Camp finden insbesondere Team-Events und Klassenfahrten statt. Hier könnt Ihr in die atemberaubende Natur eintauchen, sei es bei aufregenden Team-Building-Aktivitäten, kniffligen Herausforderungen, Floßbauen, Stockbrot machen oder in erlebnisreichen Wanderungen durch malerische Landschaften. Das Angebot im Outdoorbereich verbindet Abenteuerlust mit nachhaltiger Lernerfahrung, perfekt für Schulen, Unternehmen und alle, die das Besondere suchen. Hierbei gibt es auch Pakete, die die Draisine zur Anreise ins Camp nutzen. Weitere Infos erhaltet Ihr bei www.bottervogel.de",
             "extra": {
               "isTurningPoint": true
             }
@@ -1446,10 +684,7 @@
             "type": "crossing",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.57018340322571,
-                54.18386758023301
-              ]
+              "coordinates": [10.57018340322571, 54.18386758023301]
             },
             "description": "km 2,500 – Blinklichtanlage",
             "extra": {
@@ -1462,10 +697,7 @@
             "type": "halt",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.56342418830418,
-                54.18227755376287
-              ]
+              "coordinates": [10.56342418830418, 54.18227755376287]
             },
             "description": "km 2,010\n\nDer Haltepunkt wurde im Sommer 1954 mit der Einführung des Schienenbusbetriebs eröffnet und war ein Bedarfshaltepunkt, um den nördlichen Teil Malentes anzubinden. Früher diente die Station vielen Menschen zur Anreise zur Arbeit für die in Malente sehr bekannte ehemalige Firma Kuhnke. Interessanterweise liegt der Haltepunkt auch heute noch sehr verkehrsgünstig. Für viele der Malenterinnen und Malenter liegt er näher an ihrem Haus oder ihrer Wohnung als der Bahnhof Bad Malente-Gremsmühlen. Daher plant das Land SH, dass eines Tages wieder reguläre Züge von Lübeck Hbf bis hier hin fahren sollen. Die Hansestadt Lübeck hat den Haltepunkt Malente Nord sogar als Haltestelle für die geplante Regio-S-Bahn vorgesehen.",
             "extra": {
@@ -1478,10 +710,7 @@
             "type": "crossing",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.56310774273071,
-                54.18217866559564
-              ]
+              "coordinates": [10.56310774273071, 54.18217866559564]
             },
             "description": "km 2,000 – Blinklichtanlage mit Halbschranken",
             "extra": {
@@ -1494,10 +723,7 @@
             "type": "minor-crossing",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.56095123635328,
-                54.18146917530204
-              ]
+              "coordinates": [10.56095123635328, 54.18146917530204]
             },
             "description": "km 1,840",
             "extra": {
@@ -1510,10 +736,7 @@
             "type": "bridge",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.5570673873703,
-                54.17750239798882
-              ]
+              "coordinates": [10.5570673873703, 54.17750239798882]
             },
             "description": "km 1,313 – Länge 8 m\n\nDie Brücke führt über den kleinen Fluss „Malenter Au“ – von der Draisine aus könnt Ihr die Auewiesen Malente sehen. Ein wunderschönes Naturschutzgebiet, dass zum Wandern einlädt.",
             "extra": {
@@ -1526,10 +749,7 @@
             "type": "crossing",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.55686328469254,
-                54.17676613983736
-              ]
+              "coordinates": [10.55686328469254, 54.17676613983736]
             },
             "description": "km 1,240 – Blinklichtanlage",
             "extra": {
@@ -1542,10 +762,7 @@
             "type": "crossing",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.55600514307865,
-                54.17467189253872
-              ]
+              "coordinates": [10.55600514307865, 54.17467189253872]
             },
             "description": "km 0,991 – Blinklichtanlage",
             "extra": {
@@ -1558,10 +775,7 @@
             "type": "road-crossing",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.55139167471016,
-                54.16978909011717
-              ]
+              "coordinates": [10.55139167471016, 54.16978909011717]
             },
             "description": "km 0,360 – Länge 24 m",
             "extra": {
@@ -1574,10 +788,7 @@
             "type": "halt",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.59052012545154,
-                54.18627840204964
-              ]
+              "coordinates": [10.59052012545154, 54.18627840204964]
             },
             "description": "km 3,890\n\nDer Bahnhof Holsteinische Schweiz ist ein ganz besonderer Ort, denn der Bahnhof hat gemeinsam mit einem Hotel der gesamten Region ihren Namen gegeben (nicht andersrum!). Wenn Ihr am Bahnhof Holsteinische Schweiz vorbeikommt, seit Ihr somit am Ursprung der Holsteinischen Schweiz. Hier entstand dieser Name und wenn Ihr mit der Draisine hier lang kommt, wisst Ihr auch wieso. 1888 wurde seinerzeit mit den Planungen der Bahnstrecke Malente-Lütjenburg begonnen. Gleichzeitig plante der Kaufmann Janus die Errichtung eines Hotels am Kellersee. Er erreichte, dass für das Hotel ein eigener Bahnhof eingerichtet wurde. In Anlehnung an die Landschaft nannte er das Hotel „Holsteinische Schweiz“, weshalb auch der Bahnhof diesen Namen bekam. Mit der Eisenbahn begann in dieser Region überhaupt auch erst der Fremdenverkehr, weil die Region plötzlich in attraktiver Reisezeit erreichbar wurde. Schnell übertrug sich der Name vom Hotel und dem Bahnhof auf die ganze Region. Ihr seid somit hier am Herzen und dem direkten Ursprung der Holsteinischen Schweiz und entlang der Bahntrasse kann man lebendig erfahren, warum es hier so heißt. Heute ist der Bahnhof in Privatbesitz. Bitte respektiert die Privatsphäre und haltet aus Respekt vor den Bewohnerinnen und Bewohnern nicht direkt vor dem Gebäude. Das ehemalige Hotel Holsteinische Schweiz ist heute übrigens die Landesfinanzschule von Schleswig-Holstein.",
             "extra": {
@@ -1590,10 +801,7 @@
             "type": "crossing",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.55097608725436,
-                54.16820637323903
-              ]
+              "coordinates": [10.55097608725436, 54.16820637323903]
             },
             "description": "km 0,183",
             "extra": {
@@ -1606,10 +814,7 @@
             "type": "tourist-info",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.550507247251739,
-                54.16807395033756
-              ]
+              "coordinates": [10.550507247251739, 54.16807395033756]
             },
             "extra": {
               "isTurningPoint": false
@@ -1621,10 +826,7 @@
             "type": "tourist-info",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.59025325928048,
-                54.29294786587569
-              ]
+              "coordinates": [10.59025325928048, 54.29294786587569]
             },
             "extra": {
               "isTurningPoint": false
@@ -1636,10 +838,7 @@
             "type": "halt",
             "position": {
               "type": "Point",
-              "coordinates": [
-                10.5514,
-                54.1674
-              ]
+              "coordinates": [10.5514, 54.1674]
             },
             "description": "km 0,000\n\nHier besteht Anschluss an die Regionalzüge in Richtung Kiel (von Gleis 1) und Lübeck (von Gleis 2). Das Gleis zur Strecke nach Lütjenburg heißt Gleis 7, weil der Bahnhof einst noch viel mehr Gleisanlagen hatte, von denen viele in den letzten Jahrzehnten nach und nach zurückgebaut wurden. Vom Bahnhof erreicht Ihr auch das Zentrum Malentes fußläufig. In unmittelbarer Nähe liegen der Kurpark, die Bahnhofstraße, das Wildpark-Gehege und der Dieksee mit dem Anleger der 5-Seen-Fahrt. Die berühmte Bootstour durch die vielen Seen der Holsteinische Schweiz ist eine perfekte Ergänzung für Euren Ausflug. Bei Fragen berät Euch die Tourist Info Malente sehr gern. Diese befindet sich direkt am Abfahrtspunkt der Draisinen.",
             "extra": {
