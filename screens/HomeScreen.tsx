@@ -30,6 +30,7 @@ import {
   useTranslation,
   useTripSimulation,
 } from '../hooks';
+import { SIMULATION_VEHICLE_ID } from '../hooks/useTripSimulation';
 import { AppAction, AppActionType } from '../redux/app';
 import { ReduxAppState } from '../redux/init';
 import { TripAction, TripActionType } from '../redux/trip';
@@ -41,7 +42,7 @@ import {
   SPEED_SMOOTHING_ALPHA,
   STILLSTAND_THRESHOLD_KMH,
 } from '../constants';
-import { calculateDistanceFromCoordinates } from '../util/calculators';
+import { calculateDistanceFromCoordinates, percentToDistance } from '../util/calculators';
 import { AppEvents, events } from '../util/events';
 
 export const HomeScreen = () => {
@@ -56,6 +57,10 @@ export const HomeScreen = () => {
 
   const lastLocationRef = useRef<Location.LocationObject | null>(null);
   const smoothedSpeedRef = useRef<number>(0);
+  const isDemoRef = useRef(false);
+  const oppositeDistanceRef = useRef(0);
+  const isPercentagePositionIncreasingRef = useRef<boolean | undefined>(undefined);
+  const DIRECTION_CHANGE_THRESHOLD_METERS = 30;
 
   // Custom hooks
   const {
@@ -74,9 +79,9 @@ export const HomeScreen = () => {
     centerOnPosition,
   } = useMapCamera();
 
-  const { startForegroundTracking } = useLocationTracking();
+  const { startForegroundTracking, stopTracking } = useLocationTracking();
 
-  const { startSimulation, stopSimulation } = useTripSimulation();
+  const { registerDemoVehicle, startSimulation, stopSimulation } = useTripSimulation();
 
   // Bottom sheet visibility
   const [isVehicleSelectionVisible, setIsVehicleSelectionVisible] = useState(false);
@@ -85,11 +90,6 @@ export const HomeScreen = () => {
   const [isSummaryVisible, setIsSummaryVisible] = useState(false);
   const [isFeedbackVisible, setIsFeedbackVisible] = useState(false);
   const [pendingTripData, setPendingTripData] = useState<SavedTrip | null>(null);
-
-  // Direction tracking
-  const [isPercentagePositionIncreasing, setIsPercentagePositionIncreasing] = useState<
-    boolean | undefined
-  >(undefined);
 
   // Redux state
   const { track, location, permissions } = useSelector((state: ReduxAppState) => state.app);
@@ -167,13 +167,12 @@ export const HomeScreen = () => {
       startForegroundTracking(handleLocationUpdate);
     }
 
-    // Start simulation for Demo vehicle
-    startSimulation();
+    // Register Demo vehicle so it appears in vehicle selection
+    registerDemoVehicle();
 
     return () => {
       unsubscribePositions();
       disconnectFromServer();
-      stopSimulation();
     };
   }, []);
 
@@ -228,7 +227,25 @@ export const HomeScreen = () => {
   useEffect(() => {
     if (position.percentage != null) {
       if (position.lastPercentage != null && position.lastPercentage !== position.percentage) {
-        setIsPercentagePositionIncreasing(position.percentage > position.lastPercentage);
+        const movingForward = position.percentage > position.lastPercentage;
+        const delta = Math.abs(position.percentage - position.lastPercentage);
+        const deltaMeters = percentToDistance(track.length ?? 0, delta);
+
+        if (isPercentagePositionIncreasingRef.current === undefined) {
+          // First movement — set direction immediately
+          isPercentagePositionIncreasingRef.current = movingForward;
+          oppositeDistanceRef.current = 0;
+        } else if (movingForward === isPercentagePositionIncreasingRef.current) {
+          // Same direction — reset accumulator
+          oppositeDistanceRef.current = 0;
+        } else {
+          // Opposite direction — accumulate distance
+          oppositeDistanceRef.current += deltaMeters;
+          if (oppositeDistanceRef.current >= DIRECTION_CHANGE_THRESHOLD_METERS) {
+            isPercentagePositionIncreasingRef.current = movingForward;
+            oppositeDistanceRef.current = 0;
+          }
+        }
       }
 
       if (isActive) {
@@ -239,12 +256,12 @@ export const HomeScreen = () => {
           position.lastPercentage,
           track.pointsOfInterest,
           vehicles,
-          isPercentagePositionIncreasing,
+          isPercentagePositionIncreasingRef.current,
           currentVehicle.id
         );
       }
     }
-  }, [position.percentage]);
+  }, [position.percentage, vehicles, isActive, track.length, track.pointsOfInterest, currentVehicle.id, dispatch]);
 
   // Event handlers
   const handleLocationButtonClick = useCallback(() => {
@@ -301,6 +318,13 @@ export const HomeScreen = () => {
             dispatch(TripAction.stop());
             tripStartTimeRef.current = null;
 
+            // If demo trip, stop simulation and restart real GPS
+            if (isDemoRef.current) {
+              stopSimulation();
+              startForegroundTracking(handleLocationUpdate);
+              isDemoRef.current = false;
+            }
+
             // Show trip summary, then feedback
             setPendingTripData(savedTrip);
             setIsSummaryVisible(true);
@@ -324,10 +348,19 @@ export const HomeScreen = () => {
       dispatch(TripAction.startSegment(vehicle.id, vehicleName));
       dispatch(TripAction.start());
       setIsFollowingUser(true);
+
+      if (vehicle.id === SIMULATION_VEHICLE_ID) {
+        isDemoRef.current = true;
+        stopTracking(); // Stop real GPS
+        startSimulation(handleLocationUpdate); // Feed simulated positions
+      } else {
+        isDemoRef.current = false;
+      }
+
       // Zoom to vehicle position
       centerOnPosition(vehicle.pos.lat, vehicle.pos.lng, vehicle.heading ?? 0, 17);
     },
-    [dispatch, setIsFollowingUser, centerOnPosition]
+    [dispatch, setIsFollowingUser, centerOnPosition, stopTracking, startSimulation, handleLocationUpdate]
   );
 
   const handleChangeVehicle = useCallback(

@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import { TripAction, Warnings } from '../redux/trip';
+import { TripAction, TripActionType, Warnings } from '../redux/trip';
 import { POIType, PointOfInterest } from '../types/init';
 import { Vehicle } from '../types/vehicle';
 import { percentToDistance } from '../util/calculators';
@@ -9,7 +9,7 @@ import { percentToDistance } from '../util/calculators';
  * Uses batch update for better performance (single dispatch instead of multiple).
  */
 export const updateDistances = (
-  dispatch: Dispatch,
+  dispatch: Dispatch<TripActionType>,
   trackLength: number | null,
   percentagePosition: number | null,
   lastPercentagePosition: number | null,
@@ -20,7 +20,7 @@ export const updateDistances = (
 ) => {
   // Calculate distance to add
   let addDistance: number | undefined;
-  if (lastPercentagePosition && percentagePosition && trackLength) {
+  if (lastPercentagePosition != null && percentagePosition != null && trackLength) {
     const percentageDif = Math.abs(percentagePosition - lastPercentagePosition);
     addDistance = percentToDistance(trackLength, percentageDif);
   }
@@ -98,7 +98,7 @@ const calculateWarnings = (
   const nextVehicle = getNextVehicle(
     percentagePosition,
     vehicles,
-    undefined, // Both directions
+    isPercentagePositionIncreasing,
     undefined,
     vehicleId
   );
@@ -145,7 +145,13 @@ const getNextPOI = (
   type: POIType,
   isPercentagePositionIncreasing?: boolean
 ): PointOfInterest | null => {
-  const pois = getNextPOIs(percentagePosition, pointsOfInterest, type, isPercentagePositionIncreasing, 1);
+  const pois = getNextPOIs(
+    percentagePosition,
+    pointsOfInterest,
+    type,
+    isPercentagePositionIncreasing,
+    1
+  );
   return pois[0] ?? null;
 };
 

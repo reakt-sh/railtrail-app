@@ -101,6 +101,6 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 100,
+    zIndex: 30,
   },
 });

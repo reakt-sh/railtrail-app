@@ -235,6 +235,14 @@ export const loadTrack = () => {
 // Export the loaded track data
 export const malenteLuetjenburgTrack = loadTrack();
 
+/** Projiziert GPS-Koordinaten auf den lokalen Track und gibt die Prozentposition (0-100) zurück. */
+export const positionToPercentage = (lat: number, lng: number): number => {
+  const coordinates = (malenteLuetjenburgTrack.path.features[0].geometry as GeoJSON.LineString)
+    .coordinates as [number, number][];
+  const { totalLength, cumulativeDistances } = calculateTrackMetrics(coordinates);
+  return findPercentagePosition(lng, lat, coordinates, cumulativeDistances, totalLength);
+};
+
 // Convert percentage position to lat/lng coordinates
 export const percentageToPosition = (percentage: number): Position => {
   const track = malenteLuetjenburgTrack;
