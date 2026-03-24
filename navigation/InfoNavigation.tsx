@@ -61,7 +61,7 @@ export const InfoNavigation = () => {
       <Stack.Screen
         name="RailwayProjects"
         component={RailwayProjectsScreen}
-        options={{ title: localizedStrings.t('infoTitleProjects') }}
+        options={{ title: localizedStrings.t('infoTitleRailwayProjects') }}
       />
       <Stack.Screen
         name="RailwayHistory"
