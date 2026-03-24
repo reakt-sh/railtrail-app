@@ -180,6 +180,7 @@ const convertMarkersToPOI = (
       return {
         typeId: poiType,
         name: marker.name,
+        description: marker.description,
         pos: { lat, lng } as Position,
         percentagePosition,
         originalType: marker.extra?.isTurningPoint

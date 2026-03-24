@@ -51,7 +51,7 @@ export const POIMarker = memo(({ poi, index, zoomLevel, showTooltip, onPress }: 
         onLayout={handleLayout}
       >
         {showTooltip && (
-          <POITooltip name={poi.name} type={poi.typeId} originalType={poi.originalType} />
+          <POITooltip name={poi.name} type={poi.typeId} originalType={poi.originalType} description={poi.description} />
         )}
         <PointOfInterestMarker
           pointOfInterestType={poi.typeId}

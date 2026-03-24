@@ -28,6 +28,7 @@ export enum POIType {
 export interface PointOfInterest {
   typeId: POIType;
   name?: string;
+  description?: string;
   pos: Position;
   percentagePosition: number;
   originalType?: POIType; // Original marker type before being converted to turning point
