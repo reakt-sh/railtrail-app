@@ -58,7 +58,7 @@ export const InfoMenuScreen = () => {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
-      <StatusBar style="dark" />
+      <StatusBar style="light" />
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View style={styles.logoContainer}>
           <AppLogo width={'100%'} height={112} />
