@@ -2,6 +2,7 @@ import * as MapLibreGL from '@maplibre/maplibre-react-native';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
 import { useKeepAwake } from 'expo-keep-awake';
 import * as Location from 'expo-location';
+import { StatusBar } from 'expo-status-bar';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector, useStore } from 'react-redux';
@@ -30,11 +31,19 @@ import {
   useTranslation,
   useTripSimulation,
 } from '../hooks';
+import { SIMULATION_VEHICLE_ID } from '../hooks/useTripSimulation';
 import { AppAction, AppActionType } from '../redux/app';
 import { ReduxAppState } from '../redux/init';
 import { TripAction, TripActionType } from '../redux/trip';
 import { SavedTrip, VehicleSegment } from '../types/saved-trip';
 import { Vehicle } from '../types/vehicle';
+import {
+  MAX_GPS_ACCURACY,
+  MIN_DISTANCE_JITTER_FILTER,
+  SPEED_SMOOTHING_ALPHA,
+  STILLSTAND_THRESHOLD_KMH,
+} from '../constants';
+import { calculateDistanceFromCoordinates, percentToDistance } from '../util/calculators';
 import { AppEvents, events } from '../util/events';
 
 export const HomeScreen = () => {
@@ -47,6 +56,13 @@ export const HomeScreen = () => {
 
   useKeepAwake();
 
+  const lastLocationRef = useRef<Location.LocationObject | null>(null);
+  const smoothedSpeedRef = useRef<number>(0);
+  const isDemoRef = useRef(false);
+  const oppositeDistanceRef = useRef(0);
+  const isPercentagePositionIncreasingRef = useRef<boolean | undefined>(undefined);
+  const DIRECTION_CHANGE_THRESHOLD_METERS = 30;
+
   // Custom hooks
   const {
     cameraRef,
@@ -56,7 +72,7 @@ export const HomeScreen = () => {
     currentCameraCenter,
     cameraHeading,
     zoomLevel,
-    setIsFollowingVehicle,
+    setIsFollowingUser,
     animateCamera,
     onLocationButtonClicked,
     onRegionChange,
@@ -64,9 +80,9 @@ export const HomeScreen = () => {
     centerOnPosition,
   } = useMapCamera();
 
-  const { startForegroundTracking } = useLocationTracking();
+  const { startForegroundTracking, stopTracking } = useLocationTracking();
 
-  const { startSimulation, stopSimulation } = useTripSimulation();
+  const { registerDemoVehicle, startSimulation, stopSimulation } = useTripSimulation();
 
   // Bottom sheet visibility
   const [isVehicleSelectionVisible, setIsVehicleSelectionVisible] = useState(false);
@@ -75,11 +91,6 @@ export const HomeScreen = () => {
   const [isSummaryVisible, setIsSummaryVisible] = useState(false);
   const [isFeedbackVisible, setIsFeedbackVisible] = useState(false);
   const [pendingTripData, setPendingTripData] = useState<SavedTrip | null>(null);
-
-  // Direction tracking
-  const [isPercentagePositionIncreasing, setIsPercentagePositionIncreasing] = useState<
-    boolean | undefined
-  >(undefined);
 
   // Redux state
   const { track, location, permissions } = useSelector((state: ReduxAppState) => state.app);
@@ -97,12 +108,55 @@ export const HomeScreen = () => {
   // Elapsed time hook - uses Redux tripStartTime
   const elapsedTime = useElapsedTime(tripStartTime);
 
-  // Location update handler
+  // Location update handler — also bridges GPS to demo vehicle during active trip
   const handleLocationUpdate = useCallback(
     async (loc: Location.LocationObject) => {
+      // GPS accuracy gate: discard fixes with poor accuracy
+      if (loc.coords.accuracy != null && loc.coords.accuracy > MAX_GPS_ACCURACY) return;
+
       dispatch(AppAction.setLocation(loc));
+
+      // During active demo trip: use real GPS for speed + distance
+      const state = store.getState();
+      const { isActive: tripActive, currentVehicle: cv } = state.trip;
+      if (tripActive && cv.id === 99) {
+        // Speed from GPS (m/s → km/h)
+        const rawSpeedKmh = (loc.coords.speed ?? 0) >= 0
+          ? (loc.coords.speed ?? 0) * 3.6
+          : 0;
+
+        // Stillstand threshold
+        const speedKmh = rawSpeedKmh < STILLSTAND_THRESHOLD_KMH ? 0 : rawSpeedKmh;
+
+        // EMA smoothing
+        smoothedSpeedRef.current =
+          SPEED_SMOOTHING_ALPHA * speedKmh + (1 - SPEED_SMOOTHING_ALPHA) * smoothedSpeedRef.current;
+
+        // Post-EMA stillstand safety net: snap to 0 once smoothed value decays below threshold
+        if (smoothedSpeedRef.current < STILLSTAND_THRESHOLD_KMH) {
+          smoothedSpeedRef.current = 0;
+        }
+
+        // Distance from last GPS position
+        const lastLoc = lastLocationRef.current;
+        if (lastLoc) {
+          const dist = calculateDistanceFromCoordinates(
+            lastLoc.coords.latitude,
+            lastLoc.coords.longitude,
+            loc.coords.latitude,
+            loc.coords.longitude
+          );
+          if (dist > MIN_DISTANCE_JITTER_FILTER) {
+            dispatch(TripAction.addDistance(dist));
+          }
+        }
+
+        // Update demo vehicle speed with smoothed value
+        dispatch(TripAction.setMotion({ speed: smoothedSpeedRef.current }));
+        lastLocationRef.current = loc;
+      }
     },
-    [dispatch]
+    [dispatch, store]
   );
 
   // Initialize app and WebSocket connection
@@ -114,13 +168,12 @@ export const HomeScreen = () => {
       startForegroundTracking(handleLocationUpdate);
     }
 
-    // Start simulation for Demo vehicle
-    startSimulation();
+    // Register Demo vehicle so it appears in vehicle selection
+    registerDemoVehicle();
 
     return () => {
       unsubscribePositions();
       disconnectFromServer();
-      stopSimulation();
     };
   }, []);
 
@@ -134,11 +187,18 @@ export const HomeScreen = () => {
     };
   }, []);
 
+  // Ref to access latest vehicles without adding it as effect dependency
+  const vehiclesRef = useRef(vehicles);
+  vehiclesRef.current = vehicles;
+
   // Sync percentagePosition and calculated position from own vehicle in vehicles array
+  const lastSyncedPercentageRef = useRef<number | null>(null);
+
   useEffect(() => {
     if (currentVehicle.id != null && vehicles.length > 0) {
       const myVehicle = vehicles.find((v) => v.id === currentVehicle.id);
-      if (myVehicle) {
+      if (myVehicle && myVehicle.percentagePosition !== lastSyncedPercentageRef.current) {
+        lastSyncedPercentageRef.current = myVehicle.percentagePosition;
         dispatch(
           TripAction.setPosition({
             percentage: myVehicle.percentagePosition,
@@ -149,10 +209,16 @@ export const HomeScreen = () => {
     }
   }, [vehicles, currentVehicle.id]);
 
-  // Camera animation: follow vehicle position OR user GPS location
+  // Camera animation: follow user GPS location (during active trip)
   useEffect(() => {
-    if (isFollowingVehicle) {
-      // If trip is active, follow own vehicle; otherwise follow first available vehicle
+    if (isFollowingUser && location) {
+      animateCamera(location.coords.latitude, location.coords.longitude, location.coords.heading);
+    }
+  }, [location, isFollowingUser]);
+
+  // Camera animation: follow vehicle marker (no active trip, observing other draisines)
+  useEffect(() => {
+    if (isFollowingVehicle && !isActive) {
       const vehicleToFollow =
         currentVehicle.id != null ? vehicles.find((v) => v.id === currentVehicle.id) : vehicles[0];
 
@@ -163,10 +229,8 @@ export const HomeScreen = () => {
           vehicleToFollow.heading ?? 0
         );
       }
-    } else if (isFollowingUser && location) {
-      animateCamera(location.coords.latitude, location.coords.longitude, location.coords.heading);
     }
-  }, [location, vehicles, currentVehicle.id, isFollowingUser, isFollowingVehicle]);
+  }, [vehicles, currentVehicle.id, isFollowingVehicle, isActive]);
 
   // Trip start/stop - foreground tracking is already running, no changes needed
 
@@ -174,7 +238,25 @@ export const HomeScreen = () => {
   useEffect(() => {
     if (position.percentage != null) {
       if (position.lastPercentage != null && position.lastPercentage !== position.percentage) {
-        setIsPercentagePositionIncreasing(position.percentage > position.lastPercentage);
+        const movingForward = position.percentage > position.lastPercentage;
+        const delta = Math.abs(position.percentage - position.lastPercentage);
+        const deltaMeters = percentToDistance(track.length ?? 0, delta);
+
+        if (isPercentagePositionIncreasingRef.current === undefined) {
+          // First movement — set direction immediately
+          isPercentagePositionIncreasingRef.current = movingForward;
+          oppositeDistanceRef.current = 0;
+        } else if (movingForward === isPercentagePositionIncreasingRef.current) {
+          // Same direction — reset accumulator
+          oppositeDistanceRef.current = 0;
+        } else {
+          // Opposite direction — accumulate distance
+          oppositeDistanceRef.current += deltaMeters;
+          if (oppositeDistanceRef.current >= DIRECTION_CHANGE_THRESHOLD_METERS) {
+            isPercentagePositionIncreasingRef.current = movingForward;
+            oppositeDistanceRef.current = 0;
+          }
+        }
       }
 
       if (isActive) {
@@ -184,37 +266,18 @@ export const HomeScreen = () => {
           position.percentage,
           position.lastPercentage,
           track.pointsOfInterest,
-          vehicles,
-          isPercentagePositionIncreasing,
+          vehiclesRef.current,
+          isPercentagePositionIncreasingRef.current,
           currentVehicle.id
         );
       }
     }
-  }, [position.percentage]);
+  }, [position.percentage, isActive, track.length, track.pointsOfInterest, currentVehicle.id, dispatch]);
 
   // Event handlers
   const handleLocationButtonClick = useCallback(() => {
     onLocationButtonClicked(location ? { ...location.coords } : null);
   }, [location, onLocationButtonClicked]);
-
-  const handleCenterOnVehicle = useCallback(() => {
-    const currentState = store.getState();
-    const vehicleId = currentState.trip.currentVehicle.id;
-    const allVehicles = currentState.trip.vehicles;
-
-    // Follow own vehicle if trip is active, otherwise follow first available vehicle
-    const vehicleToFollow =
-      vehicleId != null ? allVehicles.find((v) => v.id === vehicleId) : allVehicles[0];
-
-    if (vehicleToFollow) {
-      centerOnPosition(
-        vehicleToFollow.pos.lat,
-        vehicleToFollow.pos.lng,
-        vehicleToFollow.heading ?? 0
-      );
-      setIsFollowingVehicle(true);
-    }
-  }, [store, centerOnPosition, setIsFollowingVehicle]);
 
   const handleOpenDrawer = useCallback(() => {
     navigation.dispatch(DrawerActions.openDrawer());
@@ -266,6 +329,13 @@ export const HomeScreen = () => {
             dispatch(TripAction.stop());
             tripStartTimeRef.current = null;
 
+            // If demo trip, stop simulation and restart real GPS
+            if (isDemoRef.current) {
+              stopSimulation();
+              startForegroundTracking(handleLocationUpdate);
+              isDemoRef.current = false;
+            }
+
             // Show trip summary, then feedback
             setPendingTripData(savedTrip);
             setIsSummaryVisible(true);
@@ -283,14 +353,25 @@ export const HomeScreen = () => {
     (vehicle: Vehicle) => {
       const vehicleName = vehicle.label ?? `Draisine ${vehicle.id}`;
       tripStartTimeRef.current = new Date().toISOString();
+      lastLocationRef.current = null; // Reset GPS distance tracking
+      smoothedSpeedRef.current = 0; // Reset EMA speed
       dispatch(TripAction.setCurrentVehicle(vehicle.id, vehicleName));
       dispatch(TripAction.startSegment(vehicle.id, vehicleName));
       dispatch(TripAction.start());
-      setIsFollowingVehicle(true);
+      setIsFollowingUser(true);
+
+      if (vehicle.id === SIMULATION_VEHICLE_ID) {
+        isDemoRef.current = true;
+        stopTracking(); // Stop real GPS
+        startSimulation(handleLocationUpdate); // Feed simulated positions
+      } else {
+        isDemoRef.current = false;
+      }
+
       // Zoom to vehicle position
       centerOnPosition(vehicle.pos.lat, vehicle.pos.lng, vehicle.heading ?? 0, 17);
     },
-    [dispatch, setIsFollowingVehicle, centerOnPosition]
+    [dispatch, setIsFollowingUser, centerOnPosition, stopTracking, startSimulation, handleLocationUpdate]
   );
 
   const handleChangeVehicle = useCallback(
@@ -333,6 +414,7 @@ export const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
+      <StatusBar style="dark" />
       {/* Minimal trip overlay - replaces TripHeader */}
       {isActive && (
         <MinimalTripOverlay
@@ -358,6 +440,8 @@ export const HomeScreen = () => {
         track={track.path}
         zoomLevel={zoomLevel}
         mapHeading={cameraHeading}
+        isActive={isActive}
+        currentVehicleId={currentVehicle.id}
       />
 
       {isLoadingVehicles && <LoadingVehiclesOverlay />}
@@ -365,10 +449,8 @@ export const HomeScreen = () => {
       <TripControls
         isActive={isActive}
         isFollowingUser={isFollowingUser}
-        isFollowingVehicle={isFollowingVehicle}
         onLocationButtonClick={handleLocationButtonClick}
         onStartTrip={handleStartTrip}
-        onCenterOnVehicle={handleCenterOnVehicle}
         warnings={warnings}
         speed={motion.speed}
         localizedStrings={localizedStrings}

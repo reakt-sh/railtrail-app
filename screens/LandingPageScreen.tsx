@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CommonActions } from '@react-navigation/native';
+import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -37,12 +38,12 @@ export const LandingPageScreen = ({ navigation }: any) => {
 
       // Skip landing page if both privacy accepted and permission granted
       if (privacyAccepted === 'true' && isPermissionGranted) {
-        navigation.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [{ name: 'Main' }],
-          })
-        );
+        // navigation.dispatch(
+        //   CommonActions.reset({
+        //     index: 0,
+        //     routes: [{ name: 'Main' }],
+        //   })
+        // );
       }
     };
 
@@ -67,6 +68,7 @@ export const LandingPageScreen = ({ navigation }: any) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar style="light" />
       <SafeAreaView style={styles.safeArea}>
         <AppLogo width={'100%'} height={112} />
         <View style={styles.textWrapper}>

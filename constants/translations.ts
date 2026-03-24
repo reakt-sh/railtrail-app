@@ -20,10 +20,9 @@ const translations = {
     landingPagePrivacyPolicySuffix: '.',
 
     homeSnackbarStartTitle: 'Start trip',
-    homeSnackbarStartMessage: 'Click here to select a railbike and start the trip',
     homeSnackbarWarningTitle: 'Warning',
     homeSnackbarWarningCrossingMessage: 'Level crossing in %{distance} m',
-    homeSnackbarWarningVehicleMessage: 'Vehicle in %{distance} m',
+    homeSnackbarWarningVehicleMessage: 'Railbike in %{distance} m',
     homeSnackbarWarningVehicleHeadingTowardsUserMessage: 'Oncoming railbike in %{distance} m',
     homeDialogEndTripTitle: 'End Trip',
     homeDialogEndTripMessage: 'Do you really want to end the current trip?',
@@ -48,16 +47,12 @@ const translations = {
     bottomSheetNoVehicles:
       'No railbikes available. Please wait for railbikes to appear on the map.',
     bottomSheetReload: 'Reload',
-    bottomSheetAlertVehicleIdNotFoundTitle: 'Vehicle not found',
-    bottomSheetAlertVehicleIdNotFoundMessage:
-      'The railbike could not be found. Make sure the railbike number is correct and the correct route is selected.',
 
     // Trip Header
     headerDistance: 'Distance traveled',
     headerNextVehicle: 'Next railbike',
     headerSpeed: 'Speed',
     headerNextCrossing: 'Next level crossing',
-    headerVehicleId: 'Vehicle:',
 
     // Trip Drawer
     drawerNoActiveTrip: 'No active trip.\nStart a trip to see details here.',
@@ -79,7 +74,7 @@ const translations = {
     infoTitleTripHistory: 'Past Trips',
     infoTitleGoodToKnow: 'Good to Know',
     infoTitleContacts: 'Distribution points / Service contacts',
-    infoTitleHeinLuettenborg: 'Project "Hein Lüttenborg"',
+    infoTitleRailwayProjects: 'Projects of the Railway ',
     infoTitleRailwayHistory: 'History of the Railway',
     infoTitleImprint: 'Imprint',
     infoTitlePrivacyPolicy: 'Privacy Policy',
@@ -122,8 +117,8 @@ const translations = {
     faqVouchersAnswer:
       'Yes, vouchers are available and valid for 3 years. Ask at the Tourist Info Malente.',
 
-    // Hein Lüttenborg Screen
-    heinLuettenborgContent:
+    //Railway Projects Screen
+    railwayProjectsContent:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
 
     // Railway History Screen
@@ -262,12 +257,11 @@ const translations = {
     landingPagePrivacyPolicySuffix: ' zu.',
 
     homeSnackbarStartTitle: 'Fahrt starten',
-    homeSnackbarStartMessage: 'Hier klicken um ein Fahrzeug auszuwählen und die Fahrt zu beginnen',
     homeSnackbarWarningTitle: 'Warnung',
     homeSnackbarWarningCrossingMessage: 'Bahnübergang in %{distance} m',
-    homeSnackbarWarningVehicleMessage: 'Fahrzeug in %{distance} m',
+    homeSnackbarWarningVehicleMessage: 'Draisine in %{distance} m',
     homeSnackbarWarningVehicleHeadingTowardsUserMessage:
-      'Entgegenkommendes Fahrzeug in %{distance} m',
+      'Entgegenkommende Draisine in %{distance} m',
     homeDialogEndTripTitle: 'Fahrt beenden',
     homeDialogEndTripMessage: 'Möchtest du die aktuelle Fahrt wirklich beenden?',
     homeDialogBackgroundPermissionTripTitle: 'Standortberechtigungen',
@@ -286,23 +280,19 @@ const translations = {
     // Bottom Sheet
     bottomSheetVehicleId: 'Draisinenauswahl',
     bottomSheetChangeVehicleId:
-      'Wenn du während des Ausfluges dein Fahrzeug wechselst, kannst du hier die neue Fahrzeugnummer wählen.',
+      'Wenn du während des Ausfluges deine Draisine wechselst, kannst du hier die neue Fahrzeugnummer wählen.',
     bottomSheetStartTripMessage:
       'Gib die Fahrzeugnummer ein um fortzufahren. Die Nummer kann in der Regel auf der Sitzbank gefunden werden.',
     bottomSheetSelectVehicle: 'Mit welcher Draisine bist du unterwegs?',
     bottomSheetNoVehicles:
       'Keine Draisinen verfügbar. Bitte warte, bis Fahrzeuge auf der Karte erscheinen.',
     bottomSheetReload: 'Neu laden',
-    bottomSheetAlertVehicleIdNotFoundTitle: 'Fahrzeug nicht gefunden',
-    bottomSheetAlertVehicleIdNotFoundMessage:
-      'Das Fahrzeug konnte nicht gefunden werden. Stelle sicher, dass die Fahrzeugnummer korrekt ist und die richtige Strecke ausgewählt ist.',
 
     // Trip Header
     headerDistance: 'Zurückgelegte Distanz',
     headerNextVehicle: 'Nächstes Draisine',
     headerSpeed: 'Geschwindigkeit',
     headerNextCrossing: 'Nächster Bahnübergang',
-    headerVehicleId: 'Draisine:',
 
     // Trip Drawer
     drawerNoActiveTrip: 'Keine aktive Fahrt.\nStarte eine Fahrt, um Details hier zu sehen.',
@@ -324,7 +314,7 @@ const translations = {
     infoTitleTripHistory: 'Vergangene Fahrten',
     infoTitleGoodToKnow: 'Gut zu wissen',
     infoTitleContacts: 'Ausgabestellen / Servicekontakte',
-    infoTitleHeinLuettenborg: 'Projekt „Hein Lüttenborg"',
+    infoTitleRailwayProjects: 'Projekte der Bahnstrecke',
     infoTitleRailwayHistory: 'Geschichte der Bahnstrecke',
     infoTitleImprint: 'Impressum',
     infoTitlePrivacyPolicy: 'Datenschutzerklärung',
@@ -367,8 +357,8 @@ const translations = {
     faqPriceAnswer:
       '3-Stunden-Tour: 50€ pro Draisine\nFamilienpreis (mit Kindern unter 16): 40€\nostseecard-Inhaber erhalten 2€ Rabatt.\n\nGruppentouren mit bis zu 60 Personen sind möglich.',
 
-    // Hein Lüttenborg Screen
-    heinLuettenborgContent:
+    // Railway Projects Screen
+    railwayProjectsContent:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
 
     // Railway History Screen
@@ -472,7 +462,7 @@ const translations = {
     a11yCenterOnVehicle: 'Auf Fahrzeug zentrieren',
     a11yStartTrip: 'Fahrt starten',
     a11yStopTrip: 'Fahrt beenden',
-    a11yChangeVehicle: 'Fahrzeug wechseln',
+    a11yChangeVehicle: 'Draisine wechseln',
     a11yChangeVehicleHint: 'Öffnet Fahrzeugauswahl',
     a11ySelectVehicle: '%{name} auswählen',
     a11yCallPhone: '%{phone} anrufen',

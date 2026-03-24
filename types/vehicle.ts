@@ -7,6 +7,7 @@ export interface Vehicle {
   headingTowardsUser?: boolean;
   heading?: number;
   label?: string;
+  isDirectionIncreasing?: boolean;
 }
 
 export interface VehicleNameRequest {

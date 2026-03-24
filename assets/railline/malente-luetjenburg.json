@@ -296,7 +296,7 @@
               "type": "Point",
               "coordinates": [10.61196690346371, 54.27742844944839]
             },
-            "description": "km 15,250",
+            "description": "km 15,250\n\nDer Haltepunkt wurde im Sommer 1954 mit der Einführung des Schienenbusbetriebs eröffnet und war ein Bedarfshaltepunkt, um das kleine Dorf anzubinden. Hier haben Züge nur gehalten, wenn jemand ein- oder aussteigen wollte. Am Haltepunkt Friederikenthal befindet sich ein Picknickplatz und Ihr habt einen tollen Blick in die schöne Landschaft. Perfekt für eine kleine Pause.",
             "extra": {
               "isTurningPoint": false
             }
@@ -309,7 +309,7 @@
               "type": "Point",
               "coordinates": [10.60109862008053, 54.29287607855948]
             },
-            "description": "km 17,000–17,160 \n Streckenende",
+            "description": "km 17,000–17,160 \n Streckenende\n\nDer Bahnhof Lütjenburg ist der Endpunkt der 17 km langen Bahnstrecke Malente-Lütjenburg. Er wurde 1892 eröffnet und verfügte einst über umfangreiche Gleisanlagen, auf denen ein reger Rangierbetrieb abgewickelt wurde. 13 (!) Gleise hatte das Gelände einst, da Lütjenburg wichtiger militärischer Verladebahnhof für die Kaserne in Lütjenburg und den Schießplatz der Bundeswehr in Todendorf war. Leider wurden ein Großteil der Anlagen und das Bahnhofsgebäude zwischen 2001 und 2008 zugunsten von Supermärkten abgerissen. Heute sind noch vier Gleise übrig, welche für den Betrieb genutzt werden. Mit einem Fußweg von 10 Minuten erreicht Ihr die sehenswerte Altstadt von Lütjenburg, die ein wenig an Lübeck erinnert. Mittelpunkt ist der Markt, ein wunderschöner zentraler Platz der Stadt. Sehenswert sind insbesondere die St.-Michaelis-Kirche (Baujahr 1156), das Färberhaus und das Rathaus. Zudem empfiehlt sich eine Wanderung zum Bismarckturm. Diesen könnt Ihr für zwei EUR erklimmen und habt von dort eine wunderschöne Aussicht über die gesamte Hohwachter Bucht und die Ostsee. Die Strände der Ostsee sind per Fahrrad oder Bus innerhalb von 15-20 Minuten erreichbar. Hier sind insbesondere Hohwacht und der Sehlendorfer Strand von überregionaler Bekanntheit.",
             "extra": {
               "isTurningPoint": true
             }
@@ -322,7 +322,7 @@
               "type": "Point",
               "coordinates": [10.60304135198923, 54.29175833186886]
             },
-            "description": "km 16,945 – Länge 50 m",
+            "description": "km 16,945 – Länge 50 m\n\nDie Brücke über die Kossau ist das spektakulärste Kunstbauwerk der Bahnstrecke. Das Viadukt wurde 1892 fertiggestellt und für die schweren Militärzüge in den 1950er-Jahren mit einer Betonhülle umgossen – fast wie eine Brücke um die Brücke. Sie überquert das kleine Flüsschen Kossau. Bitte bedenkt, dass das Anhalten mit der Draisine auf den Brücken aus Sicherheitsgründen verboten ist.",
             "extra": {
               "isTurningPoint": false
             }
@@ -335,7 +335,7 @@
               "type": "Point",
               "coordinates": [10.60416687437752, 54.29051218074746]
             },
-            "description": "km 16,710 – Länge 27 m",
+            "description": "km 16,710 – Länge 27 m\n\nDie Brücke wurde mit dem Bau der Bundessstraße in den 1950er-Jahren errichtet. Sie überquert die B 202, welche eine wichtige Querverbindung von Kiel in Richtung Fehmarn darstellt. Die Bedeutung der Straße wird noch zunehmen, wenn der neue Tunnel zwischen Fehmarn und Dänemark fertiggestellt wird. Die Straße ist insbesondere durch den Urlaubs- und Tourismusverkehr stark frequentiert. Bitte bedenkt, dass das Anhalten mit der Draisine auf den Brücken aus Sicherheitsgründen verboten ist.",
             "extra": {
               "isTurningPoint": false
             }
@@ -413,7 +413,7 @@
               "type": "Point",
               "coordinates": [10.626846753985497, 54.257829691514644]
             },
-            "description": "km 12,900",
+            "description": "km 12,900\n\nDer Haltepunkt wurde im Sommer 1954 mit der Einführung des Schienenbusbetriebs eröffnet und war ein Bedarfshaltepunkt, um das kleine Dorf anzubinden. Hier haben Züge nur gehalten, wenn jemand ein- oder aussteigen wollte. Übrigens sollten Geocacher sich hier vielleicht etwas genauer umsehen… Sofern Ihr Eure Draisine abstellt oder eine Pause macht, stellt das Fahrzeug bitte nicht zu nah am Bahnübergang ab und stellt sicher, dass es gegen Wegrollen gesichert ist.",
             "extra": {
               "isTurningPoint": false
             }
@@ -444,7 +444,6 @@
               "isTurningPoint": true
             }
           },
-
           {
             "id": "15",
             "name": "Kletkamp",
@@ -453,7 +452,7 @@
               "type": "Point",
               "coordinates": [10.62772484355162, 54.24413044427286]
             },
-            "description": "km 11,150 ",
+            "description": "km 11,150 \n\nDer Bahnhof wurde am 08.12.1890 in Betrieb genommen und war für kurze Zeit Endpunkt der Strecke (bis zur Fertigstellung der restlichen Strecke). Er gehörte zum unweit gelegenen Gut Kletkamp. Insbesondere diente der Bahnhof für die Verladung von landwirtschaftlichen Erzeugnissen, daher hatte er auch einst mehrere Gleise. Die Güterverladerampe existiert noch heute, Ihr fahrt mit der Draisine direkt daran vorbei. Heute ist das Gut Kletkamp eine sehr beliebe Hochzeits- und Eventlocation. Hier wurden auch einige Szenen der bekannten Filmreihe „Die Mädels vom Immenhof“ gedreht. Der Bahnhof ist inzwischen in Privatbesitz, weshalb hier Halteverbot für die Draisinen gilt. Im oberen Teil des Bahnhofs befindet sich eine wunderschöne Ferienwohnung.",
             "extra": {
               "isTurningPoint": false
             }
@@ -505,7 +504,7 @@
               "type": "Point",
               "coordinates": [10.62233083514409, 54.23083600854179]
             },
-            "description": "km 9,560",
+            "description": "km 9,560\n\nAnders als die anderen Bedarfshaltestellen an der Strecke wurde der Haltepunkt nicht im Sommer 1954 mit der Einführung des Schienenbusbetriebs eröffnet, sondern erst ein Jahr später 1955. Der Legende nach war es so, dass die Bundesbahn seinerzeit hier gar keinen Haltepunkt schaffen wollte, die Anwohnerinnen und Anwohner sich jedoch so sehr beschwerten, dass die Bundesbahn in Aussicht stellte, dass man hier halten würde, wenn die Landwirte den Bahnsteig selbst bauen würden. Die Bahn stellte das Material, die Landwirte bauten alles auf und dann wurde der Haltepunkt ein Jahr später tatsächlich in Betrieb genommen. Und auch bei der Reaktivierung der Bahnstrecke war es so. Der völlig zugewachsene Bahnsteig wurde von den umliegenden Landwirten saniert und wieder in seinen Originalzustand gebracht. So ist er heute ein beliebter Rastplatz für alle Menschen, die hier per Draisine, Fahrrad, auf einer Wanderung oder einem Pferderücken vorbeikommen. Ein tolles Beispiel einer echten „Bürgerbahn“, die von den Menschen auch selbst mitgestaltet wird. Der einst völlig zugewucherte „tote“ Bahnsteig ist wieder zu einem zentralen Begegnungsort im Dorf geworden. Am Bahnsteig steht ein kleiner Schaukasten, auf dem Ihr Euch ansehen könnt, wie es hier vor der Reaktivierung aussah und wie der Bahnstrecke dann wieder Leben eingehaucht wurde.",
             "extra": {
               "isTurningPoint": false
             }
@@ -557,7 +556,7 @@
               "type": "Point",
               "coordinates": [10.61256233320618, 54.2207208417749]
             },
-            "description": "km 8,320",
+            "description": "km 8,320\n\nDer Bahnhof Benz war früher die Mittelstation der Bahnstrecke. Früher gab es hier ein sogenanntes Kreuzungsgleis, sodass sich die Züge von Malente und Lütjenburg kommend in diesem Bahnhof begegnen konnten. Er hatte zahlreiche Signale und sogar ein Stellwerk. Neben dem Kreuzungsgleis verfügte der Bahnhof noch über ein drittes Gleis, über das noch bis 1995 Güterverladungen der landwirtschaftlichen Erzeugnisse stattfanden. Früher war es eine wichtige Aufgabe ländlicher Bahnstrecken, den Transport von landwirtschaftlichen Erzeugnissen und Gütern auf die Märkte in den Städten sicherzustellen. Das Kreuzungsgleis wurde in den 1970er-Jahren abgebaut, das Güteranschlussgleis (Gleis 3) existiert noch heute, ist aber in Privatbesitz. Im Bahnhof Benz wurde gegen Ende des 2. Weltkriegs die Reichsbahndirektion Stettin aufgelöst. Die Leitung der Reichsbahndirektion floh damals vor den russischen Alliierten. Der Zug wurde auf die Bahnhöfe Lensahn und Benz aufgeteilt, in Benz erfolgte die formale Auflösung. Bis heute erinnert eine Gedenktafel am Bahnhofsgebäude hieran. Der Bahnhof selbst ist jedoch in Privateigentum, weshalb wir Euch bitten, hier nicht anzuhalten.",
             "extra": {
               "isTurningPoint": false
             }
@@ -622,7 +621,7 @@
               "type": "Point",
               "coordinates": [10.605164, 54.208206]
             },
-            "description": "km 6,850",
+            "description": "km 6,850\n\nDer Haltepunkt Malkwitz wurde im Sommer 1954 als Halt im Schienenbusbetrieb eröffnet. Das eigentliche Dorf Malkwitz ist von hier noch ein Stück entfernt, in unmittelbarer Nähe war früher jedoch eine Ziegelei und der Bahnhalt diente als Anreisemöglichkeit für die Angestellten. Hierzu gab es in Malkwitz sogar einen Gleisanschluss, wo die Ziegel entsprechend in Züge verladen wurden. Heute ist Malkwitz ein wunderschöner Picknick-Spot für alle Draisinengäste. Bei einer Pause könnt Ihr hier den wunderschönen Blick ins Tal zum Benzer See genießen. Mit einem ca. 20-minütigen Fußmarsch könnt Ihr es Euch zudem im Feldcafè Ingenhof gemütlich machen. Ein wunderschönes Cafè mitten auf einem Feld und in den einzigen Weinhängen der Holsteinischen Schweiz. Ja, Ihr habt ganz richtig gelesen, hier wird tatsächlich Wein angebaut. Dieser kann direkt im Feldcafè vom Weingut Ingenhof verköstigt und auch gekauft werden. Wenn Ihr auf der Draisinenfahrt keine Zeit dafür habt, ist dies vielleicht ein weiteres lohnendes Ausflugsziel nach Eurer Tour.",
             "extra": {
               "isTurningPoint": true
             }
@@ -648,7 +647,7 @@
               "type": "Point",
               "coordinates": [10.5974, 54.199036]
             },
-            "description": "km 5,440",
+            "description": "km 5,440\n\nDer Bahnhof Bruhnskoppel wurde 1890 eröffnet und verfügt über eine Besonderheit – er hat nämlich zwei Bahnsteige. Einen Bahnsteig jeweils auf jeder Seite der Straße. So konnte der Zug früher zunächst die Straße überqueren und während die Fahrgäste ein- und ausstiegen, war die Straße bereits wieder frei. Der Bahnhof diente zur Anbindung für das Berghotel Bruhnskoppel. Neben dem Bahnhof Holsteinische Schweiz somit der zweite aus touristischen Gründen hergestellt Haltepunkt an der Strecke. Die Herstellung einer touristischen Anbindung spielte beim Bahnbau somit eine wesentliche Rolle. Das Berghotel Bruhnskoppel ist heute leider nur noch eine verfallene Ruine in den Wipfeln der Holsteinische Schweiz. Eine große wichtige Rolle spielte die Station zuletzt 1993, dort diente der Bahnhof als Drehort für den Film „ Das Kuckucksei“ aus der Krimireihe „Alles außer Mord“ des damals noch recht jungen TV-Senders Pro Sieben. Der Film feierte am 21.02.1995 Premiere und neben dem Bahnhof Bruhnskoppel spielte die legendäre Diesellok der Baureihe V 200 007 eine wichtige Rolle. Er kann noch heute in den Streamingportalen angeschaut werden. Heute ist Bruhnskoppel ein sehr schöner Picknickplatz, den Ihr für eine schattige Pause nutzen könnt. Allerdings bitte auf dem Bahnsteig, wo sich nicht das Bahnhofsgebäude befindet. Das Haus selbst ist nämlich inzwischen in Privatbesitz und für die Anwohner ist es sicher nicht so schön, wenn man direkt vor dem Wohnzimmerfenster Picknick macht. Haltet bitte daher auf der anderen Seite der Straße, dort ist genug Platz.",
             "extra": {
               "isTurningPoint": false
             }
@@ -674,7 +673,7 @@
               "type": "Point",
               "coordinates": [10.575, 54.1845]
             },
-            "description": "km 2,840",
+            "description": "km 2,800 \n\n Der Wendepunkt ist auch ein kleiner Draisinenbahnhof mit Zugang zum Outdoor Camp Bottervogel. Dieses befindet sich direkt im Tal neben der Bahnstrecke. Im Camp finden insbesondere Team-Events und Klassenfahrten statt. Hier könnt Ihr in die atemberaubende Natur eintauchen, sei es bei aufregenden Team-Building-Aktivitäten, kniffligen Herausforderungen, Floßbauen, Stockbrot machen oder in erlebnisreichen Wanderungen durch malerische Landschaften. Das Angebot im Outdoorbereich verbindet Abenteuerlust mit nachhaltiger Lernerfahrung, perfekt für Schulen, Unternehmen und alle, die das Besondere suchen. Hierbei gibt es auch Pakete, die die Draisine zur Anreise ins Camp nutzen. Weitere Infos erhaltet Ihr bei www.bottervogel.de",
             "extra": {
               "isTurningPoint": true
             }
@@ -700,7 +699,7 @@
               "type": "Point",
               "coordinates": [10.56342418830418, 54.18227755376287]
             },
-            "description": "km 2,010",
+            "description": "km 2,010\n\nDer Haltepunkt wurde im Sommer 1954 mit der Einführung des Schienenbusbetriebs eröffnet und war ein Bedarfshaltepunkt, um den nördlichen Teil Malentes anzubinden. Früher diente die Station vielen Menschen zur Anreise zur Arbeit für die in Malente sehr bekannte ehemalige Firma Kuhnke. Interessanterweise liegt der Haltepunkt auch heute noch sehr verkehrsgünstig. Für viele der Malenterinnen und Malenter liegt er näher an ihrem Haus oder ihrer Wohnung als der Bahnhof Bad Malente-Gremsmühlen. Daher plant das Land SH, dass eines Tages wieder reguläre Züge von Lübeck Hbf bis hier hin fahren sollen. Die Hansestadt Lübeck hat den Haltepunkt Malente Nord sogar als Haltestelle für die geplante Regio-S-Bahn vorgesehen.",
             "extra": {
               "isTurningPoint": false
             }
@@ -739,7 +738,7 @@
               "type": "Point",
               "coordinates": [10.5570673873703, 54.17750239798882]
             },
-            "description": "km 1,313 – Länge 8 m",
+            "description": "km 1,313 – Länge 8 m\n\nDie Brücke führt über den kleinen Fluss „Malenter Au“ – von der Draisine aus könnt Ihr die Auewiesen Malente sehen. Ein wunderschönes Naturschutzgebiet, dass zum Wandern einlädt.",
             "extra": {
               "isTurningPoint": false
             }
@@ -791,7 +790,7 @@
               "type": "Point",
               "coordinates": [10.59052012545154, 54.18627840204964]
             },
-            "description": "km 3,890",
+            "description": "km 3,890\n\nDer Bahnhof Holsteinische Schweiz ist ein ganz besonderer Ort, denn der Bahnhof hat gemeinsam mit einem Hotel der gesamten Region ihren Namen gegeben (nicht andersrum!). Wenn Ihr am Bahnhof Holsteinische Schweiz vorbeikommt, seit Ihr somit am Ursprung der Holsteinischen Schweiz. Hier entstand dieser Name und wenn Ihr mit der Draisine hier lang kommt, wisst Ihr auch wieso. 1888 wurde seinerzeit mit den Planungen der Bahnstrecke Malente-Lütjenburg begonnen. Gleichzeitig plante der Kaufmann Janus die Errichtung eines Hotels am Kellersee. Er erreichte, dass für das Hotel ein eigener Bahnhof eingerichtet wurde. In Anlehnung an die Landschaft nannte er das Hotel „Holsteinische Schweiz“, weshalb auch der Bahnhof diesen Namen bekam. Mit der Eisenbahn begann in dieser Region überhaupt auch erst der Fremdenverkehr, weil die Region plötzlich in attraktiver Reisezeit erreichbar wurde. Schnell übertrug sich der Name vom Hotel und dem Bahnhof auf die ganze Region. Ihr seid somit hier am Herzen und dem direkten Ursprung der Holsteinischen Schweiz und entlang der Bahntrasse kann man lebendig erfahren, warum es hier so heißt. Heute ist der Bahnhof in Privatbesitz. Bitte respektiert die Privatsphäre und haltet aus Respekt vor den Bewohnerinnen und Bewohnern nicht direkt vor dem Gebäude. Das ehemalige Hotel Holsteinische Schweiz ist heute übrigens die Landesfinanzschule von Schleswig-Holstein.",
             "extra": {
               "isTurningPoint": false
             }
@@ -809,7 +808,6 @@
               "isTurningPoint": false
             }
           },
-
           {
             "id": "50",
             "name": "Malente Tourismus- und Service GmbH",
@@ -832,6 +830,19 @@
             },
             "extra": {
               "isTurningPoint": false
+            }
+          },
+          {
+            "id": "53",
+            "name": "Bad Malente-Gremsmühlen",
+            "type": "halt",
+            "position": {
+              "type": "Point",
+              "coordinates": [10.5514, 54.1674]
+            },
+            "description": "km 0,000\n\nHier besteht Anschluss an die Regionalzüge in Richtung Kiel (von Gleis 1) und Lübeck (von Gleis 2). Das Gleis zur Strecke nach Lütjenburg heißt Gleis 7, weil der Bahnhof einst noch viel mehr Gleisanlagen hatte, von denen viele in den letzten Jahrzehnten nach und nach zurückgebaut wurden. Vom Bahnhof erreicht Ihr auch das Zentrum Malentes fußläufig. In unmittelbarer Nähe liegen der Kurpark, die Bahnhofstraße, das Wildpark-Gehege und der Dieksee mit dem Anleger der 5-Seen-Fahrt. Die berühmte Bootstour durch die vielen Seen der Holsteinische Schweiz ist eine perfekte Ergänzung für Euren Ausflug. Bei Fragen berät Euch die Tourist Info Malente sehr gern. Diese befindet sich direkt am Abfahrtspunkt der Draisinen.",
+            "extra": {
+              "isTurningPoint": true
             }
           }
         ]

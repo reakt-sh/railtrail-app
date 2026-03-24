@@ -4,7 +4,7 @@ import { AppAction, AppActionType } from '../redux/app';
 import { TripAction, TripActionType } from '../redux/trip';
 import { MapPosition } from '../types/map-position';
 import { Vehicle } from '../types/vehicle';
-import { malenteLuetjenburgTrack } from '../util/track-loader';
+import { malenteLuetjenburgTrack, positionToPercentage } from '../util/track-loader';
 
 // Initialisiert die App mit statischen Track-Daten und WebSocket-Verbindung
 export const initializeApp = (dispatch: Dispatch<AppActionType>) => {
@@ -88,13 +88,20 @@ export const setupPositionUpdates = (dispatch: Dispatch<TripActionType>): (() =>
   });
 
   const unsubscribePositions = positionSocket.subscribe((mapPosition: MapPosition) => {
-    const currentPos = mapPosition.position * 100; // 0-1 zu 0-100
+    const currentPos = mapPosition.latitude != null && mapPosition.longitude != null
+      ? positionToPercentage(mapPosition.latitude, mapPosition.longitude)
+      : mapPosition.position * 100; // Fallback wenn keine Koordinaten
     const lastPos = lastPositions.get(mapPosition.vehicle);
 
     // Nur Geschwindigkeit > 0 wenn Position sich tatsächlich geändert hat
     const positionChanged =
       lastPos === undefined || Math.abs(currentPos - lastPos) > POSITION_CHANGE_THRESHOLD;
     const effectiveSpeed = positionChanged ? mapPosition.speed : 0;
+
+    // Fahrtrichtung aus aufeinanderfolgenden Positionen bestimmen
+    const isDirectionIncreasing = lastPos !== undefined && positionChanged
+      ? currentPos > lastPos
+      : undefined;
 
     // Letzte Position speichern
     lastPositions.set(mapPosition.vehicle, currentPos);
@@ -110,6 +117,7 @@ export const setupPositionUpdates = (dispatch: Dispatch<TripActionType>): (() =>
       heading: mapPosition.heading,
       headingTowardsUser: undefined, // Wird ggf. später berechnet
       label: mapPosition.label?.replace(/^0+/, '') || mapPosition.label,
+      isDirectionIncreasing,
     };
 
     // Vehicles-Array aktualisieren

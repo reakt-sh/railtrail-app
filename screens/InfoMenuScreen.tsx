@@ -19,7 +19,7 @@ type InfoStackParamList = {
   TripHistory: undefined;
   GoodToKnow: undefined;
   Contacts: undefined;
-  HeinLuettenborg: undefined;
+  RailwayProjects: undefined;
   RailwayHistory: undefined;
   Imprint: undefined;
   PrivacyPolicy: undefined;
@@ -41,7 +41,7 @@ const menuItems: MenuItem[] = [
   },
   { titleKey: 'infoTitleGoodToKnow', icon: 'lightbulb-outline', screen: 'GoodToKnow' },
   { titleKey: 'infoTitleContacts', icon: 'phone', screen: 'Contacts' },
-  { titleKey: 'infoTitleHeinLuettenborg', icon: 'chart-line-variant', screen: 'HeinLuettenborg' },
+  { titleKey: 'infoTitleRailwayProjects', icon: 'chart-line-variant', screen: 'RailwayProjects' },
   { titleKey: 'infoTitleRailwayHistory', icon: 'book-clock', screen: 'RailwayHistory' },
   { titleKey: 'infoTitleImprint', icon: 'file-document-outline', screen: 'Imprint' },
   { titleKey: 'infoTitlePrivacyPolicy', icon: 'shield-lock-outline', screen: 'PrivacyPolicy' },
@@ -58,7 +58,7 @@ export const InfoMenuScreen = () => {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
-      <StatusBar style="dark" />
+      <StatusBar style="light" />
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View style={styles.logoContainer}>
           <AppLogo width={'100%'} height={112} />
