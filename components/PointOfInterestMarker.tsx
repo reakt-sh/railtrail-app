@@ -58,7 +58,7 @@ export const PointOfInterestMarker = memo(
         return { size: 24, iconSize: 16, extraIconSize: 8 };
       }
 
-      return { size: 16, iconSize: 12, extraIconSize: 6 };
+      return { size: 16, iconSize: 12, extraIconSize: 4 };
     }, [zoomLevel]);
 
     const actualIconSize = iconSize + (config.biggerIcon ? extraIconSize : 0);

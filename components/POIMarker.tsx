@@ -14,9 +14,6 @@ interface Props {
   readonly onPress: (index: number) => void;
 }
 
-/** Minimum touch target size matching PointOfInterestMarker hit area */
-const ICON_HIT_SIZE = 32;
-
 export const POIMarker = memo(({ poi, index, zoomLevel, onPress }: Props) => {
   const i18n = useTranslation();
   const title = getPOITitle(i18n, poi.name, poi.typeId, poi.originalType);
