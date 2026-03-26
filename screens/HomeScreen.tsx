@@ -12,6 +12,7 @@ import {
   FeedbackBottomSheet,
   LoadingVehiclesOverlay,
   MinimalTripOverlay,
+  POITooltip,
   TrackMapView,
   TripControls,
   TripSummaryModal,
@@ -91,6 +92,8 @@ export const HomeScreen = () => {
   const [isSummaryVisible, setIsSummaryVisible] = useState(false);
   const [isFeedbackVisible, setIsFeedbackVisible] = useState(false);
   const [pendingTripData, setPendingTripData] = useState<SavedTrip | null>(null);
+  const [activeTooltip, setActiveTooltip] = useState<number | null>(null);
+  const [tooltipScreenPos, setTooltipScreenPos] = useState<{ x: number; y: number } | null>(null);
 
   // Redux state
   const { track, location, permissions } = useSelector((state: ReduxAppState) => state.app);
@@ -404,6 +407,33 @@ export const HomeScreen = () => {
     [pendingTripData, dispatch]
   );
 
+  const handlePOIPress = useCallback(
+    async (index: number) => {
+      if (activeTooltip === index) {
+        setActiveTooltip(null);
+        setTooltipScreenPos(null);
+        return;
+      }
+      const poi = track.pointsOfInterest[index];
+      if (!poi) return;
+      setActiveTooltip(index);
+      try {
+        const point = await mapRef.current?.getPointInView([poi.pos.lng, poi.pos.lat]);
+        if (point) {
+          setTooltipScreenPos({ x: point[0], y: point[1] });
+        }
+      } catch {
+        setTooltipScreenPos(null);
+      }
+    },
+    [activeTooltip, track.pointsOfInterest]
+  );
+
+  const dismissTooltip = useCallback(() => {
+    setActiveTooltip(null);
+    setTooltipScreenPos(null);
+  }, []);
+
   const handleFeedbackSkip = useCallback(async () => {
     if (pendingTripData) {
       await saveTrip(dispatch, pendingTripData);
@@ -442,7 +472,34 @@ export const HomeScreen = () => {
         mapHeading={cameraHeading}
         isActive={isActive}
         currentVehicleId={currentVehicle.id}
+        activeTooltip={activeTooltip}
+        onPOIPress={handlePOIPress}
+        onDismissTooltip={dismissTooltip}
       />
+
+      {activeTooltip != null && tooltipScreenPos && (
+        <View
+          pointerEvents="box-none"
+          style={[StyleSheet.absoluteFill, { zIndex: 1000 }]}
+        >
+          <View
+            style={{
+              position: 'absolute',
+              left: tooltipScreenPos.x,
+              top: tooltipScreenPos.y,
+              transform: [{ translateX: '-50%' }, { translateY: '-100%' }],
+              marginTop: -20,
+            }}
+          >
+            <POITooltip
+              name={track.pointsOfInterest[activeTooltip].name}
+              type={track.pointsOfInterest[activeTooltip].typeId}
+              originalType={track.pointsOfInterest[activeTooltip].originalType}
+              description={track.pointsOfInterest[activeTooltip].description}
+            />
+          </View>
+        </View>
+      )}
 
       {isLoadingVehicles && <LoadingVehiclesOverlay />}
 

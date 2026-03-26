@@ -42,6 +42,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     maxWidth: 280,
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
   tooltipTitle: {
     ...textStyles.titleSmall,

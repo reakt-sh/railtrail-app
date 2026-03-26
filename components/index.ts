@@ -7,6 +7,7 @@ export { LoadingVehiclesOverlay } from './LoadingVehiclesOverlay';
 export { LocationButton } from './LocationButton';
 export { MapMarkers } from './MapMarkers';
 export { MinimalTripOverlay } from './MinimalTripOverlay';
+export { POITooltip } from './POITooltip';
 export { PointOfInterestMarker } from './PointOfInterestMarker';
 export { Snackbar, SnackbarState } from './Snackbar';
 export { StartTripBottomSheet } from './StartTripBottomSheet';

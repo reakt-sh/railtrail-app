@@ -1,6 +1,6 @@
 import * as MapLibreGL from '@maplibre/maplibre-react-native';
 import * as Location from 'expo-location';
-import React, { memo, RefObject, useCallback, useState } from 'react';
+import React, { memo, RefObject } from 'react';
 import { StyleSheet } from 'react-native';
 import { initialRegion, mapStyleUrl } from '../constants';
 import { PointOfInterest } from '../types/init';
@@ -29,6 +29,9 @@ interface ExternalProps {
   readonly mapHeading: number;
   readonly isActive: boolean;
   readonly currentVehicleId: number | null;
+  readonly activeTooltip: number | null;
+  readonly onPOIPress: (index: number) => void;
+  readonly onDismissTooltip: () => void;
 }
 
 type Props = ExternalProps;
@@ -51,13 +54,10 @@ export const TrackMapView = memo(
     mapHeading,
     isActive,
     currentVehicleId,
+    activeTooltip,
+    onPOIPress,
+    onDismissTooltip,
   }: Props) => {
-    const [activeTooltip, setActiveTooltip] = useState<number | null>(null);
-    const onPOIPress = useCallback((index: number) => {
-      setActiveTooltip((prev) => (prev === index ? null : index));
-    }, []);
-    const dismissTooltip = useCallback(() => setActiveTooltip(null), []);
-
     return (
       <MapLibreGL.MapView
         ref={mapRef}
@@ -69,6 +69,7 @@ export const TrackMapView = memo(
           const isUserInteraction = feature?.properties?.isUserInteraction ?? false;
           if (isUserInteraction) {
             onUserInteraction();
+            onDismissTooltip();
           }
         }}
         onRegionDidChange={(feature: any) => {
@@ -85,7 +86,7 @@ export const TrackMapView = memo(
 
           onRegionChange(zoom, heading, center);
         }}
-        onPress={dismissTooltip}
+        onPress={onDismissTooltip}
       >
         <MapLibreGL.Camera
           key={userHasInteracted ? 'free' : 'track'}
@@ -109,7 +110,6 @@ export const TrackMapView = memo(
           mapHeading={mapHeading}
           isActive={isActive}
           currentVehicleId={currentVehicleId}
-          activeTooltip={activeTooltip}
           onPOIPress={onPOIPress}
         />
       </MapLibreGL.MapView>
