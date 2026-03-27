@@ -142,11 +142,11 @@ const translations = {
 
     // Privacy Policy Screen
     privacyPolicyTitle: 'Privacy Policy',
-    privacyPolicySubtitle: 'Railbike On-Board Computer App\nLast updated: [DATE TO BE ADDED]',
+    privacyPolicySubtitle: 'Railbike On-Board Computer App\nLast updated: March 27, 2026',
 
     privacySection1Title: '1. Data Controller',
     privacySection1Content:
-      'The data controller within the meaning of the General Data Protection Regulation (GDPR) is:\n\nHLB GmbH\n[Street and house number]\n[Postal code City]\nEmail: [Email address]\nPhone: [Phone number]\n\n[If a data protection officer has been appointed:]\nData Protection Officer: [Name / Contact details]',
+      'The data controller within the meaning of the General Data Protection Regulation (GDPR) is:\n\nHLB GmbH\nBahnhofstraße 3\n23714 Malente\nEmail: kontakt@hl-bahnstreckenverwaltung.de',
 
     privacySection2Title: '2. Overview of Data Processing',
     privacySection2Content:
@@ -166,7 +166,7 @@ const translations = {
 
     privacySection6Title: '6. Map Display (MapLibre)',
     privacySection6Content:
-      'The app uses MapLibre, an open-source map library, for map display. The map tiles are loaded from an external server. In this process, your IP address is technically transmitted to the tile server.\n\n[NOTE: The specific tile server provider must be added here, e.g., OpenStreetMap Foundation, Maptiler, or a self-hosted server. Different privacy notices may apply depending on the provider.]\n\nLegal basis: Legitimate interest pursuant to Art. 6(1)(f) GDPR. The map display is a core function of the app.',
+      'The app uses MapLibre, an open-source map library, for map display. The map tiles are loaded from OpenFreeMap (openfreemap.org), a free tile server based on OpenStreetMap data. When loading the map, your IP address is technically transmitted to the OpenFreeMap server.\n\nOpenFreeMap is an open-source project that provides map tiles without requiring registration or API keys. The underlying map data comes from OpenStreetMap contributors.\n\nLegal basis: Legitimate interest pursuant to Art. 6(1)(f) GDPR. The map display is a core function of the app.',
 
     privacySection7Title: '7. Embedded YouTube Videos',
     privacySection7Content:
@@ -389,11 +389,11 @@ const translations = {
 
     // Privacy Policy Screen
     privacyPolicyTitle: 'Datenschutzerklärung',
-    privacyPolicySubtitle: 'Draisinen-Bordcomputer App\nStand: [DATUM EINFÜGEN]',
+    privacyPolicySubtitle: 'Draisinen-Bordcomputer App\nStand: 27. März 2026',
 
     privacySection1Title: '1. Verantwortlicher',
     privacySection1Content:
-      'Verantwortlicher im Sinne der Datenschutz-Grundverordnung (DSGVO) ist:\n\nHLB GmbH\n[Straße und Hausnummer]\n[PLZ Ort]\nE-Mail: [E-Mail-Adresse]\nTelefon: [Telefonnummer]\n\n[Sofern ein Datenschutzbeauftragter bestellt ist:]\nDatenschutzbeauftragte/r: [Name / Kontaktdaten]',
+      'Verantwortlicher im Sinne der Datenschutz-Grundverordnung (DSGVO) ist:\n\nHLB GmbH\nBahnhofstraße 3\n23714 Malente\nE-Mail: kontakt@hl-bahnstreckenverwaltung.de',
 
     privacySection2Title: '2. Übersicht der Datenverarbeitung',
     privacySection2Content:
@@ -413,7 +413,7 @@ const translations = {
 
     privacySection6Title: '6. Kartendarstellung (MapLibre)',
     privacySection6Content:
-      'Für die Kartendarstellung verwendet die App MapLibre, eine quelloffene Kartenbibliothek. Die Kartenkacheln (Tiles) werden von einem externen Server geladen. Dabei wird technisch bedingt deine IP-Adresse an den Tile-Server übertragen.\n\n[HINWEIS: Hier muss der konkrete Tile-Server-Anbieter ergänzt werden, z. B. OpenStreetMap Foundation, Maptiler, oder ein selbst gehosteter Server. Je nach Anbieter können unterschiedliche Datenschutzhinweise gelten.]\n\nRechtsgrundlage: Berechtigtes Interesse gem. Art. 6 Abs. 1 lit. f DSGVO. Die Kartenanzeige ist eine Kernfunktion der App.',
+      'Für die Kartendarstellung verwendet die App MapLibre, eine quelloffene Kartenbibliothek. Die Kartenkacheln (Tiles) werden von OpenFreeMap (openfreemap.org) geladen, einem freien Tile-Server auf Basis von OpenStreetMap-Daten. Beim Laden der Karte wird technisch bedingt deine IP-Adresse an den OpenFreeMap-Server übertragen.\n\nOpenFreeMap ist ein Open-Source-Projekt, das Kartenkacheln ohne Registrierung oder API-Schlüssel bereitstellt. Die zugrunde liegenden Kartendaten stammen von OpenStreetMap-Mitwirkenden.\n\nRechtsgrundlage: Berechtigtes Interesse gem. Art. 6 Abs. 1 lit. f DSGVO. Die Kartenanzeige ist eine Kernfunktion der App.',
 
     privacySection7Title: '7. Eingebettete YouTube-Videos',
     privacySection7Content:

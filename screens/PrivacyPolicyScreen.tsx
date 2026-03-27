@@ -1,5 +1,6 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { LinkedText } from '../components';
 import { Color, privacySections } from '../constants';
 import { textStyles } from '../constants/text-styles';
 import { useTranslation } from '../hooks/useTranslation';
@@ -12,7 +13,7 @@ type SectionProps = {
 const Section = ({ title, content }: SectionProps) => (
   <View style={styles.section}>
     <Text style={styles.sectionTitle}>{title}</Text>
-    <Text style={styles.sectionContent}>{content}</Text>
+    <LinkedText style={styles.sectionContent}>{content}</LinkedText>
   </View>
 );
 
