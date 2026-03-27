@@ -103,7 +103,17 @@ const translations = {
     // Good to Know Screen (FAQ)
     faqDepartureTimes: 'What are the departure times?',
     faqDepartureTimesAnswer:
-      'There is always a designated direction of travel on the railway line to prevent oncoming traffic. We must avoid this at all costs, as otherwise you could suddenly find yourselves facing each other on an open stretch of track without being able to take the handcar off the tracks at a turning point. Since oncoming traffic can also lead to dangerous situations, the designated directions of travel and the associated schedule must be strictly adhered to! \n\n10:00 a.m.–12:00 p.m.: Everyone heading toward Lütjenburg\n12:00 p.m.–1:30 p.m.: Everyone heading toward Malente\n1:30 p.m.–3:00 p.m.: Everyone heading toward Lütjenburg\n3:00 p.m.–5:00 p.m.: Everyone heading toward Malente',
+      'There is always a designated direction of travel on the railway line to prevent oncoming traffic. We must avoid this at all costs, as otherwise you could suddenly find yourselves facing each other on an open stretch of track without being able to take the handcar off the tracks at a turning point. Since oncoming traffic can also lead to dangerous situations, the designated directions of travel and the associated schedule must be strictly adhered to!',
+    departureMalente: 'Departure Bad Malente-Gremsmühlen',
+    departureLuetjenburg: 'Departure Lütjenburg',
+    departureBookedTour: 'Booked tour',
+    departureDayTour: 'Day tour',
+    departure3hTour: '3-hour tour',
+    departureDeparture: 'Departure',
+    departureTurn: 'Turn (wherever you are)',
+    departureArrivalLuetjenburg: 'Arrival in Lütjenburg',
+    departureReturnStartLuetjenburg: 'Start return in Lütjenburg',
+    departureReturn: 'Return',
     faqPrice: 'What does a railbike tour cost?',
     faqPriceAnswer:
       '3-hour tour: €50 per railbike\nFamily price (with children under 16): €40\nostseecard holders receive €2 discount.\n\nGroup tours with up to 60 people are possible.',
@@ -341,7 +351,17 @@ const translations = {
     // Good to Know Screen (FAQ)
     faqDepartureTimes: 'Wie sind die Abfahrtszeiten?',
     faqDepartureTimesAnswer:
-      'Auf der Bahnstrecke gibt es immer eine feste vorgegebene Fahrtrichtung, damit es nicht zu Gegenverkehr kommt. Dies wollen wir unbedingt vermeiden, da es sonst dazu kommen würde, dass Ihr Euch auf offener Strecke plötzlich gegenübersteht, ohne an einer Wendestelle die Draisine aus dem Gleis nehmen zu können. Da es bei Gegenverkehr zudem auch zu gefährlichen Situationen kommen kann, sind die vorgegebenen Fahrtrichtungen und der damit verbundene Fahrplan unbedingt zwingend einzuhalten! \n\n10:00-12:00 Uhr alle in Fahrtrichtung Lütjenburg\n12:00-13:30 Uhr alle in Fahrtrichtung Malente\n13:30-15:00 Uhr alle in Fahrtrichtung Lütjenburg\n15:00-17:00 Uhr alle in Fahrtrichtung Malente',
+      'Auf der Bahnstrecke gibt es immer eine feste vorgegebene Fahrtrichtung, damit es nicht zu Gegenverkehr kommt. Dies wollen wir unbedingt vermeiden, da es sonst dazu kommen würde, dass Ihr Euch auf offener Strecke plötzlich gegenübersteht, ohne an einer Wendestelle die Draisine aus dem Gleis nehmen zu können. Da es bei Gegenverkehr zudem auch zu gefährlichen Situationen kommen kann, sind die vorgegebenen Fahrtrichtungen und der damit verbundene Fahrplan unbedingt zwingend einzuhalten!',
+    departureMalente: 'Abfahrt Bad Malente-Gremsmühlen',
+    departureLuetjenburg: 'Abfahrt Lütjenburg',
+    departureBookedTour: 'Gebuchte Tour',
+    departureDayTour: 'Tagestour',
+    departure3hTour: '3-Std.-Tour',
+    departureDeparture: 'Abfahrt',
+    departureTurn: 'Wende (egal, wo Ihr dann seid)',
+    departureArrivalLuetjenburg: 'Ankunft in Lütjenburg',
+    departureReturnStartLuetjenburg: 'Beginn Rückfahrt in Lütjenburg',
+    departureReturn: 'Rückkehr',
     faqHowItWorks: 'Wie funktioniert eine Draisine?',
     faqHowItWorksAnswer:
       'Die Draisine wird durch Treten angetrieben, ähnlich wie ein Fahrrad. Wichtig: Draisinen haben einen langen Bremsweg – fahre vorausschauend!\n\nDer Verkehr fließt immer in eine Fahrtrichtung, damit es nicht zu Gegenverkehr auf der Strecke kommt. Haltet Euch unbedingt an die Abfahrt-, Wende- und Rückgabezeiten! An allen Wendepunkten könnt Ihr die Draisine drehen.\n\nAuf jeder Draisine können bis zu 4 Personen mitfahren – 2 Personen treten, 2 Personen können sich entspannen. Mindestens ein Erwachsener pro Draisine ist erforderlich.',

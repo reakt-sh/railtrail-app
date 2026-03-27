@@ -1,6 +1,7 @@
 import { ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AccordionItem } from '../components/AccordionItem';
+import { DepartureTable } from '../components/DepartureTable';
 import { Color } from '../constants';
 import { useTranslation } from '../hooks/useTranslation';
 
@@ -18,13 +19,23 @@ export const GoodToKnowScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea} edges={[]}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        {faqKeys.map((item, index) => (
-          <AccordionItem
-            key={index}
-            question={i18n.t(item.questionKey)}
-            answer={i18n.t(item.answerKey)}
-          />
-        ))}
+        {faqKeys.map((item, index) =>
+          item.questionKey === 'faqDepartureTimes' ? (
+            <AccordionItem
+              key={index}
+              question={i18n.t(item.questionKey)}
+              answer={i18n.t(item.answerKey)}
+            >
+              <DepartureTable />
+            </AccordionItem>
+          ) : (
+            <AccordionItem
+              key={index}
+              question={i18n.t(item.questionKey)}
+              answer={i18n.t(item.answerKey)}
+            />
+          )
+        )}
       </ScrollView>
     </SafeAreaView>
   );

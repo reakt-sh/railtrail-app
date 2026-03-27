@@ -10,7 +10,7 @@ import { MapMarkers } from './MapMarkers';
 
 interface ExternalProps {
   readonly mapRef: RefObject<MapLibreGL.MapViewRef | null>;
-  readonly cameraRef: RefObject<MapLibreGL.CameraRef>;
+  readonly cameraRef: RefObject<MapLibreGL.CameraRef | null>;
   readonly onRegionChange: (
     zoom: number,
     heading: number,

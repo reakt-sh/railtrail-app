@@ -8,9 +8,10 @@ import { useTranslation } from '../hooks';
 export interface AccordionItemProps {
   question: string;
   answer: string;
+  children?: React.ReactNode;
 }
 
-export const AccordionItem = ({ question, answer }: AccordionItemProps) => {
+export const AccordionItem = ({ question, answer, children }: AccordionItemProps) => {
   const [expanded, setExpanded] = useState(false);
   const i18n = useTranslation();
 
@@ -39,6 +40,7 @@ export const AccordionItem = ({ question, answer }: AccordionItemProps) => {
       {expanded && (
         <View style={styles.answerContainer}>
           <Text style={textStyles.bodyMedium}>{answer}</Text>
+          {children}
         </View>
       )}
     </View>

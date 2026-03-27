@@ -2,7 +2,7 @@ import * as MapLibreGL from '@maplibre/maplibre-react-native';
 import { RefObject, useCallback, useRef, useState } from 'react';
 
 interface UseMapCameraReturn {
-  cameraRef: RefObject<MapLibreGL.CameraRef>;
+  cameraRef: RefObject<MapLibreGL.CameraRef | null>;
   isFollowingUser: boolean;
   isFollowingVehicle: boolean;
   userHasInteracted: boolean;
