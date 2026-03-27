@@ -4,6 +4,7 @@ import { AppAction, AppActionType } from '../redux/app';
 import { TripAction, TripActionType } from '../redux/trip';
 import { MapPosition } from '../types/map-position';
 import { Vehicle } from '../types/vehicle';
+import { SIMULATION_VEHICLE_ID } from '../hooks/useTripSimulation';
 import { malenteLuetjenburgTrack, positionToPercentage } from '../util/track-loader';
 
 // Initialisiert die App mit statischen Track-Daten und WebSocket-Verbindung
@@ -44,9 +45,6 @@ const LOADING_TIMEOUT_MS = 5000;
 
 // Debounce für Loading-State: Warte bis keine neuen Fahrzeuge mehr kommen
 const LOADING_DEBOUNCE_MS = 1500;
-
-// Demo-Draisine ID - wird bei Loading-Prüfung ignoriert
-const DEMO_VEHICLE_ID = 99;
 
 // Richtet WebSocket-Updates ein und konvertiert MapPosition zu Vehicle-Format
 export const setupPositionUpdates = (dispatch: Dispatch<TripActionType>): (() => void) => {
@@ -130,7 +128,7 @@ export const setupPositionUpdates = (dispatch: Dispatch<TripActionType>): (() =>
 
     // Debounce: Bei neuem Fahrzeug Timer zurücksetzen (Demo ignorieren)
     const isNewVehicle = !knownVehicleIds.has(mapPosition.vehicle);
-    if (isNewVehicle && mapPosition.vehicle !== DEMO_VEHICLE_ID) {
+    if (isNewVehicle && mapPosition.vehicle !== SIMULATION_VEHICLE_ID) {
       knownVehicleIds.add(mapPosition.vehicle);
 
       // Debounce: Timer zurücksetzen bei jedem neuen Fahrzeug

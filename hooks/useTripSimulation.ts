@@ -8,7 +8,7 @@ import { Vehicle } from '../types/vehicle';
 import { calculateBearing } from '../util/calculators';
 import { percentageToPosition } from '../util/track-loader';
 
-export const SIMULATION_VEHICLE_ID = 99;
+export const SIMULATION_VEHICLE_ID = -1;
 const SIMULATION_VEHICLE_LABEL = 'Demo';
 
 export const useTripSimulation = () => {

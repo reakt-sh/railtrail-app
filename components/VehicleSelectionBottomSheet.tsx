@@ -14,10 +14,8 @@ import { Color } from '../constants/color';
 import { textStyles } from '../constants/text-styles';
 import { reloadVehicles } from '../effect-actions/api-actions';
 import { useTranslation } from '../hooks';
+import { SIMULATION_VEHICLE_ID } from '../hooks/useTripSimulation';
 import { Vehicle } from '../types/vehicle';
-
-// Demo vehicle ID - should be excluded from "no vehicles" check
-const DEMO_VEHICLE_ID = 99;
 
 interface ExternalProps {
   readonly isVisible: boolean;
@@ -74,7 +72,7 @@ export const VehicleSelectionBottomSheet = memo(
 
     // Check if there are real vehicles (excluding Demo) for the empty state
     const hasNoRealVehicles =
-      availableVehicles.filter((v) => v.id !== DEMO_VEHICLE_ID).length === 0;
+      availableVehicles.filter((v) => v.id !== SIMULATION_VEHICLE_ID).length === 0;
 
     return (
       <BottomSheet
