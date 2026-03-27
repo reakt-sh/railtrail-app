@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
   accordionItem: {
     borderRadius: 12,
     marginBottom: 12,
-    overflow: 'hidden',
   },
   accordionItemCollapsed: {
     borderBottomColor: Color.outline,
