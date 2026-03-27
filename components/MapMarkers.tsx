@@ -26,6 +26,8 @@ interface Props {
   readonly zoomLevel: number;
   /** Current map heading for rotating vehicle direction indicators */
   readonly mapHeading: number;
+  /** Visible map bounds [[ne_lng, ne_lat], [sw_lng, sw_lat]] for filtering off-screen markers */
+  readonly visibleBounds: [[number, number], [number, number]] | null;
   /** Whether a trip is currently active */
   readonly isActive: boolean;
   /** ID of the user's current vehicle during an active trip */
@@ -48,6 +50,7 @@ export const MapMarkers = memo(
     track,
     zoomLevel,
     mapHeading,
+    visibleBounds,
     isActive,
     currentVehicleId,
     onPOIPress,
@@ -65,6 +68,13 @@ export const MapMarkers = memo(
           : v
       );
     }, [vehicles, isActive, currentVehicleId, location]);
+
+    // Filter out vehicles outside the track range (keep all on-track vehicles to avoid native crash)
+    const visibleVehicles = useMemo(() => {
+      return processedVehicles.filter(
+        (v) => v.percentagePosition >= 0 && v.percentagePosition <= 100
+      );
+    }, [processedVehicles]);
 
     // Hide UserLocationMarker during active trip (the vehicle marker IS the user)
     const showUserLocation = !isActive || currentVehicleId == null;
@@ -94,12 +104,13 @@ export const MapMarkers = memo(
         ))}
 
         {/* Vehicles on the track (own vehicle uses GPS position during active trip) */}
-        {processedVehicles.map((vehicle) => (
+        {visibleVehicles.map((vehicle) => (
           <VehicleMarker
             key={`vehicle-${vehicle.id}`}
             vehicle={vehicle}
             mapHeading={mapHeading}
             zoomLevel={zoomLevel}
+            visibleBounds={visibleBounds}
           />
         ))}
 

@@ -9,6 +9,7 @@ interface UseMapCameraReturn {
   currentCameraCenter: [number, number] | null;
   cameraHeading: number;
   zoomLevel: number;
+  visibleBounds: [[number, number], [number, number]] | null;
   setIsFollowingUser: (following: boolean) => void;
   setIsFollowingVehicle: (following: boolean) => void;
   animateCamera: (lat: number, lng: number, heading: number | null) => void;
@@ -18,7 +19,8 @@ interface UseMapCameraReturn {
   onRegionChange: (
     zoom: number,
     heading: number,
-    center?: [number, number] | null
+    center?: [number, number] | null,
+    bounds?: [[number, number], [number, number]] | null
   ) => void;
   onUserInteraction: () => void;
   centerOnPosition: (lat: number, lng: number, heading: number, zoomLevel?: number) => void;
@@ -32,6 +34,7 @@ export const useMapCamera = (): UseMapCameraReturn => {
   const [currentCameraCenter, setCurrentCameraCenter] = useState<[number, number] | null>(null);
   const [cameraHeading, setCameraHeading] = useState<number>(0);
   const [zoomLevel, setZoomLevel] = useState<number>(15);
+  const [visibleBounds, setVisibleBounds] = useState<[[number, number], [number, number]] | null>(null);
 
   const setIsFollowingUser = useCallback((following: boolean) => {
     setIsFollowingUserState(following);
@@ -73,12 +76,16 @@ export const useMapCamera = (): UseMapCameraReturn => {
     (
       zoom: number,
       heading: number,
-      center?: [number, number] | null
+      center?: [number, number] | null,
+      bounds?: [[number, number], [number, number]] | null
     ) => {
       setZoomLevel(Math.round(zoom));
       setCameraHeading(heading);
       if (center) {
         setCurrentCameraCenter(center);
+      }
+      if (bounds) {
+        setVisibleBounds(bounds);
       }
     },
     []
@@ -113,6 +120,7 @@ export const useMapCamera = (): UseMapCameraReturn => {
     currentCameraCenter,
     cameraHeading,
     zoomLevel,
+    visibleBounds,
     setIsFollowingUser,
     setIsFollowingVehicle,
     animateCamera,

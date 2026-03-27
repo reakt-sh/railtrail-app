@@ -5,7 +5,7 @@ import { TripAction, TripActionType } from '../redux/trip';
 import { MapPosition } from '../types/map-position';
 import { Vehicle } from '../types/vehicle';
 import { SIMULATION_VEHICLE_ID } from '../hooks/useTripSimulation';
-import { malenteLuetjenburgTrack, positionToPercentage } from '../util/track-loader';
+import { malenteLuetjenburgTrack, percentageToPosition, positionToPercentage } from '../util/track-loader';
 
 // Initialisiert die App mit statischen Track-Daten und WebSocket-Verbindung
 export const initializeApp = (dispatch: Dispatch<AppActionType>) => {
@@ -86,8 +86,11 @@ export const setupPositionUpdates = (dispatch: Dispatch<TripActionType>): (() =>
   });
 
   const unsubscribePositions = positionSocket.subscribe((mapPosition: MapPosition) => {
-    const currentPos = mapPosition.latitude != null && mapPosition.longitude != null
-      ? positionToPercentage(mapPosition.latitude, mapPosition.longitude)
+    const hasValidCoords = mapPosition.latitude != null && mapPosition.longitude != null
+      && (mapPosition.latitude !== 0 || mapPosition.longitude !== 0);
+
+    const currentPos = hasValidCoords
+      ? positionToPercentage(mapPosition.latitude!, mapPosition.longitude!)
       : mapPosition.position * 100; // Fallback wenn keine Koordinaten
     const lastPos = lastPositions.get(mapPosition.vehicle);
 
@@ -105,12 +108,13 @@ export const setupPositionUpdates = (dispatch: Dispatch<TripActionType>): (() =>
     lastPositions.set(mapPosition.vehicle, currentPos);
 
     // MapPosition zu Vehicle-Format konvertieren für die bestehende UI
+    const pos = hasValidCoords
+      ? { lat: mapPosition.latitude!, lng: mapPosition.longitude! }
+      : percentageToPosition(currentPos);
+
     const vehicle: Vehicle = {
       id: mapPosition.vehicle,
-      pos: {
-        lat: mapPosition.latitude ?? 0,
-        lng: mapPosition.longitude ?? 0,
-      },
+      pos,
       percentagePosition: currentPos,
       heading: mapPosition.heading,
       headingTowardsUser: undefined, // Wird ggf. später berechnet

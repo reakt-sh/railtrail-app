@@ -14,7 +14,8 @@ interface ExternalProps {
   readonly onRegionChange: (
     zoom: number,
     heading: number,
-    center?: [number, number] | null
+    center?: [number, number] | null,
+    bounds?: [[number, number], [number, number]] | null
   ) => void;
   readonly onUserInteraction: () => void;
   readonly userHasInteracted: boolean;
@@ -27,6 +28,7 @@ interface ExternalProps {
   readonly track: GeoJSON.FeatureCollection | null;
   readonly zoomLevel: number;
   readonly mapHeading: number;
+  readonly visibleBounds: [[number, number], [number, number]] | null;
   readonly isActive: boolean;
   readonly currentVehicleId: number | null;
   readonly activeTooltip: number | null;
@@ -52,6 +54,7 @@ export const TrackMapView = memo(
     track,
     zoomLevel,
     mapHeading,
+    visibleBounds: visibleBoundsProp,
     isActive,
     currentVehicleId,
     activeTooltip,
@@ -84,7 +87,9 @@ export const TrackMapView = memo(
             center = [(ne[0] + sw[0]) / 2, (ne[1] + sw[1]) / 2];
           }
 
-          onRegionChange(zoom, heading, center);
+          const bounds: [[number, number], [number, number]] | null =
+            visibleBounds?.length === 2 ? visibleBounds : null;
+          onRegionChange(zoom, heading, center, bounds);
         }}
         onPress={onDismissTooltip}
       >
@@ -108,6 +113,7 @@ export const TrackMapView = memo(
           track={track}
           zoomLevel={zoomLevel}
           mapHeading={mapHeading}
+          visibleBounds={visibleBoundsProp}
           isActive={isActive}
           currentVehicleId={currentVehicleId}
           onPOIPress={onPOIPress}

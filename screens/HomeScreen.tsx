@@ -73,6 +73,7 @@ export const HomeScreen = () => {
     currentCameraCenter,
     cameraHeading,
     zoomLevel,
+    visibleBounds,
     setIsFollowingUser,
     animateCamera,
     onLocationButtonClicked,
@@ -470,6 +471,7 @@ export const HomeScreen = () => {
         track={track.path}
         zoomLevel={zoomLevel}
         mapHeading={cameraHeading}
+        visibleBounds={visibleBounds}
         isActive={isActive}
         currentVehicleId={currentVehicle.id}
         activeTooltip={activeTooltip}
