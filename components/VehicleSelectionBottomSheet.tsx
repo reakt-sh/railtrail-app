@@ -40,7 +40,7 @@ export const VehicleSelectionBottomSheet = memo(
     excludeVehicleId,
   }: Props) => {
     const bottomSheetRef = useRef<BottomSheet>(null);
-    const snapPoints = useMemo(() => ['50%', '85%'], []);
+    const snapPoints = useMemo(() => ['50%', '65%', '85%'], []);
     const i18n = useTranslation();
 
     useEffect(() => {
