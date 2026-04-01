@@ -7,25 +7,58 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unreleased]
 
+### Geändert
+
+- HomeScreen-Logik in Custom Hooks aufgeteilt (`useGPSProcessing`, `usePostTripFlow`, `useTripLifecycle`)
+
+## [1.0.0] - 2026-04-01
+
 ### Hinzugefügt
 
-- WebSocket-Integration für Echtzeit-Fahrzeugpositionen vom Production-Server
-- Umgebungsvariablen über `.env` Datei (react-native-dotenv)
-- `.env.example` Template für Entwickler
+- Trip-Simulation (Demo-Modus) mit simulierten GPS-Positionen
+- Trip-Summary nach Fahrtende mit Streckenübersicht
+- Feedback-System (Bewertung + Text nach Trip)
+- Trip-History: vergangene Fahrten einsehen und Feedback nachreichen
+- Abfahrtstabelle
+- Splash Screen
+- Points of Interest mit Tooltips und Beschreibungen
+- Fahrzeugwechsel während aktiver Fahrt
+- Info-Bereich (Impressum, Datenschutz, Logos)
+- Ladeindikator für Fahrzeuge
+- Minimales Trip-Overlay (ersetzt Trip-Header)
+- App-Icons für iOS und Android
+- WebSocket-Integration für Echtzeit-Fahrzeugpositionen
+- Umgebungsvariablen über `.env` (react-native-dotenv)
 
 ### Geändert
 
 - Migration von Google Maps zu MapLibre GL (OpenFreeMap Tiles)
 - Expo Upgrade von Version 48 auf 52
 - Backend-Anbindung: REST-Polling durch WebSocket ersetzt
-- Vehicle-Marker: Foreground und Background in einer PointAnnotation kombiniert (Z-Order Fix)
-- New Architecture deaktiviert (Kompatibilität mit MapLibre)
+- Komplettes UI-Redesign
+- Verbesserte Kartenanimationen und Kamera-Verhalten
+- GPS-Geschwindigkeit mit EMA-Smoothing und Richtungserkennung
+- Fahrzeug-Marker: Z-Order Fix
+- Statusbar-Farben korrigiert (iOS + Android)
+- Links in Texten klickbar
+- New Architecture deaktiviert (MapLibre-Kompatibilität)
 
 ### Entfernt
 
 - Google Maps API-Abhängigkeit
-- Vehicle-API (Daten kommen jetzt über WebSocket)
-- Unnötige Auth-Logik für lokale Entwicklung
+- Vehicle-API (Daten über WebSocket)
+- QR-Code-Auswahl und -Komponenten
+- Hintergrund-Location-Tracking (nur noch Foreground)
+- Streckenauswahl-Screen (feste Strecke konfiguriert)
+
+### Behoben
+
+- Marker-Position oben links beim Laden (MapLibre-Bug)
+- Tooltip-Verhalten auf Android
+- Accordion-Darstellung auf Android
+- Distanzberechnung für nächstes Hindernis
+- POI-Marker-Positionierung
+- Statusbar-Farbe auf verschiedenen Screens
 
 ---
 
@@ -61,8 +94,3 @@ Das Original-Projekt wurde als studentischer Prototyp an der Christian-Albrechts
 
 Für die vollständige Historie des Prototyps siehe:
 https://github.com/kieler/RailTrail
-
----
-
-[Unreleased]: https://gitlab.uxma.io/hlb/railtrail-app/compare/v0.1.0...HEAD
-[0.1.0]: https://gitlab.uxma.io/hlb/railtrail-app/-/releases/v0.1.0

@@ -34,7 +34,9 @@ export const useMapCamera = (): UseMapCameraReturn => {
   const [currentCameraCenter, setCurrentCameraCenter] = useState<[number, number] | null>(null);
   const [cameraHeading, setCameraHeading] = useState<number>(0);
   const [zoomLevel, setZoomLevel] = useState<number>(15);
-  const [visibleBounds, setVisibleBounds] = useState<[[number, number], [number, number]] | null>(null);
+  const [visibleBounds, setVisibleBounds] = useState<[[number, number], [number, number]] | null>(
+    null
+  );
 
   const setIsFollowingUser = useCallback((following: boolean) => {
     setIsFollowingUserState(following);
@@ -62,6 +64,7 @@ export const useMapCamera = (): UseMapCameraReturn => {
 
   const onLocationButtonClicked = useCallback(
     (location: { latitude: number; longitude: number; heading: number | null } | null) => {
+      console.log('Location button clicked. Current location:', location);
       const newFollowing = !isFollowingUser;
       setIsFollowingUser(newFollowing);
 
