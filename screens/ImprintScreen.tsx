@@ -6,18 +6,13 @@ import { Color } from '../constants';
 import { textStyles } from '../constants/text-styles';
 import { useTranslation } from '../hooks/useTranslation';
 
+const contactEmail = 'kontakt@hl-bahnstreckenverwaltung.de';
+
 export const ImprintScreen = () => {
   const i18n = useTranslation();
-  const handlePhonePress = () => {
-    Linking.openURL(`tel:${'+49 4522 509525'.replace(/\s/g, '')}`);
-  };
 
   const handleEmailPress = () => {
-    Linking.openURL('mailto:info@holsteinischeschweiz.de');
-  };
-
-  const handleWebsitePress = () => {
-    Linking.openURL('https://www.holsteinischeschweiz.de');
+    Linking.openURL(`mailto:${contactEmail}`);
   };
 
   return (
@@ -25,29 +20,14 @@ export const ImprintScreen = () => {
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{i18n.t('imprintOperator')}</Text>
-          <Text style={styles.text}>{i18n.t('contactTourismuszentrale')}</Text>
-          <Text style={styles.text}>Bahnhofstraße 5</Text>
-          <Text style={styles.text}>24306 Plön</Text>
-
-          <Pressable onPress={handlePhonePress} style={[styles.row, { marginTop: 8 }]}>
-            <MaterialCommunityIcons name="phone-outline" size={20} color={Color.primary} />
-            <Text style={textStyles.link}>+49 4522 509525</Text>
-          </Pressable>
-
-          <Pressable onPress={handleEmailPress} style={styles.row}>
-            <MaterialCommunityIcons name="email-outline" size={20} color={Color.primary} />
-            <Text style={textStyles.link}>info@holsteinischeschweiz.de</Text>
-          </Pressable>
-
-          <Pressable onPress={handleWebsitePress} style={styles.row}>
-            <MaterialCommunityIcons name="web" size={20} color={Color.primary} />
-            <Text style={textStyles.link}>www.holsteinischeschweiz.de</Text>
-          </Pressable>
-        </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{i18n.t('imprintAppDevelopment')}</Text>
           <Text style={styles.text}>HLB GmbH</Text>
+          <Text style={styles.text}>Bahnhofstraße 3</Text>
+          <Text style={styles.text}>23714 Malente</Text>
+
+          <Pressable onPress={handleEmailPress} style={[styles.row, { marginTop: 8 }]}>
+            <MaterialCommunityIcons name="email-outline" size={20} color={Color.primary} />
+            <Text style={textStyles.link}>{contactEmail}</Text>
+          </Pressable>
         </View>
 
         <View style={styles.section}>

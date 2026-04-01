@@ -1,5 +1,5 @@
 import * as MapLibreGL from '@maplibre/maplibre-react-native';
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import {
   DraisineIcon,
@@ -34,6 +34,8 @@ interface Props {
   readonly mapHeading: number;
   /** Current map zoom level (quantized to whole numbers) */
   readonly zoomLevel: number;
+  /** Visible map bounds [[ne_lng, ne_lat], [sw_lng, sw_lat]] for hiding off-screen markers */
+  readonly visibleBounds: [[number, number], [number, number]] | null;
 }
 
 /**
@@ -42,7 +44,18 @@ interface Props {
  * - Train icon (foreground, always upright)
  * - Optional label below the icon
  */
-export const VehicleMarker = memo(({ vehicle, mapHeading, zoomLevel }: Props) => {
+export const VehicleMarker = memo(({ vehicle, mapHeading, zoomLevel, visibleBounds }: Props) => {
+  const isInBounds = useMemo(() => {
+    if (!visibleBounds) return true;
+    const [[neLng, neLat], [swLng, swLat]] = visibleBounds;
+    const padLat = (neLat - swLat) * 0.3;
+    const padLng = (neLng - swLng) * 0.3;
+    return (
+      vehicle.pos.lat >= swLat - padLat && vehicle.pos.lat <= neLat + padLat &&
+      vehicle.pos.lng >= swLng - padLng && vehicle.pos.lng <= neLng + padLng
+    );
+  }, [vehicle.pos.lat, vehicle.pos.lng, visibleBounds]);
+
   const useSmallMarker = zoomLevel < 15;
   const size = useSmallMarker ? MARKER_SIZE.small : MARKER_SIZE.large;
   const hasHeading = vehicle.heading != null;
@@ -54,35 +67,39 @@ export const VehicleMarker = memo(({ vehicle, mapHeading, zoomLevel }: Props) =>
       id={`vehicle-${vehicle.id}`}
       coordinate={[vehicle.pos.lng, vehicle.pos.lat]}
     >
-      <View
-        collapsable={false}
-        style={[
-          styles.container,
-          {
-            minWidth: size.background,
-            height: vehicle.label ? size.labelTop + size.labelFontSize + 8 : size.background,
-          },
-        ]}
-      >
-        {/* Background: Direction indicator - rotates with vehicle heading */}
-        <View style={[styles.backgroundLayer, { transform: [{ rotate: `${rotation}deg` }] }]}>
-          <VehicleBackground hasHeading={hasHeading} size={size.background} />
-        </View>
-
-        {/* Foreground: Train icon - always upright */}
-        <View style={styles.foregroundLayer}>
-          <DraisineIcon width={size.foregroundWidth} height={size.foregroundHeight} />
-        </View>
-
-        {/* Label below the icon */}
-        {vehicle.label && (
-          <View style={[styles.labelContainer, { top: size.labelTop }]}>
-            <Text style={useSmallMarker ? styles.labelSmall : styles.labelLarge} numberOfLines={1}>
-              {vehicle.label}
-            </Text>
+      {isInBounds ? (
+        <View
+          collapsable={false}
+          style={[
+            styles.container,
+            {
+              minWidth: size.background,
+              height: vehicle.label ? size.labelTop + size.labelFontSize + 8 : size.background,
+            },
+          ]}
+        >
+          {/* Background: Direction indicator - rotates with vehicle heading */}
+          <View style={[styles.backgroundLayer, { transform: [{ rotate: `${rotation}deg` }] }]}>
+            <VehicleBackground hasHeading={hasHeading} size={size.background} />
           </View>
-        )}
-      </View>
+
+          {/* Foreground: Train icon - always upright */}
+          <View style={styles.foregroundLayer}>
+            <DraisineIcon width={size.foregroundWidth} height={size.foregroundHeight} />
+          </View>
+
+          {/* Label below the icon */}
+          {vehicle.label && (
+            <View style={[styles.labelContainer, { top: size.labelTop }]}>
+              <Text style={useSmallMarker ? styles.labelSmall : styles.labelLarge} numberOfLines={1}>
+                {vehicle.label}
+              </Text>
+            </View>
+          )}
+        </View>
+      ) : (
+        <View collapsable={false} style={styles.hidden} />
+      )}
     </MapLibreGL.PointAnnotation>
   );
 });
@@ -125,5 +142,10 @@ const styles = StyleSheet.create({
     fontFamily: Font.regular,
     fontSize: 12,
     color: Color.text,
+  },
+  hidden: {
+    width: 1,
+    height: 1,
+    opacity: 0,
   },
 });

@@ -34,7 +34,7 @@ const translations = {
 
     // Draisine Info Screen
     infoDraisineDescription:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      'Railbikes are muscle-powered rail vehicles that were originally used primarily for track maintenance and line inspections. It’s nothing more than a bicycle designed for rails. Two people sit on the outside and pedal just like on a regular bicycle. One or two people can sit on the center bench and enjoy the ride. You also have plenty of storage space on the vehicles—especially under the bench. The brake is located at the front as a foot pedal; there is no coaster brake.',
     infoDraisineEquipment: 'Setup',
     infoDraisineRules: 'Rules',
     infoDraisineTurning: 'Turning',
@@ -103,7 +103,17 @@ const translations = {
     // Good to Know Screen (FAQ)
     faqDepartureTimes: 'What are the departure times?',
     faqDepartureTimesAnswer:
-      'Malente: Mon-Sat 10:00 a.m. and 1:30 p.m., Sun 10:00 a.m.\n\nLütjenburg: Mon-Sat 12:00 p.m.\n\nDay tours always start Mon-Sat at 10:00 a.m. from Malente and depart from Lütjenburg at 3:00 p.m. for the return trip.\n\n“Please arrive 30 minutes before departure for formalities and handover.”',
+      'There is always a designated direction of travel on the railway line to prevent oncoming traffic. We must avoid this at all costs, as otherwise you could suddenly find yourselves facing each other on an open stretch of track without being able to take the handcar off the tracks at a turning point. Since oncoming traffic can also lead to dangerous situations, the designated directions of travel and the associated schedule must be strictly adhered to!',
+    departureMalente: 'Departure Bad Malente-Gremsmühlen',
+    departureLuetjenburg: 'Departure Lütjenburg',
+    departureBookedTour: 'Booked tour',
+    departureDayTour: 'Day tour',
+    departure3hTour: '3-hour tour',
+    departureDeparture: 'Departure',
+    departureTurn: 'Turn (wherever you are)',
+    departureArrivalLuetjenburg: 'Arrival in Lütjenburg',
+    departureReturnStartLuetjenburg: 'Start return in Lütjenburg',
+    departureReturn: 'Return',
     faqPrice: 'What does a railbike tour cost?',
     faqPriceAnswer:
       '3-hour tour: €50 per railbike\nFamily price (with children under 16): €40\nostseecard holders receive €2 discount.\n\nGroup tours with up to 60 people are possible.',
@@ -119,12 +129,10 @@ const translations = {
 
     //Railway Projects Screen
     railwayProjectsContent:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-
+      'The tracks you’re riding on are used for other purposes besides the Holsteinische Schweiz Nature Park Trolley. Several projects are underway simultaneously on the Malente-Lütjenburg railway line. They are all supported and driven by the Schienenverkehr Malente-Lütjenburg e.V. association, which was founded in 2020 to save and revitalize the railway line.\n\nThe railway line is also being used for the REAKT research initiative. This initiative is exploring innovative rail vehicles and route concepts for rural railway lines. For example, it aims to investigate how on-demand two-way traffic can be implemented on single-track lines using autonomous vehicles. In addition, innovative concepts for railroad crossings, signal boxes, and control and safety technology based on digital technologies and modern sensor systems are being tested. REAKT comprises a large network of universities, industry partners, municipalities, and associations. Since 2025, the innovation community has been supported by the Federal Ministry of Research, Technology, and Space (BMFTR) as one of twenty innovation communities selected from nearly 500 applications. The Christian-Albrechts-University of Kiel (CAU) serves as the lead institution. The Malente-Lütjenburg railway line serves as a real-world laboratory for joint projects between partners from academia and industry. Test vehicles allow for optimal research into the rail transport of the future. For more information, visit https://www.reaktsh.de/\n\nOn certain days, the Holsteinische Schweiz Historical Railway Association (HEHS) also operates a railbus on the route. This means that on some days, you can ride a real train on the very same track where you’ll be cycling on a rail bike. You can find the operating days, schedules, and prices at https://hehs-eisenbahn.de/',
     // Railway History Screen
     railwayHistoryContent:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-
+      'The Malente-Lütjenburg railway line has a long and eventful history. Known affectionately as “Hein Lüttenborg,” it has gained national recognition and is considered one of the most scenic railway lines in northern Germany. It was opened in four construction phases between 1890 and 1892. For the line’s opening, the intermediate stops Holsteinische Schweiz, Bruhnskoppel, Benz, and Kletkamp were put into service. The line quickly became of great importance for passenger and agricultural freight transport. It also played a key role in the development of tourism in Holsteinische Schweiz and Hohwacht Bay. It led to a veritable boom and was a major milestone in the area’s settlement development. In 1954, operations were converted to railbuses. From then on, steam-hauled trains were no longer in service; instead, the famous little red railbuses took over. To allow even more people to access the railway directly, the small on-demand stops Malente Nord, Malkwitz, Flehm, Blekendorf, and Friederikenthal were opened. In the 1960s, a Bundeswehr barracks was opened in Lütjenburg, which, together with the Bundeswehr’s important military training area in Todendorf near Lütjenburg, gave the railway line new relevance. The rural branch line was completely upgraded to handle military heavy-haul trains and expanded to accommodate trains with a total weight of up to 1,400 tons. This is otherwise uncommon for branch lines, and the line therefore continues to benefit from its excellent condition to this day. Due to increasing car traffic and ever-thinning schedules, the railway became uneconomical. Despite major protests in the region, DB discontinued passenger service in 1976. However, the line continued to be used for freight and military traffic until 1996. In addition, starting in the 1980s, it became a popular destination for excursion, special, and steam trains. Until the year 2000, numerous steam trains ran on the line every summer, which led to “Hein Lüttenborg” once again becoming an important tourist attraction. In 2000, DB finally discontinued this service as well, and the line was shut down. In 2004, the connecting switch to the rest of the network was removed at Malente Station. In 2008, a large part of the once-huge railway facilities (13 tracks!) in Lütjenburg, including the station building, was demolished. The line’s fate seemed sealed; it had become overgrown with vegetation and was barely recognizable as a railway track. That is, until 2020, when a group of citizens came together to form the Schienenverkehr Malente-Lütjenburg e.V. association. In 2022, the line was saved and taken over by a holding company established by the association to implement the association’s goals through a phased reactivation. It has been in use as a handcar and research track since 2022. Since then, life has returned to the railway line—and the great story of Hein Lüttenborg continues.',
     // Imprint Screen
     imprintOperator: 'Operator',
     imprintAppDevelopment: 'App Development',
@@ -134,11 +142,11 @@ const translations = {
 
     // Privacy Policy Screen
     privacyPolicyTitle: 'Privacy Policy',
-    privacyPolicySubtitle: 'Railbike On-Board Computer App\nLast updated: [DATE TO BE ADDED]',
+    privacyPolicySubtitle: 'Railbike On-Board Computer App\nLast updated: March 27, 2026',
 
     privacySection1Title: '1. Data Controller',
     privacySection1Content:
-      'The data controller within the meaning of the General Data Protection Regulation (GDPR) is:\n\nHLB GmbH\n[Street and house number]\n[Postal code City]\nEmail: [Email address]\nPhone: [Phone number]\n\n[If a data protection officer has been appointed:]\nData Protection Officer: [Name / Contact details]',
+      'The data controller within the meaning of the General Data Protection Regulation (GDPR) is:\n\nHLB GmbH\nBahnhofstraße 3\n23714 Malente\nEmail: kontakt@hl-bahnstreckenverwaltung.de',
 
     privacySection2Title: '2. Overview of Data Processing',
     privacySection2Content:
@@ -158,7 +166,7 @@ const translations = {
 
     privacySection6Title: '6. Map Display (MapLibre)',
     privacySection6Content:
-      'The app uses MapLibre, an open-source map library, for map display. The map tiles are loaded from an external server. In this process, your IP address is technically transmitted to the tile server.\n\n[NOTE: The specific tile server provider must be added here, e.g., OpenStreetMap Foundation, Maptiler, or a self-hosted server. Different privacy notices may apply depending on the provider.]\n\nLegal basis: Legitimate interest pursuant to Art. 6(1)(f) GDPR. The map display is a core function of the app.',
+      'The app uses MapLibre, an open-source map library, for map display. The map tiles are loaded from OpenFreeMap (openfreemap.org), a free tile server based on OpenStreetMap data. When loading the map, your IP address is technically transmitted to the OpenFreeMap server.\n\nOpenFreeMap is an open-source project that provides map tiles without requiring registration or API keys. The underlying map data comes from OpenStreetMap contributors.\n\nLegal basis: Legitimate interest pursuant to Art. 6(1)(f) GDPR. The map display is a core function of the app.',
 
     privacySection7Title: '7. Embedded YouTube Videos',
     privacySection7Content:
@@ -272,7 +280,7 @@ const translations = {
 
     // Draisine Info Screen
     infoDraisineDescription:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      'Draisinen sind mit Muskelkraft angetriebene Schienenfahrzeuge, die ursprünglich insbesondere für Bahnmeisterarbeiten und Streckenwartung eingesetzt wurden. Bei uns fahrt Ihr mit einer sog. Fahrraddraisine (engl.: „Railbike“). Das ist nichts anderes als ein Fahrrad für Schienen. Zwei Personen sitzen außen und treten wie bei einem gewöhnlichen Fahrrad in die Pedale. 1-2 Personen können auf der Mittelbank Platz nehmen und die Fahrt genießen. Zudem habt Ihr eine ganze Menge Stauraum auf den Fahrzeugen – insbesondere unter der Bank. Die Bremse befindet sich vorn als Fußpedal, Ihr habt keinen Rücktritt.',
     infoDraisineEquipment: 'Aufbau',
     infoDraisineRules: 'Regeln',
     infoDraisineTurning: 'Drehen',
@@ -343,7 +351,17 @@ const translations = {
     // Good to Know Screen (FAQ)
     faqDepartureTimes: 'Wie sind die Abfahrtszeiten?',
     faqDepartureTimesAnswer:
-      'Malente: Mo-Sa 10:00 Uhr und 13:30 Uhr, So 10:00 Uhr\n\nLütjenburg: Mo-Sa 12:00 Uhr\n\nTagestouren starten immer Mo-Sa um 10:00 Uhr von Malente und machen sich um 15:00 Uhr von Lütjenburg aus auf die Rückfahrt.\n\n„Bitte erscheinen Sie 30 Minuten vor Abfahrt für Formalitäten und Übergabe“',
+      'Auf der Bahnstrecke gibt es immer eine feste vorgegebene Fahrtrichtung, damit es nicht zu Gegenverkehr kommt. Dies wollen wir unbedingt vermeiden, da es sonst dazu kommen würde, dass Ihr Euch auf offener Strecke plötzlich gegenübersteht, ohne an einer Wendestelle die Draisine aus dem Gleis nehmen zu können. Da es bei Gegenverkehr zudem auch zu gefährlichen Situationen kommen kann, sind die vorgegebenen Fahrtrichtungen und der damit verbundene Fahrplan unbedingt zwingend einzuhalten!',
+    departureMalente: 'Abfahrt Bad Malente-Gremsmühlen',
+    departureLuetjenburg: 'Abfahrt Lütjenburg',
+    departureBookedTour: 'Gebuchte Tour',
+    departureDayTour: 'Tagestour',
+    departure3hTour: '3-Std.-Tour',
+    departureDeparture: 'Abfahrt',
+    departureTurn: 'Wende (egal, wo Ihr dann seid)',
+    departureArrivalLuetjenburg: 'Ankunft in Lütjenburg',
+    departureReturnStartLuetjenburg: 'Beginn Rückfahrt in Lütjenburg',
+    departureReturn: 'Rückkehr',
     faqHowItWorks: 'Wie funktioniert eine Draisine?',
     faqHowItWorksAnswer:
       'Die Draisine wird durch Treten angetrieben, ähnlich wie ein Fahrrad. Wichtig: Draisinen haben einen langen Bremsweg – fahre vorausschauend!\n\nDer Verkehr fließt immer in eine Fahrtrichtung, damit es nicht zu Gegenverkehr auf der Strecke kommt. Haltet Euch unbedingt an die Abfahrt-, Wende- und Rückgabezeiten! An allen Wendepunkten könnt Ihr die Draisine drehen.\n\nAuf jeder Draisine können bis zu 4 Personen mitfahren – 2 Personen treten, 2 Personen können sich entspannen. Mindestens ein Erwachsener pro Draisine ist erforderlich.',
@@ -359,26 +377,23 @@ const translations = {
 
     // Railway Projects Screen
     railwayProjectsContent:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-
+      'Projekte zur Bahnstrecke mit Infos und Verlinkungen zum Gesamtprojekt.\n\nDie Schienen, auf denen Ihr fahrt, werden neben der Naturpark-Draisine Holsteinische Schweiz auch noch anderweitig genutzt. Auf der Bahnstrecke Malente-Lütjenburg laufen mehrere Projekte gleichzeitig. Sie alle werden unterstützt und vorangetrieben durch den Verein Schienenverkehr Malente-Lütjenburg e.V., welcher sich 2020 gründete, um die Bahnstrecke zu retten und wiederzubeleben.\n\nSo wird die Bahnstrecke auch noch genutzt für die Forschungsinitiative REAKT. Diese erforscht neuartige Schienenfahrzeuge und Streckenkonzepte für ländliche Bahnstrecken. So soll z. B. untersucht werden, wie auf eingleisigen Strecken mit autonomen Fahrzeugen On-Demand-Begegnungsverkehr realisiert werden kann. Daneben werden neuartige Konzepte für Bahnübergänge, Stellwerke und die Leit- und Sicherungstechnik erprobt, die auf digitalen Technologien und moderner Sensorik basieren. REAKT umfasst ein großes Netzwerk aus Hochschulen, Industriepartnern, Kommunen und Verbänden. Seit 2025 wird die Innovationscommunity durch das Bundesministerium für Forschung, Technologie und Raumfahrt (BMFTR) unterstützt, als eine von zwanzig Innovationscommunities unter knapp 500 Bewerbungen. Die Federführung liegt bei der Christian-Albrechts-Universität zu Kiel (CAU). Die Bahnstrecke Malente-Lütjenburg dient als Reallabor für gemeinsame Projekte der Partner aus Wissenschaft und Wirtschaft. Mit Versuchsfahrzeugen kann hier optimal am Schienenverkehr der Zukunft geforscht werden. Weitere Infos bekommt Ihr hier unter https://www.reaktsh.de/\n\nAn einigen Tagen fährt zudem der Verein Historische Eisenbahn Holsteinische Schweiz e.V. (HEHS) mit einem Schienenbus auf der Bahnstrecke. Ihr könnt somit auf der Strecke, auf der Ihr selbst per Fahrraddraisine radelt, an einigen Tagen auch wieder mit einem richtigen Zug fahren. Die Fahrtage, Fahrzeiten und Preise erfahrt Ihr unter https://hehs-eisenbahn.de/',
     // Railway History Screen
     railwayHistoryContent:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-
+      'Die Bahnstrecke Malente-Lütjenburg blickt auf eine lange und bewegte Geschichte zurück. Unter dem liebevollen Spitznamen „Hein Lüttenborg“ hat sie überregionale Bekanntheit und gilt als eine der landschaftlich schönsten Bahnstrecken in Norddeutschland. Eröffnet wurde sie in vier Bauabschnitten zwischen 1890 und 1892. Zur Eröffnung der Strecke wurden die Unterwegshaltestellen Holsteinische Schweiz, Bruhnskoppel, Benz und Kletkamp in Betrieb genommen. Die Strecke erfuhr schnell eine große Bedeutung im Personen- und landwirtschaftlichen Güterverkehr. Zudem spielte sie eine wichtige Rolle in der touristischen Erschließung der Holsteinischen Schweiz und der Hohwachter Bucht. Sie führte zu einem regelrechten Aufschwung und an war ein wichtiger Meilenstein in der Siedlungsentwicklung. 1954 wurde der Betrieb auf Schienenbusse umgestellt. Ab dann fuhren keine dampflokbespannten Züge mehr, sondern die berühmten kleinen roten Triebwagen. Damit noch mehr Menschen die Bahn direkt erreichen konnten, wurden die kleinen Bedarfshaltepunkte Malente Nord, Malkwitz, Flehm, Blekendorf und Friederikenthal eröffnet. In den 1960er-Jahren wurde in Lütjenburg eine Bundeswehrkaserne eröffnet, welche mit dem wichtigen Truppenübungsplatz der Bundeswehr in Todendorf bei Lütjenburg für neue Relevanz der Bahnstrecke führte. Die ländliche Nebenbahn wurde für den Verkehr von militärischen Schwerlastzügen von Grund auf ertüchtigt und für eine Tragfähigkeit von Zügen bis 1.400 Tonnen Gesamtgewicht ausgebaut. Dies ist für Nebenbahnstrecken sonst unüblich, die Strecke profitiert daher bis heute von ihrem sehr guten Ausbauzustand. Durch den zunehmenden Autoverkehr und immer weiter ausgedünnte Fahrpläne wurde die Bahn unwirtschaftlicher. Trotz großer Proteste in der Region stellt die DB den Personenverkehr 1976 ein. Für den Güter- und Militärverkehr wurde die Strecke bis ins Jahr 1996 aber weiter genutzt. Zudem wurde sie ab den 1980er-Jahren beliebtes Ziel von Ausflugs-, Sonder- und Dampfzügen. Bis ins Jahr 2000 waren jeden Sommer zahlreiche Dampfzüge auf der Strecke unterwegs, was dazu führte, dass „Hein Lüttenborg“ erneut eine wichtige Touristenattraktion wurde. 2000 stellt die DB dann auch diesen Betrieb endgültig ein und die Strecke wurde stillgelegt. 2004 wurde im Bahnhof Malente die Anbindungsweiche zum restlichen Netz rausgerissen. 2008 wurde in Lütjenburg ein Großteil der einst riesigen Bahnanlagen (13 Gleise!) samt dem Bahnhofsgebäude abgerissen. Das Ende der Strecke schien besiegelt, sie wurde von der Vegetation überwuchert und war kaum mehr als Gleis zu erkennen. Bis sich 2020 zahlreiche Bürgerinnen und Bürger zusammentaten und den Verein Schienenverkehr Malente-Lütjenburg e.V. gründeten. 2022 wurde die Strecke gerettet und durch eine aus dem Verein heraus gegründete Trägergesellschaft übernommen, um die Ziele des Vereins mit einer stufenartigen Reaktivierung umzusetzen. Die Nutzung als Draisinen- und Forschungsstrecke läuft seit 2022. Seitdem ist wieder Leben auf der Bahnstrecke eingekehrt - und die große Geschichte von Hein Lüttenborg wird fortgesetzt.',
     // Imprint Screen
     imprintOperator: 'Betreiber',
-    imprintAppDevelopment: 'App-Entwicklung',
     imprintDisclaimer: 'Haftungsausschluss',
     imprintDisclaimerText:
       'Die Inhalte dieser App wurden mit größtmöglicher Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen.',
 
     // Privacy Policy Screen
     privacyPolicyTitle: 'Datenschutzerklärung',
-    privacyPolicySubtitle: 'Draisinen-Bordcomputer App\nStand: [DATUM EINFÜGEN]',
+    privacyPolicySubtitle: 'Draisinen-Bordcomputer App\nStand: 27. März 2026',
 
     privacySection1Title: '1. Verantwortlicher',
     privacySection1Content:
-      'Verantwortlicher im Sinne der Datenschutz-Grundverordnung (DSGVO) ist:\n\nHLB GmbH\n[Straße und Hausnummer]\n[PLZ Ort]\nE-Mail: [E-Mail-Adresse]\nTelefon: [Telefonnummer]\n\n[Sofern ein Datenschutzbeauftragter bestellt ist:]\nDatenschutzbeauftragte/r: [Name / Kontaktdaten]',
+      'Verantwortlicher im Sinne der Datenschutz-Grundverordnung (DSGVO) ist:\n\nHLB GmbH\nBahnhofstraße 3\n23714 Malente\nE-Mail: kontakt@hl-bahnstreckenverwaltung.de',
 
     privacySection2Title: '2. Übersicht der Datenverarbeitung',
     privacySection2Content:
@@ -398,7 +413,7 @@ const translations = {
 
     privacySection6Title: '6. Kartendarstellung (MapLibre)',
     privacySection6Content:
-      'Für die Kartendarstellung verwendet die App MapLibre, eine quelloffene Kartenbibliothek. Die Kartenkacheln (Tiles) werden von einem externen Server geladen. Dabei wird technisch bedingt deine IP-Adresse an den Tile-Server übertragen.\n\n[HINWEIS: Hier muss der konkrete Tile-Server-Anbieter ergänzt werden, z. B. OpenStreetMap Foundation, Maptiler, oder ein selbst gehosteter Server. Je nach Anbieter können unterschiedliche Datenschutzhinweise gelten.]\n\nRechtsgrundlage: Berechtigtes Interesse gem. Art. 6 Abs. 1 lit. f DSGVO. Die Kartenanzeige ist eine Kernfunktion der App.',
+      'Für die Kartendarstellung verwendet die App MapLibre, eine quelloffene Kartenbibliothek. Die Kartenkacheln (Tiles) werden von OpenFreeMap (openfreemap.org) geladen, einem freien Tile-Server auf Basis von OpenStreetMap-Daten. Beim Laden der Karte wird technisch bedingt deine IP-Adresse an den OpenFreeMap-Server übertragen.\n\nOpenFreeMap ist ein Open-Source-Projekt, das Kartenkacheln ohne Registrierung oder API-Schlüssel bereitstellt. Die zugrunde liegenden Kartendaten stammen von OpenStreetMap-Mitwirkenden.\n\nRechtsgrundlage: Berechtigtes Interesse gem. Art. 6 Abs. 1 lit. f DSGVO. Die Kartenanzeige ist eine Kernfunktion der App.',
 
     privacySection7Title: '7. Eingebettete YouTube-Videos',
     privacySection7Content:

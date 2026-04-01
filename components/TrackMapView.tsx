@@ -1,6 +1,6 @@
 import * as MapLibreGL from '@maplibre/maplibre-react-native';
 import * as Location from 'expo-location';
-import React, { memo, RefObject, useCallback, useState } from 'react';
+import React, { memo, RefObject } from 'react';
 import { StyleSheet } from 'react-native';
 import { initialRegion, mapStyleUrl } from '../constants';
 import { PointOfInterest } from '../types/init';
@@ -10,11 +10,12 @@ import { MapMarkers } from './MapMarkers';
 
 interface ExternalProps {
   readonly mapRef: RefObject<MapLibreGL.MapViewRef | null>;
-  readonly cameraRef: RefObject<MapLibreGL.CameraRef>;
+  readonly cameraRef: RefObject<MapLibreGL.CameraRef | null>;
   readonly onRegionChange: (
     zoom: number,
     heading: number,
-    center?: [number, number] | null
+    center?: [number, number] | null,
+    bounds?: [[number, number], [number, number]] | null
   ) => void;
   readonly onUserInteraction: () => void;
   readonly userHasInteracted: boolean;
@@ -27,8 +28,12 @@ interface ExternalProps {
   readonly track: GeoJSON.FeatureCollection | null;
   readonly zoomLevel: number;
   readonly mapHeading: number;
+  readonly visibleBounds: [[number, number], [number, number]] | null;
   readonly isActive: boolean;
   readonly currentVehicleId: number | null;
+  readonly activeTooltip: number | null;
+  readonly onPOIPress: (index: number) => void;
+  readonly onDismissTooltip: () => void;
 }
 
 type Props = ExternalProps;
@@ -49,15 +54,13 @@ export const TrackMapView = memo(
     track,
     zoomLevel,
     mapHeading,
+    visibleBounds: visibleBoundsProp,
     isActive,
     currentVehicleId,
+    activeTooltip,
+    onPOIPress,
+    onDismissTooltip,
   }: Props) => {
-    const [activeTooltip, setActiveTooltip] = useState<number | null>(null);
-    const onPOIPress = useCallback((index: number) => {
-      setActiveTooltip((prev) => (prev === index ? null : index));
-    }, []);
-    const dismissTooltip = useCallback(() => setActiveTooltip(null), []);
-
     return (
       <MapLibreGL.MapView
         ref={mapRef}
@@ -69,6 +72,7 @@ export const TrackMapView = memo(
           const isUserInteraction = feature?.properties?.isUserInteraction ?? false;
           if (isUserInteraction) {
             onUserInteraction();
+            onDismissTooltip();
           }
         }}
         onRegionDidChange={(feature: any) => {
@@ -83,9 +87,11 @@ export const TrackMapView = memo(
             center = [(ne[0] + sw[0]) / 2, (ne[1] + sw[1]) / 2];
           }
 
-          onRegionChange(zoom, heading, center);
+          const bounds: [[number, number], [number, number]] | null =
+            visibleBounds?.length === 2 ? visibleBounds : null;
+          onRegionChange(zoom, heading, center, bounds);
         }}
-        onPress={dismissTooltip}
+        onPress={onDismissTooltip}
       >
         <MapLibreGL.Camera
           key={userHasInteracted ? 'free' : 'track'}
@@ -107,9 +113,9 @@ export const TrackMapView = memo(
           track={track}
           zoomLevel={zoomLevel}
           mapHeading={mapHeading}
+          visibleBounds={visibleBoundsProp}
           isActive={isActive}
           currentVehicleId={currentVehicleId}
-          activeTooltip={activeTooltip}
           onPOIPress={onPOIPress}
         />
       </MapLibreGL.MapView>

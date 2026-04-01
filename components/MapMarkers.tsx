@@ -1,13 +1,10 @@
-import * as MapLibreGL from '@maplibre/maplibre-react-native';
 import * as Location from 'expo-location';
 import React, { memo, useMemo } from 'react';
-import { View } from 'react-native';
 import { PointOfInterest } from '../types/init';
 import { Position } from '../types/position';
 import { Vehicle } from '../types/vehicle';
 import { PassingPositionMarker } from './PassingPositionMarker';
 import { POIMarker } from './POIMarker';
-import { POITooltip } from './POITooltip';
 import { Track } from './Track';
 import { UserLocationMarker } from './UserLocationMarker';
 import { VehicleMarker } from './VehicleMarker';
@@ -29,12 +26,12 @@ interface Props {
   readonly zoomLevel: number;
   /** Current map heading for rotating vehicle direction indicators */
   readonly mapHeading: number;
+  /** Visible map bounds [[ne_lng, ne_lat], [sw_lng, sw_lat]] for filtering off-screen markers */
+  readonly visibleBounds: [[number, number], [number, number]] | null;
   /** Whether a trip is currently active */
   readonly isActive: boolean;
   /** ID of the user's current vehicle during an active trip */
   readonly currentVehicleId: number | null;
-  /** Index of the currently active POI tooltip, or null */
-  readonly activeTooltip: number | null;
   /** Called when a POI marker is tapped */
   readonly onPOIPress: (index: number) => void;
 }
@@ -53,9 +50,9 @@ export const MapMarkers = memo(
     track,
     zoomLevel,
     mapHeading,
+    visibleBounds,
     isActive,
     currentVehicleId,
-    activeTooltip,
     onPOIPress,
   }: Props) => {
     // During active trip: override own vehicle's position with user GPS for smooth tracking
@@ -71,6 +68,13 @@ export const MapMarkers = memo(
           : v
       );
     }, [vehicles, isActive, currentVehicleId, location]);
+
+    // Filter out vehicles outside the track range (keep all on-track vehicles to avoid native crash)
+    const visibleVehicles = useMemo(() => {
+      return processedVehicles.filter(
+        (v) => v.percentagePosition >= 0 && v.percentagePosition <= 100
+      );
+    }, [processedVehicles]);
 
     // Hide UserLocationMarker during active trip (the vehicle marker IS the user)
     const showUserLocation = !isActive || currentVehicleId == null;
@@ -99,36 +103,14 @@ export const MapMarkers = memo(
           />
         ))}
 
-        {/* Active tooltip — rendered after all POI markers so it stacks on top.
-            Separate MarkerView avoids the z-ordering problem: MarkerView ignores zIndex,
-            and React reconciliation prevents reordering within the same key set. */}
-        {activeTooltip != null && (
-          <MapLibreGL.MarkerView
-            key="poi-tooltip"
-            coordinate={[
-              pointsOfInterest[activeTooltip].pos.lng,
-              pointsOfInterest[activeTooltip].pos.lat,
-            ]}
-            anchor={{ x: 0.5, y: 1 }}
-          >
-            <View collapsable={false} style={{ alignItems: 'center', marginBottom: 4 }}>
-              <POITooltip
-                name={pointsOfInterest[activeTooltip].name}
-                type={pointsOfInterest[activeTooltip].typeId}
-                originalType={pointsOfInterest[activeTooltip].originalType}
-                description={pointsOfInterest[activeTooltip].description}
-              />
-            </View>
-          </MapLibreGL.MarkerView>
-        )}
-
         {/* Vehicles on the track (own vehicle uses GPS position during active trip) */}
-        {processedVehicles.map((vehicle) => (
+        {visibleVehicles.map((vehicle) => (
           <VehicleMarker
             key={`vehicle-${vehicle.id}`}
             vehicle={vehicle}
             mapHeading={mapHeading}
             zoomLevel={zoomLevel}
+            visibleBounds={visibleBounds}
           />
         ))}
 

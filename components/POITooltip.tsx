@@ -15,8 +15,7 @@ interface POITooltipProps {
 export const POITooltip = ({ name, type, originalType, description }: POITooltipProps) => {
   const i18n = useTranslation();
 
-  // Extract info text after the double newline (skip km line)
-  const infoText = description?.split('\n\n').slice(1).join('\n\n')?.trim();
+  const infoText = description?.trim();
 
   return (
     <View collapsable={false} style={styles.tooltip}>
@@ -42,6 +41,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     maxWidth: 280,
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
   tooltipTitle: {
     ...textStyles.titleSmall,

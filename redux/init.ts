@@ -1,4 +1,4 @@
-import { Reducer, ThunkDispatch, combineReducers, configureStore } from '@reduxjs/toolkit';
+import { ThunkDispatch, combineReducers, configureStore } from '@reduxjs/toolkit';
 import { RailTrailReduxAction } from './action';
 import app, { initialAppState } from './app';
 import trip, { initialTripState } from './trip';
@@ -22,13 +22,14 @@ export const defaultReduxAppState: ReduxAppState = {
 
 export const createReduxStore = (
   initialState?: ReduxAppState,
-  reducer?: Reducer<any, RailTrailReduxAction>
+  reducer?: typeof rootReducer
 ) =>
   configureStore({
     reducer: reducer ?? rootReducer,
     middleware: (defaultMiddleware) =>
       defaultMiddleware({ immutableCheck: false, serializableCheck: false }),
-    preloadedState: initialState ?? defaultReduxAppState,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    preloadedState: (initialState ?? defaultReduxAppState) as any,
   });
 
 export const initStore = () => {

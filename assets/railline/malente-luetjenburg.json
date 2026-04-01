@@ -610,7 +610,7 @@
             },
             "description": "km 6,885 – Fußweg",
             "extra": {
-              "isTurningPoint": false
+              "isTurningPoint": true
             }
           },
           {
@@ -623,7 +623,7 @@
             },
             "description": "km 6,850\n\nDer Haltepunkt Malkwitz wurde im Sommer 1954 als Halt im Schienenbusbetrieb eröffnet. Das eigentliche Dorf Malkwitz ist von hier noch ein Stück entfernt, in unmittelbarer Nähe war früher jedoch eine Ziegelei und der Bahnhalt diente als Anreisemöglichkeit für die Angestellten. Hierzu gab es in Malkwitz sogar einen Gleisanschluss, wo die Ziegel entsprechend in Züge verladen wurden. Heute ist Malkwitz ein wunderschöner Picknick-Spot für alle Draisinengäste. Bei einer Pause könnt Ihr hier den wunderschönen Blick ins Tal zum Benzer See genießen. Mit einem ca. 20-minütigen Fußmarsch könnt Ihr es Euch zudem im Feldcafè Ingenhof gemütlich machen. Ein wunderschönes Cafè mitten auf einem Feld und in den einzigen Weinhängen der Holsteinischen Schweiz. Ja, Ihr habt ganz richtig gelesen, hier wird tatsächlich Wein angebaut. Dieser kann direkt im Feldcafè vom Weingut Ingenhof verköstigt und auch gekauft werden. Wenn Ihr auf der Draisinenfahrt keine Zeit dafür habt, ist dies vielleicht ein weiteres lohnendes Ausflugsziel nach Eurer Tour.",
             "extra": {
-              "isTurningPoint": true
+              "isTurningPoint": false
             }
           },
           {

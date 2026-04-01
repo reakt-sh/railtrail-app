@@ -1,5 +1,5 @@
-import { AppAction } from './app';
-import { TripAction } from './trip';
-import { TripHistoryAction } from './tripHistory';
+import { type AppActionType } from './app';
+import { type TripActionType } from './trip';
+import { type TripHistoryAction } from './tripHistory';
 
-export type RailTrailReduxAction = AppAction | TripAction | TripHistoryAction;
+export type RailTrailReduxAction = AppActionType | TripActionType | TripHistoryAction;

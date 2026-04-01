@@ -3,7 +3,7 @@ import React from 'react';
 
 interface ExternalProps {
   readonly onPress: () => void;
-  readonly children: JSX.Element;
+  readonly children: React.ReactNode;
   readonly accessibilityLabel: string;
   readonly accessibilityHint?: string;
 }

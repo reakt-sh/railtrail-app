@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--drawn by Richtest-->
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="-70 -70 640 640">
+<title>DRAISINE</title>
+ <g style="stroke:#1973B5;fill:none;">
+  <g style="stroke-width:25px;">
+   <circle cx="100" cy="425" r="60"/>
+   <circle cx="400" cy="425" r="60"/>
+  </g>
+  <path d="M 250,60 410,320 M 250,60 90,320 M 220,50 h 90" style="stroke-width:25px;stroke-linecap:round;"/>
+  <path d="m 205,215 40,0 10,80 40,0" style="stroke-width:25px;"/>
+  <path d="m 130,255 h 240" style="stroke-width:14px;"/>
+ </g>
+ <g style="fill:#1973B5">
+  <path d="M 10,320 H 490 v 50 H 10 z" style="fill:#1973B5"/>
+  <circle cx="250" cy="255" r="22"/>
+ </g>
+</svg>

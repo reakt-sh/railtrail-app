@@ -4,7 +4,8 @@ import { AppAction, AppActionType } from '../redux/app';
 import { TripAction, TripActionType } from '../redux/trip';
 import { MapPosition } from '../types/map-position';
 import { Vehicle } from '../types/vehicle';
-import { malenteLuetjenburgTrack, positionToPercentage } from '../util/track-loader';
+import { SIMULATION_VEHICLE_ID } from '../hooks/useTripSimulation';
+import { malenteLuetjenburgTrack, percentageToPosition, positionToPercentage } from '../util/track-loader';
 
 // Initialisiert die App mit statischen Track-Daten und WebSocket-Verbindung
 export const initializeApp = (dispatch: Dispatch<AppActionType>) => {
@@ -44,9 +45,6 @@ const LOADING_TIMEOUT_MS = 5000;
 
 // Debounce für Loading-State: Warte bis keine neuen Fahrzeuge mehr kommen
 const LOADING_DEBOUNCE_MS = 1500;
-
-// Demo-Draisine ID - wird bei Loading-Prüfung ignoriert
-const DEMO_VEHICLE_ID = 99;
 
 // Richtet WebSocket-Updates ein und konvertiert MapPosition zu Vehicle-Format
 export const setupPositionUpdates = (dispatch: Dispatch<TripActionType>): (() => void) => {
@@ -88,8 +86,11 @@ export const setupPositionUpdates = (dispatch: Dispatch<TripActionType>): (() =>
   });
 
   const unsubscribePositions = positionSocket.subscribe((mapPosition: MapPosition) => {
-    const currentPos = mapPosition.latitude != null && mapPosition.longitude != null
-      ? positionToPercentage(mapPosition.latitude, mapPosition.longitude)
+    const hasValidCoords = mapPosition.latitude != null && mapPosition.longitude != null
+      && (mapPosition.latitude !== 0 || mapPosition.longitude !== 0);
+
+    const currentPos = hasValidCoords
+      ? positionToPercentage(mapPosition.latitude!, mapPosition.longitude!)
       : mapPosition.position * 100; // Fallback wenn keine Koordinaten
     const lastPos = lastPositions.get(mapPosition.vehicle);
 
@@ -107,12 +108,13 @@ export const setupPositionUpdates = (dispatch: Dispatch<TripActionType>): (() =>
     lastPositions.set(mapPosition.vehicle, currentPos);
 
     // MapPosition zu Vehicle-Format konvertieren für die bestehende UI
+    const pos = hasValidCoords
+      ? { lat: mapPosition.latitude!, lng: mapPosition.longitude! }
+      : percentageToPosition(currentPos);
+
     const vehicle: Vehicle = {
       id: mapPosition.vehicle,
-      pos: {
-        lat: mapPosition.latitude ?? 0,
-        lng: mapPosition.longitude ?? 0,
-      },
+      pos,
       percentagePosition: currentPos,
       heading: mapPosition.heading,
       headingTowardsUser: undefined, // Wird ggf. später berechnet
@@ -130,7 +132,7 @@ export const setupPositionUpdates = (dispatch: Dispatch<TripActionType>): (() =>
 
     // Debounce: Bei neuem Fahrzeug Timer zurücksetzen (Demo ignorieren)
     const isNewVehicle = !knownVehicleIds.has(mapPosition.vehicle);
-    if (isNewVehicle && mapPosition.vehicle !== DEMO_VEHICLE_ID) {
+    if (isNewVehicle && mapPosition.vehicle !== SIMULATION_VEHICLE_ID) {
       knownVehicleIds.add(mapPosition.vehicle);
 
       // Debounce: Timer zurücksetzen bei jedem neuen Fahrzeug
