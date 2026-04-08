@@ -12,6 +12,7 @@ export {
 } from './location';
 export { initialRegion, mapStyleUrl } from './map';
 export { privacySections } from './privacy';
+export const SIMULATION_VEHICLE_ID = -1;
 export { StorageKeys } from './storage-keys';
 export { textStyles } from './text-styles';
 export { translations } from './translations';

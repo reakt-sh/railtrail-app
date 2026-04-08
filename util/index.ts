@@ -1,3 +1,6 @@
-export { calculateDistanceFromCoordinates, delay, percentToDistance } from './calculators';
+export * from './calculators';
+export * from './events';
 export * from './formatters';
-export { malenteLuetjenburgTrack } from './track-loader';
+export * from './poi';
+export * from './speed';
+export * from './track-loader';

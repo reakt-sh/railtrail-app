@@ -4,7 +4,7 @@ import { AppAction, AppActionType } from '../redux/app';
 import { TripAction, TripActionType } from '../redux/trip';
 import { MapPosition } from '../types/map-position';
 import { Vehicle } from '../types/vehicle';
-import { SIMULATION_VEHICLE_ID } from '../hooks/useTripSimulation';
+import { SIMULATION_VEHICLE_ID } from '../constants';
 import { malenteLuetjenburgTrack, percentageToPosition, positionToPercentage } from '../util/track-loader';
 
 // Initialisiert die App mit statischen Track-Daten und WebSocket-Verbindung
@@ -97,7 +97,7 @@ export const setupPositionUpdates = (dispatch: Dispatch<TripActionType>): (() =>
     // Nur Geschwindigkeit > 0 wenn Position sich tatsächlich geändert hat
     const positionChanged =
       lastPos === undefined || Math.abs(currentPos - lastPos) > POSITION_CHANGE_THRESHOLD;
-    const effectiveSpeed = positionChanged ? mapPosition.speed : 0;
+    const effectiveSpeed = positionChanged ? (mapPosition.speed ?? 0) : 0;
 
     // Fahrtrichtung aus aufeinanderfolgenden Positionen bestimmen
     const isDirectionIncreasing = lastPos !== undefined && positionChanged

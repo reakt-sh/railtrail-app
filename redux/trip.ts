@@ -1,7 +1,7 @@
 import { Position } from '../types/position';
 import { VehicleSegment } from '../types/saved-trip';
 import { Vehicle } from '../types/vehicle';
-import { SIMULATION_VEHICLE_ID } from '../hooks/useTripSimulation';
+import { SIMULATION_VEHICLE_ID } from '../constants';
 import { RailTrailReduxAction } from './action';
 
 // Grouped sub-interfaces for cleaner state structure

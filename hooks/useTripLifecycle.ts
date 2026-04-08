@@ -4,7 +4,7 @@ import { Alert } from 'react-native';
 import { useDispatch, useStore } from 'react-redux';
 import { Dispatch } from 'redux';
 import { useTranslation } from './useTranslation';
-import { SIMULATION_VEHICLE_ID } from './useTripSimulation';
+import { SIMULATION_VEHICLE_ID } from '../constants';
 import { AppActionType } from '../redux/app';
 import { ReduxAppState } from '../redux/init';
 import { TripAction, TripActionType } from '../redux/trip';

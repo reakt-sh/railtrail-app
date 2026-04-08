@@ -6,12 +6,9 @@ import { updateDistances } from '../effect-actions/trip-actions';
 import { AppAction, AppActionType } from '../redux/app';
 import { ReduxAppState } from '../redux/init';
 import { TripAction, TripActionType } from '../redux/trip';
-import {
-  MAX_GPS_ACCURACY,
-  SPEED_SMOOTHING_ALPHA,
-  STILLSTAND_THRESHOLD_KMH,
-} from '../constants';
+import { MAX_GPS_ACCURACY } from '../constants';
 import { percentToDistance } from '../util/calculators';
+import { processSpeed } from '../util/speed';
 import { positionToPercentage, percentageToPosition } from '../util/track-loader';
 
 const DIRECTION_CHANGE_THRESHOLD_METERS = 30;
@@ -58,18 +55,10 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
         dispatch(TripAction.setPosition({ percentage, calculated }));
 
         // 2. Speed from GPS (m/s → km/h) with EMA smoothing
-        const rawSpeedKmh = (loc.coords.speed ?? 0) >= 0
-          ? (loc.coords.speed ?? 0) * 3.6
-          : 0;
-
-        const speedKmh = rawSpeedKmh < STILLSTAND_THRESHOLD_KMH ? 0 : rawSpeedKmh;
-
-        smoothedSpeedRef.current =
-          SPEED_SMOOTHING_ALPHA * speedKmh + (1 - SPEED_SMOOTHING_ALPHA) * smoothedSpeedRef.current;
-
-        if (smoothedSpeedRef.current < STILLSTAND_THRESHOLD_KMH) {
-          smoothedSpeedRef.current = 0;
-        }
+        smoothedSpeedRef.current = processSpeed(
+          loc.coords.speed ?? 0,
+          smoothedSpeedRef.current
+        );
 
         // 3. Distance: handled by updateDistances() via position.percentage changes
 

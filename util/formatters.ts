@@ -1,4 +1,4 @@
-import { Locale, STILLSTAND_THRESHOLD_KMH } from '../constants';
+import { Locale } from '../constants';
 
 /**
  * Formatiert eine Distanz in Metern zu einem lesbaren String.
@@ -13,10 +13,10 @@ export const formatDistance = (meters: number): string => {
 
 /**
  * Formatiert Geschwindigkeit für die Anzeige.
- * Werte unter Stillstand-Schwelle werden als 0 angezeigt.
+ * Stillstand-Filterung erfolgt bereits in processSpeed().
  */
 export const formatSpeed = (kmh: number): number => {
-  return kmh < STILLSTAND_THRESHOLD_KMH ? 0 : Math.round(kmh);
+  return Math.round(kmh);
 };
 
 export const formatDuration = (

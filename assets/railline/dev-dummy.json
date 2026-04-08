@@ -1,0 +1,130 @@
+{
+  "id": "dev-dummy",
+  "version": "0.1",
+  "name": "Dev Dummy Route",
+  "map": {
+    "startConfiguration": {
+      "latitude": 54.3400,
+      "longitude": 10.1520,
+      "zoom": 14.5
+    }
+  },
+  "tracks": [
+    {
+      "id": "main",
+      "name": "Teststrecke",
+      "data": {
+        "type": "LineString",
+        "coordinates": [
+          [10.15000, 54.34850],
+          [10.15180, 54.34650],
+          [10.15350, 54.34450],
+          [10.15430, 54.34250],
+          [10.15480, 54.34050],
+          [10.15480, 54.33900],
+          [10.15430, 54.33750],
+          [10.15300, 54.33600],
+          [10.15150, 54.33450],
+          [10.15000, 54.33320],
+          [10.14900, 54.33200]
+        ]
+      },
+      "markers": {
+        "types": [
+          {
+            "id": "end-of-the-line",
+            "name": "Streckenende"
+          },
+          {
+            "id": "halt",
+            "name": "Haltepunkt"
+          },
+          {
+            "id": "crossing",
+            "name": "Bahnübergang"
+          }
+        ],
+        "data": [
+          {
+            "id": "d1",
+            "name": "Start Düsternbrook",
+            "type": "end-of-the-line",
+            "position": {
+              "type": "Point",
+              "coordinates": [10.15000, 54.34850]
+            },
+            "description": "Startpunkt Düsternbrook",
+            "extra": {
+              "isTurningPoint": true
+            }
+          },
+          {
+            "id": "d2",
+            "name": "Aquarium",
+            "type": "halt",
+            "position": {
+              "type": "Point",
+              "coordinates": [10.15430, 54.34250]
+            },
+            "description": "Haltepunkt Aquarium / GEOMAR",
+            "extra": {
+              "isTurningPoint": false
+            }
+          },
+          {
+            "id": "d3",
+            "name": "Kiellinie Mitte",
+            "type": "crossing",
+            "position": {
+              "type": "Point",
+              "coordinates": [10.15480, 54.34050]
+            },
+            "description": "Kreuzung Kiellinie Mitte",
+            "extra": {
+              "isTurningPoint": false
+            }
+          },
+          {
+            "id": "d4",
+            "name": "Bellevue",
+            "type": "crossing",
+            "position": {
+              "type": "Point",
+              "coordinates": [10.15430, 54.33750]
+            },
+            "description": "Bellevue",
+            "extra": {
+              "isTurningPoint": true
+            }
+          },
+          {
+            "id": "d5",
+            "name": "Reventloubrücke",
+            "type": "halt",
+            "position": {
+              "type": "Point",
+              "coordinates": [10.15000, 54.33320]
+            },
+            "description": "Haltepunkt Reventloubrücke",
+            "extra": {
+              "isTurningPoint": false
+            }
+          },
+          {
+            "id": "d6",
+            "name": "Seegarten",
+            "type": "end-of-the-line",
+            "position": {
+              "type": "Point",
+              "coordinates": [10.14900, 54.33200]
+            },
+            "description": "Endpunkt Seegarten",
+            "extra": {
+              "isTurningPoint": true
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

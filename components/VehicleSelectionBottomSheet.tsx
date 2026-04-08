@@ -14,7 +14,7 @@ import { Color } from '../constants/color';
 import { textStyles } from '../constants/text-styles';
 import { reloadVehicles } from '../effect-actions/api-actions';
 import { useTranslation } from '../hooks';
-import { SIMULATION_VEHICLE_ID } from '../hooks/useTripSimulation';
+import { SIMULATION_VEHICLE_ID } from '../constants';
 import { Vehicle } from '../types/vehicle';
 
 interface ExternalProps {
