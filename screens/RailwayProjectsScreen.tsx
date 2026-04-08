@@ -1,6 +1,6 @@
-import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { AccordionItem } from '../components/AccordionItem';
 import { LinkedText } from '../components';
 import { Color } from '../constants';
 import { textStyles } from '../constants/text-styles';
@@ -14,8 +14,16 @@ export const RailwayProjectsScreen = () => {
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{i18n.t('infoTitleRailwayProjects')}</Text>
-          <LinkedText style={styles.text}>{i18n.t('railwayProjectsContent')}</LinkedText>
+          <LinkedText style={styles.text}>{i18n.t('railwayProjectsIntro')}</LinkedText>
         </View>
+        <AccordionItem
+          question={i18n.t('railwayProjectsReaktTitle')}
+          answer={i18n.t('railwayProjectsReaktContent')}
+        />
+        <AccordionItem
+          question={i18n.t('railwayProjectsHehsTitle')}
+          answer={i18n.t('railwayProjectsHehsContent')}
+        />
       </ScrollView>
     </SafeAreaView>
   );

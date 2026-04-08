@@ -4,6 +4,7 @@ import { LayoutAnimation, Pressable, StyleSheet, Text, View } from 'react-native
 import { Color } from '../constants';
 import { textStyles } from '../constants/text-styles';
 import { useTranslation } from '../hooks';
+import { LinkedText } from './LinkedText';
 
 export interface AccordionItemProps {
   question: string;
@@ -39,7 +40,7 @@ export const AccordionItem = ({ question, answer, children }: AccordionItemProps
       </Pressable>
       {expanded && (
         <View style={styles.answerContainer}>
-          <Text style={textStyles.bodyMedium}>{answer}</Text>
+          <LinkedText style={textStyles.bodyMedium}>{answer}</LinkedText>
           {children}
         </View>
       )}

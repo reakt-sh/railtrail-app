@@ -24,6 +24,11 @@ const translations = {
     homeSnackbarWarningCrossingMessage: 'Level crossing in %{distance} m',
     homeSnackbarWarningVehicleMessage: 'Railbike in %{distance} m',
     homeSnackbarWarningVehicleHeadingTowardsUserMessage: 'Oncoming railbike in %{distance} m',
+    homeSnackbarInfoTitle: 'Info',
+    homeSnackbarInfoOffRouteMessage: 'You are far from the track. The trip is paused.',
+    homeDialogOffRouteStartTitle: 'Far from track',
+    homeDialogOffRouteStartMessage:
+      'You are far from the track. Do you still want to start the trip?',
     homeDialogEndTripTitle: 'End Trip',
     homeDialogEndTripMessage: 'Do you really want to end the current trip?',
     homeDialogBackgroundPermissionTripTitle: 'Location Permission',
@@ -31,10 +36,12 @@ const translations = {
       'For best app experience, it is recommended to enable background location access. In order to access the location, the app must remain open in the background.',
 
     menuButtonLabel: 'More',
+    tripPause: 'Pause trip',
+    tripResume: 'Resume trip',
 
     // Draisine Info Screen
     infoDraisineDescription:
-      'Railbikes are muscle-powered rail vehicles that were originally used primarily for track maintenance and line inspections. It’s nothing more than a bicycle designed for rails. Two people sit on the outside and pedal just like on a regular bicycle. One or two people can sit on the center bench and enjoy the ride. You also have plenty of storage space on the vehicles—especially under the bench. The brake is located at the front as a foot pedal; there is no coaster brake.',
+      "Railbikes are muscle-powered rail vehicles that were originally used primarily for track maintenance and line inspections. It's nothing more than a bicycle designed for rails. Two people sit on the outside and pedal just like on a regular bicycle. One or two people can sit on the center bench and enjoy the ride. You also have plenty of storage space on the vehicles—especially under the bench. The brake is located at the front as a foot pedal; there is no coaster brake.",
     infoDraisineEquipment: 'Setup',
     infoDraisineRules: 'Rules',
     infoDraisineTurning: 'Turning',
@@ -74,7 +81,7 @@ const translations = {
     infoTitleTripHistory: 'Past Trips',
     infoTitleGoodToKnow: 'Good to Know',
     infoTitleContacts: 'Distribution points / Service contacts',
-    infoTitleRailwayProjects: 'Projects of the Railway ',
+    infoTitleRailwayProjects: 'Other projects along the railway',
     infoTitleRailwayHistory: 'History of the Railway',
     infoTitleImprint: 'Imprint',
     infoTitlePrivacyPolicy: 'Privacy Policy',
@@ -98,10 +105,10 @@ const translations = {
     contactTouristInfoMalenteSubtitle: 'Booking & handout of railbikes',
     contactTouristInfoLuetjenburg: 'Tourist Info Lütjenburg',
     contactTouristInfoHint:
-      'Bei Problemen oder Fragen während der Fahrt wendet Euch an eure Ausgabestelle.',
+      'If you encounter any problems or have any questions during your trip, please contact your issuing office.',
 
     // Good to Know Screen (FAQ)
-    faqDepartureTimes: 'What are the departure times?',
+    faqDepartureTimes: 'What are the return and exchange policies?',
     faqDepartureTimesAnswer:
       'There is always a designated direction of travel on the railway line to prevent oncoming traffic. We must avoid this at all costs, as otherwise you could suddenly find yourselves facing each other on an open stretch of track without being able to take the handcar off the tracks at a turning point. Since oncoming traffic can also lead to dangerous situations, the designated directions of travel and the associated schedule must be strictly adhered to!',
     departureMalente: 'Departure Bad Malente-Gremsmühlen',
@@ -116,7 +123,7 @@ const translations = {
     departureReturn: 'Return',
     faqPrice: 'What does a railbike tour cost?',
     faqPriceAnswer:
-      '3-hour tour: €50 per railbike\nFamily price (with children under 16): €40\nostseecard holders receive €2 discount.\n\nGroup tours with up to 60 people are possible.',
+      '3-hour tour: €50 per railbike\nFamily price (with children under 16): €40\nostseecard holders receive €2 discount.\n\nGroup tours with up to 100 people are possible.\nA day trip from Malente to Lütjenburg and back is also available daily. On this trip, you’ll travel from Malente to Lütjenburg in the morning and return in the afternoon. Cost: double the price of the 3-hour tour.',
     faqHowItWorks: 'How does a railbike work?',
     faqHowItWorksAnswer:
       'The trolley is powered by pedaling, similar to a bicycle. Important: Trolleys have a long braking distance – drive with foresight! Traffic always flows in one direction to avoid oncoming traffic on the track. Be sure to adhere to the departure, turning, and return times! You can turn the railbike at all turning points. Up to 4 people can ride on each railbike – 2 people pedal, 2 people can relax. At least one adult per railbike is required.',
@@ -125,14 +132,20 @@ const translations = {
       '• A railbike never has right of way! Road and pedestrian traffic always has priority at all railroad crossings and road and path intersections. Therefore, please stop before every railroad crossing and only cross the road when there is no oncoming traffic. When crossing, one person wearing a high-visibility vest secures the crossing. • At least one adult must ride on each handcar. • Taking animals onto the railbike is not recommended, among other things due to the noise. • Due to the vegetation along the route, we recommend wearing long, sturdy clothing and sturdy shoes.',
     faqVouchers: 'Are there vouchers for railbike rides?',
     faqVouchersAnswer:
-      'Yes, vouchers are available and valid for 3 years. Ask at the Tourist Info Malente.',
+      'Yes, vouchers are available and valid for 3 years. Ask at the Tourist Info Malente or Luetjenburg or contact us by email at info@schiene-m-l.de.',
 
     //Railway Projects Screen
-    railwayProjectsContent:
-      'The tracks you’re riding on are used for other purposes besides the Holsteinische Schweiz Nature Park Trolley. Several projects are underway simultaneously on the Malente-Lütjenburg railway line. They are all supported and driven by the Schienenverkehr Malente-Lütjenburg e.V. association, which was founded in 2020 to save and revitalize the railway line.\n\nThe railway line is also being used for the REAKT research initiative. This initiative is exploring innovative rail vehicles and route concepts for rural railway lines. For example, it aims to investigate how on-demand two-way traffic can be implemented on single-track lines using autonomous vehicles. In addition, innovative concepts for railroad crossings, signal boxes, and control and safety technology based on digital technologies and modern sensor systems are being tested. REAKT comprises a large network of universities, industry partners, municipalities, and associations. Since 2025, the innovation community has been supported by the Federal Ministry of Research, Technology, and Space (BMFTR) as one of twenty innovation communities selected from nearly 500 applications. The Christian-Albrechts-University of Kiel (CAU) serves as the lead institution. The Malente-Lütjenburg railway line serves as a real-world laboratory for joint projects between partners from academia and industry. Test vehicles allow for optimal research into the rail transport of the future. For more information, visit https://www.reaktsh.de/\n\nOn certain days, the Holsteinische Schweiz Historical Railway Association (HEHS) also operates a railbus on the route. This means that on some days, you can ride a real train on the very same track where you’ll be cycling on a rail bike. You can find the operating days, schedules, and prices at https://hehs-eisenbahn.de/',
+    railwayProjectsIntro:
+      "The tracks you're riding on are used for other purposes besides the Holsteinische Schweiz Nature Park Trolley. Several projects are underway simultaneously on the Malente-Lütjenburg railway line. They are all supported and driven by the Schienenverkehr Malente-Lütjenburg e.V. association, which was founded in 2020 to save and revitalize the railway line.",
+    railwayProjectsReaktTitle: 'REAKT Research Initiative',
+    railwayProjectsReaktContent:
+      'The Malente-Lütjenburg railway line is also being used for the REAKT research initiative. This initiative is exploring innovative rail vehicles and route concepts for rural railway lines. For example, it aims to investigate how on-demand two-way traffic can be implemented on single-track lines using autonomous vehicles. In addition, innovative concepts for railroad crossings, signal boxes, and control and safety technology based on digital technologies and modern sensor systems are being tested. REAKT comprises a large network of universities, industry partners, municipalities, and associations. Since 2025, the innovation community has been supported by the Federal Ministry of Research, Technology, and Space (BMFTR) as one of twenty innovation communities selected from nearly 500 applications. The Christian-Albrechts-University of Kiel (CAU) serves as the lead institution. The Malente-Lütjenburg railway line serves as a real-world laboratory for joint projects between partners from academia and industry. Test vehicles allow for optimal research into the rail transport of the future. For more information, visit https://www.reaktsh.de/',
+    railwayProjectsHehsTitle: 'Special Train "Hein Lüttenborg"',
+    railwayProjectsHehsContent:
+      'On certain days, the Holsteinische Schweiz Historical Railway Association (HEHS) operates a railbus on the route. This means that on some days, you can ride a real train on the very same track where you\'ll be cycling on a rail bike. You can find the operating days, schedules, and prices at https://hehs-eisenbahn.de/',
     // Railway History Screen
     railwayHistoryContent:
-      'The Malente-Lütjenburg railway line has a long and eventful history. Known affectionately as “Hein Lüttenborg,” it has gained national recognition and is considered one of the most scenic railway lines in northern Germany. It was opened in four construction phases between 1890 and 1892. For the line’s opening, the intermediate stops Holsteinische Schweiz, Bruhnskoppel, Benz, and Kletkamp were put into service. The line quickly became of great importance for passenger and agricultural freight transport. It also played a key role in the development of tourism in Holsteinische Schweiz and Hohwacht Bay. It led to a veritable boom and was a major milestone in the area’s settlement development. In 1954, operations were converted to railbuses. From then on, steam-hauled trains were no longer in service; instead, the famous little red railbuses took over. To allow even more people to access the railway directly, the small on-demand stops Malente Nord, Malkwitz, Flehm, Blekendorf, and Friederikenthal were opened. In the 1960s, a Bundeswehr barracks was opened in Lütjenburg, which, together with the Bundeswehr’s important military training area in Todendorf near Lütjenburg, gave the railway line new relevance. The rural branch line was completely upgraded to handle military heavy-haul trains and expanded to accommodate trains with a total weight of up to 1,400 tons. This is otherwise uncommon for branch lines, and the line therefore continues to benefit from its excellent condition to this day. Due to increasing car traffic and ever-thinning schedules, the railway became uneconomical. Despite major protests in the region, DB discontinued passenger service in 1976. However, the line continued to be used for freight and military traffic until 1996. In addition, starting in the 1980s, it became a popular destination for excursion, special, and steam trains. Until the year 2000, numerous steam trains ran on the line every summer, which led to “Hein Lüttenborg” once again becoming an important tourist attraction. In 2000, DB finally discontinued this service as well, and the line was shut down. In 2004, the connecting switch to the rest of the network was removed at Malente Station. In 2008, a large part of the once-huge railway facilities (13 tracks!) in Lütjenburg, including the station building, was demolished. The line’s fate seemed sealed; it had become overgrown with vegetation and was barely recognizable as a railway track. That is, until 2020, when a group of citizens came together to form the Schienenverkehr Malente-Lütjenburg e.V. association. In 2022, the line was saved and taken over by a holding company established by the association to implement the association’s goals through a phased reactivation. It has been in use as a handcar and research track since 2022. Since then, life has returned to the railway line—and the great story of Hein Lüttenborg continues.',
+      "The Malente-Lütjenburg railway line has a long and eventful history. Known affectionately as “Hein Lüttenborg,” it has gained national recognition and is considered one of the most scenic railway lines in northern Germany. It was opened in four construction phases between 1890 and 1892. For the line's opening, the intermediate stops Holsteinische Schweiz, Bruhnskoppel, Benz, and Kletkamp were put into service. The line quickly became of great importance for passenger and agricultural freight transport. It also played a key role in the development of tourism in Holsteinische Schweiz and Hohwacht Bay. It led to a veritable boom and was a major milestone in the area's settlement development. In 1954, operations were converted to railbuses. From then on, steam-hauled trains were no longer in service; instead, the famous little red railbuses took over. To allow even more people to access the railway directly, the small on-demand stops Malente Nord, Malkwitz, Flehm, Blekendorf, and Friederikenthal were opened. In the 1960s, a Bundeswehr barracks was opened in Lütjenburg, which, together with the Bundeswehr's important military training area in Todendorf near Lütjenburg, gave the railway line new relevance. The rural branch line was completely upgraded to handle military heavy-haul trains and expanded to accommodate trains with a total weight of up to 1,400 tons. This is otherwise uncommon for branch lines, and the line therefore continues to benefit from its excellent condition to this day. Due to increasing car traffic and ever-thinning schedules, the railway became uneconomical. Despite major protests in the region, DB discontinued passenger service in 1976. However, the line continued to be used for freight and military traffic until 1996. In addition, starting in the 1980s, it became a popular destination for excursion, special, and steam trains. Until the year 2000, numerous steam trains ran on the line every summer, which led to “Hein Lüttenborg” once again becoming an important tourist attraction. In 2000, DB finally discontinued this service as well, and the line was shut down. In 2004, the connecting switch to the rest ofthe network was removed at Malente Station. In 2008, a large part ofthe once-huge railway facilities (13 tracks!) in Lütjenburg, includingthe station building, was demolished. The line's fate seemed sealed; it had become overgrown with vegetation and was barely recognizable as a railway track. That is, until 2020, when a group of citizens came together to formthe Schienenverkehr Malente-Lütjenburg e.V. association.\nIn 2022, the line was savedand taken over bya holding company established bythe associationto implementthe association's goals througha phased reactivation. It has been in use asa handcarand research track since 2022. Since then, life has returnedtothe railwayline—andthe great storyof Hein Lüttenborg continues.",
     // Imprint Screen
     imprintOperator: 'Operator',
     imprintAppDevelopment: 'App Development',
@@ -270,6 +283,12 @@ const translations = {
     homeSnackbarWarningVehicleMessage: 'Draisine in %{distance} m',
     homeSnackbarWarningVehicleHeadingTowardsUserMessage:
       'Entgegenkommende Draisine in %{distance} m',
+    homeSnackbarInfoTitle: 'Hinweis',
+    homeSnackbarInfoOffRouteMessage:
+      'Du befindest dich abseits der Strecke. Der Trip wird pausiert.',
+    homeDialogOffRouteStartTitle: 'Weit von der Strecke',
+    homeDialogOffRouteStartMessage:
+      'Du befindest dich weit von der Strecke entfernt. Möchtest du den Trip trotzdem starten?',
     homeDialogEndTripTitle: 'Fahrt beenden',
     homeDialogEndTripMessage: 'Möchtest du die aktuelle Fahrt wirklich beenden?',
     homeDialogBackgroundPermissionTripTitle: 'Standortberechtigungen',
@@ -277,6 +296,8 @@ const translations = {
       'Um die App optimal nutzen zu können, wird die Berechtigung für den Standortzugriff im Hintergrund benötigt. Die App muss dafür weiterhin im Hintergrund geöffnet bleiben.',
 
     menuButtonLabel: 'Mehr',
+    tripPause: 'Fahrt pausieren',
+    tripResume: 'Fahrt fortsetzen',
 
     // Draisine Info Screen
     infoDraisineDescription:
@@ -322,7 +343,7 @@ const translations = {
     infoTitleTripHistory: 'Vergangene Fahrten',
     infoTitleGoodToKnow: 'Gut zu wissen',
     infoTitleContacts: 'Ausgabestellen / Servicekontakte',
-    infoTitleRailwayProjects: 'Projekte der Bahnstrecke',
+    infoTitleRailwayProjects: 'Weitere Projekte auf der Bahnstrecke',
     infoTitleRailwayHistory: 'Geschichte der Bahnstrecke',
     infoTitleImprint: 'Impressum',
     infoTitlePrivacyPolicy: 'Datenschutzerklärung',
@@ -346,10 +367,10 @@ const translations = {
     contactTouristInfoSubtitle: 'Buchung & Ausgabe der Draisinen',
     contactTouristInfoLuetjenburg: 'Tourist Info Lütjenburg',
     contactTouristInfoHint:
-      'If you encounter any problems or have any questions during your trip, please contact your issuing office.',
+      'Bei Problemen oder Fragen während der Fahrt wendet Euch an eure Ausgabestelle.',
 
     // Good to Know Screen (FAQ)
-    faqDepartureTimes: 'Wie sind die Abfahrtszeiten?',
+    faqDepartureTimes: 'Welche Wende- und Rückgabezeiten muss ich beachten?',
     faqDepartureTimesAnswer:
       'Auf der Bahnstrecke gibt es immer eine feste vorgegebene Fahrtrichtung, damit es nicht zu Gegenverkehr kommt. Dies wollen wir unbedingt vermeiden, da es sonst dazu kommen würde, dass Ihr Euch auf offener Strecke plötzlich gegenübersteht, ohne an einer Wendestelle die Draisine aus dem Gleis nehmen zu können. Da es bei Gegenverkehr zudem auch zu gefährlichen Situationen kommen kann, sind die vorgegebenen Fahrtrichtungen und der damit verbundene Fahrplan unbedingt zwingend einzuhalten!',
     departureMalente: 'Abfahrt Bad Malente-Gremsmühlen',
@@ -370,14 +391,20 @@ const translations = {
       '• Eine Draisine hat nie Vorfahrt! An allen Bahnübergängen sowie Straßen- und Wegkreuzungen hat der Straßen- und Fußgängerverkehr grundsätzlich Vorrang. Bitte haltet daher vor jedem Bahnübergang an und überquert die Straße erst, wenn sich kein kreuzender Verkehr nähert. Beim Überqueren sichert eine Person mit Warnweste den Übergang ab.\n• An allen Bahnübergängen anhalten – Straßenverkehr hat Vorfahrt\n• Pro Draisine muss mindestens ein Erwachsener mitfahren. \n•Das Mitnehmen von Tieren auf der Draisine wird u.a. aufgrund der Lautstärke nicht empfohlen. \n• Wir empfehlen aufgrund der Vegetation an der Strecke das Tragen von langer und robuster Kleidung sowie festem Schuhwerk.',
     faqVouchers: 'Gibt es Gutscheine für Draisinenfahrten?',
     faqVouchersAnswer:
-      'Ja, für die Draisinenfahrten können auch Gutscheine erworben werden. Der Wert des Gutscheins kann selbst bestimmt werden, er ist ab Kauf 3 Jahre lang gültig.\n\nDie Gutscheine gibt es vor Ort bei der Tourist Information in Malente oder auf Bestellung zzgl. einer kleinen Versandpauschale per Post auf Rechnung.\n\nBei Interesse und weiteren Fragen meldet euch gern bei der Malenter Tourist Information. ',
+      'Ja, für die Draisinenfahrten können auch Gutscheine erworben werden. Der Wert des Gutscheins kann selbst bestimmt werden, er ist ab Kauf 3 Jahre lang gültig.\n\nDie Gutscheine gibt es vor Ort bei der Tourist Information in Malente oder auf Bestellung zzgl. einer kleinen Versandpauschale per Post auf Rechnung.\n\nBei Interesse und weiteren Fragen meldet euch gern bei der Malenter oder Lütjenburger Tourist Information oder wendet Euch per Mail an info@schiene-m-l.de.',
     faqPrice: 'Was kostet eine Draisinenfahrt?',
     faqPriceAnswer:
-      '3-Stunden-Tour: 50€ pro Draisine\nFamilienpreis (mit Kindern unter 16): 40€\nostseecard-Inhaber erhalten 2€ Rabatt.\n\nGruppentouren mit bis zu 60 Personen sind möglich.',
+      '3-Stunden-Tour: 50€ pro Draisine\nFamilienpreis (mit Kindern unter 16): 40€\nostseecard-Inhaber erhalten 2€ Rabatt.\n\nGruppentouren mit bis zu 100 Personen sind möglich.\nTäglich ist zudem eine Tagestour von Malente nach Lütjenburg und zurück möglich. Hierbei fahrt Ihr vormittags von Malente nach Lütjenburg und nachmittags wieder zurück. Kosten: Doppelter Preis der 3-Std.-Tour.',
 
     // Railway Projects Screen
-    railwayProjectsContent:
-      'Projekte zur Bahnstrecke mit Infos und Verlinkungen zum Gesamtprojekt.\n\nDie Schienen, auf denen Ihr fahrt, werden neben der Naturpark-Draisine Holsteinische Schweiz auch noch anderweitig genutzt. Auf der Bahnstrecke Malente-Lütjenburg laufen mehrere Projekte gleichzeitig. Sie alle werden unterstützt und vorangetrieben durch den Verein Schienenverkehr Malente-Lütjenburg e.V., welcher sich 2020 gründete, um die Bahnstrecke zu retten und wiederzubeleben.\n\nSo wird die Bahnstrecke auch noch genutzt für die Forschungsinitiative REAKT. Diese erforscht neuartige Schienenfahrzeuge und Streckenkonzepte für ländliche Bahnstrecken. So soll z. B. untersucht werden, wie auf eingleisigen Strecken mit autonomen Fahrzeugen On-Demand-Begegnungsverkehr realisiert werden kann. Daneben werden neuartige Konzepte für Bahnübergänge, Stellwerke und die Leit- und Sicherungstechnik erprobt, die auf digitalen Technologien und moderner Sensorik basieren. REAKT umfasst ein großes Netzwerk aus Hochschulen, Industriepartnern, Kommunen und Verbänden. Seit 2025 wird die Innovationscommunity durch das Bundesministerium für Forschung, Technologie und Raumfahrt (BMFTR) unterstützt, als eine von zwanzig Innovationscommunities unter knapp 500 Bewerbungen. Die Federführung liegt bei der Christian-Albrechts-Universität zu Kiel (CAU). Die Bahnstrecke Malente-Lütjenburg dient als Reallabor für gemeinsame Projekte der Partner aus Wissenschaft und Wirtschaft. Mit Versuchsfahrzeugen kann hier optimal am Schienenverkehr der Zukunft geforscht werden. Weitere Infos bekommt Ihr hier unter https://www.reaktsh.de/\n\nAn einigen Tagen fährt zudem der Verein Historische Eisenbahn Holsteinische Schweiz e.V. (HEHS) mit einem Schienenbus auf der Bahnstrecke. Ihr könnt somit auf der Strecke, auf der Ihr selbst per Fahrraddraisine radelt, an einigen Tagen auch wieder mit einem richtigen Zug fahren. Die Fahrtage, Fahrzeiten und Preise erfahrt Ihr unter https://hehs-eisenbahn.de/',
+    railwayProjectsIntro:
+      'Die Schienen, auf denen Ihr fahrt, werden neben der Naturpark-Draisine Holsteinische Schweiz auch noch anderweitig genutzt. Auf der Bahnstrecke Malente-Lütjenburg laufen mehrere Projekte gleichzeitig. Sie alle werden unterstützt und vorangetrieben durch den Verein Schienenverkehr Malente-Lütjenburg e.V., welcher sich 2020 gründete, um die Bahnstrecke zu retten und wiederzubeleben.',
+    railwayProjectsReaktTitle: 'Forschungsinitiative REAKT',
+    railwayProjectsReaktContent:
+      'Die Bahnstrecke Malente-Lütjenburg wird auch noch genutzt für die Forschungsinitiative REAKT. Diese erforscht neuartige Schienenfahrzeuge und Streckenkonzepte für ländliche Bahnstrecken. So soll z. B. untersucht werden, wie auf eingleisigen Strecken mit autonomen Fahrzeugen On-Demand-Begegnungsverkehr realisiert werden kann. Daneben werden neuartige Konzepte für Bahnübergänge, Stellwerke und die Leit- und Sicherungstechnik erprobt, die auf digitalen Technologien und moderner Sensorik basieren. REAKT umfasst ein großes Netzwerk aus Hochschulen, Industriepartnern, Kommunen und Verbänden. Seit 2025 wird die Innovationscommunity durch das Bundesministerium für Forschung, Technologie und Raumfahrt (BMFTR) unterstützt, als eine von zwanzig Innovationscommunities unter knapp 500 Bewerbungen. Die Federführung liegt bei der Christian-Albrechts-Universität zu Kiel (CAU). Die Bahnstrecke Malente-Lütjenburg dient als Reallabor für gemeinsame Projekte der Partner aus Wissenschaft und Wirtschaft. Mit Versuchsfahrzeugen kann hier optimal am Schienenverkehr der Zukunft geforscht werden. Weitere Infos bekommt Ihr hier unter https://www.reaktsh.de/',
+    railwayProjectsHehsTitle: 'Sonderzug „Hein Lüttenborg"',
+    railwayProjectsHehsContent:
+      'An einigen Tagen fährt der Verein Historische Eisenbahn Holsteinische Schweiz e.V. (HEHS) mit einem Schienenbus auf der Bahnstrecke. Ihr könnt somit auf der Strecke, auf der Ihr selbst per Fahrraddraisine radelt, an einigen Tagen auch wieder mit einem richtigen Zug fahren. Die Fahrtage, Fahrzeiten und Preise erfahrt Ihr unter https://hehs-eisenbahn.de/',
     // Railway History Screen
     railwayHistoryContent:
       'Die Bahnstrecke Malente-Lütjenburg blickt auf eine lange und bewegte Geschichte zurück. Unter dem liebevollen Spitznamen „Hein Lüttenborg“ hat sie überregionale Bekanntheit und gilt als eine der landschaftlich schönsten Bahnstrecken in Norddeutschland. Eröffnet wurde sie in vier Bauabschnitten zwischen 1890 und 1892. Zur Eröffnung der Strecke wurden die Unterwegshaltestellen Holsteinische Schweiz, Bruhnskoppel, Benz und Kletkamp in Betrieb genommen. Die Strecke erfuhr schnell eine große Bedeutung im Personen- und landwirtschaftlichen Güterverkehr. Zudem spielte sie eine wichtige Rolle in der touristischen Erschließung der Holsteinischen Schweiz und der Hohwachter Bucht. Sie führte zu einem regelrechten Aufschwung und an war ein wichtiger Meilenstein in der Siedlungsentwicklung. 1954 wurde der Betrieb auf Schienenbusse umgestellt. Ab dann fuhren keine dampflokbespannten Züge mehr, sondern die berühmten kleinen roten Triebwagen. Damit noch mehr Menschen die Bahn direkt erreichen konnten, wurden die kleinen Bedarfshaltepunkte Malente Nord, Malkwitz, Flehm, Blekendorf und Friederikenthal eröffnet. In den 1960er-Jahren wurde in Lütjenburg eine Bundeswehrkaserne eröffnet, welche mit dem wichtigen Truppenübungsplatz der Bundeswehr in Todendorf bei Lütjenburg für neue Relevanz der Bahnstrecke führte. Die ländliche Nebenbahn wurde für den Verkehr von militärischen Schwerlastzügen von Grund auf ertüchtigt und für eine Tragfähigkeit von Zügen bis 1.400 Tonnen Gesamtgewicht ausgebaut. Dies ist für Nebenbahnstrecken sonst unüblich, die Strecke profitiert daher bis heute von ihrem sehr guten Ausbauzustand. Durch den zunehmenden Autoverkehr und immer weiter ausgedünnte Fahrpläne wurde die Bahn unwirtschaftlicher. Trotz großer Proteste in der Region stellt die DB den Personenverkehr 1976 ein. Für den Güter- und Militärverkehr wurde die Strecke bis ins Jahr 1996 aber weiter genutzt. Zudem wurde sie ab den 1980er-Jahren beliebtes Ziel von Ausflugs-, Sonder- und Dampfzügen. Bis ins Jahr 2000 waren jeden Sommer zahlreiche Dampfzüge auf der Strecke unterwegs, was dazu führte, dass „Hein Lüttenborg“ erneut eine wichtige Touristenattraktion wurde. 2000 stellt die DB dann auch diesen Betrieb endgültig ein und die Strecke wurde stillgelegt. 2004 wurde im Bahnhof Malente die Anbindungsweiche zum restlichen Netz rausgerissen. 2008 wurde in Lütjenburg ein Großteil der einst riesigen Bahnanlagen (13 Gleise!) samt dem Bahnhofsgebäude abgerissen. Das Ende der Strecke schien besiegelt, sie wurde von der Vegetation überwuchert und war kaum mehr als Gleis zu erkennen. Bis sich 2020 zahlreiche Bürgerinnen und Bürger zusammentaten und den Verein Schienenverkehr Malente-Lütjenburg e.V. gründeten. 2022 wurde die Strecke gerettet und durch eine aus dem Verein heraus gegründete Trägergesellschaft übernommen, um die Ziele des Vereins mit einer stufenartigen Reaktivierung umzusetzen. Die Nutzung als Draisinen- und Forschungsstrecke läuft seit 2022. Seitdem ist wieder Leben auf der Bahnstrecke eingekehrt - und die große Geschichte von Hein Lüttenborg wird fortgesetzt.',
