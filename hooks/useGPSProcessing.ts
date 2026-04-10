@@ -55,7 +55,7 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
           const calculated = { lat: loc.coords.latitude, lng: loc.coords.longitude };
           dispatch(TripAction.setPosition({ percentage: null, calculated }));
 
-          // Speed: always calculate from position delta in local mode
+          // Speed + distance from Haversine delta
           // (iOS GPS speed is unreliable — returns 0 or -1)
           let rawSpeedMs = 0;
           if (lastLocationRef.current) {
@@ -67,23 +67,14 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
             );
             const timeDeltaS = (loc.timestamp - lastLocationRef.current.timestamp) / 1000;
             rawSpeedMs = timeDeltaS > 0 ? distanceM / timeDeltaS : 0;
-          }
-          smoothedSpeedRef.current = processSpeed(rawSpeedMs, smoothedSpeedRef.current);
 
-          // Distance from Haversine delta
-          if (lastLocationRef.current) {
-            const addDistance = calculateDistanceFromCoordinates(
-              lastLocationRef.current.coords.latitude,
-              lastLocationRef.current.coords.longitude,
-              loc.coords.latitude,
-              loc.coords.longitude
-            );
             dispatch(TripAction.batchUpdate({
-              addDistance,
+              addDistance: distanceM,
               lastPercentage: null,
               warnings: { nextVehicle: null, nextVehicleHeadingTowards: null, nextLevelCrossing: null, nextTurningPoint: null, secondTurningPoint: null },
             }));
           }
+          smoothedSpeedRef.current = processSpeed(rawSpeedMs, smoothedSpeedRef.current);
         } else {
           // Normal mode: project GPS position onto track
           const percentage = positionToPercentage(loc.coords.latitude, loc.coords.longitude);
