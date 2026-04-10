@@ -36,25 +36,31 @@ export const usePostTripFlow = (): UsePostTripFlowReturn => {
 
   const handleFeedbackSubmit = useCallback(
     async (rating: number, text?: string) => {
-      if (pendingTripData) {
-        const vehicleId = getVehicleWithLongestDistance(pendingTripData.segments);
-        if (vehicleId) {
-          await submitFeedback({ rating, text, vehicle: vehicleId });
+      try {
+        if (pendingTripData) {
+          const vehicleId = getVehicleWithLongestDistance(pendingTripData.segments);
+          if (vehicleId) {
+            await submitFeedback({ rating, text, vehicle: vehicleId });
+          }
+          await saveTrip(dispatch, pendingTripData);
         }
-        await saveTrip(dispatch, pendingTripData);
+      } finally {
+        setIsFeedbackVisible(false);
+        setPendingTripData(null);
       }
-      setIsFeedbackVisible(false);
-      setPendingTripData(null);
     },
     [pendingTripData, dispatch]
   );
 
   const handleFeedbackSkip = useCallback(async () => {
-    if (pendingTripData) {
-      await saveTrip(dispatch, pendingTripData);
+    try {
+      if (pendingTripData) {
+        await saveTrip(dispatch, pendingTripData);
+      }
+    } finally {
+      setIsFeedbackVisible(false);
+      setPendingTripData(null);
     }
-    setIsFeedbackVisible(false);
-    setPendingTripData(null);
   }, [pendingTripData, dispatch]);
 
   return {
