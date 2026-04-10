@@ -9,10 +9,12 @@ export {
   MIN_LOCATION_UPDATE_TIME_INTERVAL,
   SPEED_SMOOTHING_ALPHA,
   STILLSTAND_THRESHOLD_KMH,
+  GPS_SPEED_RESET_TIMEOUT_MS,
 } from './location';
 export { initialRegion, mapStyleUrl } from './map';
 export { privacySections } from './privacy';
 export const SIMULATION_VEHICLE_ID = -1;
+export const LOCAL_VEHICLE_ID = -2;
 export { StorageKeys } from './storage-keys';
 export { textStyles } from './text-styles';
 export { translations } from './translations';

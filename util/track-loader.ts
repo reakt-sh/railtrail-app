@@ -1,6 +1,14 @@
-import trackData from '../assets/railline/malente-luetjenburg.json';
+import { TRACK_FILE } from '@env';
+import devDummyData from '../assets/railline/dev-dummy.json';
+import malenteLuetjenburgData from '../assets/railline/malente-luetjenburg.json';
 import { POIType, PointOfInterest } from '../types/init';
 import { Position } from '../types/position';
+
+const trackDataByFile: Record<string, unknown> = {
+  'malente-luetjenburg': malenteLuetjenburgData,
+  'dev-dummy': devDummyData,
+};
+const trackData = trackDataByFile[TRACK_FILE] ?? malenteLuetjenburgData;
 
 // Type definitions for the JSON structure
 interface TrackMarker {
@@ -155,11 +163,6 @@ const convertMarkersToPOI = (
   totalLength: number
 ): PointOfInterest[] => {
   return markers
-    .filter((marker) => {
-      // Filter out markers that are outside the track area (Kiel markers)
-      const [lng] = marker.position.coordinates;
-      return lng > 10.5 && lng < 10.7; // Only Malente-Lütjenburg area
-    })
     .map((marker) => {
       const [lng, lat] = marker.position.coordinates;
       let poiType = markerTypeToPOIType[marker.type] ?? POIType.Generic;
@@ -234,10 +237,10 @@ export const loadTrack = () => {
 };
 
 // Export the loaded track data
-export const malenteLuetjenburgTrack = loadTrack();
+export const loadedTrack = loadTrack();
 
 // Cached track coordinates and metrics — avoids recalculating Haversine on every call
-const cachedCoordinates = (malenteLuetjenburgTrack.path.features[0].geometry as GeoJSON.LineString)
+const cachedCoordinates = (loadedTrack.path.features[0].geometry as GeoJSON.LineString)
   .coordinates as [number, number][];
 const cachedMetrics = calculateTrackMetrics(cachedCoordinates);
 

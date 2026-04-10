@@ -5,11 +5,14 @@ Alle wesentlichen Änderungen an diesem Projekt werden in dieser Datei dokumenti
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/),
 und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
-## [Unreleased]
+## [1.1.0] - 2026-04-10
 
 ### Geändert
 
 - HomeScreen-Logik in Custom Hooks aufgeteilt (`useGPSProcessing`, `usePostTripFlow`, `useTripLifecycle`)
+- Geschwindigkeitsberechnung verbessert: Stillstand-Filter und EMA-Glättung in eigene Funktion (`processSpeed`) ausgelagert
+- Kaltstart-Erkennung: EMA-Glättung wird bei erstem Messwert übersprungen, damit niedrige Geschwindigkeiten nicht fälschlich als Stillstand gefiltert werden
+- `eas.json` aus Git-Tracking entfernt (enthält Umgebungsvariablen); Template als `eas.json.example` bereitgestellt
 
 ## [1.0.0] - 2026-04-01
 

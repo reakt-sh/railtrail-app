@@ -1,7 +1,7 @@
 import { Position } from '../types/position';
 import { VehicleSegment } from '../types/saved-trip';
 import { Vehicle } from '../types/vehicle';
-import { SIMULATION_VEHICLE_ID } from '../constants';
+import { LOCAL_VEHICLE_ID, SIMULATION_VEHICLE_ID } from '../constants';
 import { RailTrailReduxAction } from './action';
 
 // Grouped sub-interfaces for cleaner state structure
@@ -310,7 +310,9 @@ const reducer = (state = initialTripState, action: RailTrailReduxAction): TripSt
     case 'trip/clear-vehicles-except-demo': {
       return {
         ...state,
-        vehicles: state.vehicles.filter((v) => v.id === SIMULATION_VEHICLE_ID),
+        vehicles: state.vehicles.filter(
+          (v) => v.id === SIMULATION_VEHICLE_ID || v.id === LOCAL_VEHICLE_ID
+        ),
       };
     }
 

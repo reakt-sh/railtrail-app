@@ -4,7 +4,7 @@ import { Alert } from 'react-native';
 import { useDispatch, useStore } from 'react-redux';
 import { Dispatch } from 'redux';
 import { useTranslation } from './useTranslation';
-import { SIMULATION_VEHICLE_ID } from '../constants';
+import { LOCAL_VEHICLE_ID, SIMULATION_VEHICLE_ID } from '../constants';
 import { AppActionType } from '../redux/app';
 import { ReduxAppState } from '../redux/init';
 import { TripAction, TripActionType } from '../redux/trip';
@@ -149,12 +149,23 @@ export const useTripLifecycle = ({
         isDemoRef.current = true;
         stopTracking(); // Stop real GPS
         startSimulation(handleLocationUpdate); // Feed simulated positions
+      } else if (vehicle.id === LOCAL_VEHICLE_ID) {
+        isDemoRef.current = false;
+        // Real GPS is already running
       } else {
         isDemoRef.current = false;
       }
 
-      // Zoom to vehicle position
-      centerOnPosition(vehicle.pos.lat, vehicle.pos.lng, vehicle.heading ?? 0, 17);
+      // Zoom: for local mode use last known GPS location, otherwise vehicle position
+      if (vehicle.id === LOCAL_VEHICLE_ID) {
+        const appState = store.getState();
+        const lastLoc = appState.app.location;
+        if (lastLoc) {
+          centerOnPosition(lastLoc.coords.latitude, lastLoc.coords.longitude, lastLoc.coords.heading ?? 0, 17);
+        }
+      } else {
+        centerOnPosition(vehicle.pos.lat, vehicle.pos.lng, vehicle.heading ?? 0, 17);
+      }
     },
     [dispatch, setIsFollowingUser, centerOnPosition, stopTracking, startSimulation, handleLocationUpdate, resetTracking]
   );

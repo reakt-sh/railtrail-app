@@ -5,14 +5,14 @@ import { TripAction, TripActionType } from '../redux/trip';
 import { MapPosition } from '../types/map-position';
 import { Vehicle } from '../types/vehicle';
 import { SIMULATION_VEHICLE_ID } from '../constants';
-import { malenteLuetjenburgTrack, percentageToPosition, positionToPercentage } from '../util/track-loader';
+import { loadedTrack, percentageToPosition, positionToPercentage } from '../util/track-loader';
 
 // Initialisiert die App mit statischen Track-Daten und WebSocket-Verbindung
 export const initializeApp = (dispatch: Dispatch<AppActionType>) => {
   if (__DEV__) console.log('[Init] Initializing app...');
 
   // Track-Daten laden
-  const track = malenteLuetjenburgTrack;
+  const track = loadedTrack;
   if (__DEV__) {
     console.log(
       `[Init] Loaded track: ${track.name} (${track.length}m, ${track.pointsOfInterest.length} POIs)`

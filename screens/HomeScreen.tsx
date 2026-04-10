@@ -68,7 +68,7 @@ export const HomeScreen = () => {
   } = useMapCamera();
 
   const { startForegroundTracking, stopTracking } = useLocationTracking();
-  const { registerDemoVehicle, startSimulation, stopSimulation } = useTripSimulation();
+  const { registerDemoVehicle, registerLocalVehicle, startSimulation, stopSimulation } = useTripSimulation();
   const { handleLocationUpdate, resetTracking } = useGPSProcessing();
 
   const {
@@ -133,8 +133,9 @@ export const HomeScreen = () => {
       startForegroundTracking(handleLocationUpdate);
     }
 
-    // Register Demo vehicle so it appears in vehicle selection
+    // Register Demo and Lokal vehicles so they appear in vehicle selection
     registerDemoVehicle();
+    registerLocalVehicle();
 
     return () => {
       unsubscribePositions();
