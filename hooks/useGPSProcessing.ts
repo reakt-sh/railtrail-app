@@ -43,7 +43,10 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
   const handleLocationUpdate = useCallback(
     async (loc: Location.LocationObject) => {
       // GPS accuracy gate: discard fixes with poor accuracy
-      if (loc.coords.accuracy != null && loc.coords.accuracy > MAX_GPS_ACCURACY) return;
+      if (loc.coords.accuracy != null && loc.coords.accuracy > MAX_GPS_ACCURACY) {
+        if (__DEV__) console.log(`[GPS] Discarded: accuracy ${loc.coords.accuracy}m > ${MAX_GPS_ACCURACY}m`);
+        return;
+      }
 
       dispatch(AppAction.setLocation(loc));
 

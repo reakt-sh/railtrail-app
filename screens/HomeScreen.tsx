@@ -3,8 +3,8 @@ import { DrawerActions, useFocusEffect, useNavigation } from '@react-navigation/
 import { useKeepAwake } from 'expo-keep-awake';
 import { setStatusBarStyle, StatusBar } from 'expo-status-bar';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { AppState, AppStateStatus, StyleSheet, View } from 'react-native';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import { Dispatch } from 'redux';
 import {
   FeedbackBottomSheet,
@@ -38,6 +38,7 @@ import { TripActionType } from '../redux/trip';
 export const HomeScreen = () => {
   const mapRef = useRef<MapLibreGL.MapViewRef>(null);
   const dispatch = useDispatch<Dispatch<AppActionType | TripActionType>>();
+  const store = useStore<ReduxAppState>();
   const navigation = useNavigation();
   const localizedStrings = useTranslation();
 
@@ -142,6 +143,21 @@ export const HomeScreen = () => {
       disconnectFromServer();
     };
   }, []);
+
+  // Resubscribe to location updates when app returns from background (iOS kills watchPositionAsync)
+  useEffect(() => {
+    const handleAppStateChange = (nextAppState: AppStateStatus) => {
+      if (nextAppState === 'active') {
+        const state = store.getState();
+        if (state.trip.isActive || permissions.foreground) {
+          startForegroundTracking(handleLocationUpdate);
+        }
+      }
+    };
+
+    const subscription = AppState.addEventListener('change', handleAppStateChange);
+    return () => subscription.remove();
+  }, [startForegroundTracking, handleLocationUpdate, permissions.foreground, store]);
 
   // Camera animation: follow user GPS location (during active trip)
   useEffect(() => {
