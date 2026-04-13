@@ -17,7 +17,11 @@ export const processSpeed = (rawSpeedMs: number, previousSmoothed: number): numb
   const filtered = rawKmh < STILLSTAND_THRESHOLD_KMH ? 0 : rawKmh;
 
   // 3. EMA-Glättung: α * aktuell + (1-α) * vorher
-  const smoothed = SPEED_SMOOTHING_ALPHA * filtered + (1 - SPEED_SMOOTHING_ALPHA) * previousSmoothed;
+  // Bei Kaltstart (previousSmoothed === 0) direkt übernehmen, da EMA sonst
+  // niedrige Werte (z.B. Gehgeschwindigkeit 5 km/h) unter den Stillstand-Threshold drückt
+  const smoothed = previousSmoothed === 0
+    ? filtered
+    : SPEED_SMOOTHING_ALPHA * filtered + (1 - SPEED_SMOOTHING_ALPHA) * previousSmoothed;
 
   // 4. Stillstand-Filter nach Glättung (EMA-Nachlauf abfangen)
   return smoothed < STILLSTAND_THRESHOLD_KMH ? 0 : smoothed;

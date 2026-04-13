@@ -1,11 +1,11 @@
 {
   "id": "dev-dummy",
   "version": "0.1",
-  "name": "Dev Dummy Route",
+  "name": "Dev Teststrecke",
   "map": {
     "startConfiguration": {
-      "latitude": 54.3400,
-      "longitude": 10.1520,
+      "latitude": 54.3425,
+      "longitude": 10.1390,
       "zoom": 14.5
     }
   },
@@ -16,17 +16,22 @@
       "data": {
         "type": "LineString",
         "coordinates": [
-          [10.15000, 54.34850],
-          [10.15180, 54.34650],
-          [10.15350, 54.34450],
-          [10.15430, 54.34250],
-          [10.15480, 54.34050],
-          [10.15480, 54.33900],
-          [10.15430, 54.33750],
-          [10.15300, 54.33600],
-          [10.15150, 54.33450],
-          [10.15000, 54.33320],
-          [10.14900, 54.33200]
+          [10.1310, 54.3475],
+          [10.1320, 54.3470],
+          [10.133373133032238, 54.3461917510541],
+          [10.1340, 54.3463],
+          [10.135284622220885, 54.34641747743671],
+          [10.1365, 54.3460],
+          [10.1378, 54.3452],
+          [10.1390, 54.3442],
+          [10.1402, 54.3430],
+          [10.1415, 54.3418],
+          [10.1428, 54.3406],
+          [10.1438, 54.3396],
+          [10.14534011283816, 54.33860664560389],
+          [10.1465, 54.3376],
+          [10.1475, 54.3367],
+          [10.1485, 54.3358]
         ]
       },
       "markers": {
@@ -47,78 +52,49 @@
         "data": [
           {
             "id": "d1",
-            "name": "Start Düsternbrook",
+            "name": "Start Nord",
             "type": "end-of-the-line",
             "position": {
               "type": "Point",
-              "coordinates": [10.15000, 54.34850]
+              "coordinates": [10.1310, 54.3475]
             },
-            "description": "Startpunkt Düsternbrook",
+            "description": "Startpunkt der Teststrecke",
             "extra": {
               "isTurningPoint": true
             }
           },
           {
             "id": "d2",
-            "name": "Aquarium",
-            "type": "halt",
+            "name": "Kreuzung Mitte",
+            "type": "crossing",
             "position": {
               "type": "Point",
-              "coordinates": [10.15430, 54.34250]
+              "coordinates": [10.1402, 54.3430]
             },
-            "description": "Haltepunkt Aquarium / GEOMAR",
-            "extra": {
-              "isTurningPoint": false
-            }
+            "description": "Bahnübergang Mitte"
           },
           {
             "id": "d3",
-            "name": "Kiellinie Mitte",
-            "type": "crossing",
+            "name": "Haltepunkt Süd",
+            "type": "halt",
             "position": {
               "type": "Point",
-              "coordinates": [10.15480, 54.34050]
+              "coordinates": [10.14534011283816, 54.33860664560389]
             },
-            "description": "Kreuzung Kiellinie Mitte",
-            "extra": {
-              "isTurningPoint": false
-            }
-          },
-          {
-            "id": "d4",
-            "name": "Bellevue",
-            "type": "crossing",
-            "position": {
-              "type": "Point",
-              "coordinates": [10.15430, 54.33750]
-            },
-            "description": "Bellevue",
+            "description": "Haltepunkt Süd",
             "extra": {
               "isTurningPoint": true
             }
           },
           {
-            "id": "d5",
-            "name": "Reventloubrücke",
-            "type": "halt",
-            "position": {
-              "type": "Point",
-              "coordinates": [10.15000, 54.33320]
-            },
-            "description": "Haltepunkt Reventloubrücke",
-            "extra": {
-              "isTurningPoint": false
-            }
-          },
-          {
-            "id": "d6",
-            "name": "Seegarten",
+            "id": "d4",
+            "name": "Ende Süd",
             "type": "end-of-the-line",
             "position": {
               "type": "Point",
-              "coordinates": [10.14900, 54.33200]
+              "coordinates": [10.1485, 54.3358]
             },
-            "description": "Endpunkt Seegarten",
+            "description": "Endpunkt der Teststrecke",
             "extra": {
               "isTurningPoint": true
             }

@@ -6,8 +6,8 @@ import { updateDistances } from '../effect-actions/trip-actions';
 import { AppAction, AppActionType } from '../redux/app';
 import { ReduxAppState } from '../redux/init';
 import { TripAction, TripActionType } from '../redux/trip';
-import { MAX_GPS_ACCURACY } from '../constants';
-import { percentToDistance } from '../util/calculators';
+import { LOCAL_VEHICLE_ID, MAX_GPS_ACCURACY, GPS_SPEED_RESET_TIMEOUT_MS } from '../constants';
+import { calculateDistanceFromCoordinates, percentToDistance } from '../util/calculators';
 import { processSpeed } from '../util/speed';
 import { positionToPercentage, percentageToPosition } from '../util/track-loader';
 
@@ -24,6 +24,7 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
 
   const lastLocationRef = useRef<Location.LocationObject | null>(null);
   const smoothedSpeedRef = useRef<number>(0);
+  const speedResetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const oppositeDistanceRef = useRef(0);
   const isPercentagePositionIncreasingRef = useRef<boolean | undefined>(undefined);
   const vehiclesRef = useRef(useSelector((state: ReduxAppState) => state.trip.vehicles));
@@ -47,22 +48,59 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
       dispatch(AppAction.setLocation(loc));
 
       const state = store.getState();
-      const { isActive: tripActive } = state.trip;
+      const { isActive: tripActive, currentVehicle: tripVehicle } = state.trip;
       if (tripActive) {
-        // 1. Project GPS position onto track
-        const percentage = positionToPercentage(loc.coords.latitude, loc.coords.longitude);
-        const calculated = percentageToPosition(percentage);
-        dispatch(TripAction.setPosition({ percentage, calculated }));
+        if (tripVehicle.id === LOCAL_VEHICLE_ID) {
+          // Local mode: use raw GPS coordinates, no track projection
+          const calculated = { lat: loc.coords.latitude, lng: loc.coords.longitude };
+          dispatch(TripAction.setPosition({ percentage: null, calculated }));
 
-        // 2. Speed from GPS (m/s → km/h) with EMA smoothing
-        smoothedSpeedRef.current = processSpeed(
-          loc.coords.speed ?? 0,
-          smoothedSpeedRef.current
-        );
+          // Speed + distance from Haversine delta
+          // (iOS GPS speed is unreliable — returns 0 or -1)
+          let rawSpeedMs = 0;
+          if (lastLocationRef.current) {
+            const distanceM = calculateDistanceFromCoordinates(
+              lastLocationRef.current.coords.latitude,
+              lastLocationRef.current.coords.longitude,
+              loc.coords.latitude,
+              loc.coords.longitude
+            );
+            const timeDeltaS = (loc.timestamp - lastLocationRef.current.timestamp) / 1000;
+            rawSpeedMs = timeDeltaS > 0 ? distanceM / timeDeltaS : 0;
 
-        // 3. Distance: handled by updateDistances() via position.percentage changes
+            dispatch(TripAction.batchUpdate({
+              addDistance: distanceM,
+              lastPercentage: null,
+              warnings: { nextVehicle: null, nextVehicleHeadingTowards: null, nextLevelCrossing: null, nextTurningPoint: null, secondTurningPoint: null },
+            }));
+          }
+          smoothedSpeedRef.current = processSpeed(rawSpeedMs, smoothedSpeedRef.current);
+        } else {
+          // Normal mode: project GPS position onto track
+          const percentage = positionToPercentage(loc.coords.latitude, loc.coords.longitude);
+          const calculated = percentageToPosition(percentage);
+          dispatch(TripAction.setPosition({ percentage, calculated }));
+
+          // Speed from GPS (m/s → km/h) with EMA smoothing
+          smoothedSpeedRef.current = processSpeed(
+            loc.coords.speed ?? 0,
+            smoothedSpeedRef.current
+          );
+
+          // Distance: handled by updateDistances() via position.percentage changes
+        }
 
         dispatch(TripAction.setMotion({ speed: smoothedSpeedRef.current }));
+
+        // Reset speed to 0 if no GPS update arrives within timeout (local mode only)
+        if (tripVehicle.id === LOCAL_VEHICLE_ID) {
+          if (speedResetTimerRef.current) clearTimeout(speedResetTimerRef.current);
+          speedResetTimerRef.current = setTimeout(() => {
+            smoothedSpeedRef.current = 0;
+            dispatch(TripAction.setMotion({ speed: 0 }));
+          }, GPS_SPEED_RESET_TIMEOUT_MS);
+        }
+
         lastLocationRef.current = loc;
       }
     },
@@ -126,9 +164,20 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
     }
   }, [position.percentage, isActive, track.length, track.pointsOfInterest, currentVehicle.id, dispatch]);
 
+  // Cleanup speed reset timer on unmount
+  useEffect(() => {
+    return () => {
+      if (speedResetTimerRef.current) clearTimeout(speedResetTimerRef.current);
+    };
+  }, []);
+
   const resetTracking = useCallback(() => {
     lastLocationRef.current = null;
     smoothedSpeedRef.current = 0;
+    if (speedResetTimerRef.current) {
+      clearTimeout(speedResetTimerRef.current);
+      speedResetTimerRef.current = null;
+    }
   }, []);
 
   return { handleLocationUpdate, resetTracking };

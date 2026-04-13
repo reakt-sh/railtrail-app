@@ -2,7 +2,7 @@ import * as Location from 'expo-location';
 import { useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
-import { SIMULATION_VEHICLE_ID } from '../constants';
+import { LOCAL_VEHICLE_ID, SIMULATION_VEHICLE_ID } from '../constants';
 import { ReduxAppState, TripAction, TripActionType } from '../redux';
 import { Vehicle } from '../types/vehicle';
 import { calculateBearing, percentageToPosition } from '../util';
@@ -113,8 +113,20 @@ export const useTripSimulation = () => {
     [dispatch, trackLength]
   );
 
+  const registerLocalVehicle = useCallback(() => {
+    const localVehicle: Vehicle = {
+      id: LOCAL_VEHICLE_ID,
+      pos: { lat: 0, lng: 0 },
+      percentagePosition: 0,
+      heading: 0,
+      label: 'Lokal',
+    };
+    dispatch(TripAction.updateVehicleFromWebSocket({ vehicle: localVehicle, speed: 0 }));
+  }, [dispatch]);
+
   return {
     registerDemoVehicle,
+    registerLocalVehicle,
     startSimulation,
     stopSimulation,
   };

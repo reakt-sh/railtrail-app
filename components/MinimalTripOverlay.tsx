@@ -5,18 +5,19 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Color } from '../constants/color';
 import { textStyles } from '../constants/text-styles';
 import { useTranslation } from '../hooks';
-import { formatSpeed } from '../util/formatters';
+import { formatDistance, formatSpeed } from '../util/formatters';
 
 interface ExternalProps {
   readonly speed: number;
   readonly elapsedTime: string;
+  readonly distance: number;
   readonly onPress: () => void;
   readonly onStopTrip: () => void;
 }
 
 type Props = ExternalProps;
 
-export const MinimalTripOverlay = memo(({ speed, elapsedTime, onPress, onStopTrip }: Props) => {
+export const MinimalTripOverlay = memo(({ speed, elapsedTime, distance, onPress, onStopTrip }: Props) => {
   const insets = useSafeAreaInsets();
   const formattedSpeed = formatSpeed(speed);
   const i18n = useTranslation();
@@ -32,7 +33,7 @@ export const MinimalTripOverlay = memo(({ speed, elapsedTime, onPress, onStopTri
         accessibilityHint="Opens drawer with full trip information"
       >
         <View style={styles.menuContainer}>
-          <MaterialCommunityIcons name="menu" size={24} color={Color.white} />
+          <MaterialCommunityIcons name="speedometer" size={24} color={Color.white} />
           <Text style={styles.menuLabel}>{i18n.t('menuButtonLabel')}</Text>
         </View>
         <View style={styles.divider} />
@@ -44,6 +45,11 @@ export const MinimalTripOverlay = memo(({ speed, elapsedTime, onPress, onStopTri
         <View style={styles.timeContainer}>
           <MaterialCommunityIcons name="clock-outline" size={16} color={Color.white} />
           <Text style={styles.timeValue}>{elapsedTime}</Text>
+        </View>
+        <View style={styles.divider} />
+        <View style={styles.distanceContainer}>
+          <MaterialCommunityIcons name="map-marker-distance" size={16} color={Color.white} />
+          <Text style={styles.distanceValue}>{formatDistance(distance)}</Text>
         </View>
       </Pressable>
 
@@ -129,6 +135,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   timeValue: {
+    ...textStyles.bodyMedium,
+    color: Color.white,
+    marginLeft: 4,
+  },
+  distanceContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  distanceValue: {
     ...textStyles.bodyMedium,
     color: Color.white,
     marginLeft: 4,

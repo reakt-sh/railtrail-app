@@ -5,11 +5,30 @@ Alle wesentlichen Änderungen an diesem Projekt werden in dieser Datei dokumenti
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/),
 und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
-## [Unreleased]
+## [1.1.1] - 2026-04-13
+
+### Geändert
+
+- POI-Description Schriftgröße von 12 auf 14 erhöht
+- Trip-Overlay: Icon auf Speedometer geändert, zurückgelegte Strecke wird angezeigt
+- POI "Bhf. Malente" (km 0,000) entfernt; Text auf "Bhf. Malente / Kurpark" übertragen
+- Blinklichtanlage-Hinweise aus POI-Descriptions entfernt
+- Wendepunkte bei km 2,500 und km 9,610 zeigen jetzt Andreaskreuz (Crossing-Priorität)
+- Wendepunkt Bottervogel (km 2,800) auf Gleisposition korrigiert
+- Feldweg km 13,940 als Wendepunkt markiert
+
+### Behoben
+
+- Rechtschreibfehler "seit Ihr" → "seid Ihr" (Bhf. Holsteinische Schweiz)
+
+## [1.1.0] - 2026-04-10
 
 ### Geändert
 
 - HomeScreen-Logik in Custom Hooks aufgeteilt (`useGPSProcessing`, `usePostTripFlow`, `useTripLifecycle`)
+- Geschwindigkeitsberechnung verbessert: Stillstand-Filter und EMA-Glättung in eigene Funktion (`processSpeed`) ausgelagert
+- Kaltstart-Erkennung: EMA-Glättung wird bei erstem Messwert übersprungen, damit niedrige Geschwindigkeiten nicht fälschlich als Stillstand gefiltert werden
+- `eas.json` aus Git-Tracking entfernt (enthält Umgebungsvariablen); Template als `eas.json.example` bereitgestellt
 
 ## [1.0.0] - 2026-04-01
 

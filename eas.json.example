@@ -24,6 +24,13 @@
       }
     },
     "production": {
+      "env": {
+        "POSITIONING_WS_URL": "wss://your-server/api/position-updates",
+        "API_TIMEOUT": "3000",
+        "MAP_STYLE_URL": "https://your-map-style-url",
+        "FEEDBACK_URL": "https://your-server/api/feedback/submit",
+        "TRACK_FILE": "malente-luetjenburg"
+      },
       "ios": {
         "resourceClass": "m-medium"
       },

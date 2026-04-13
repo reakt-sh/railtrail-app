@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
   },
   descriptionText: {
     ...textStyles.hint,
+    fontSize: 14,
     textAlign: 'left',
   },
 });
