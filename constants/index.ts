@@ -18,9 +18,4 @@ export const LOCAL_VEHICLE_ID = -2;
 export { StorageKeys } from './storage-keys';
 export { textStyles } from './text-styles';
 export { translations } from './translations';
-export {
-  LEVEL_CROSSING_WARNING_DISTANCE,
-  VEHICLE_HEADING_TOWARDS_USER_WARNING_DISTANCE,
-  VEHICLE_WARNING_DISTANCE,
-  warningDistance,
-} from './warnings';
+export { warningDistance } from './warnings';
