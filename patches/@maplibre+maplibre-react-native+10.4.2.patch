@@ -1,0 +1,12 @@
+diff --git a/node_modules/@maplibre/maplibre-react-native/ios/MLRN/MLRNMapView.m b/node_modules/@maplibre/maplibre-react-native/ios/MLRN/MLRNMapView.m
+index 28c79d5..76d1e8e 100644
+--- a/node_modules/@maplibre/maplibre-react-native/ios/MLRN/MLRNMapView.m
++++ b/node_modules/@maplibre/maplibre-react-native/ios/MLRN/MLRNMapView.m
+@@ -203,6 +203,7 @@ static double const M2PI = M_PI * 2;
+ #pragma clang diagnostic push
+ #pragma clang diagnostic ignored "-Wobjc-missing-super-calls"
+ - (void)insertReactSubview:(id<RCTComponent>)subview atIndex:(NSInteger)atIndex {
++  if (!subview) return;
+   [self addToMap:subview];
+   [_reactSubviews insertObject:(UIView *)subview atIndex:(NSUInteger)atIndex];
+ }

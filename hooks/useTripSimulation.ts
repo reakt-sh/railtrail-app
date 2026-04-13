@@ -2,13 +2,10 @@ import * as Location from 'expo-location';
 import { useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
-import { ReduxAppState } from '../redux/init';
-import { TripAction, TripActionType } from '../redux/trip';
+import { SIMULATION_VEHICLE_ID } from '../constants';
+import { ReduxAppState, TripAction, TripActionType } from '../redux';
 import { Vehicle } from '../types/vehicle';
-import { calculateBearing } from '../util/calculators';
-import { percentageToPosition } from '../util/track-loader';
-
-export const SIMULATION_VEHICLE_ID = -1;
+import { calculateBearing, percentageToPosition } from '../util';
 const SIMULATION_VEHICLE_LABEL = 'Demo';
 
 export const useTripSimulation = () => {
