@@ -277,13 +277,13 @@
         "data": [
           {
             "id": "2",
-            "name": "Malente Fußweg",
+            "name": "Bhf. Malente / Kurpark",
             "type": "minor-crossing",
             "position": {
               "type": "Point",
               "coordinates": [10.55104046371384, 54.16795514276929]
             },
-            "description": "Der Weg zum Kurpark",
+            "description": "km 0,000\n\nHier besteht Anschluss an die Regionalzüge in Richtung Kiel (von Gleis 1) und Lübeck (von Gleis 2). Das Gleis zur Strecke nach Lütjenburg heißt Gleis 7, weil der Bahnhof einst noch viel mehr Gleisanlagen hatte, von denen viele in den letzten Jahrzehnten nach und nach zurückgebaut wurden. Vom Bahnhof erreicht Ihr auch das Zentrum Malentes fußläufig. In unmittelbarer Nähe liegen der Kurpark, die Bahnhofstraße, das Wildpark-Gehege und der Dieksee mit dem Anleger der 5-Seen-Fahrt. Die berühmte Bootstour durch die vielen Seen der Holsteinische Schweiz ist eine perfekte Ergänzung für Euren Ausflug. Bei Fragen berät Euch die Tourist Info Malente sehr gern. Diese befindet sich direkt am Abfahrtspunkt der Draisinen.",
             "extra": {
               "isTurningPoint": true
             }
@@ -376,7 +376,7 @@
             },
             "description": "km 13,940",
             "extra": {
-              "isTurningPoint": false
+              "isTurningPoint": true
             }
           },
           {
@@ -400,7 +400,7 @@
               "type": "Point",
               "coordinates": [10.62576951662293, 54.25879622285369]
             },
-            "description": "km 12,930 – Blinklichtanlage",
+            "description": "km 12,930",
             "extra": {
               "isTurningPoint": false
             }
@@ -491,9 +491,9 @@
               "type": "Point",
               "coordinates": [10.62245977399284, 54.23130478038833]
             },
-            "description": "km 9,610",
+            "description": "km 9,610, ggf Wendepunkt",
             "extra": {
-              "isTurningPoint": true
+              "isTurningPoint": false
             }
           },
           {
@@ -543,7 +543,7 @@
               "type": "Point",
               "coordinates": [10.61424944611967, 54.22189069636329]
             },
-            "description": "km 8,410 – Blinklichtanlage",
+            "description": "km 8,410",
             "extra": {
               "isTurningPoint": false
             }
@@ -671,7 +671,7 @@
             "type": "minor-crossing",
             "position": {
               "type": "Point",
-              "coordinates": [10.575, 54.1845]
+              "coordinates": [10.574987, 54.184584]
             },
             "description": "km 2,800 \n\n Der Wendepunkt ist auch ein kleiner Draisinenbahnhof mit Zugang zum Outdoor Camp Bottervogel. Dieses befindet sich direkt im Tal neben der Bahnstrecke. Im Camp finden insbesondere Team-Events und Klassenfahrten statt. Hier könnt Ihr in die atemberaubende Natur eintauchen, sei es bei aufregenden Team-Building-Aktivitäten, kniffligen Herausforderungen, Floßbauen, Stockbrot machen oder in erlebnisreichen Wanderungen durch malerische Landschaften. Das Angebot im Outdoorbereich verbindet Abenteuerlust mit nachhaltiger Lernerfahrung, perfekt für Schulen, Unternehmen und alle, die das Besondere suchen. Hierbei gibt es auch Pakete, die die Draisine zur Anreise ins Camp nutzen. Weitere Infos erhaltet Ihr bei www.bottervogel.de",
             "extra": {
@@ -686,9 +686,9 @@
               "type": "Point",
               "coordinates": [10.57018340322571, 54.18386758023301]
             },
-            "description": "km 2,500 – Blinklichtanlage",
+            "description": "km 2,500",
             "extra": {
-              "isTurningPoint": true
+              "isTurningPoint": false
             }
           },
           {
@@ -712,7 +712,7 @@
               "type": "Point",
               "coordinates": [10.56310774273071, 54.18217866559564]
             },
-            "description": "km 2,000 – Blinklichtanlage mit Halbschranken",
+            "description": "km 2,000",
             "extra": {
               "isTurningPoint": false
             }
@@ -751,7 +751,7 @@
               "type": "Point",
               "coordinates": [10.55686328469254, 54.17676613983736]
             },
-            "description": "km 1,240 – Blinklichtanlage",
+            "description": "km 1,240",
             "extra": {
               "isTurningPoint": false
             }
@@ -764,7 +764,7 @@
               "type": "Point",
               "coordinates": [10.55600514307865, 54.17467189253872]
             },
-            "description": "km 0,991 – Blinklichtanlage",
+            "description": "km 0,991",
             "extra": {
               "isTurningPoint": false
             }
@@ -790,7 +790,7 @@
               "type": "Point",
               "coordinates": [10.59052012545154, 54.18627840204964]
             },
-            "description": "km 3,890\n\nDer Bahnhof Holsteinische Schweiz ist ein ganz besonderer Ort, denn der Bahnhof hat gemeinsam mit einem Hotel der gesamten Region ihren Namen gegeben (nicht andersrum!). Wenn Ihr am Bahnhof Holsteinische Schweiz vorbeikommt, seit Ihr somit am Ursprung der Holsteinischen Schweiz. Hier entstand dieser Name und wenn Ihr mit der Draisine hier lang kommt, wisst Ihr auch wieso. 1888 wurde seinerzeit mit den Planungen der Bahnstrecke Malente-Lütjenburg begonnen. Gleichzeitig plante der Kaufmann Janus die Errichtung eines Hotels am Kellersee. Er erreichte, dass für das Hotel ein eigener Bahnhof eingerichtet wurde. In Anlehnung an die Landschaft nannte er das Hotel „Holsteinische Schweiz“, weshalb auch der Bahnhof diesen Namen bekam. Mit der Eisenbahn begann in dieser Region überhaupt auch erst der Fremdenverkehr, weil die Region plötzlich in attraktiver Reisezeit erreichbar wurde. Schnell übertrug sich der Name vom Hotel und dem Bahnhof auf die ganze Region. Ihr seid somit hier am Herzen und dem direkten Ursprung der Holsteinischen Schweiz und entlang der Bahntrasse kann man lebendig erfahren, warum es hier so heißt. Heute ist der Bahnhof in Privatbesitz. Bitte respektiert die Privatsphäre und haltet aus Respekt vor den Bewohnerinnen und Bewohnern nicht direkt vor dem Gebäude. Das ehemalige Hotel Holsteinische Schweiz ist heute übrigens die Landesfinanzschule von Schleswig-Holstein.",
+            "description": "km 3,890\n\nDer Bahnhof Holsteinische Schweiz ist ein ganz besonderer Ort, denn der Bahnhof hat gemeinsam mit einem Hotel der gesamten Region ihren Namen gegeben (nicht andersrum!). Wenn Ihr am Bahnhof Holsteinische Schweiz vorbeikommt, seid Ihr somit am Ursprung der Holsteinischen Schweiz. Hier entstand dieser Name und wenn Ihr mit der Draisine hier lang kommt, wisst Ihr auch wieso. 1888 wurde seinerzeit mit den Planungen der Bahnstrecke Malente-Lütjenburg begonnen. Gleichzeitig plante der Kaufmann Janus die Errichtung eines Hotels am Kellersee. Er erreichte, dass für das Hotel ein eigener Bahnhof eingerichtet wurde. In Anlehnung an die Landschaft nannte er das Hotel „Holsteinische Schweiz“, weshalb auch der Bahnhof diesen Namen bekam. Mit der Eisenbahn begann in dieser Region überhaupt auch erst der Fremdenverkehr, weil die Region plötzlich in attraktiver Reisezeit erreichbar wurde. Schnell übertrug sich der Name vom Hotel und dem Bahnhof auf die ganze Region. Ihr seid somit hier am Herzen und dem direkten Ursprung der Holsteinischen Schweiz und entlang der Bahntrasse kann man lebendig erfahren, warum es hier so heißt. Heute ist der Bahnhof in Privatbesitz. Bitte respektiert die Privatsphäre und haltet aus Respekt vor den Bewohnerinnen und Bewohnern nicht direkt vor dem Gebäude. Das ehemalige Hotel Holsteinische Schweiz ist heute übrigens die Landesfinanzschule von Schleswig-Holstein.",
             "extra": {
               "isTurningPoint": false
             }
@@ -830,19 +830,6 @@
             },
             "extra": {
               "isTurningPoint": false
-            }
-          },
-          {
-            "id": "53",
-            "name": "Bad Malente-Gremsmühlen",
-            "type": "halt",
-            "position": {
-              "type": "Point",
-              "coordinates": [10.5514, 54.1674]
-            },
-            "description": "km 0,000\n\nHier besteht Anschluss an die Regionalzüge in Richtung Kiel (von Gleis 1) und Lübeck (von Gleis 2). Das Gleis zur Strecke nach Lütjenburg heißt Gleis 7, weil der Bahnhof einst noch viel mehr Gleisanlagen hatte, von denen viele in den letzten Jahrzehnten nach und nach zurückgebaut wurden. Vom Bahnhof erreicht Ihr auch das Zentrum Malentes fußläufig. In unmittelbarer Nähe liegen der Kurpark, die Bahnhofstraße, das Wildpark-Gehege und der Dieksee mit dem Anleger der 5-Seen-Fahrt. Die berühmte Bootstour durch die vielen Seen der Holsteinische Schweiz ist eine perfekte Ergänzung für Euren Ausflug. Bei Fragen berät Euch die Tourist Info Malente sehr gern. Diese befindet sich direkt am Abfahrtspunkt der Draisinen.",
-            "extra": {
-              "isTurningPoint": true
             }
           }
         ]

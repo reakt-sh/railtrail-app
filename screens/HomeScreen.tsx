@@ -210,6 +210,7 @@ export const HomeScreen = () => {
         <MinimalTripOverlay
           speed={motion.speed}
           elapsedTime={elapsedTime}
+          distance={motion.distanceTravelled}
           onPress={handleOpenDrawer}
           onStopTrip={handleStopTrip}
         />
