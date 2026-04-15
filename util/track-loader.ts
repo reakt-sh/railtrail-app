@@ -1,12 +1,10 @@
 import { TRACK_FILE } from '@env';
-import devDummyData from '../assets/railline/dev-dummy.json';
 import malenteLuetjenburgData from '../assets/railline/malente-luetjenburg.json';
 import { POIType, PointOfInterest } from '../types/init';
 import { Position } from '../types/position';
 
 const trackDataByFile: Record<string, unknown> = {
   'malente-luetjenburg': malenteLuetjenburgData,
-  'dev-dummy': devDummyData,
 };
 const trackData = trackDataByFile[TRACK_FILE] ?? malenteLuetjenburgData;
 

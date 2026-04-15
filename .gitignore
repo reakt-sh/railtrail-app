@@ -25,7 +25,6 @@ docs/
 .env.local
 .env.*.local
 eas.json
-assets/railline/dev-dummy.json
 # Native build directories
 ios/
 android/
