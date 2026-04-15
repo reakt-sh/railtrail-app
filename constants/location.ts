@@ -5,3 +5,4 @@ export const SPEED_SMOOTHING_ALPHA = 0.3;
 export const MIN_DISTANCE_JITTER_FILTER = 5;
 export const STILLSTAND_THRESHOLD_KMH = 2;
 export const GPS_SPEED_RESET_TIMEOUT_MS = 3000;
+export const GPS_GAP_THRESHOLD_MS = 5000;

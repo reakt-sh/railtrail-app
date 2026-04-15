@@ -6,7 +6,7 @@ import { updateDistances } from '../effect-actions/trip-actions';
 import { AppAction, AppActionType } from '../redux/app';
 import { ReduxAppState } from '../redux/init';
 import { TripAction, TripActionType } from '../redux/trip';
-import { LOCAL_VEHICLE_ID, MAX_GPS_ACCURACY, GPS_SPEED_RESET_TIMEOUT_MS } from '../constants';
+import { LOCAL_VEHICLE_ID, MAX_GPS_ACCURACY, GPS_SPEED_RESET_TIMEOUT_MS, GPS_GAP_THRESHOLD_MS } from '../constants';
 import { calculateDistanceFromCoordinates, percentToDistance } from '../util/calculators';
 import { processSpeed } from '../util/speed';
 import { positionToPercentage, percentageToPosition } from '../util/track-loader';
@@ -68,14 +68,22 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
               loc.coords.latitude,
               loc.coords.longitude
             );
-            const timeDeltaS = (loc.timestamp - lastLocationRef.current.timestamp) / 1000;
-            rawSpeedMs = timeDeltaS > 0 ? distanceM / timeDeltaS : 0;
+            const timeDeltaMs = loc.timestamp - lastLocationRef.current.timestamp;
+            const timeDeltaS = timeDeltaMs / 1000;
 
+            // Distanz immer addieren (echte zurückgelegte Strecke)
             dispatch(TripAction.batchUpdate({
               addDistance: distanceM,
               lastPercentage: null,
               warnings: { nextVehicle: null, nextVehicleHeadingTowards: null, nextLevelCrossing: null, nextTurningPoint: null, secondTurningPoint: null },
             }));
+
+            // Speed nur berechnen wenn kein großer Zeitsprung (z.B. App im Hintergrund)
+            if (timeDeltaMs <= GPS_GAP_THRESHOLD_MS && timeDeltaS > 0) {
+              rawSpeedMs = distanceM / timeDeltaS;
+            } else {
+              smoothedSpeedRef.current = 0;
+            }
           }
           smoothedSpeedRef.current = processSpeed(rawSpeedMs, smoothedSpeedRef.current);
         } else {
