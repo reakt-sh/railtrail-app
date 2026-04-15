@@ -31,6 +31,7 @@ import {
   useTripLifecycle,
   useTripSimulation,
 } from '../hooks';
+import { SIMULATION_VEHICLE_ID } from '../constants';
 import { AppActionType } from '../redux/app';
 import { ReduxAppState } from '../redux/init';
 import { TripActionType } from '../redux/trip';
@@ -149,7 +150,8 @@ export const HomeScreen = () => {
     const handleAppStateChange = (nextAppState: AppStateStatus) => {
       if (nextAppState === 'active') {
         const state = store.getState();
-        if (state.trip.isActive || permissions.foreground) {
+        const isSimulation = state.trip.currentVehicle.id === SIMULATION_VEHICLE_ID;
+        if (!isSimulation && (state.trip.isActive || permissions.foreground)) {
           startForegroundTracking(handleLocationUpdate);
         }
       }

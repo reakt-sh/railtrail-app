@@ -6,7 +6,7 @@ import { updateDistances } from '../effect-actions/trip-actions';
 import { AppAction, AppActionType } from '../redux/app';
 import { ReduxAppState } from '../redux/init';
 import { TripAction, TripActionType } from '../redux/trip';
-import { LOCAL_VEHICLE_ID, MAX_GPS_ACCURACY, GPS_SPEED_RESET_TIMEOUT_MS, GPS_GAP_THRESHOLD_MS } from '../constants';
+import { LOCAL_VEHICLE_ID, SIMULATION_VEHICLE_ID, MAX_GPS_ACCURACY, GPS_SPEED_RESET_TIMEOUT_MS, GPS_GAP_THRESHOLD_MS } from '../constants';
 import { calculateDistanceFromCoordinates, percentToDistance } from '../util/calculators';
 import { processSpeed } from '../util/speed';
 import { positionToPercentage, percentageToPosition } from '../util/track-loader';
@@ -14,7 +14,7 @@ import { positionToPercentage, percentageToPosition } from '../util/track-loader
 const DIRECTION_CHANGE_THRESHOLD_METERS = 30;
 
 interface UseGPSProcessingReturn {
-  handleLocationUpdate: (loc: Location.LocationObject) => void;
+  handleLocationUpdate: (loc: Location.LocationObject, knownPercentage?: number) => void;
   resetTracking: () => void;
 }
 
@@ -29,6 +29,7 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
   const isPercentagePositionIncreasingRef = useRef<boolean | undefined>(undefined);
   const vehiclesRef = useRef(useSelector((state: ReduxAppState) => state.trip.vehicles));
   const lastSyncedPercentageRef = useRef<number | null>(null);
+  const lastUpdateTimestampRef = useRef<number>(0);
 
   // Keep vehiclesRef in sync
   const vehicles = useSelector((state: ReduxAppState) => state.trip.vehicles);
@@ -41,7 +42,7 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
 
   // Location update handler — GPS is primary data source during active trips
   const handleLocationUpdate = useCallback(
-    async (loc: Location.LocationObject) => {
+    async (loc: Location.LocationObject, knownPercentage?: number) => {
       // GPS accuracy gate: discard fixes with poor accuracy
       if (loc.coords.accuracy != null && loc.coords.accuracy > MAX_GPS_ACCURACY) {
         if (__DEV__) console.log(`[GPS] Discarded: accuracy ${loc.coords.accuracy}m > ${MAX_GPS_ACCURACY}m`);
@@ -88,9 +89,28 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
           smoothedSpeedRef.current = processSpeed(rawSpeedMs, smoothedSpeedRef.current);
         } else {
           // Normal mode: project GPS position onto track
-          const percentage = positionToPercentage(loc.coords.latitude, loc.coords.longitude);
+          // Im Demo-Modus echtes GPS ignorieren (kommt ohne knownPercentage)
+          if (tripVehicle.id === SIMULATION_VEHICLE_ID && knownPercentage == null) {
+            return;
+          }
+
+          const percentage = knownPercentage ?? positionToPercentage(loc.coords.latitude, loc.coords.longitude);
           const calculated = percentageToPosition(percentage);
           dispatch(TripAction.setPosition({ percentage, calculated }));
+
+          // Gap detection: bei großem Zeitsprung (z.B. App-Resume) lastPercentage
+          // auf aktuelle Position setzen, damit updateDistances keinen Sprung berechnet
+          const now = loc.timestamp;
+          const prevTimestamp = lastUpdateTimestampRef.current;
+          lastUpdateTimestampRef.current = now;
+
+          if (prevTimestamp > 0 && (now - prevTimestamp) > GPS_GAP_THRESHOLD_MS) {
+            dispatch(TripAction.batchUpdate({
+              addDistance: undefined,
+              lastPercentage: percentage,
+              warnings: { nextVehicle: null, nextVehicleHeadingTowards: null, nextLevelCrossing: null, nextTurningPoint: null, secondTurningPoint: null },
+            }));
+          }
 
           // Speed from GPS (m/s → km/h) with EMA smoothing
           smoothedSpeedRef.current = processSpeed(
@@ -185,6 +205,7 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
   const resetTracking = useCallback(() => {
     lastLocationRef.current = null;
     smoothedSpeedRef.current = 0;
+    lastUpdateTimestampRef.current = 0;
     if (speedResetTimerRef.current) {
       clearTimeout(speedResetTimerRef.current);
       speedResetTimerRef.current = null;
