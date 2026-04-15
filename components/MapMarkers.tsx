@@ -1,5 +1,6 @@
 import * as Location from 'expo-location';
 import React, { memo, useMemo } from 'react';
+import { HIDDEN_VEHICLE_IDS } from '../constants';
 import { PointOfInterest } from '../types/init';
 import { Position } from '../types/position';
 import { Vehicle } from '../types/vehicle';
@@ -72,7 +73,10 @@ export const MapMarkers = memo(
     // Filter out vehicles outside the track range (keep all on-track vehicles to avoid native crash)
     const visibleVehicles = useMemo(() => {
       return processedVehicles.filter(
-        (v) => v.percentagePosition >= 0 && v.percentagePosition <= 100
+        (v) =>
+          v.percentagePosition >= 0 &&
+          v.percentagePosition <= 100 &&
+          !HIDDEN_VEHICLE_IDS.includes(v.id)
       );
     }, [processedVehicles]);
 
@@ -86,10 +90,7 @@ export const MapMarkers = memo(
 
         {/* User's current location - hidden during active trip */}
         {showUserLocation && (calculatedPosition || location) && (
-          <UserLocationMarker
-            calculatedPosition={calculatedPosition}
-            location={location}
-          />
+          <UserLocationMarker calculatedPosition={calculatedPosition} location={location} />
         )}
 
         {/* POI icons */}
@@ -116,10 +117,7 @@ export const MapMarkers = memo(
 
         {/* Designated passing position */}
         {passingPosition && (
-          <PassingPositionMarker
-            position={passingPosition}
-            zoomLevel={zoomLevel}
-          />
+          <PassingPositionMarker position={passingPosition} zoomLevel={zoomLevel} />
         )}
       </>
     );
