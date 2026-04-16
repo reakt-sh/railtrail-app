@@ -1,5 +1,22 @@
 # Changelog
 
+## v1.3.0
+
+### Verbesserungen
+
+- **Warnungen neben Location-Button:** Warnungen (Fahrzeug-Nähe, Bahnübergang) erscheinen nun neben statt über dem Location-Button.
+- **Geschwindigkeitsanzeige:** Speed-Icon entfernt und Schriftgröße reduziert für eine aufgeräumtere Darstellung.
+- **Geschwindigkeitswert verbessert:** Genauere Berechnung/Darstellung der Geschwindigkeit.
+- **POI-Texte aktualisiert:** Aktualisierte Beschreibungen für Points of Interest.
+- **POI verschoben:** Position eines POI korrigiert.
+
+### Bugfixes
+
+- **Map-Marker auf Android fehlte:** Fehlender Marker auf der Karte bei Android behoben.
+- **Demo-Railtrail Glitching:** Visuelles Glitching der Demo-Railtrail-Route behoben.
+- **Nummer 99 herausgefiltert:** Unerwünschter Eintrag (Nummer 99) wird nicht mehr angezeigt.
+- **Dummy-Track entfernt:** Nicht benötigter Test-Track aus den Daten entfernt.
+
 ## v1.2.0
 
 ### Bugfixes
