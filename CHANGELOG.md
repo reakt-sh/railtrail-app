@@ -8,7 +8,7 @@
 
 ### Verbesserungen
 
-- Distazen für Warnungen zu Draisinen in der Nähe angepasst.
+- Distanzen für Warnungen zu Draisinen in der Nähe angepasst.
 
 ## v1.1.1
 
