@@ -37,22 +37,24 @@ export const TripControls = memo(
   }: Props) => {
     return (
       <View style={styles.container} pointerEvents="box-none">
-        {isActive && (
-          <Warnings
-            localizedStrings={localizedStrings}
-            nextLevelCrossingDistance={warnings.nextLevelCrossing}
-            nextVehicleDistance={warnings.nextVehicle}
-            nextVehicleHeadingTowardsUserDistance={warnings.nextVehicleHeadingTowards}
-            speed={speed}
-          />
-        )}
         {isActive ? (
-          <LocationButton
-            onPress={onLocationButtonClick}
-            isActive={isFollowingUser}
-            accessibilityLabelActive={localizedStrings.t('a11yLocationTrackingActive')}
-            accessibilityLabelInactive={localizedStrings.t('a11yShowMyLocation')}
-          />
+          <View style={styles.activeRow} pointerEvents="box-none">
+            <View style={styles.warningsContainer} pointerEvents="box-none">
+              <Warnings
+                localizedStrings={localizedStrings}
+                nextLevelCrossingDistance={warnings.nextLevelCrossing}
+                nextVehicleDistance={warnings.nextVehicle}
+                nextVehicleHeadingTowardsUserDistance={warnings.nextVehicleHeadingTowards}
+                speed={speed}
+              />
+            </View>
+            <LocationButton
+              onPress={onLocationButtonClick}
+              isActive={isFollowingUser}
+              accessibilityLabelActive={localizedStrings.t('a11yLocationTrackingActive')}
+              accessibilityLabelInactive={localizedStrings.t('a11yShowMyLocation')}
+            />
+          </View>
         ) : (
           <View style={styles.startTripRow}>
             <Pressable
@@ -98,6 +100,15 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     zIndex: 0,
+  },
+  activeRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    paddingHorizontal: 8,
+    paddingBottom: 8,
+  },
+  warningsContainer: {
+    flex: 1,
   },
   startTripRow: {
     flexDirection: 'row',
