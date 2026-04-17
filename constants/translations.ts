@@ -220,8 +220,10 @@ const translations = {
     languageLabel: 'Language',
     languageValue: 'English',
 
-    // Funding
+    // Support,
+    inCooperationWith: 'In cooperation with:',
     fundedBy: 'Funded by:',
+    partOf: 'Part of:',
 
     // Trip Controls
     tripControlsSelectDraisine: 'Select railbike',
@@ -481,8 +483,10 @@ const translations = {
     languageLabel: 'Sprache',
     languageValue: 'Deutsch',
 
-    // Funding
+    // Support
+    inCooperationWith: 'In Kooperation mit:',
     fundedBy: 'Gefördert von:',
+    partOf: 'Bestandteil von:',
 
     // Trip Controls
     tripControlsSelectDraisine: 'Draisine auswählen',

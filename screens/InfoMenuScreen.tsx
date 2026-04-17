@@ -134,6 +134,7 @@ export const InfoMenuScreen = () => {
         </View>
 
         <View style={styles.supportSection}>
+          <Text style={textStyles.bodySmall}>{i18n.t('inCooperationWith')}</Text>
           <View style={styles.logoRow}>
             <Image
               source={require('../assets/logos/Stadtlogo_2022_Luetjenburg.png')}
@@ -142,10 +143,33 @@ export const InfoMenuScreen = () => {
             />
             <MalenteLogo width={80} height={64} />
           </View>
+          <View style={styles.logoRow}>
+            <Image
+              source={require('../assets/logos/Logo_CAU.png')}
+              style={styles.addixLogo}
+              resizeMode="contain"
+            />
+            <Image
+              source={require('../assets/logos/ADDIX.png')}
+              style={styles.addixLogo}
+              resizeMode="contain"
+            />
+            <Image
+              source={require('../assets/logos/UXMA.png')}
+              style={styles.addixLogo}
+              resizeMode="contain"
+            />
+          </View>
           <Text style={textStyles.bodySmall}>{i18n.t('fundedBy')}</Text>
           <Image
             source={require('../assets/logos/support_logo.png')}
             style={styles.supportLogo}
+            resizeMode="contain"
+          />
+          <Text style={textStyles.bodySmall}>{i18n.t('partOf')}</Text>
+          <Image
+            source={require('../assets/logos/reakt_black.png')}
+            style={styles.reaktLogo}
             resizeMode="contain"
           />
         </View>
@@ -227,15 +251,26 @@ const styles = StyleSheet.create({
   logoRow: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginBottom: 24,
+    marginBottom: 8,
+    marginTop: 8,
   },
   luetjenburgLogo: {
     width: 180,
     height: 64,
   },
+  addixLogo: {
+    width: '30%',
+    height: 64,
+  },
   supportLogo: {
     width: '90%',
-    height: 152,
+    height: 150,
     alignSelf: 'center',
+  },
+  reaktLogo: {
+    width: '90%',
+    height: 90,
+    alignSelf: 'center',
+    marginTop: 16,
   },
 });
