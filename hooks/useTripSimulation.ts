@@ -40,7 +40,7 @@ export const useTripSimulation = () => {
   }, []);
 
   const startSimulation = useCallback(
-    (callback: (loc: Location.LocationObject) => void) => {
+    (callback: (loc: Location.LocationObject, knownPercentage?: number) => void) => {
       if (intervalRef.current) return;
 
       percentageRef.current = 0;
@@ -107,7 +107,7 @@ export const useTripSimulation = () => {
           },
           timestamp: Date.now(),
         };
-        callback(fakeLocation);
+        callback(fakeLocation, percentageRef.current);
       }, 1000);
     },
     [dispatch, trackLength]

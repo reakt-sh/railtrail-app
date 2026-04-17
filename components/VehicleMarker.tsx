@@ -62,14 +62,12 @@ export const VehicleMarker = memo(({ vehicle, mapHeading, zoomLevel, visibleBoun
   const rotation = hasHeading ? vehicle.heading! - mapHeading : 0;
 
   return (
-    <MapLibreGL.PointAnnotation
-      key={`vehicle-${vehicle.id}`}
+    <MapLibreGL.MarkerView
       id={`vehicle-${vehicle.id}`}
       coordinate={[vehicle.pos.lng, vehicle.pos.lat]}
     >
       {isInBounds ? (
         <View
-          collapsable={false}
           style={[
             styles.container,
             {
@@ -98,9 +96,9 @@ export const VehicleMarker = memo(({ vehicle, mapHeading, zoomLevel, visibleBoun
           )}
         </View>
       ) : (
-        <View collapsable={false} style={styles.hidden} />
+        <View style={styles.hidden} />
       )}
-    </MapLibreGL.PointAnnotation>
+    </MapLibreGL.MarkerView>
   );
 });
 

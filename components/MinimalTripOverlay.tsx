@@ -17,59 +17,60 @@ interface ExternalProps {
 
 type Props = ExternalProps;
 
-export const MinimalTripOverlay = memo(({ speed, elapsedTime, distance, onPress, onStopTrip }: Props) => {
-  const insets = useSafeAreaInsets();
-  const formattedSpeed = formatSpeed(speed);
-  const i18n = useTranslation();
+export const MinimalTripOverlay = memo(
+  ({ speed, elapsedTime, distance, onPress, onStopTrip }: Props) => {
+    const insets = useSafeAreaInsets();
+    const formattedSpeed = formatSpeed(speed);
+    const i18n = useTranslation();
 
-  return (
-    <View style={[styles.container, { top: insets.top + 32 }]}>
-      {/* Left area: tap opens drawer */}
-      <Pressable
-        style={styles.infoArea}
-        onPress={onPress}
-        accessibilityRole="button"
-        accessibilityLabel="Open trip details"
-        accessibilityHint="Opens drawer with full trip information"
-      >
-        <View style={styles.menuContainer}>
-          <MaterialCommunityIcons name="speedometer" size={24} color={Color.white} />
-          <Text style={styles.menuLabel}>{i18n.t('menuButtonLabel')}</Text>
-        </View>
-        <View style={styles.divider} />
-        <View style={styles.speedContainer}>
-          <Text style={styles.speedValue}>{formattedSpeed}</Text>
-          <Text style={styles.speedUnit}>km/h</Text>
-        </View>
-        <View style={styles.divider} />
-        <View style={styles.timeContainer}>
-          <MaterialCommunityIcons name="clock-outline" size={16} color={Color.white} />
-          <Text style={styles.timeValue}>{elapsedTime}</Text>
-        </View>
-        <View style={styles.divider} />
-        <View style={styles.distanceContainer}>
-          <MaterialCommunityIcons name="map-marker-distance" size={16} color={Color.white} />
-          <Text style={styles.distanceValue}>{formatDistance(distance)}</Text>
-        </View>
-      </Pressable>
+    return (
+      <View style={[styles.container, { top: insets.top + 32 }]}>
+        {/* Left area: tap opens drawer */}
+        <Pressable
+          style={styles.infoArea}
+          onPress={onPress}
+          accessibilityRole="button"
+          accessibilityLabel="Open trip details"
+          accessibilityHint="Opens drawer with full trip information"
+        >
+          <View style={styles.menuContainer}>
+            <MaterialCommunityIcons name="speedometer" size={24} color={Color.white} />
+            <Text style={styles.menuLabel}>{i18n.t('menuButtonLabel')}</Text>
+          </View>
+          <View style={styles.divider} />
+          <View style={styles.speedContainer}>
+            <Text style={styles.speedValue}>{formattedSpeed}</Text>
+            <Text style={styles.speedUnit}>km/h</Text>
+          </View>
+          <View style={styles.divider} />
+          <View style={styles.timeContainer}>
+            <MaterialCommunityIcons name="clock-outline" size={16} color={Color.white} />
+            <Text style={styles.timeValue}>{elapsedTime}</Text>
+          </View>
+          <View style={styles.divider} />
+          <View style={styles.distanceContainer}>
+            <Text style={styles.distanceValue}>{formatDistance(distance)}</Text>
+          </View>
+        </Pressable>
 
-      {/* Right area: stop button */}
-      <View style={styles.stopDivider} />
-      <Pressable
-        style={styles.stopButton}
-        onPress={onStopTrip}
-        accessibilityRole="button"
-        accessibilityLabel="Stop trip"
-        accessibilityHint="Shows confirmation dialog to end the current trip"
-      >
-        <View style={styles.stopIconWrapper}>
-          <View style={styles.stopIconBackground} />
-          <MaterialCommunityIcons name="stop-circle" size={28} color={Color.stop} />
-        </View>
-      </Pressable>
-    </View>
-  );
-});
+        {/* Right area: stop button */}
+        <View style={styles.stopDivider} />
+        <Pressable
+          style={styles.stopButton}
+          onPress={onStopTrip}
+          accessibilityRole="button"
+          accessibilityLabel="Stop trip"
+          accessibilityHint="Shows confirmation dialog to end the current trip"
+        >
+          <View style={styles.stopIconWrapper}>
+            <View style={styles.stopIconBackground} />
+            <MaterialCommunityIcons name="stop-circle" size={28} color={Color.stop} />
+          </View>
+        </Pressable>
+      </View>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -106,12 +107,15 @@ const styles = StyleSheet.create({
   speedContainer: {
     flexDirection: 'row',
     alignItems: 'baseline',
+    // width: 52,
   },
   speedValue: {
     ...textStyles.headerTextHuge,
     color: Color.white,
-    fontSize: 32,
+    fontSize: 28,
     lineHeight: 36,
+    width: 30,
+    textAlign: 'center',
   },
   speedUnit: {
     ...textStyles.bodySmall,
@@ -146,7 +150,6 @@ const styles = StyleSheet.create({
   distanceValue: {
     ...textStyles.bodyMedium,
     color: Color.white,
-    marginLeft: 4,
   },
   stopButton: {
     paddingHorizontal: 14,

@@ -17,9 +17,9 @@ interface UseTripLifecycleParams {
   centerOnPosition: (lat: number, lng: number, heading: number, zoom?: number) => void;
   startForegroundTracking: (cb: (loc: Location.LocationObject) => void) => void;
   stopTracking: () => void;
-  startSimulation: (cb: (loc: Location.LocationObject) => void) => void;
+  startSimulation: (cb: (loc: Location.LocationObject, knownPercentage?: number) => void) => void;
   stopSimulation: () => void;
-  handleLocationUpdate: (loc: Location.LocationObject) => void;
+  handleLocationUpdate: (loc: Location.LocationObject, knownPercentage?: number) => void;
   resetTracking: () => void;
   setPendingTripData: (data: SavedTrip | null) => void;
   showSummary: () => void;

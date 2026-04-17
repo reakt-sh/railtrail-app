@@ -42,7 +42,7 @@ export const Snackbar = ({ title, message, state, onPress = () => {} }: Props) =
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 8,
+    marginRight: 8,
     marginBottom: 8,
     padding: 16,
     borderRadius: 16,

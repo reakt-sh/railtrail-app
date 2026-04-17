@@ -14,7 +14,7 @@ import { Color } from '../constants/color';
 import { textStyles } from '../constants/text-styles';
 import { reloadVehicles } from '../effect-actions/api-actions';
 import { useTranslation } from '../hooks';
-import { SIMULATION_VEHICLE_ID } from '../constants';
+import { SIMULATION_VEHICLE_ID, HIDDEN_VEHICLE_IDS } from '../constants';
 import { Vehicle } from '../types/vehicle';
 
 interface ExternalProps {
@@ -58,7 +58,7 @@ export const VehicleSelectionBottomSheet = memo(
     };
 
     const availableVehicles = useMemo(() => {
-      let filtered = vehicles;
+      let filtered = vehicles.filter((v) => !HIDDEN_VEHICLE_IDS.includes(v.id));
       // Optionally exclude the current vehicle (for vehicle change)
       if (excludeVehicleId != null) {
         filtered = filtered.filter((v) => v.id !== excludeVehicleId);

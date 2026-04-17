@@ -1,9 +1,5 @@
 import { I18n } from 'i18n-js';
-import {
-  LEVEL_CROSSING_WARNING_DISTANCE,
-  VEHICLE_HEADING_TOWARDS_USER_WARNING_DISTANCE,
-  VEHICLE_WARNING_DISTANCE,
-} from '../constants';
+import { warningDistance } from '../constants';
 import { Snackbar, SnackbarState } from './Snackbar';
 
 interface ExternalProps {
@@ -60,28 +56,28 @@ export const Warnings = ({
   if (nextLevelCrossingDistance != null && nextVehicleHeadingTowardsUserDistance != null) {
     if (
       isMoving &&
-      nextVehicleHeadingTowardsUserDistance <= VEHICLE_HEADING_TOWARDS_USER_WARNING_DISTANCE &&
+      nextVehicleHeadingTowardsUserDistance <= warningDistance.vehicleHeadingTowardsUser &&
       nextVehicleHeadingTowardsUserDistance <= nextLevelCrossingDistance
     ) {
       return VehicleHeadingTowardsUserWarning;
-    } else if (nextLevelCrossingDistance <= LEVEL_CROSSING_WARNING_DISTANCE) {
+    } else if (nextLevelCrossingDistance <= warningDistance.levelCrossing) {
       return LevelCrossingWarning;
     } else return null;
   } else if (
     isMoving &&
     nextVehicleHeadingTowardsUserDistance != null &&
-    nextVehicleHeadingTowardsUserDistance <= VEHICLE_HEADING_TOWARDS_USER_WARNING_DISTANCE
+    nextVehicleHeadingTowardsUserDistance <= warningDistance.vehicleHeadingTowardsUser
   ) {
     return VehicleHeadingTowardsUserWarning;
   } else if (
     nextLevelCrossingDistance != null &&
-    nextLevelCrossingDistance <= LEVEL_CROSSING_WARNING_DISTANCE
+    nextLevelCrossingDistance <= warningDistance.levelCrossing
   ) {
     return LevelCrossingWarning;
   } else if (
     isMoving &&
     nextVehicleDistance != null &&
-    nextVehicleDistance <= VEHICLE_WARNING_DISTANCE
+    nextVehicleDistance <= warningDistance.vehicle
   ) {
     return VehicleWarning;
   } else return null;

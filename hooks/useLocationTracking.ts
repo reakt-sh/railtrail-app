@@ -1,34 +1,29 @@
 import * as Location from 'expo-location';
-import { useCallback, useState } from 'react';
-import {
-  setForegroundLocationListener,
-  stopForegroundLocationListener,
-} from '../effect-actions/location';
+import { useCallback, useRef } from 'react';
+import { setForegroundLocationListener } from '../effect-actions/location';
 
-interface UseLocationTrackingReturn {
-  locationSubscription: Location.LocationSubscription | null;
-  startForegroundTracking: (onLocationUpdate: (loc: Location.LocationObject) => void) => void;
-  stopTracking: () => void;
-}
-
-export const useLocationTracking = (): UseLocationTrackingReturn => {
-  const [locationSubscription, setLocationSubscription] =
-    useState<Location.LocationSubscription | null>(null);
+export const useLocationTracking = () => {
+  const subscriptionRef = useRef<Location.LocationSubscription | null>(null);
 
   const startForegroundTracking = useCallback(
-    (onLocationUpdate: (loc: Location.LocationObject) => void) => {
-      setForegroundLocationListener(onLocationUpdate, setLocationSubscription);
+    async (onLocationUpdate: (loc: Location.LocationObject) => void) => {
+      // Alte Subscription aufräumen falls vorhanden
+      if (subscriptionRef.current) {
+        subscriptionRef.current.remove();
+        subscriptionRef.current = null;
+      }
+      const subscription = await setForegroundLocationListener(onLocationUpdate);
+      subscriptionRef.current = subscription;
     },
     []
   );
 
   const stopTracking = useCallback(() => {
-    stopForegroundLocationListener(locationSubscription);
-  }, [locationSubscription]);
+    if (subscriptionRef.current) {
+      subscriptionRef.current.remove();
+      subscriptionRef.current = null;
+    }
+  }, []);
 
-  return {
-    locationSubscription,
-    startForegroundTracking,
-    stopTracking,
-  };
+  return { startForegroundTracking, stopTracking };
 };
