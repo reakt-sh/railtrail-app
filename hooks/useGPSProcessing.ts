@@ -72,9 +72,10 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
             const timeDeltaMs = loc.timestamp - lastLocationRef.current.timestamp;
             const timeDeltaS = timeDeltaMs / 1000;
 
-            // Distanz immer addieren (echte zurückgelegte Strecke)
+            // Distanz nur addieren wenn kein großer Zeitsprung (z.B. App im Hintergrund)
+            const isGap = timeDeltaMs > GPS_GAP_THRESHOLD_MS;
             dispatch(TripAction.batchUpdate({
-              addDistance: distanceM,
+              addDistance: isGap ? undefined : distanceM,
               lastPercentage: null,
               warnings: { nextVehicle: null, nextVehicleHeadingTowards: null, nextLevelCrossing: null, nextTurningPoint: null, secondTurningPoint: null },
             }));
