@@ -4,6 +4,7 @@
 
 ### Verbesserungen
 
+- **Swipe-Back-Geste auf Android:** In den Info-Screens kann nun per Wisch nach rechts zurücknavigiert werden — sowohl innerhalb des Info-Stacks als auch vom Info-Menü zurück zum Karten-Tab. Auf iOS bleibt die native Geste unverändert.
 - **Neue Logos im Info-Screen:** Logos von CAU, ADDIX und UXMA hinzugefügt, sowie "reakt"-Logo. Neue Sektionen "In Kooperation mit" und "Bestandteil von" ergänzt.
 - **Tooltip-Textgröße erhöht:** Schriftgröße in POI-Tooltips (Titel und Beschreibung) auf 16px erhöht, Hint-Textstil global von 12px auf 14px angepasst.
 - **Ungenutzte Packages entfernt:** `axios`, `expo-constants`, `expo-file-system`, `expo-media-library`, `make-plural` und `react-native-webview` aus den Dependencies entfernt.

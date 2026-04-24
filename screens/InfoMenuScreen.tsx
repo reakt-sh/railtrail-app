@@ -8,6 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { DraisineIcon } from '../assets/icons';
 import AppLogo from '../assets/icons/AppLogo';
 import MalenteLogo from '../assets/icons/MalenteLogo';
+import { AndroidSwipeBack } from '../components/AndroidSwipeBack';
 import { Color, Locale } from '../constants';
 import { textStyles } from '../constants/text-styles';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -49,6 +50,7 @@ const menuItems: MenuItem[] = [
 
 export const InfoMenuScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<InfoStackParamList>>();
+  const parentNavigation = useNavigation();
   const i18n = useTranslation();
   const { locale, setLocale } = useLanguage();
 
@@ -59,6 +61,7 @@ export const InfoMenuScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <StatusBar style="light" />
+      <AndroidSwipeBack onSwipeBack={() => parentNavigation.navigate(i18n.t('navigationMap') as never)}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View style={styles.logoContainer}>
           <AppLogo width={'100%'} height={112} />
@@ -174,6 +177,7 @@ export const InfoMenuScreen = () => {
           />
         </View>
       </ScrollView>
+      </AndroidSwipeBack>
     </SafeAreaView>
   );
 };

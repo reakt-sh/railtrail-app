@@ -1,4 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from 'react';
+import { AndroidSwipeBack } from '../components/AndroidSwipeBack';
 import { CustomHeader } from '../components/CustomHeader';
 import { useTranslation } from '../hooks';
 import {
@@ -12,6 +14,12 @@ import {
   RailwayProjectsScreen,
   TripHistoryScreen,
 } from '../screens';
+
+const withSwipeBack = (Component: React.ComponentType<any>) => (props: any) => (
+  <AndroidSwipeBack onSwipeBack={() => props.navigation.goBack()}>
+    <Component {...props} />
+  </AndroidSwipeBack>
+);
 
 export type InfoStackParamList = {
   InfoMenu: undefined;
@@ -40,42 +48,42 @@ export const InfoNavigation = () => {
       <Stack.Screen name="InfoMenu" component={InfoMenuScreen} options={{ headerShown: false }} />
       <Stack.Screen
         name="DraisineInfo"
-        component={DraisineInfoScreen}
+        component={withSwipeBack(DraisineInfoScreen)}
         options={{ title: localizedStrings.t('infoTitleDraisineInfo') }}
       />
       <Stack.Screen
         name="TripHistory"
-        component={TripHistoryScreen}
+        component={withSwipeBack(TripHistoryScreen)}
         options={{ title: localizedStrings.t('infoTitleTripHistory') }}
       />
       <Stack.Screen
         name="GoodToKnow"
-        component={GoodToKnowScreen}
+        component={withSwipeBack(GoodToKnowScreen)}
         options={{ title: localizedStrings.t('infoTitleGoodToKnow') }}
       />
       <Stack.Screen
         name="Contacts"
-        component={ContactsScreen}
+        component={withSwipeBack(ContactsScreen)}
         options={{ title: localizedStrings.t('infoTitleContacts') }}
       />
       <Stack.Screen
         name="RailwayProjects"
-        component={RailwayProjectsScreen}
+        component={withSwipeBack(RailwayProjectsScreen)}
         options={{ title: localizedStrings.t('infoTitleRailwayProjects') }}
       />
       <Stack.Screen
         name="RailwayHistory"
-        component={RailwayHistoryScreen}
+        component={withSwipeBack(RailwayHistoryScreen)}
         options={{ title: localizedStrings.t('infoTitleRailwayHistory') }}
       />
       <Stack.Screen
         name="Imprint"
-        component={ImprintScreen}
+        component={withSwipeBack(ImprintScreen)}
         options={{ title: localizedStrings.t('infoTitleImprint') }}
       />
       <Stack.Screen
         name="PrivacyPolicy"
-        component={PrivacyPolicyScreen}
+        component={withSwipeBack(PrivacyPolicyScreen)}
         options={{ title: localizedStrings.t('infoTitlePrivacyPolicy') }}
       />
     </Stack.Navigator>
