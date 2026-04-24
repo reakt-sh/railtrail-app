@@ -2,6 +2,11 @@
 
 ## v1.4.0
 
+### Bugfixes
+
+- **Distanzsprung nach App-Backgrounding (Lokaler Modus):** Wenn die App im Hintergrund war, wurde die Haversine-Distanz zwischen letzter und aktueller Position fälschlicherweise zur Gesamtdistanz addiert — das erzeugte einen fehlerhaften Sprung. Fix: Gap Detection im lokalen Modus, die bei großem Zeitsprung die Distanz überspringt.
+- **Geschwindigkeit ging im Stillstand nicht auf 0 (Lokaler Modus):** GPS-Jitter im Stillstand erzeugte scheinbare Geschwindigkeiten von 3–5 km/h. Fix: Bewegung unterhalb der GPS-Genauigkeit wird als Rauschen ignoriert und nicht in die Geschwindigkeitsberechnung einbezogen.
+
 ### Verbesserungen
 
 - **Swipe-Back-Geste auf Android:** In den Info-Screens kann nun per Wisch nach rechts zurücknavigiert werden — sowohl innerhalb des Info-Stacks als auch vom Info-Menü zurück zum Karten-Tab. Auf iOS bleibt die native Geste unverändert.

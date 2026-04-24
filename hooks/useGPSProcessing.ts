@@ -80,10 +80,12 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
               warnings: { nextVehicle: null, nextVehicleHeadingTowards: null, nextLevelCrossing: null, nextTurningPoint: null, secondTurningPoint: null },
             }));
 
-            // Speed nur berechnen wenn kein großer Zeitsprung (z.B. App im Hintergrund)
-            if (timeDeltaMs <= GPS_GAP_THRESHOLD_MS && timeDeltaS > 0) {
+            // Speed nur berechnen wenn kein großer Zeitsprung und Bewegung über GPS-Genauigkeit
+            // (GPS-Jitter im Stillstand erzeugt sonst scheinbare Geschwindigkeiten)
+            const accuracy = loc.coords.accuracy ?? MAX_GPS_ACCURACY;
+            if (timeDeltaMs <= GPS_GAP_THRESHOLD_MS && timeDeltaS > 0 && distanceM > accuracy) {
               rawSpeedMs = distanceM / timeDeltaS;
-            } else {
+            } else if (timeDeltaMs > GPS_GAP_THRESHOLD_MS) {
               smoothedSpeedRef.current = 0;
             }
           }
