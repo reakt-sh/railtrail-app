@@ -1,5 +1,20 @@
 # Changelog
 
+## v1.5.0
+
+### Bugfixes
+
+- **Geschwindigkeit sinkt beim Anhalten nicht auf 0:** Die EMA-Glättung ließ die km/h-Anzeige nach dem Anhalten ~6 Sekunden lang langsam abklingen, statt sofort 0 zu zeigen. Fix: Bei Stillstand (Rohgeschwindigkeit unter 2 km/h) wird die Glättung übersprungen und sofort 0 angezeigt.
+
+### Neue Features
+
+- **Distanzmessung im Hintergrund:** Background Location Tracking wiederhergestellt. Während einer aktiven Fahrt wechselt die App auf `startLocationUpdatesAsync`, sodass GPS-Updates auch im Hintergrund ankommen und die Distanz korrekt weitergemessen wird. Beim Trip-Start wird die Background-Location-Permission angefragt (falls noch nicht erteilt). Beim Trip-Ende wird auf Foreground-Tracking zurückgewechselt.
+- **Track-basierter Distanz-Fallback:** Im Normal-Modus (Track-Projektion) wird bei einem GPS-Gap (z.B. App-Resume) die verpasste Distanz anhand der Track-Positionen berechnet, statt sie zu verwerfen. Da die Draisine auf dem Gleis fährt, entspricht die Track-Distanz der tatsächlich gefahrenen Strecke.
+
+### Sonstiges
+
+- Datenschutzerklärung Abschnitt 3.2 aktualisiert: Erläutert die Hintergrund-Standorterfassung während aktiver Fahrten.
+
 ## v1.4.0
 
 ### Bugfixes

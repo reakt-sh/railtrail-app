@@ -12,6 +12,7 @@ export interface Track {
 
 export interface Permissions {
   readonly foreground: boolean;
+  readonly background: boolean;
 }
 
 export interface AppState {
@@ -65,6 +66,7 @@ export const initialAppState: AppState = {
   location: null,
   permissions: {
     foreground: false,
+    background: false,
   },
 };
 

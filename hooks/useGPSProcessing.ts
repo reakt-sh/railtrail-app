@@ -6,7 +6,7 @@ import { updateDistances } from '../effect-actions/trip-actions';
 import { AppAction, AppActionType } from '../redux/app';
 import { ReduxAppState } from '../redux/init';
 import { TripAction, TripActionType } from '../redux/trip';
-import { LOCAL_VEHICLE_ID, SIMULATION_VEHICLE_ID, MAX_GPS_ACCURACY, GPS_SPEED_RESET_TIMEOUT_MS, GPS_GAP_THRESHOLD_MS } from '../constants';
+import { LOCAL_VEHICLE_ID, SIMULATION_VEHICLE_ID, MAX_GPS_ACCURACY, GPS_SPEED_RESET_TIMEOUT_MS, GPS_GAP_THRESHOLD_MS, MIN_DISTANCE_JITTER_FILTER } from '../constants';
 import { calculateDistanceFromCoordinates, percentToDistance } from '../util/calculators';
 import { processSpeed } from '../util/speed';
 import { positionToPercentage, percentageToPosition } from '../util/track-loader';
@@ -73,9 +73,11 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
             const timeDeltaS = timeDeltaMs / 1000;
 
             // Distanz nur addieren wenn kein großer Zeitsprung (z.B. App im Hintergrund)
+            // und Bewegung über Jitter-Schwelle (GPS-Drift im Stillstand filtern)
             const isGap = timeDeltaMs > GPS_GAP_THRESHOLD_MS;
+            const isSignificantMovement = distanceM >= MIN_DISTANCE_JITTER_FILTER;
             dispatch(TripAction.batchUpdate({
-              addDistance: isGap ? undefined : distanceM,
+              addDistance: isGap || !isSignificantMovement ? undefined : distanceM,
               lastPercentage: null,
               warnings: { nextVehicle: null, nextVehicleHeadingTowards: null, nextLevelCrossing: null, nextTurningPoint: null, secondTurningPoint: null },
             }));
@@ -108,8 +110,15 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
           lastUpdateTimestampRef.current = now;
 
           if (prevTimestamp > 0 && (now - prevTimestamp) > GPS_GAP_THRESHOLD_MS) {
+            // Track-basierter Fallback: Distanz anhand der Track-Positionen berechnen,
+            // da die Draisine nur auf dem Gleis fährt
+            const lastPct = state.trip.position.percentage;
+            const trackDistance = lastPct != null && track.length
+              ? percentToDistance(track.length, Math.abs(percentage - lastPct))
+              : undefined;
+
             dispatch(TripAction.batchUpdate({
-              addDistance: undefined,
+              addDistance: trackDistance,
               lastPercentage: percentage,
               warnings: { nextVehicle: null, nextVehicleHeadingTowards: null, nextLevelCrossing: null, nextTurningPoint: null, secondTurningPoint: null },
             }));

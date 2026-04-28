@@ -3,6 +3,7 @@ export { Color } from './color';
 export { Font } from './fonts';
 export { Locale } from './locale';
 export {
+  BACKGROUND_LOCATION_TASK,
   GPS_GAP_THRESHOLD_MS,
   GPS_SPEED_RESET_TIMEOUT_MS,
   MAX_GPS_ACCURACY,

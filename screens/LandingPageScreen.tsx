@@ -12,6 +12,7 @@ import { privacySections, StorageKeys } from '../constants';
 import { Color } from '../constants/color';
 import { textStyles } from '../constants/text-styles';
 import {
+  getBackgroundPermissionStatus,
   getForegroundPermissionStatus,
   requestForegroundPermission,
 } from '../effect-actions/permissions';
@@ -26,13 +27,17 @@ export const LandingPageScreen = ({ navigation }: any) => {
 
   useEffect(() => {
     const checkInitialState = async () => {
-      const [isPermissionGranted, privacyAccepted] = await Promise.all([
+      const [isPermissionGranted, isBackgroundGranted, privacyAccepted] = await Promise.all([
         getForegroundPermissionStatus(),
+        getBackgroundPermissionStatus(),
         AsyncStorage.getItem(StorageKeys.PRIVACY_ACCEPTED),
       ]);
 
-      if (isPermissionGranted) {
-        dispatch(AppAction.setPermissions({ foreground: true }));
+      if (isPermissionGranted || isBackgroundGranted) {
+        dispatch(AppAction.setPermissions({
+          foreground: isPermissionGranted,
+          background: isBackgroundGranted,
+        }));
       }
 
       // Skip landing page if both privacy accepted and permission granted

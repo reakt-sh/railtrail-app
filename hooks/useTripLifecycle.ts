@@ -17,6 +17,7 @@ interface UseTripLifecycleParams {
   centerOnPosition: (lat: number, lng: number, heading: number, zoom?: number) => void;
   startForegroundTracking: (cb: (loc: Location.LocationObject) => void) => void;
   stopTracking: () => void;
+  requestBackgroundAndSwitch: (cb: (loc: Location.LocationObject) => void) => void;
   startSimulation: (cb: (loc: Location.LocationObject, knownPercentage?: number) => void) => void;
   stopSimulation: () => void;
   handleLocationUpdate: (loc: Location.LocationObject, knownPercentage?: number) => void;
@@ -41,6 +42,7 @@ export const useTripLifecycle = ({
   centerOnPosition,
   startForegroundTracking,
   stopTracking,
+  requestBackgroundAndSwitch,
   startSimulation,
   stopSimulation,
   handleLocationUpdate,
@@ -115,12 +117,14 @@ export const useTripLifecycle = ({
             dispatch(TripAction.stop());
             tripStartTimeRef.current = null;
 
-            // If demo trip, stop simulation and restart real GPS
+            // Stop background/simulation tracking and restart foreground GPS
             if (isDemoRef.current) {
               stopSimulation();
-              startForegroundTracking(handleLocationUpdate);
               isDemoRef.current = false;
+            } else {
+              stopTracking();
             }
+            startForegroundTracking(handleLocationUpdate);
 
             // Show trip summary, then feedback
             setPendingTripData(savedTrip);
@@ -129,7 +133,7 @@ export const useTripLifecycle = ({
         },
       ]
     );
-  }, [localizedStrings, store, dispatch, stopSimulation, startForegroundTracking, handleLocationUpdate, setPendingTripData, showSummary]);
+  }, [localizedStrings, store, dispatch, stopSimulation, stopTracking, startForegroundTracking, handleLocationUpdate, setPendingTripData, showSummary]);
 
   const handleStartTrip = useCallback(() => {
     setIsVehicleSelectionVisible(true);
@@ -149,11 +153,10 @@ export const useTripLifecycle = ({
         isDemoRef.current = true;
         stopTracking(); // Stop real GPS
         startSimulation(handleLocationUpdate); // Feed simulated positions
-      } else if (vehicle.id === LOCAL_VEHICLE_ID) {
-        isDemoRef.current = false;
-        // Real GPS is already running
       } else {
         isDemoRef.current = false;
+        // Switch to background tracking for continuous updates during trip
+        requestBackgroundAndSwitch(handleLocationUpdate);
       }
 
       // Zoom: for local mode use last known GPS location, otherwise vehicle position
@@ -167,7 +170,7 @@ export const useTripLifecycle = ({
         centerOnPosition(vehicle.pos.lat, vehicle.pos.lng, vehicle.heading ?? 0, 17);
       }
     },
-    [dispatch, setIsFollowingUser, centerOnPosition, stopTracking, startSimulation, handleLocationUpdate, resetTracking]
+    [dispatch, setIsFollowingUser, centerOnPosition, stopTracking, requestBackgroundAndSwitch, startSimulation, handleLocationUpdate, resetTracking, store]
   );
 
   const handleChangeVehicle = useCallback(
