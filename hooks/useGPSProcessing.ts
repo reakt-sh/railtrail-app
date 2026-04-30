@@ -6,7 +6,7 @@ import { updateDistances } from '../effect-actions/trip-actions';
 import { AppAction, AppActionType } from '../redux/app';
 import { ReduxAppState } from '../redux/init';
 import { TripAction, TripActionType } from '../redux/trip';
-import { LOCAL_VEHICLE_ID, SIMULATION_VEHICLE_ID, MAX_GPS_ACCURACY, GPS_SPEED_RESET_TIMEOUT_MS, GPS_GAP_THRESHOLD_MS, MIN_DISTANCE_JITTER_FILTER } from '../constants';
+import { LOCAL_VEHICLE_ID, SIMULATION_VEHICLE_ID, MAX_GPS_ACCURACY, GPS_SPEED_RESET_TIMEOUT_MS, GPS_GAP_THRESHOLD_MS, MIN_DISTANCE_JITTER_FILTER, MAX_PLAUSIBLE_SPEED_MS } from '../constants';
 import { calculateDistanceFromCoordinates, percentToDistance } from '../util/calculators';
 import { processSpeed } from '../util/speed';
 import { positionToPercentage, percentageToPosition } from '../util/track-loader';
@@ -59,9 +59,14 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
           const calculated = { lat: loc.coords.latitude, lng: loc.coords.longitude };
           dispatch(TripAction.setPosition({ percentage: null, calculated }));
 
-          // Speed + distance from Haversine delta
-          // (iOS GPS speed is unreliable — returns 0 or -1)
+          // Speed-Quelle: GPS-eigener Wert (loc.coords.speed) ist auf modernen iOS/Android-
+          // Geräten zuverlässig und reagiert auch bei langsamen Bewegungen, bei denen die
+          // Haversine-Berechnung scheitert (Distanz < accuracy). Haversine als Fallback,
+          // wenn GPS keinen Speed liefert (-1 / null).
           let rawSpeedMs = 0;
+          const gpsSpeedMs = loc.coords.speed;
+          const hasValidGpsSpeed = gpsSpeedMs != null && gpsSpeedMs >= 0;
+
           if (lastLocationRef.current) {
             const distanceM = calculateDistanceFromCoordinates(
               lastLocationRef.current.coords.latitude,
@@ -72,24 +77,35 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
             const timeDeltaMs = loc.timestamp - lastLocationRef.current.timestamp;
             const timeDeltaS = timeDeltaMs / 1000;
 
-            // Distanz nur addieren wenn kein großer Zeitsprung (z.B. App im Hintergrund)
-            // und Bewegung über Jitter-Schwelle (GPS-Drift im Stillstand filtern)
             const isGap = timeDeltaMs > GPS_GAP_THRESHOLD_MS;
             const isSignificantMovement = distanceM >= MIN_DISTANCE_JITTER_FILTER;
+            // Plausibilität: implizite Geschwindigkeit darf MAX_PLAUSIBLE_SPEED_MS nicht überschreiten
+            // (filtert GPS-Sprünge nach Empfangsverlust). Akzeptiert Lücken, solange sie zu einer
+            // realistischen Geschwindigkeit passen — so geht Distanz im Hintergrund nicht verloren.
+            const isPlausible =
+              timeDeltaS > 0 && distanceM / timeDeltaS <= MAX_PLAUSIBLE_SPEED_MS;
+            const shouldAddDistance = isSignificantMovement && isPlausible;
+
             dispatch(TripAction.batchUpdate({
-              addDistance: isGap || !isSignificantMovement ? undefined : distanceM,
+              addDistance: shouldAddDistance ? distanceM : undefined,
               lastPercentage: null,
               warnings: { nextVehicle: null, nextVehicleHeadingTowards: null, nextLevelCrossing: null, nextTurningPoint: null, secondTurningPoint: null },
             }));
 
-            // Speed nur berechnen wenn kein großer Zeitsprung und Bewegung über GPS-Genauigkeit
-            // (GPS-Jitter im Stillstand erzeugt sonst scheinbare Geschwindigkeiten)
-            const accuracy = loc.coords.accuracy ?? MAX_GPS_ACCURACY;
-            if (timeDeltaMs <= GPS_GAP_THRESHOLD_MS && timeDeltaS > 0 && distanceM > accuracy) {
-              rawSpeedMs = distanceM / timeDeltaS;
-            } else if (timeDeltaMs > GPS_GAP_THRESHOLD_MS) {
+            // Speed-Berechnung mit Fallback-Hierarchie:
+            // 1. GPS-Speed (primär, funktioniert auch bei langsamer Fahrt)
+            // 2. Haversine-Speed (Fallback bei iOS-Altgeräten / GPS ohne Speed)
+            // Bei Gap (Hintergrund-Resume) auf 0 zurücksetzen.
+            if (isGap) {
               smoothedSpeedRef.current = 0;
+            } else if (hasValidGpsSpeed) {
+              rawSpeedMs = gpsSpeedMs > MAX_PLAUSIBLE_SPEED_MS ? 0 : gpsSpeedMs;
+            } else if (timeDeltaS > 0 && isSignificantMovement && isPlausible) {
+              rawSpeedMs = distanceM / timeDeltaS;
             }
+          } else if (hasValidGpsSpeed) {
+            // Erstes GPS-Update mit gültigem Speed: direkt übernehmen
+            rawSpeedMs = gpsSpeedMs > MAX_PLAUSIBLE_SPEED_MS ? 0 : gpsSpeedMs;
           }
           smoothedSpeedRef.current = processSpeed(rawSpeedMs, smoothedSpeedRef.current);
         } else {
@@ -124,16 +140,21 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
             }));
           }
 
-          // Speed from GPS (m/s → km/h) with EMA smoothing
+          // GPS-Rohgeschwindigkeit (m/s) mit Plausibilitäts-Cap: Spikes nach
+          // Empfangsverlust (Tunnel/Wald) verwerfen statt in den Tacho durchzulassen.
+          const rawTrackSpeedMs = loc.coords.speed ?? 0;
+          const sanitizedTrackSpeedMs =
+            rawTrackSpeedMs > MAX_PLAUSIBLE_SPEED_MS ? 0 : rawTrackSpeedMs;
           smoothedSpeedRef.current = processSpeed(
-            loc.coords.speed ?? 0,
+            sanitizedTrackSpeedMs,
             smoothedSpeedRef.current
           );
 
           // Distance: handled by updateDistances() via position.percentage changes
         }
 
-        dispatch(TripAction.setMotion({ speed: smoothedSpeedRef.current }));
+        // smoothedSpeedRef ist in m/s; Redux/UI erwarten km/h.
+        dispatch(TripAction.setMotion({ speed: smoothedSpeedRef.current * 3.6 }));
 
         // Reset speed to 0 if no GPS update arrives within timeout (local mode only)
         if (tripVehicle.id === LOCAL_VEHICLE_ID) {
