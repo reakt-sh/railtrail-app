@@ -44,7 +44,6 @@ export const MinimalTripOverlay = memo(
           </View>
           <View style={styles.divider} />
           <View style={styles.timeContainer}>
-            <MaterialCommunityIcons name="clock-outline" size={16} color={Color.white} />
             <Text style={styles.timeValue}>{elapsedTime}</Text>
           </View>
           <View style={styles.divider} />
