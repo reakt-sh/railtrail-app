@@ -84,10 +84,14 @@ npx expo run:ios    # oder run:android
 
 ### Release Build
 
-Für Release Builds auf physischen Testgeräten (ohne Xcode/Android Studio):
+Für Release Builds auf physischen Testgeräten (ohne Xcode / Android Studio):
 
 ```bash
- npx expo run:ios --device --configuration Release
+# iOS
+npm run ios:release
+
+# Android
+npx expo run:android --variant release
 ```
 
 ### Expo Go (eingeschränkt)
@@ -116,6 +120,12 @@ API_TIMEOUT=3000
 
 # Map Tile Server
 MAP_STYLE_URL=https://tiles.openfreemap.org/styles/liberty
+
+# Feedback API Endpoint (optional – wenn nicht gesetzt, wird kein Feedback gesendet)
+FEEDBACK_URL=https://example.com/api/feedback
+
+# Track-Datei (dev-dummy | malente-luetjenburg)
+TRACK_FILE=malente-luetjenburg
 ```
 
 ### Backend
@@ -134,13 +144,17 @@ Die App verbindet sich per WebSocket für Echtzeit-Positionsupdates der Fahrzeug
 ├── api/              # Backend-Kommunikation
 ├── components/       # Wiederverwendbare UI-Komponenten
 ├── screens/          # Screen-Komponenten
+├── navigation/       # React Navigation Setup
 ├── redux/            # State Management
+├── contexts/         # React Contexts (Permissions, Trip-Lifecycle)
 ├── hooks/            # Custom React Hooks
 ├── effect-actions/   # Side-Effect Logik (API, Location)
-├── navigation/       # React Navigation Setup
+├── constants/        # Design-Tokens, Farben, Fonts, App-Konstanten
 ├── types/            # TypeScript Type Definitions
-├── util/             # Utility-Funktionen & Konstanten
-├── values/           # Design-Tokens (Farben, etc.)
+├── util/             # Utility-Funktionen
+├── scripts/          # Build-Helfer (z. B. EAS create-env.sh)
+├── patches/          # patch-package-Patches für Dependencies
+├── docs/             # Projektdokumentation
 └── assets/           # Icons, Bilder, Splash
 ```
 
@@ -169,16 +183,6 @@ npx expo prebuild --platform ios
 npx expo run:ios
 ```
 
-### iOS: Swift Compiler Error in `expo-localization`
-
-Falls ein Fehler wie `Switch must be exhaustive` in `LocalizationModule.swift` auftritt:
-
-Der Patch in `/patches/expo-localization+16.0.1.patch` behebt dieses Problem automatisch bei `npm install`. Falls der Patch nicht angewendet wurde:
-
-```bash
-npx patch-package
-```
-
 ### Android: `Cannot find native module`
 
 Native Module fehlen nach Änderungen:
@@ -201,7 +205,7 @@ Diese App verwendet `patch-package` für Fixes in Dependencies. Patches liegen i
 
 Aktuell gepatchte Packages:
 
-- `expo-localization` - Swift exhaustive switch fix für neuere Xcode-Versionen
+- `@maplibre/maplibre-react-native` - Null-Check für Subview in `MLRNMapView.m` (verhindert iOS-Crash beim Mounten)
 
 ## Mitwirken
 
