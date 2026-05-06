@@ -1,5 +1,34 @@
 # Changelog
 
+## v1.5.0
+
+### Bugfixes
+
+- **Geschwindigkeit sinkt beim Anhalten nicht auf 0:** Die EMA-Glättung ließ die km/h-Anzeige nach dem Anhalten ~6 Sekunden lang langsam abklingen, statt sofort 0 zu zeigen. Fix: Bei Stillstand (Rohgeschwindigkeit unter 2 km/h) wird die Glättung übersprungen und sofort 0 angezeigt.
+
+### Neue Features
+
+- **Distanzmessung im Hintergrund:** Background Location Tracking wiederhergestellt. Während einer aktiven Fahrt wechselt die App auf `startLocationUpdatesAsync`, sodass GPS-Updates auch im Hintergrund ankommen und die Distanz korrekt weitergemessen wird. Beim Trip-Start wird die Background-Location-Permission angefragt (falls noch nicht erteilt). Beim Trip-Ende wird auf Foreground-Tracking zurückgewechselt.
+- **Track-basierter Distanz-Fallback:** Im Normal-Modus (Track-Projektion) wird bei einem GPS-Gap (z.B. App-Resume) die verpasste Distanz anhand der Track-Positionen berechnet, statt sie zu verwerfen. Da die Draisine auf dem Gleis fährt, entspricht die Track-Distanz der tatsächlich gefahrenen Strecke.
+
+### Sonstiges
+
+- Datenschutzerklärung Abschnitt 3.2 aktualisiert: Erläutert die Hintergrund-Standorterfassung während aktiver Fahrten.
+
+## v1.4.0
+
+### Bugfixes
+
+- **Distanzsprung nach App-Backgrounding (Lokaler Modus):** Wenn die App im Hintergrund war, wurde die Haversine-Distanz zwischen letzter und aktueller Position fälschlicherweise zur Gesamtdistanz addiert — das erzeugte einen fehlerhaften Sprung. Fix: Gap Detection im lokalen Modus, die bei großem Zeitsprung die Distanz überspringt.
+- **Geschwindigkeit ging im Stillstand nicht auf 0 (Lokaler Modus):** GPS-Jitter im Stillstand erzeugte scheinbare Geschwindigkeiten von 3–5 km/h. Fix: Bewegung unterhalb der GPS-Genauigkeit wird als Rauschen ignoriert und nicht in die Geschwindigkeitsberechnung einbezogen.
+
+### Verbesserungen
+
+- **Swipe-Back-Geste auf Android:** In den Info-Screens kann nun per Wisch nach rechts zurücknavigiert werden — sowohl innerhalb des Info-Stacks als auch vom Info-Menü zurück zum Karten-Tab. Auf iOS bleibt die native Geste unverändert.
+- **Neue Logos im Info-Screen:** Logos von CAU, ADDIX und UXMA hinzugefügt, sowie "reakt"-Logo. Neue Sektionen "In Kooperation mit" und "Bestandteil von" ergänzt.
+- **Tooltip-Textgröße erhöht:** Schriftgröße in POI-Tooltips (Titel und Beschreibung) auf 16px erhöht, Hint-Textstil global von 12px auf 14px angepasst.
+- **Ungenutzte Packages entfernt:** `axios`, `expo-constants`, `expo-file-system`, `expo-media-library`, `make-plural` und `react-native-webview` aus den Dependencies entfernt.
+
 ## v1.3.0
 
 ### Verbesserungen

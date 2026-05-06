@@ -69,7 +69,7 @@ export const HomeScreen = () => {
     centerOnPosition,
   } = useMapCamera();
 
-  const { startForegroundTracking, stopTracking } = useLocationTracking();
+  const { startForegroundTracking, stopTracking, requestBackgroundAndSwitch } = useLocationTracking();
   const { registerDemoVehicle, registerLocalVehicle, startSimulation, stopSimulation } = useTripSimulation();
   const { handleLocationUpdate, resetTracking } = useGPSProcessing();
 
@@ -98,6 +98,7 @@ export const HomeScreen = () => {
     centerOnPosition,
     startForegroundTracking,
     stopTracking,
+    requestBackgroundAndSwitch,
     startSimulation,
     stopSimulation,
     handleLocationUpdate,
@@ -145,13 +146,15 @@ export const HomeScreen = () => {
     };
   }, []);
 
-  // Resubscribe to location updates when app returns from background (iOS kills watchPositionAsync)
+  // Resubscribe to foreground location updates when app returns from background
+  // (nur wenn kein aktiver Trip läuft — aktive Trips nutzen Background-Tracking)
   useEffect(() => {
     const handleAppStateChange = (nextAppState: AppStateStatus) => {
       if (nextAppState === 'active') {
         const state = store.getState();
         const isSimulation = state.trip.currentVehicle.id === SIMULATION_VEHICLE_ID;
-        if (!isSimulation && (state.trip.isActive || permissions.foreground)) {
+        // Während eines aktiven Trips läuft Background-Tracking — kein Foreground-Restart nötig
+        if (!isSimulation && !state.trip.isActive && permissions.foreground) {
           startForegroundTracking(handleLocationUpdate);
         }
       }

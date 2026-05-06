@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
   },
   tooltipTitle: {
     ...textStyles.titleSmall,
+    fontSize: 16,
     textAlign: 'center',
   },
   tooltipType: {
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
   },
   descriptionText: {
     ...textStyles.hint,
-    fontSize: 14,
+    fontSize: 16,
     textAlign: 'left',
   },
 });

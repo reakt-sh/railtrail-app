@@ -51,7 +51,7 @@ export const textStyles = StyleSheet.create({
   },
   hint: {
     fontFamily: Font.regular,
-    fontSize: 12,
+    fontSize: 14,
     color: Color.darkGray,
   },
   link: {

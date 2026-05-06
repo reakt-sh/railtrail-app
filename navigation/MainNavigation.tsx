@@ -29,7 +29,7 @@ export const MainNavigation = () => {
           return <MaterialCommunityIcons name={icon} size={24} color={color} />;
         },
         tabBarActiveTintColor: Color.primary,
-        tabBarInactiveTintColor: Color.darkGray,
+        tabBarInactiveTintColor: Color.text,
         tabBarStyle: {
           height: 64 + insets.bottom,
           paddingBottom: insets.bottom,

@@ -6,7 +6,7 @@ import { updateDistances } from '../effect-actions/trip-actions';
 import { AppAction, AppActionType } from '../redux/app';
 import { ReduxAppState } from '../redux/init';
 import { TripAction, TripActionType } from '../redux/trip';
-import { LOCAL_VEHICLE_ID, SIMULATION_VEHICLE_ID, MAX_GPS_ACCURACY, GPS_SPEED_RESET_TIMEOUT_MS, GPS_GAP_THRESHOLD_MS } from '../constants';
+import { LOCAL_VEHICLE_ID, SIMULATION_VEHICLE_ID, MAX_GPS_ACCURACY, GPS_SPEED_RESET_TIMEOUT_MS, GPS_GAP_THRESHOLD_MS, MIN_DISTANCE_JITTER_FILTER } from '../constants';
 import { calculateDistanceFromCoordinates, percentToDistance } from '../util/calculators';
 import { processSpeed } from '../util/speed';
 import { positionToPercentage, percentageToPosition } from '../util/track-loader';
@@ -72,17 +72,22 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
             const timeDeltaMs = loc.timestamp - lastLocationRef.current.timestamp;
             const timeDeltaS = timeDeltaMs / 1000;
 
-            // Distanz immer addieren (echte zurückgelegte Strecke)
+            // Distanz nur addieren wenn kein großer Zeitsprung (z.B. App im Hintergrund)
+            // und Bewegung über Jitter-Schwelle (GPS-Drift im Stillstand filtern)
+            const isGap = timeDeltaMs > GPS_GAP_THRESHOLD_MS;
+            const isSignificantMovement = distanceM >= MIN_DISTANCE_JITTER_FILTER;
             dispatch(TripAction.batchUpdate({
-              addDistance: distanceM,
+              addDistance: isGap || !isSignificantMovement ? undefined : distanceM,
               lastPercentage: null,
               warnings: { nextVehicle: null, nextVehicleHeadingTowards: null, nextLevelCrossing: null, nextTurningPoint: null, secondTurningPoint: null },
             }));
 
-            // Speed nur berechnen wenn kein großer Zeitsprung (z.B. App im Hintergrund)
-            if (timeDeltaMs <= GPS_GAP_THRESHOLD_MS && timeDeltaS > 0) {
+            // Speed nur berechnen wenn kein großer Zeitsprung und Bewegung über GPS-Genauigkeit
+            // (GPS-Jitter im Stillstand erzeugt sonst scheinbare Geschwindigkeiten)
+            const accuracy = loc.coords.accuracy ?? MAX_GPS_ACCURACY;
+            if (timeDeltaMs <= GPS_GAP_THRESHOLD_MS && timeDeltaS > 0 && distanceM > accuracy) {
               rawSpeedMs = distanceM / timeDeltaS;
-            } else {
+            } else if (timeDeltaMs > GPS_GAP_THRESHOLD_MS) {
               smoothedSpeedRef.current = 0;
             }
           }
@@ -105,8 +110,15 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
           lastUpdateTimestampRef.current = now;
 
           if (prevTimestamp > 0 && (now - prevTimestamp) > GPS_GAP_THRESHOLD_MS) {
+            // Track-basierter Fallback: Distanz anhand der Track-Positionen berechnen,
+            // da die Draisine nur auf dem Gleis fährt
+            const lastPct = state.trip.position.percentage;
+            const trackDistance = lastPct != null && track.length
+              ? percentToDistance(track.length, Math.abs(percentage - lastPct))
+              : undefined;
+
             dispatch(TripAction.batchUpdate({
-              addDistance: undefined,
+              addDistance: trackDistance,
               lastPercentage: percentage,
               warnings: { nextVehicle: null, nextVehicleHeadingTowards: null, nextLevelCrossing: null, nextTurningPoint: null, secondTurningPoint: null },
             }));

@@ -8,6 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { DraisineIcon } from '../assets/icons';
 import AppLogo from '../assets/icons/AppLogo';
 import MalenteLogo from '../assets/icons/MalenteLogo';
+import { AndroidSwipeBack } from '../components/AndroidSwipeBack';
 import { Color, Locale } from '../constants';
 import { textStyles } from '../constants/text-styles';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -49,6 +50,7 @@ const menuItems: MenuItem[] = [
 
 export const InfoMenuScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<InfoStackParamList>>();
+  const parentNavigation = useNavigation();
   const i18n = useTranslation();
   const { locale, setLocale } = useLanguage();
 
@@ -59,6 +61,7 @@ export const InfoMenuScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <StatusBar style="light" />
+      <AndroidSwipeBack onSwipeBack={() => parentNavigation.navigate(i18n.t('navigationMap') as never)}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View style={styles.logoContainer}>
           <AppLogo width={'100%'} height={112} />
@@ -134,6 +137,7 @@ export const InfoMenuScreen = () => {
         </View>
 
         <View style={styles.supportSection}>
+          <Text style={textStyles.bodySmall}>{i18n.t('inCooperationWith')}</Text>
           <View style={styles.logoRow}>
             <Image
               source={require('../assets/logos/Stadtlogo_2022_Luetjenburg.png')}
@@ -142,14 +146,38 @@ export const InfoMenuScreen = () => {
             />
             <MalenteLogo width={80} height={64} />
           </View>
+          <View style={styles.logoRow}>
+            <Image
+              source={require('../assets/logos/Logo_CAU.png')}
+              style={styles.addixLogo}
+              resizeMode="contain"
+            />
+            <Image
+              source={require('../assets/logos/ADDIX.png')}
+              style={styles.addixLogo}
+              resizeMode="contain"
+            />
+            <Image
+              source={require('../assets/logos/UXMA.png')}
+              style={styles.addixLogo}
+              resizeMode="contain"
+            />
+          </View>
           <Text style={textStyles.bodySmall}>{i18n.t('fundedBy')}</Text>
           <Image
             source={require('../assets/logos/support_logo.png')}
             style={styles.supportLogo}
             resizeMode="contain"
           />
+          <Text style={textStyles.bodySmall}>{i18n.t('partOf')}</Text>
+          <Image
+            source={require('../assets/logos/reakt_black.png')}
+            style={styles.reaktLogo}
+            resizeMode="contain"
+          />
         </View>
       </ScrollView>
+      </AndroidSwipeBack>
     </SafeAreaView>
   );
 };
@@ -227,15 +255,26 @@ const styles = StyleSheet.create({
   logoRow: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginBottom: 24,
+    marginBottom: 8,
+    marginTop: 8,
   },
   luetjenburgLogo: {
     width: 180,
     height: 64,
   },
+  addixLogo: {
+    width: '30%',
+    height: 64,
+  },
   supportLogo: {
     width: '90%',
-    height: 152,
+    height: 150,
     alignSelf: 'center',
+  },
+  reaktLogo: {
+    width: '90%',
+    height: 90,
+    alignSelf: 'center',
+    marginTop: 16,
   },
 });
