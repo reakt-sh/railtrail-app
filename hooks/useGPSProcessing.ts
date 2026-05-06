@@ -124,8 +124,9 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
           const now = loc.timestamp;
           const prevTimestamp = lastUpdateTimestampRef.current;
           lastUpdateTimestampRef.current = now;
+          const isGap = prevTimestamp > 0 && (now - prevTimestamp) > GPS_GAP_THRESHOLD_MS;
 
-          if (prevTimestamp > 0 && (now - prevTimestamp) > GPS_GAP_THRESHOLD_MS) {
+          if (isGap) {
             // Track-basierter Fallback: Distanz anhand der Track-Positionen berechnen,
             // da die Draisine nur auf dem Gleis fährt
             const lastPct = state.trip.position.percentage;
@@ -138,6 +139,9 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
               lastPercentage: percentage,
               warnings: { nextVehicle: null, nextVehicleHeadingTowards: null, nextLevelCrossing: null, nextTurningPoint: null, secondTurningPoint: null },
             }));
+            // Bei Gap (z.B. App-Resume aus Hintergrund) Geschwindigkeit zurücksetzen,
+            // damit die EMA nicht mit veralteten Werten weiterläuft.
+            smoothedSpeedRef.current = 0;
           }
 
           // GPS-Rohgeschwindigkeit (m/s) mit Plausibilitäts-Cap: Spikes nach
@@ -156,8 +160,11 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
         // smoothedSpeedRef ist in m/s; Redux/UI erwarten km/h.
         dispatch(TripAction.setMotion({ speed: smoothedSpeedRef.current * 3.6 }));
 
-        // Reset speed to 0 if no GPS update arrives within timeout (local mode only)
-        if (tripVehicle.id === LOCAL_VEHICLE_ID) {
+        // Reset speed to 0 if no GPS update arrives within timeout. Greift in allen
+        // Modi mit echtem GPS — im Stillstand pausiert expo-location die Updates
+        // (distanceInterval), wodurch sonst der letzte geglättete Wert hängenbleibt.
+        // Simulation-Mode ausnehmen, da dort Geschwindigkeit aus useTripSimulation kommt.
+        if (tripVehicle.id !== SIMULATION_VEHICLE_ID) {
           if (speedResetTimerRef.current) clearTimeout(speedResetTimerRef.current);
           speedResetTimerRef.current = setTimeout(() => {
             smoothedSpeedRef.current = 0;
