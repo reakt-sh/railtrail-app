@@ -67,6 +67,12 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
           const gpsSpeedMs = loc.coords.speed;
           const hasValidGpsSpeed = gpsSpeedMs != null && gpsSpeedMs >= 0;
 
+          // Bezugspunkt nur dann verschieben, wenn wir die Distanz auch akzeptiert haben
+          // oder ein Gap einen Reset erfordert. Sonst gehen Bewegungen unterhalb des
+          // Jitter-Filters verloren (expo-location liefert wegen timeInterval auch Updates
+          // mit < 5 m Bewegung; die müssen sich kumulieren statt verworfen zu werden).
+          let advanceLastLocation = false;
+
           if (lastLocationRef.current) {
             const distanceM = calculateDistanceFromCoordinates(
               lastLocationRef.current.coords.latitude,
@@ -85,6 +91,7 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
             const isPlausible =
               timeDeltaS > 0 && distanceM / timeDeltaS <= MAX_PLAUSIBLE_SPEED_MS;
             const shouldAddDistance = isSignificantMovement && isPlausible;
+            advanceLastLocation = shouldAddDistance || isGap;
 
             dispatch(TripAction.batchUpdate({
               addDistance: shouldAddDistance ? distanceM : undefined,
@@ -103,11 +110,18 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
             } else if (timeDeltaS > 0 && isSignificantMovement && isPlausible) {
               rawSpeedMs = distanceM / timeDeltaS;
             }
-          } else if (hasValidGpsSpeed) {
-            // Erstes GPS-Update mit gültigem Speed: direkt übernehmen
-            rawSpeedMs = gpsSpeedMs > MAX_PLAUSIBLE_SPEED_MS ? 0 : gpsSpeedMs;
+          } else {
+            // Erstes Update: Referenzpunkt setzen
+            advanceLastLocation = true;
+            if (hasValidGpsSpeed) {
+              rawSpeedMs = gpsSpeedMs > MAX_PLAUSIBLE_SPEED_MS ? 0 : gpsSpeedMs;
+            }
           }
           smoothedSpeedRef.current = processSpeed(rawSpeedMs, smoothedSpeedRef.current);
+
+          if (advanceLastLocation) {
+            lastLocationRef.current = loc;
+          }
         } else {
           // Normal mode: project GPS position onto track
           // Im Demo-Modus echtes GPS ignorieren (kommt ohne knownPercentage)
@@ -171,8 +185,6 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
             dispatch(TripAction.setMotion({ speed: 0 }));
           }, GPS_SPEED_RESET_TIMEOUT_MS);
         }
-
-        lastLocationRef.current = loc;
       }
     },
     [dispatch, store]

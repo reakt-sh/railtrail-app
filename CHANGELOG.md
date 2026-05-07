@@ -1,5 +1,39 @@
 # Changelog
 
+## v1.7.0
+
+### Bugfixes
+
+- **Geschwindigkeit blieb im Stillstand auf altem Wert hängen:** Im Track-Modus mit registrierter Draisine fiel der Tacho beim Anhalten nicht auf 0, weil der Speed-Reset-Timer (8 s ohne neues GPS-Update → 0) ausschließlich im lokalen Modus aktiv war. Wenn `expo-location` im Stillstand wegen `distanceInterval` keine Updates mehr lieferte, blieb der zuletzt geglättete Wert bestehen. Fix: Reset-Timer für alle Modi mit echtem GPS aktiviert (Simulation-Modus weiterhin ausgenommen). Zusätzlich Speed-Gap-Reset im Track-Modus analog zum lokalen Modus, damit nach App-Resume aus dem Hintergrund nicht der alte EMA-Wert weiterläuft.
+- **Distanzverlust im lokalen Modus (~2 % zu kurz):** Der Bezugspunkt für die Haversine-Berechnung wurde bei jedem Location-Update verschoben — auch wenn das Update vom Jitter-Filter (≥ 5 m) verworfen wurde. Bei langsamer Fahrt liefert `expo-location` wegen `timeInterval` jede Sekunde Updates, oft mit < 5 m Bewegung; diese wanderten dem Bezugspunkt hinterher, ohne dass die Distanz addiert wurde. Folge: Reihen aus 4 m + 4 m + 4 m … wurden zu 0 m gemessener Distanz. Fix: `lastLocationRef` wird nur noch verschoben, wenn die Distanz akzeptiert wurde, ein Gap einen Reset erfordert oder es das erste Update ist. Kleine Schritte kumulieren sich jetzt, bis der Jitter-Filter überschritten wird.
+
+## v1.6.0
+
+### Bugfixes
+
+- **Distanz wurde im lokalen Modus nicht akkumuliert:** Eine fehlende Import-Anweisung (`MIN_DISTANCE_JITTER_FILTER`) führte dazu, dass der Jitter-Check stets fehlschlug und keine Distanz addiert wurde. Fix: Import ergänzt.
+- **Mehrfach registrierte Background-Task:** `TaskManager.defineTask` wurde bei jedem Trip-Start erneut aufgerufen, wodurch alte Closures aktiv blieben und mehrfach feuern konnten. Fix: Task wird einmalig auf Modul-Ebene definiert; der Callback wird über eine Modul-Referenz ausgetauscht.
+- **Fremde Tasks wurden mit-deregistriert:** Beim Trip-Ende rief die App `TaskManager.unregisterAllTasksAsync()` auf, was potenziell auch andere Tasks betraf. Fix: Nur noch `stopLocationUpdatesAsync` für die spezifische Background-Task; Aufräumen mit `hasStartedLocationUpdatesAsync`-Check.
+- **Tacho zeigte bei langsamer Fahrt fälschlich 0 km/h:** Im lokalen Modus wurde die Geschwindigkeit nur aus Distanz/Zeit berechnet, was bei langsamen Bewegungen (~3 km/h) wegen GPS-Genauigkeitsschwellen scheiterte. Fix: Primär wird jetzt der GPS-eigene Speed (`loc.coords.speed`) verwendet, Haversine nur noch als Fallback. Außerdem Reset-Timeout von 3 → 8 Sekunden, damit der Tacho bei seltenen Updates nicht ständig auf 0 fällt.
+
+### Neue Features
+
+- **Foreground-Service-Notification (Android):** Während einer aktiven Fahrt erscheint eine dauerhafte Benachrichtigung „Fahrt läuft – Distanz und Geschwindigkeit werden im Hintergrund aufgezeichnet." Das hält den OS-Service stabil und verhindert, dass Android das Tracking unter Doze beendet. Vollständig lokalisiert (DE/EN).
+- **Sichtbare Warnung bei abgelehnter Background-Permission:** Wer im Permission-Dialog „Später" wählt oder die System-Berechtigung ablehnt, sieht jetzt einen Hinweis: „Aufzeichnung eingeschränkt – Distanz und Geschwindigkeit werden nur aufgezeichnet, solange die App im Vordergrund geöffnet ist." Verhindert das stille Verlust-Szenario, in dem User glauben, das Tracking laufe weiter.
+
+### Verbesserungen
+
+- **Stabileres Background-Tracking (iOS):** `pausesUpdatesAutomatically: false`, `activityType: OtherNavigation` und `showsBackgroundLocationIndicator: true` setzen — das System pausiert die Updates nicht mehr selbständig, wenn es Stillstand vermutet, und der User sieht den blauen Indikator, während Tracking läuft.
+- **AppState-Recovery während aktiver Fahrt:** Bei Rückkehr aus dem Hintergrund prüft die App, ob die Background-Task noch aktiv ist (`hasStartedLocationUpdatesAsync`), und startet sie bei Bedarf neu. Ohne Background-Permission greift Foreground-Tracking als Fallback.
+- **Plausibilitäts-Cap (≈ 72 km/h):** GPS-Sprünge nach Empfangsverlust (Tunnel, Wald) werden in beiden Modi (Track und lokal) verworfen, statt fälschlich Distanz oder Geschwindigkeit zu erzeugen.
+- **Distanz-Akkumulation bei Gap im lokalen Modus:** Statt die Distanz zwischen Hintergrund-Suspend und Resume zu verwerfen, wird sie akkumuliert — vorausgesetzt die implizite Geschwindigkeit ist plausibel. Reduziert den Distanzverlust beim Wiederöffnen der App.
+- **Weicheres Accuracy-Gate (25 → 35 m):** Mehr GPS-Updates werden bei schlechtem Empfang (Wald, Brücken) akzeptiert; das Plausibilitäts-Cap fängt unrealistische Werte ab.
+- **Speed-Konstanten intern auf m/s vereinheitlicht:** `STILLSTAND_THRESHOLD_MS` und `MAX_PLAUSIBLE_SPEED_MS` arbeiten jetzt in derselben Einheit (m/s); die Umrechnung in km/h erfolgt nur noch beim Dispatch an Redux/UI. Reine interne Refaktorierung, kein UI-Effekt.
+
+### Sonstiges
+
+- `fetch` aus `UIBackgroundModes` (iOS) entfernt — war ungenutzt.
+
 ## v1.5.0
 
 ### Bugfixes
