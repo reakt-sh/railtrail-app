@@ -54,7 +54,6 @@ export const useTripLifecycle = ({
   const store = useStore<ReduxAppState>();
   const localizedStrings = useTranslation();
 
-  const tripStartTimeRef = useRef<string | null>(null);
   const isDemoRef = useRef(false);
 
   const [isVehicleSelectionVisible, setIsVehicleSelectionVisible] = useState(false);
@@ -86,8 +85,9 @@ export const useTripLifecycle = ({
               activeSegment,
               completedSegments,
               motion,
+              tripStartTime,
             } = state.trip;
-            const startTime = tripStartTimeRef.current ?? new Date().toISOString();
+            const startTime = tripStartTime ?? new Date().toISOString();
             const endTime = new Date().toISOString();
 
             // Build segments array: completed segments + finalized active segment
@@ -115,7 +115,6 @@ export const useTripLifecycle = ({
 
             // Stop the trip immediately
             dispatch(TripAction.stop());
-            tripStartTimeRef.current = null;
 
             // Stop background/simulation tracking and restart foreground GPS
             if (isDemoRef.current) {
@@ -141,8 +140,14 @@ export const useTripLifecycle = ({
 
   const handleStartVehicleSelect = useCallback(
     (vehicle: Vehicle) => {
+      const tripState = store.getState().trip;
+      if (tripState.isActive) {
+        console.warn(
+          '[trip] handleStartVehicleSelect during active trip — startTime will be reset',
+          { vehicleId: vehicle.id, previousStart: tripState.tripStartTime }
+        );
+      }
       const vehicleName = vehicle.label ?? `Draisine ${vehicle.id}`;
-      tripStartTimeRef.current = new Date().toISOString();
       resetTracking();
       dispatch(TripAction.setCurrentVehicle(vehicle.id, vehicleName));
       dispatch(TripAction.startSegment(vehicle.id, vehicleName));
