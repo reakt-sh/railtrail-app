@@ -6,7 +6,7 @@ import { updateDistances } from '../effect-actions/trip-actions';
 import { AppAction, AppActionType } from '../redux/app';
 import { ReduxAppState } from '../redux/init';
 import { TripAction, TripActionType } from '../redux/trip';
-import { LOCAL_VEHICLE_ID, SIMULATION_VEHICLE_ID, MAX_GPS_ACCURACY, GPS_SPEED_RESET_TIMEOUT_MS, GPS_GAP_THRESHOLD_MS, MIN_DISTANCE_JITTER_FILTER } from '../constants';
+import { LOCAL_VEHICLE_ID, SIMULATION_VEHICLE_ID, MAX_GPS_ACCURACY, GPS_SPEED_RESET_TIMEOUT_MS, GPS_GAP_THRESHOLD_MS, MIN_DISTANCE_JITTER_FILTER, MAX_PLAUSIBLE_SPEED_MS, STILLSTAND_DRIFT_WINDOW_MS, STILLSTAND_DRIFT_THRESHOLD_M } from '../constants';
 import { calculateDistanceFromCoordinates, percentToDistance } from '../util/calculators';
 import { processSpeed } from '../util/speed';
 import { positionToPercentage, percentageToPosition } from '../util/track-loader';
@@ -27,6 +27,7 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
   const speedResetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const oppositeDistanceRef = useRef(0);
   const isPercentagePositionIncreasingRef = useRef<boolean | undefined>(undefined);
+  const recentPositionsRef = useRef<{ lat: number; lng: number; ts: number }[]>([]);
   const vehiclesRef = useRef(useSelector((state: ReduxAppState) => state.trip.vehicles));
   const lastSyncedPercentageRef = useRef<number | null>(null);
   const lastUpdateTimestampRef = useRef<number>(0);
@@ -54,14 +55,53 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
       const state = store.getState();
       const { isActive: tripActive, currentVehicle: tripVehicle } = state.trip;
       if (tripActive) {
+        // Drift-basierte Stillstandserkennung: rollendes Fenster der letzten Positionen.
+        // Maximaler Abstand innerhalb des Fensters < Threshold → Stillstand. Reagiert
+        // viel schneller als loc.coords.speed (10-30 s Nachlauf auf manchen Geräten).
+        recentPositionsRef.current.push({
+          lat: loc.coords.latitude,
+          lng: loc.coords.longitude,
+          ts: loc.timestamp,
+        });
+        recentPositionsRef.current = recentPositionsRef.current.filter(
+          (p) => loc.timestamp - p.ts <= STILLSTAND_DRIFT_WINDOW_MS
+        );
+        let maxDriftM = 0;
+        const windowed = recentPositionsRef.current;
+        for (let i = 0; i < windowed.length; i++) {
+          for (let j = i + 1; j < windowed.length; j++) {
+            const d = calculateDistanceFromCoordinates(
+              windowed[i].lat,
+              windowed[i].lng,
+              windowed[j].lat,
+              windowed[j].lng
+            );
+            if (d > maxDriftM) maxDriftM = d;
+          }
+        }
+        const isStandstillByDrift =
+          windowed.length >= 3 && maxDriftM < STILLSTAND_DRIFT_THRESHOLD_M;
+
         if (tripVehicle.id === LOCAL_VEHICLE_ID) {
           // Local mode: use raw GPS coordinates, no track projection
           const calculated = { lat: loc.coords.latitude, lng: loc.coords.longitude };
           dispatch(TripAction.setPosition({ percentage: null, calculated }));
 
-          // Speed + distance from Haversine delta
-          // (iOS GPS speed is unreliable — returns 0 or -1)
+          // Speed-Quelle: GPS-eigener Wert (loc.coords.speed) ist auf modernen iOS/Android-
+          // Geräten zuverlässig und reagiert auch bei langsamen Bewegungen, bei denen die
+          // Haversine-Berechnung scheitert (Distanz < accuracy). Haversine als Fallback,
+          // wenn GPS keinen Speed liefert (-1 / null).
           let rawSpeedMs = 0;
+          const gpsSpeedMs = loc.coords.speed;
+          const hasValidGpsSpeed = gpsSpeedMs != null && gpsSpeedMs >= 0;
+
+          // Bezugspunkt-Strategie hängt vom Bewegungszustand ab:
+          // - Stillstand laut GPS: Ref pro Update mitlaufen lassen, damit GPS-Jitter
+          //   nicht in der Haversine zu Phantom-Distanz akkumuliert.
+          // - Bewegung: Ref nur bei akzeptiertem Update verschieben, damit kleine
+          //   Schritte unterhalb des Jitter-Filters sich kumulieren statt verloren zu gehen.
+          let advanceLastLocation = false;
+
           if (lastLocationRef.current) {
             const distanceM = calculateDistanceFromCoordinates(
               lastLocationRef.current.coords.latitude,
@@ -72,26 +112,49 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
             const timeDeltaMs = loc.timestamp - lastLocationRef.current.timestamp;
             const timeDeltaS = timeDeltaMs / 1000;
 
-            // Distanz nur addieren wenn kein großer Zeitsprung (z.B. App im Hintergrund)
-            // und Bewegung über Jitter-Schwelle (GPS-Drift im Stillstand filtern)
             const isGap = timeDeltaMs > GPS_GAP_THRESHOLD_MS;
             const isSignificantMovement = distanceM >= MIN_DISTANCE_JITTER_FILTER;
+            // Plausibilität: implizite Geschwindigkeit darf MAX_PLAUSIBLE_SPEED_MS nicht überschreiten
+            // (filtert GPS-Sprünge nach Empfangsverlust). Akzeptiert Lücken, solange sie zu einer
+            // realistischen Geschwindigkeit passen — so geht Distanz im Hintergrund nicht verloren.
+            const isPlausible =
+              timeDeltaS > 0 && distanceM / timeDeltaS <= MAX_PLAUSIBLE_SPEED_MS;
+            // Stillstand wird primär über die Drift-Analyse erkannt — viel schneller
+            // als über loc.coords.speed.
+            const shouldAddDistance = isSignificantMovement && isPlausible && !isStandstillByDrift;
+            advanceLastLocation = shouldAddDistance || isGap || isStandstillByDrift;
+
             dispatch(TripAction.batchUpdate({
-              addDistance: isGap || !isSignificantMovement ? undefined : distanceM,
+              addDistance: shouldAddDistance ? distanceM : undefined,
               lastPercentage: null,
               warnings: { nextVehicle: null, nextVehicleHeadingTowards: null, nextLevelCrossing: null, nextTurningPoint: null, secondTurningPoint: null },
             }));
 
-            // Speed nur berechnen wenn kein großer Zeitsprung und Bewegung über GPS-Genauigkeit
-            // (GPS-Jitter im Stillstand erzeugt sonst scheinbare Geschwindigkeiten)
-            const accuracy = loc.coords.accuracy ?? MAX_GPS_ACCURACY;
-            if (timeDeltaMs <= GPS_GAP_THRESHOLD_MS && timeDeltaS > 0 && distanceM > accuracy) {
-              rawSpeedMs = distanceM / timeDeltaS;
-            } else if (timeDeltaMs > GPS_GAP_THRESHOLD_MS) {
+            // Speed-Berechnung mit Fallback-Hierarchie:
+            // 1. GPS-Speed (primär, funktioniert auch bei langsamer Fahrt)
+            // 2. Haversine-Speed (Fallback bei iOS-Altgeräten / GPS ohne Speed)
+            // Bei Gap (Hintergrund-Resume) auf 0 zurücksetzen.
+            // Bei drift-erkanntem Stillstand sofort 0, weil loc.coords.speed nachläuft.
+            if (isGap || isStandstillByDrift) {
               smoothedSpeedRef.current = 0;
+              rawSpeedMs = 0;
+            } else if (hasValidGpsSpeed) {
+              rawSpeedMs = gpsSpeedMs > MAX_PLAUSIBLE_SPEED_MS ? 0 : gpsSpeedMs;
+            } else if (timeDeltaS > 0 && isSignificantMovement && isPlausible) {
+              rawSpeedMs = distanceM / timeDeltaS;
+            }
+          } else {
+            // Erstes Update: Referenzpunkt setzen
+            advanceLastLocation = true;
+            if (hasValidGpsSpeed) {
+              rawSpeedMs = gpsSpeedMs > MAX_PLAUSIBLE_SPEED_MS ? 0 : gpsSpeedMs;
             }
           }
           smoothedSpeedRef.current = processSpeed(rawSpeedMs, smoothedSpeedRef.current);
+
+          if (advanceLastLocation) {
+            lastLocationRef.current = loc;
+          }
         } else {
           // Normal mode: project GPS position onto track
           // Im Demo-Modus echtes GPS ignorieren (kommt ohne knownPercentage)
@@ -108,8 +171,9 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
           const now = loc.timestamp;
           const prevTimestamp = lastUpdateTimestampRef.current;
           lastUpdateTimestampRef.current = now;
+          const isGap = prevTimestamp > 0 && (now - prevTimestamp) > GPS_GAP_THRESHOLD_MS;
 
-          if (prevTimestamp > 0 && (now - prevTimestamp) > GPS_GAP_THRESHOLD_MS) {
+          if (isGap) {
             // Track-basierter Fallback: Distanz anhand der Track-Positionen berechnen,
             // da die Draisine nur auf dem Gleis fährt
             const lastPct = state.trip.position.percentage;
@@ -122,29 +186,44 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
               lastPercentage: percentage,
               warnings: { nextVehicle: null, nextVehicleHeadingTowards: null, nextLevelCrossing: null, nextTurningPoint: null, secondTurningPoint: null },
             }));
+            // Bei Gap (z.B. App-Resume aus Hintergrund) Geschwindigkeit zurücksetzen,
+            // damit die EMA nicht mit veralteten Werten weiterläuft.
+            smoothedSpeedRef.current = 0;
           }
 
-          // Speed from GPS (m/s → km/h) with EMA smoothing
-          smoothedSpeedRef.current = processSpeed(
-            loc.coords.speed ?? 0,
-            smoothedSpeedRef.current
-          );
+          // GPS-Rohgeschwindigkeit (m/s) mit Plausibilitäts-Cap: Spikes nach
+          // Empfangsverlust (Tunnel/Wald) verwerfen statt in den Tacho durchzulassen.
+          // Bei drift-erkanntem Stillstand sofort auf 0 (loc.coords.speed läuft nach).
+          const rawTrackSpeedMs = loc.coords.speed ?? 0;
+          const cappedTrackSpeedMs =
+            rawTrackSpeedMs > MAX_PLAUSIBLE_SPEED_MS ? 0 : rawTrackSpeedMs;
+          const sanitizedTrackSpeedMs = isStandstillByDrift ? 0 : cappedTrackSpeedMs;
+          if (isStandstillByDrift) {
+            smoothedSpeedRef.current = 0;
+          } else {
+            smoothedSpeedRef.current = processSpeed(
+              sanitizedTrackSpeedMs,
+              smoothedSpeedRef.current
+            );
+          }
 
           // Distance: handled by updateDistances() via position.percentage changes
         }
 
-        dispatch(TripAction.setMotion({ speed: smoothedSpeedRef.current }));
+        // smoothedSpeedRef ist in m/s; Redux/UI erwarten km/h.
+        dispatch(TripAction.setMotion({ speed: smoothedSpeedRef.current * 3.6 }));
 
-        // Reset speed to 0 if no GPS update arrives within timeout (local mode only)
-        if (tripVehicle.id === LOCAL_VEHICLE_ID) {
+        // Reset speed to 0 if no GPS update arrives within timeout. Greift in allen
+        // Modi mit echtem GPS — im Stillstand pausiert expo-location die Updates
+        // (distanceInterval), wodurch sonst der letzte geglättete Wert hängenbleibt.
+        // Simulation-Mode ausnehmen, da dort Geschwindigkeit aus useTripSimulation kommt.
+        if (tripVehicle.id !== SIMULATION_VEHICLE_ID) {
           if (speedResetTimerRef.current) clearTimeout(speedResetTimerRef.current);
           speedResetTimerRef.current = setTimeout(() => {
             smoothedSpeedRef.current = 0;
             dispatch(TripAction.setMotion({ speed: 0 }));
           }, GPS_SPEED_RESET_TIMEOUT_MS);
         }
-
-        lastLocationRef.current = loc;
       }
     },
     [dispatch, store]
@@ -218,6 +297,7 @@ export const useGPSProcessing = (): UseGPSProcessingReturn => {
     lastLocationRef.current = null;
     smoothedSpeedRef.current = 0;
     lastUpdateTimestampRef.current = 0;
+    recentPositionsRef.current = [];
     if (speedResetTimerRef.current) {
       clearTimeout(speedResetTimerRef.current);
       speedResetTimerRef.current = null;

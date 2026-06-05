@@ -3,7 +3,7 @@
     "name": "Naturpark-Draisine",
     "slug": "Train-Project",
     "scheme": "naturparkdraisine",
-    "version": "1.5.0",
+    "version": "1.7.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -15,7 +15,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "bundleIdentifier": "com.uxma.naturpark-draisine",
-      "buildNumber": "1.4.1",
+      "buildNumber": "1.7.0",
       "supportsTablet": true,
       "infoPlist": {
         "UIBackgroundModes": ["location"],

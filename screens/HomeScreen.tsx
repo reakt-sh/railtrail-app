@@ -31,7 +31,8 @@ import {
   useTripLifecycle,
   useTripSimulation,
 } from '../hooks';
-import { SIMULATION_VEHICLE_ID } from '../constants';
+import * as Location from 'expo-location';
+import { BACKGROUND_LOCATION_TASK, SIMULATION_VEHICLE_ID } from '../constants';
 import { AppActionType } from '../redux/app';
 import { ReduxAppState } from '../redux/init';
 import { TripActionType } from '../redux/trip';
@@ -69,7 +70,12 @@ export const HomeScreen = () => {
     centerOnPosition,
   } = useMapCamera();
 
-  const { startForegroundTracking, stopTracking, requestBackgroundAndSwitch } = useLocationTracking();
+  const {
+    startForegroundTracking,
+    stopTracking,
+    requestBackgroundAndSwitch,
+    startBackgroundTracking,
+  } = useLocationTracking();
   const { registerDemoVehicle, registerLocalVehicle, startSimulation, stopSimulation } = useTripSimulation();
   const { handleLocationUpdate, resetTracking } = useGPSProcessing();
 
@@ -146,23 +152,50 @@ export const HomeScreen = () => {
     };
   }, []);
 
-  // Resubscribe to foreground location updates when app returns from background
-  // (nur wenn kein aktiver Trip läuft — aktive Trips nutzen Background-Tracking)
+  // Bei Rückkehr aus dem Hintergrund Tracking-Recovery durchführen.
+  // Aktiver Trip + Background-Permission: prüfen ob Background-Task noch läuft, sonst neu starten.
+  // Aktiver Trip ohne Background-Permission: Foreground neu starten (Fallback).
+  // Kein aktiver Trip: Foreground-Subscription neu aufsetzen.
   useEffect(() => {
-    const handleAppStateChange = (nextAppState: AppStateStatus) => {
-      if (nextAppState === 'active') {
-        const state = store.getState();
-        const isSimulation = state.trip.currentVehicle.id === SIMULATION_VEHICLE_ID;
-        // Während eines aktiven Trips läuft Background-Tracking — kein Foreground-Restart nötig
-        if (!isSimulation && !state.trip.isActive && permissions.foreground) {
+    const handleAppStateChange = async (nextAppState: AppStateStatus) => {
+      if (nextAppState !== 'active') return;
+
+      const state = store.getState();
+      const isSimulation = state.trip.currentVehicle.id === SIMULATION_VEHICLE_ID;
+      if (isSimulation) return;
+
+      if (state.trip.isActive) {
+        if (permissions.background) {
+          try {
+            const isRunning = await Location.hasStartedLocationUpdatesAsync(
+              BACKGROUND_LOCATION_TASK
+            );
+            if (!isRunning) {
+              startBackgroundTracking(handleLocationUpdate);
+            }
+          } catch (e) {
+            if (__DEV__) console.log('[Tracking] Background recovery failed:', e);
+            startBackgroundTracking(handleLocationUpdate);
+          }
+        } else if (permissions.foreground) {
+          // Ohne Background-Permission: Foreground neu starten, damit zumindest sichtbares Tracking läuft
           startForegroundTracking(handleLocationUpdate);
         }
+      } else if (permissions.foreground) {
+        startForegroundTracking(handleLocationUpdate);
       }
     };
 
     const subscription = AppState.addEventListener('change', handleAppStateChange);
     return () => subscription.remove();
-  }, [startForegroundTracking, handleLocationUpdate, permissions.foreground, store]);
+  }, [
+    startForegroundTracking,
+    startBackgroundTracking,
+    handleLocationUpdate,
+    permissions.foreground,
+    permissions.background,
+    store,
+  ]);
 
   // Camera animation: follow user GPS location (during active trip)
   useEffect(() => {

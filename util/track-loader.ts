@@ -2,6 +2,7 @@ import { TRACK_FILE } from '@env';
 import malenteLuetjenburgData from '../assets/railline/malente-luetjenburg.json';
 import { POIType, PointOfInterest } from '../types/init';
 import { Position } from '../types/position';
+import { calculateDistanceFromCoordinates } from './calculators';
 
 const trackDataByFile: Record<string, unknown> = {
   'malente-luetjenburg': malenteLuetjenburgData,
@@ -64,21 +65,6 @@ const markerTypeToPOIType: Record<string, POIType> = {
   'road-crossing': POIType.RoadCrossing,
 };
 
-// Calculate distance between two coordinates using Haversine formula
-const haversineDistance = (lat1: number, lng1: number, lat2: number, lng2: number): number => {
-  const R = 6371000; // Earth's radius in meters
-  const dLat = ((lat2 - lat1) * Math.PI) / 180;
-  const dLng = ((lng2 - lng1) * Math.PI) / 180;
-  const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos((lat1 * Math.PI) / 180) *
-      Math.cos((lat2 * Math.PI) / 180) *
-      Math.sin(dLng / 2) *
-      Math.sin(dLng / 2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return R * c;
-};
-
 // Calculate total track length and cumulative distances
 const calculateTrackMetrics = (
   coordinates: [number, number][]
@@ -89,7 +75,7 @@ const calculateTrackMetrics = (
   for (let i = 1; i < coordinates.length; i++) {
     const [lng1, lat1] = coordinates[i - 1];
     const [lng2, lat2] = coordinates[i];
-    const segmentLength = haversineDistance(lat1, lng1, lat2, lng2);
+    const segmentLength = calculateDistanceFromCoordinates(lat1, lng1, lat2, lng2);
     totalLength += segmentLength;
     cumulativeDistances.push(totalLength);
   }
@@ -129,7 +115,7 @@ const findPercentagePosition = (
 
     const projectedLng = lng1 + t * dx;
     const projectedLat = lat1 + t * dy;
-    const distance = haversineDistance(markerLat, markerLng, projectedLat, projectedLng);
+    const distance = calculateDistanceFromCoordinates(markerLat, markerLng, projectedLat, projectedLng);
 
     if (distance < minDistance) {
       minDistance = distance;
@@ -142,7 +128,7 @@ const findPercentagePosition = (
 
   // Calculate the distance along the track to this point
   const [lng1, lat1] = coordinates[closestSegmentIndex];
-  const distanceToProjectedPoint = haversineDistance(
+  const distanceToProjectedPoint = calculateDistanceFromCoordinates(
     lat1,
     lng1,
     closestPointOnSegment.lat,
