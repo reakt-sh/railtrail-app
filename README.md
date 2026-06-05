@@ -116,7 +116,30 @@ API_TIMEOUT=3000
 
 # Map Tile Server
 MAP_STYLE_URL=https://tiles.openfreemap.org/styles/liberty
+
+# Demo-/Lokalmodus in der Fahrzeugauswahl anzeigen (true | false)
+ENABLE_DEMO_MODE=false
 ```
+
+> Hinweis: Alle Variablen, die in `.env.example` stehen, müssen auch in der lokalen `.env` vorhanden sein — sonst bricht der Build (`safe: true` in `babel.config.js`).
+
+### Demo-/Lokalmodus
+
+Für Test- und Demo-Zwecke kann die App zwei virtuelle Fahrzeuge in die Fahrzeugauswahl einblenden:
+
+- **Demo** – Simulierte Fahrt entlang der Strecke (7–15 km/h, automatisches Reversieren an den Streckenenden). Kein GPS und keine Backend-Verbindung nötig.
+- **Lokal** – Echtes GPS-Tracking ohne Zuordnung zu einer realen Draisine. Nützlich für lokale Tests entlang der Strecke ohne Backend-Fahrzeug.
+
+Aktivierung über die Env-Variable `ENABLE_DEMO_MODE`:
+
+| Wert            | Verhalten                                                |
+| --------------- | -------------------------------------------------------- |
+| `false` (Default) | Production-Modus – Demo und Lokal sind ausgeblendet.    |
+| `true`          | Dev/QA-Modus – Demo und Lokal erscheinen in der Auswahl. |
+
+Für Release-Builds via EAS empfiehlt es sich, `ENABLE_DEMO_MODE=false` explizit pro Build-Profile in `eas.json` zu setzen, damit Production-Binaries garantiert ohne Demo-Modus ausgeliefert werden.
+
+> Hinweis: Nach Änderung der Variable Metro-Cache leeren – `npx expo start -c` – sonst greift der neue Wert nicht.
 
 ### Backend
 
