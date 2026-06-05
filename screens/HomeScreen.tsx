@@ -31,7 +31,7 @@ import {
   useTripLifecycle,
   useTripSimulation,
 } from '../hooks';
-import { SIMULATION_VEHICLE_ID } from '../constants';
+import { DEMO_MODE_ENABLED, SIMULATION_VEHICLE_ID } from '../constants';
 import { AppActionType } from '../redux/app';
 import { ReduxAppState } from '../redux/init';
 import { TripActionType } from '../redux/trip';
@@ -137,8 +137,10 @@ export const HomeScreen = () => {
     }
 
     // Register Demo and Lokal vehicles so they appear in vehicle selection
-    registerDemoVehicle();
-    registerLocalVehicle();
+    if (DEMO_MODE_ENABLED) {
+      registerDemoVehicle();
+      registerLocalVehicle();
+    }
 
     return () => {
       unsubscribePositions();

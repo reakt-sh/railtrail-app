@@ -1,6 +1,6 @@
 import * as Location from 'expo-location';
 import React, { memo, useMemo } from 'react';
-import { HIDDEN_VEHICLE_IDS } from '../constants';
+import { EXCLUDED_VEHICLE_IDS } from '../constants';
 import { PointOfInterest } from '../types/init';
 import { Position } from '../types/position';
 import { Vehicle } from '../types/vehicle';
@@ -76,7 +76,7 @@ export const MapMarkers = memo(
         (v) =>
           v.percentagePosition >= 0 &&
           v.percentagePosition <= 100 &&
-          !HIDDEN_VEHICLE_IDS.includes(v.id)
+          !EXCLUDED_VEHICLE_IDS.includes(v.id)
       );
     }, [processedVehicles]);
 

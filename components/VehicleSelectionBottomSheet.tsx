@@ -14,7 +14,12 @@ import { Color } from '../constants/color';
 import { textStyles } from '../constants/text-styles';
 import { reloadVehicles } from '../effect-actions/api-actions';
 import { useTranslation } from '../hooks';
-import { SIMULATION_VEHICLE_ID, HIDDEN_VEHICLE_IDS } from '../constants';
+import {
+  DEMO_MODE_ENABLED,
+  EXCLUDED_VEHICLE_IDS,
+  LOCAL_VEHICLE_ID,
+  SIMULATION_VEHICLE_ID,
+} from '../constants';
 import { Vehicle } from '../types/vehicle';
 
 interface ExternalProps {
@@ -58,7 +63,12 @@ export const VehicleSelectionBottomSheet = memo(
     };
 
     const availableVehicles = useMemo(() => {
-      let filtered = vehicles.filter((v) => !HIDDEN_VEHICLE_IDS.includes(v.id));
+      let filtered = vehicles.filter((v) => !EXCLUDED_VEHICLE_IDS.includes(v.id));
+      if (!DEMO_MODE_ENABLED) {
+        filtered = filtered.filter(
+          (v) => v.id !== SIMULATION_VEHICLE_ID && v.id !== LOCAL_VEHICLE_ID
+        );
+      }
       // Optionally exclude the current vehicle (for vehicle change)
       if (excludeVehicleId != null) {
         filtered = filtered.filter((v) => v.id !== excludeVehicleId);
@@ -70,9 +80,11 @@ export const VehicleSelectionBottomSheet = memo(
       });
     }, [vehicles, excludeVehicleId]);
 
-    // Check if there are real vehicles (excluding Demo) for the empty state
+    // Check if there are real vehicles (excluding Demo/Lokal) for the empty state
     const hasNoRealVehicles =
-      availableVehicles.filter((v) => v.id !== SIMULATION_VEHICLE_ID).length === 0;
+      availableVehicles.filter(
+        (v) => v.id !== SIMULATION_VEHICLE_ID && v.id !== LOCAL_VEHICLE_ID
+      ).length === 0;
 
     return (
       <BottomSheet
