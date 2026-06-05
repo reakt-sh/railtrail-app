@@ -33,7 +33,12 @@ const translations = {
     homeDialogEndTripMessage: 'Do you really want to end the current trip?',
     homeDialogBackgroundPermissionTripTitle: 'Location Permission',
     homeDialogBackgroundPermissionMessage:
-      'For best app experience, it is recommended to enable background location access. In order to access the location, the app must remain open in the background.',
+      'Background location access is required to record distance and speed correctly while the app is in the background or the screen is locked. Without it, tracking will pause when you leave the app.',
+    homeDialogBackgroundPermissionDeniedTitle: 'Tracking limited',
+    homeDialogBackgroundPermissionDeniedMessage:
+      'Without background location, distance and speed are only recorded while the app is open in the foreground. You can enable background location later in your device settings.',
+    backgroundServiceNotificationTitle: 'Trip in progress',
+    backgroundServiceNotificationBody: 'Recording distance and speed in the background.',
 
     menuButtonLabel: 'More',
     tripPause: 'Pause trip',
@@ -295,7 +300,12 @@ const translations = {
     homeDialogEndTripMessage: 'Möchtest du die aktuelle Fahrt wirklich beenden?',
     homeDialogBackgroundPermissionTripTitle: 'Standortberechtigungen',
     homeDialogBackgroundPermissionMessage:
-      'Um die App optimal nutzen zu können, wird die Berechtigung für den Standortzugriff im Hintergrund benötigt. Die App muss dafür weiterhin im Hintergrund geöffnet bleiben.',
+      'Damit Distanz und Geschwindigkeit korrekt aufgezeichnet werden, wenn die App im Hintergrund läuft oder das Display gesperrt ist, wird der Standortzugriff im Hintergrund benötigt. Ohne diese Berechtigung pausiert die Aufzeichnung, sobald du die App verlässt.',
+    homeDialogBackgroundPermissionDeniedTitle: 'Aufzeichnung eingeschränkt',
+    homeDialogBackgroundPermissionDeniedMessage:
+      'Ohne Hintergrund-Standort werden Distanz und Geschwindigkeit nur aufgezeichnet, solange die App im Vordergrund geöffnet ist. Du kannst die Berechtigung später in den Geräteeinstellungen aktivieren.',
+    backgroundServiceNotificationTitle: 'Fahrt läuft',
+    backgroundServiceNotificationBody: 'Distanz und Geschwindigkeit werden im Hintergrund aufgezeichnet.',
 
     menuButtonLabel: 'Mehr',
     tripPause: 'Fahrt pausieren',

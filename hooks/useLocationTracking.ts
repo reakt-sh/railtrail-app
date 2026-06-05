@@ -40,15 +40,26 @@ export const useLocationTracking = () => {
   const startBackgroundTracking = useCallback(
     (onLocationUpdate: (loc: Location.LocationObject) => void) => {
       stopForegroundTracking();
-      setBackgroundLocationListener(onLocationUpdate);
+      setBackgroundLocationListener(onLocationUpdate, {
+        foregroundServiceTitle: localizedStrings.t('backgroundServiceNotificationTitle'),
+        foregroundServiceBody: localizedStrings.t('backgroundServiceNotificationBody'),
+      });
     },
-    [stopForegroundTracking]
+    [stopForegroundTracking, localizedStrings]
   );
 
   const stopTracking = useCallback(() => {
     stopForegroundTracking();
     stopBackgroundLocationListener();
   }, [stopForegroundTracking]);
+
+  const showBackgroundDeniedWarning = useCallback(() => {
+    Alert.alert(
+      localizedStrings.t('homeDialogBackgroundPermissionDeniedTitle'),
+      localizedStrings.t('homeDialogBackgroundPermissionDeniedMessage'),
+      [{ text: localizedStrings.t('alertOk') }]
+    );
+  }, [localizedStrings]);
 
   const requestBackgroundAndSwitch = useCallback(
     (onLocationUpdate: (loc: Location.LocationObject) => void) => {
@@ -60,7 +71,9 @@ export const useLocationTracking = () => {
             {
               text: localizedStrings.t('alertLater'),
               onPress: () => {
-                // Foreground-Tracking weiter nutzen falls Permission abgelehnt
+                // Foreground-Tracking weiter nutzen falls Permission abgelehnt;
+                // User über Einschränkung der Aufzeichnung informieren.
+                showBackgroundDeniedWarning();
               },
             },
             {
@@ -70,6 +83,9 @@ export const useLocationTracking = () => {
                   if (result) {
                     dispatch(AppAction.setPermissions({ background: true }));
                     startBackgroundTracking(onLocationUpdate);
+                  } else {
+                    // Permission durch System-Dialog abgelehnt
+                    showBackgroundDeniedWarning();
                   }
                 });
               },
@@ -80,7 +96,7 @@ export const useLocationTracking = () => {
         startBackgroundTracking(onLocationUpdate);
       }
     },
-    [permissions.background, localizedStrings, dispatch, startBackgroundTracking]
+    [permissions.background, localizedStrings, dispatch, startBackgroundTracking, showBackgroundDeniedWarning]
   );
 
   return {

@@ -15,7 +15,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "bundleIdentifier": "com.uxma.naturpark-draisine",
-      "buildNumber": "1.4.1",
+      "buildNumber": "1.7.0",
       "supportsTablet": true,
       "infoPlist": {
         "UIBackgroundModes": ["location"],

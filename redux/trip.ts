@@ -20,7 +20,6 @@ export interface ActiveSegment {
 export interface Motion {
   readonly distanceTravelled: number;
   readonly speed: number;
-  readonly heading: number;
 }
 
 export interface TripPosition {
@@ -72,11 +71,6 @@ interface TripActionSetCurrentVehicle {
 interface TripActionSetMotion {
   readonly type: 'trip/set-motion';
   readonly payload: Partial<Motion>;
-}
-
-interface TripActionAddDistance {
-  readonly type: 'trip/add-distance';
-  readonly payload: number;
 }
 
 interface TripActionSetPosition {
@@ -138,7 +132,6 @@ export type TripActionType =
   | TripActionStop
   | TripActionSetCurrentVehicle
   | TripActionSetMotion
-  | TripActionAddDistance
   | TripActionSetPosition
   | TripActionSetWarnings
   | TripActionSetVehicles
@@ -170,11 +163,6 @@ export const TripAction = {
   setMotion: (motion: Partial<Motion>): TripActionSetMotion => ({
     type: 'trip/set-motion',
     payload: motion,
-  }),
-
-  addDistance: (distance: number): TripActionAddDistance => ({
-    type: 'trip/add-distance',
-    payload: distance,
   }),
 
   setPosition: (position: Partial<TripPosition>): TripActionSetPosition => ({
@@ -239,7 +227,6 @@ export const initialTripState: TripState = {
   motion: {
     distanceTravelled: 0,
     speed: 0,
-    heading: 0,
   },
   position: {
     percentage: null,
@@ -281,15 +268,6 @@ const reducer = (state = initialTripState, action: RailTrailReduxAction): TripSt
       return {
         ...state,
         motion: { ...state.motion, ...action.payload },
-      };
-
-    case 'trip/add-distance':
-      return {
-        ...state,
-        motion: {
-          ...state.motion,
-          distanceTravelled: state.motion.distanceTravelled + action.payload,
-        },
       };
 
     case 'trip/set-position':
