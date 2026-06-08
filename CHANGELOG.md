@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.8.0
+
+### Bugfixes
+
+- **Draisine 99 löste weiterhin Warnungen aus, obwohl sie ausgeblendet war:** Die Motorbahn (ID 16) wurde bisher nur in der Karte und im Fahrzeugauswahl-BottomSheet gefiltert. Die Warn-Berechnung (`calculateWarnings()`) berücksichtigte den Filter nicht, sodass beim Fahren eine Warnung für eine "entgegenkommende Draisine" auftauchte. Fix: Filter erfolgt jetzt zentral am WebSocket-Eingang (`api-actions.ts`); ausgeschlossene Fahrzeuge gelangen gar nicht erst in den Redux-State. Konstante `HIDDEN_VEHICLE_IDS` zu `EXCLUDED_VEHICLE_IDS` umbenannt, da die Semantik jetzt "vollständig aus allen Interaktionen ausgeschlossen" ist (nicht mehr nur "vor der Karte versteckt").
+
 ## v1.7.0
 
 ### Bugfixes

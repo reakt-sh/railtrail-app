@@ -4,7 +4,7 @@ import { AppAction, AppActionType } from '../redux/app';
 import { TripAction, TripActionType } from '../redux/trip';
 import { MapPosition } from '../types/map-position';
 import { Vehicle } from '../types/vehicle';
-import { SIMULATION_VEHICLE_ID } from '../constants';
+import { EXCLUDED_VEHICLE_IDS, SIMULATION_VEHICLE_ID } from '../constants';
 import { loadedTrack, percentageToPosition, positionToPercentage } from '../util/track-loader';
 
 // Initialisiert die App mit statischen Track-Daten und WebSocket-Verbindung
@@ -86,6 +86,12 @@ export const setupPositionUpdates = (dispatch: Dispatch<TripActionType>): (() =>
   });
 
   const unsubscribePositions = positionSocket.subscribe((mapPosition: MapPosition) => {
+    // Komplett ausgeschlossene Fahrzeuge (z.B. Motorbahn 99) ignorieren —
+    // sie sollen nicht in den State gelangen und keine Interaktionen auslösen
+    if (EXCLUDED_VEHICLE_IDS.includes(mapPosition.vehicle)) {
+      return;
+    }
+
     const hasValidCoords = mapPosition.latitude != null && mapPosition.longitude != null
       && (mapPosition.latitude !== 0 || mapPosition.longitude !== 0);
 

@@ -1,6 +1,7 @@
 import * as MapLibreGL from '@maplibre/maplibre-react-native';
 import { DrawerActions, useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useKeepAwake } from 'expo-keep-awake';
+import * as Location from 'expo-location';
 import { setStatusBarStyle, StatusBar } from 'expo-status-bar';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { AppState, AppStateStatus, StyleSheet, View } from 'react-native';
@@ -16,6 +17,7 @@ import {
   TripSummaryModal,
   VehicleSelectionBottomSheet,
 } from '../components';
+import { BACKGROUND_LOCATION_TASK, DEMO_MODE_ENABLED, SIMULATION_VEHICLE_ID } from '../constants';
 import {
   disconnectFromServer,
   initializeApp,
@@ -31,8 +33,6 @@ import {
   useTripLifecycle,
   useTripSimulation,
 } from '../hooks';
-import * as Location from 'expo-location';
-import { BACKGROUND_LOCATION_TASK, SIMULATION_VEHICLE_ID } from '../constants';
 import { AppActionType } from '../redux/app';
 import { ReduxAppState } from '../redux/init';
 import { TripActionType } from '../redux/trip';
@@ -76,7 +76,8 @@ export const HomeScreen = () => {
     requestBackgroundAndSwitch,
     startBackgroundTracking,
   } = useLocationTracking();
-  const { registerDemoVehicle, registerLocalVehicle, startSimulation, stopSimulation } = useTripSimulation();
+  const { registerDemoVehicle, registerLocalVehicle, startSimulation, stopSimulation } =
+    useTripSimulation();
   const { handleLocationUpdate, resetTracking } = useGPSProcessing();
 
   const {
@@ -143,8 +144,10 @@ export const HomeScreen = () => {
     }
 
     // Register Demo and Lokal vehicles so they appear in vehicle selection
-    registerDemoVehicle();
-    registerLocalVehicle();
+    if (DEMO_MODE_ENABLED) {
+      registerDemoVehicle();
+      registerLocalVehicle();
+    }
 
     return () => {
       unsubscribePositions();
@@ -167,9 +170,8 @@ export const HomeScreen = () => {
       if (state.trip.isActive) {
         if (permissions.background) {
           try {
-            const isRunning = await Location.hasStartedLocationUpdatesAsync(
-              BACKGROUND_LOCATION_TASK
-            );
+            const isRunning =
+              await Location.hasStartedLocationUpdatesAsync(BACKGROUND_LOCATION_TASK);
             if (!isRunning) {
               startBackgroundTracking(handleLocationUpdate);
             }
@@ -294,10 +296,7 @@ export const HomeScreen = () => {
       />
 
       {activeTooltip != null && tooltipScreenPos && (
-        <View
-          pointerEvents="box-none"
-          style={[StyleSheet.absoluteFill, { zIndex: 1000 }]}
-        >
+        <View pointerEvents="box-none" style={[StyleSheet.absoluteFill, { zIndex: 1000 }]}>
           <View
             style={{
               position: 'absolute',
