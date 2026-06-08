@@ -122,8 +122,8 @@ API_TIMEOUT=3000
 MAP_STYLE_URL=https://tiles.openfreemap.org/styles/liberty
 
 
-# Demo-/Lokalmodus in der Fahrzeugauswahl anzeigen (true | false)
-ENABLE_DEMO_MODE=false
+# Demo-/Lokalmodus in der Fahrzeugauswahl anzeigen (optional, Default ohne Eintrag: false)
+EXPO_PUBLIC_ENABLE_DEMO_MODE=false
 
 # Feedback API Endpoint (optional – wenn nicht gesetzt, wird kein Feedback gesendet)
 FEEDBACK_URL=https://example.com/api/feedback
@@ -141,14 +141,15 @@ Für Test- und Demo-Zwecke kann die App zwei virtuelle Fahrzeuge in die Fahrzeug
 - **Demo** – Simulierte Fahrt entlang der Strecke (7–15 km/h, automatisches Reversieren an den Streckenenden). Kein GPS und keine Backend-Verbindung nötig.
 - **Lokal** – Echtes GPS-Tracking ohne Zuordnung zu einer realen Draisine. Nützlich für lokale Tests entlang der Strecke ohne Backend-Fahrzeug.
 
-Aktivierung über die Env-Variable `ENABLE_DEMO_MODE`:
+Aktivierung über die Env-Variable `EXPO_PUBLIC_ENABLE_DEMO_MODE`:
 
-| Wert              | Verhalten                                                |
-| ----------------- | -------------------------------------------------------- |
-| `false` (Default) | Production-Modus – Demo und Lokal sind ausgeblendet.     |
-| `true`            | Dev/QA-Modus – Demo und Lokal erscheinen in der Auswahl. |
+| Wert                     | Verhalten                                                |
+| ------------------------ | -------------------------------------------------------- |
+| nicht gesetzt (Default)  | Production-Modus – Demo und Lokal sind ausgeblendet.     |
+| `true`                   | Dev/QA-Modus – Demo und Lokal erscheinen in der Auswahl. |
+| `false` (oder sonstiges) | Production-Modus – Demo und Lokal sind ausgeblendet.     |
 
-Für Release-Builds via EAS empfiehlt es sich, `ENABLE_DEMO_MODE=false` explizit pro Build-Profile in `eas.json` zu setzen, damit Production-Binaries garantiert ohne Demo-Modus ausgeliefert werden.
+Die Variable ist als Default versteckt und muss nicht in der `.env` stehen — sie greift erst, wenn sie explizit auf `true` gesetzt wird. Für Release-Builds via EAS kann sie pro Build-Profile in `eas.json` gesetzt (Preview) oder weggelassen (Production) werden.
 
 > Hinweis: Nach Änderung der Variable Metro-Cache leeren – `npx expo start -c` – sonst greift der neue Wert nicht.
 
