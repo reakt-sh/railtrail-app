@@ -37,6 +37,9 @@ const translations = {
     homeDialogBackgroundPermissionDeniedTitle: 'Tracking limited',
     homeDialogBackgroundPermissionDeniedMessage:
       'Without background location, distance and speed are only recorded while the app is open in the foreground. You can enable background location later in your device settings.',
+    homeDialogLocationServicesDisabledTitle: 'Location services disabled',
+    homeDialogLocationServicesDisabledMessage:
+      'Distance and speed cannot be recorded while location services are turned off. You can enable them in your device settings.',
     backgroundServiceNotificationTitle: 'Trip in progress',
     backgroundServiceNotificationBody: 'Recording distance and speed in the background.',
 
@@ -304,6 +307,9 @@ const translations = {
     homeDialogBackgroundPermissionDeniedTitle: 'Aufzeichnung eingeschränkt',
     homeDialogBackgroundPermissionDeniedMessage:
       'Ohne Hintergrund-Standort werden Distanz und Geschwindigkeit nur aufgezeichnet, solange die App im Vordergrund geöffnet ist. Du kannst die Berechtigung später in den Geräteeinstellungen aktivieren.',
+    homeDialogLocationServicesDisabledTitle: 'Standortdienste deaktiviert',
+    homeDialogLocationServicesDisabledMessage:
+      'Solange die Standortdienste ausgeschaltet sind, können Distanz und Geschwindigkeit nicht aufgezeichnet werden. Du kannst sie in den Geräteeinstellungen aktivieren.',
     backgroundServiceNotificationTitle: 'Fahrt läuft',
     backgroundServiceNotificationBody: 'Distanz und Geschwindigkeit werden im Hintergrund aufgezeichnet.',
 

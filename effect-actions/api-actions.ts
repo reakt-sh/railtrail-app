@@ -92,6 +92,14 @@ export const setupPositionUpdates = (dispatch: Dispatch<TripActionType>): (() =>
       return;
     }
 
+    // Off-Track-Draisinen aus dem State entfernen und Update verwerfen
+    // (der Reducer schützt die eigene Draisine bei aktivem Trip)
+    if (mapPosition.offtrack === true) {
+      dispatch(TripAction.removeVehicle(mapPosition.vehicle));
+      lastPositions.delete(mapPosition.vehicle);
+      return;
+    }
+
     const hasValidCoords = mapPosition.latitude != null && mapPosition.longitude != null
       && (mapPosition.latitude !== 0 || mapPosition.longitude !== 0);
 
