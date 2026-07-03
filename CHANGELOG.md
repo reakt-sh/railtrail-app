@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.0.0
+
+### Neue Features
+
+- **Off-Track-Draisinen werden ausgeblendet:** Das Positions-WebSocket liefert pro Draisine ein `offtrack`-Flag. Meldet eine Draisine `offtrack=true` (z.B. neben dem Gleis abgestellt oder abtransportiert), wird sie sofort aus dem Redux-State entfernt und verschwindet damit von der Karte, aus der Fahrzeugauswahl und aus den Warnungen. Kehrt sie auf die Strecke zurück (`offtrack=false`), erscheint sie automatisch wieder. Ausnahme: Die eigene Draisine wird während einer aktiven Fahrt nie entfernt, da ihr Marker zugleich der Nutzer-Marker ist und per GPS positioniert wird. Neue Redux-Action `trip/remove-vehicle`; der Filter greift zentral am WebSocket-Eingang (`api-actions.ts`), analog zum `EXCLUDED_VEHICLE_IDS`-Muster.
+
 ## v1.8.0
 
 ### Bugfixes

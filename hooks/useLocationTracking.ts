@@ -31,21 +31,45 @@ export const useLocationTracking = () => {
     async (onLocationUpdate: (loc: Location.LocationObject) => void) => {
       // Alte Subscription aufräumen falls vorhanden
       stopForegroundTracking();
-      const subscription = await setForegroundLocationListener(onLocationUpdate);
-      subscriptionRef.current = subscription;
+      try {
+        const subscription = await setForegroundLocationListener(onLocationUpdate);
+        subscriptionRef.current = subscription;
+      } catch (e) {
+        // Schlägt fehl, wenn der Nutzer den "Standort aktivieren?"-Dialog ablehnt
+        if (__DEV__) console.log('[Tracking] Foreground-Start fehlgeschlagen:', e);
+      }
     },
     [stopForegroundTracking]
   );
 
+  const showLocationServicesDisabledWarning = useCallback(() => {
+    Alert.alert(
+      localizedStrings.t('homeDialogLocationServicesDisabledTitle'),
+      localizedStrings.t('homeDialogLocationServicesDisabledMessage'),
+      [{ text: localizedStrings.t('alertOk') }]
+    );
+  }, [localizedStrings]);
+
   const startBackgroundTracking = useCallback(
-    (onLocationUpdate: (loc: Location.LocationObject) => void) => {
+    async (onLocationUpdate: (loc: Location.LocationObject) => void) => {
       stopForegroundTracking();
-      setBackgroundLocationListener(onLocationUpdate, {
-        foregroundServiceTitle: localizedStrings.t('backgroundServiceNotificationTitle'),
-        foregroundServiceBody: localizedStrings.t('backgroundServiceNotificationBody'),
-      });
+      try {
+        await setBackgroundLocationListener(onLocationUpdate, {
+          foregroundServiceTitle: localizedStrings.t('backgroundServiceNotificationTitle'),
+          foregroundServiceBody: localizedStrings.t('backgroundServiceNotificationBody'),
+        });
+      } catch (e) {
+        // Schlägt u. a. fehl, wenn der Nutzer den "Standort aktivieren?"-Dialog ablehnt.
+        // Der Trip läuft dann ohne GPS-Daten weiter — Nutzer über die Einschränkung informieren.
+        const servicesEnabled = await Location.hasServicesEnabledAsync();
+        if (!servicesEnabled) {
+          showLocationServicesDisabledWarning();
+        } else if (__DEV__) {
+          console.log('[Tracking] Background-Start fehlgeschlagen:', e);
+        }
+      }
     },
-    [stopForegroundTracking, localizedStrings]
+    [stopForegroundTracking, localizedStrings, showLocationServicesDisabledWarning]
   );
 
   const stopTracking = useCallback(() => {

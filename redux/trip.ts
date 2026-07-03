@@ -117,6 +117,11 @@ interface TripActionEndSegment {
   readonly type: 'trip/end-segment';
 }
 
+interface TripActionRemoveVehicle {
+  readonly type: 'trip/remove-vehicle';
+  readonly payload: { vehicleId: number };
+}
+
 interface TripActionClearVehiclesExceptDemo {
   readonly type: 'trip/clear-vehicles-except-demo';
 }
@@ -136,6 +141,7 @@ export type TripActionType =
   | TripActionSetWarnings
   | TripActionSetVehicles
   | TripActionUpdateVehicleFromWebSocket
+  | TripActionRemoveVehicle
   | TripActionBatchUpdate
   | TripActionStartSegment
   | TripActionEndSegment
@@ -186,6 +192,11 @@ export const TripAction = {
   }): TripActionUpdateVehicleFromWebSocket => ({
     type: 'trip/update-vehicle-from-websocket',
     payload,
+  }),
+
+  removeVehicle: (vehicleId: number): TripActionRemoveVehicle => ({
+    type: 'trip/remove-vehicle',
+    payload: { vehicleId },
   }),
 
   // Batch update for performance - single dispatch updates multiple values
@@ -308,6 +319,19 @@ const reducer = (state = initialTripState, action: RailTrailReduxAction): TripSt
       return {
         ...state,
         vehicles: updatedVehicles,
+      };
+    }
+
+    case 'trip/remove-vehicle': {
+      const { vehicleId } = action.payload;
+      // Eigene Draisine bei aktivem Trip nie entfernen — ihr Marker ist
+      // während der Fahrt der Nutzer-Marker (GPS-Override in MapMarkers)
+      if (state.isActive && state.currentVehicle.id === vehicleId) {
+        return state;
+      }
+      return {
+        ...state,
+        vehicles: state.vehicles.filter((v) => v.id !== vehicleId),
       };
     }
 

@@ -167,6 +167,15 @@ export const HomeScreen = () => {
       const isSimulation = state.trip.currentVehicle.id === SIMULATION_VEHICLE_ID;
       if (isSimulation) return;
 
+      // Bei deaktivierten Standortdiensten keine Recovery: watchPositionAsync würde
+      // auf Android den System-Dialog "Standort aktivieren?" erneut öffnen, dessen
+      // Schließen wiederum diesen Listener feuert (Endlosschleife nach "Nein danke").
+      const servicesEnabled = await Location.hasServicesEnabledAsync();
+      if (!servicesEnabled) {
+        if (__DEV__) console.log('[Tracking] Recovery übersprungen: Standortdienste deaktiviert');
+        return;
+      }
+
       if (state.trip.isActive) {
         if (permissions.background) {
           try {
